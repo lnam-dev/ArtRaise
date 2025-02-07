@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail',
+    'wagtail.api.v2',
 
     'modelcluster',
     'taggit',
@@ -109,7 +110,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'artraise',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'newpassword',
         'HOST': 'localhost',
         'PORT': '5432',
     }
