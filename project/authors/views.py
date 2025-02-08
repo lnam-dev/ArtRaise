@@ -9,5 +9,7 @@ class AuthorViewSet(PagesAPIViewSet):
     renderer_classes = [JSONRenderer]
     queryset = Author.objects.all()
 
+
     def get_queryset(self):
         return self.queryset.order_by('-id')
+
