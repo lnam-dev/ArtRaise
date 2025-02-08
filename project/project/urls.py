@@ -12,8 +12,8 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
     path('api/v2/', api_router.urls),
-    re_path(r'^', include(wagtail_urls)),
     path('users/', include('users.urls')),
+    re_path(r'^', include(wagtail_urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
