@@ -32,7 +32,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #Wagtail
+    'artpiece',
+    'authors',
+    'events',
+    'users',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -45,7 +48,6 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail',
     'wagtail.api.v2',
-
     'modelcluster',
     'taggit',
     # Django
@@ -55,14 +57,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     #DRF and apps
     'rest_framework',
     'rest_framework_simplejwt',
-    'artpiece',
-    'authors',
-    'events',
-    'users',
+
 
 ]
 
@@ -71,7 +69,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
 }
 
@@ -84,6 +82,11 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': 'your-secret-key',  # Секретний ключ для підпису
 }
+
+
+AUTH_USER_MODEL = 'users.CustomUser'
+WAGTAILUSERS_USER_MODEL = 'users.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -184,4 +187,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 
 
-AUTH_USER_MODEL = 'users.CustomUser'
