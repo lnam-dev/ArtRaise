@@ -3,7 +3,7 @@ from django.db import models
 
 class CustomUser(AbstractUser): #Abstract user має всі необхідні поля для керування користувачем (role,is_staff і тд.)
     email = models.EmailField(unique=True)
-    createdOn = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True)
     USERNAME_FIELD = 'email'  # Логін через email
     REQUIRED_FIELDS = ['username']  # Залишається username обов'язковим для реєстрації
 
