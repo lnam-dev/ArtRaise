@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     #DRF and apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'cities_light',
+    'geopy',
 
 
 ]

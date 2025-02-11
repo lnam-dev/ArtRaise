@@ -9,7 +9,8 @@ class WagtailEventProfileViewSet(SnippetViewSet):
     icon = "event"
     list_display = [
         "title",
-        "place",
+        "location_name",
+        "location_details",
         "ticket_price",
         "description",
         "start_date",
@@ -19,7 +20,8 @@ class WagtailEventProfileViewSet(SnippetViewSet):
     ordering = ["start_date"]
     form_fields = [
         "title",
-        "place",
+        "location_name",
+        "location_details",
         "ticket_price",
         "description",
         "start_date",

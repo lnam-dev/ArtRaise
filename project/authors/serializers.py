@@ -12,5 +12,5 @@ class AuthorSerializer(serializers.ModelSerializer):
             'style',
             'theme',
             'expression_type',
-            'category',
+            'event',
         ]

@@ -13,7 +13,7 @@ class WagtailAuthorProfileViewSet(SnippetViewSet):
         "style",
         "theme",
         "expression_type",
-        "category",
+        "event",
     ]
     search_filters = ["fullname", "style"]
     ordering = ["fullname"]
@@ -23,7 +23,7 @@ class WagtailAuthorProfileViewSet(SnippetViewSet):
         "style",
         "theme",
         "expression_type",
-        "category",
+        "event",
     ]
 
 
