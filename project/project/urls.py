@@ -13,6 +13,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('authors/', include('authors.urls')),
     path('events/', include('events.urls')),
+    path('artpieces/', include('artpiece.urls')),
     re_path(r'^', include(wagtail_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

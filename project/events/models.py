@@ -1,5 +1,4 @@
 from django.db import models
-from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 
 
@@ -11,16 +10,6 @@ class Event(models.Model):
     description = models.TextField(max_length=1000)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
-
-    panels = [
-        FieldPanel('title'),
-        FieldPanel('location_name'),
-        FieldPanel('location_details'),
-        FieldPanel('ticket_price'),
-        FieldPanel('description'),
-        FieldPanel('start_date'),
-        FieldPanel('end_date'),
-    ]
 
     api_fields = [
         APIField('title'),

@@ -1,5 +1,4 @@
 from django.db import models
-from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 
 from events.models import Event
@@ -13,15 +12,6 @@ class Author(models.Model):
     expression_type = models.CharField(max_length=255)
 
     event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True, blank=True)
-
-    panels = [
-        FieldPanel('fullname'),
-        FieldPanel('bio_text'),
-        FieldPanel('style'),
-        FieldPanel('theme'),
-        FieldPanel('expression_type'),
-        FieldPanel('event'),
-    ]
 
     api_fields = [
         APIField('fullname'),
