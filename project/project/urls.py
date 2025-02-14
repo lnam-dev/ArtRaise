@@ -10,10 +10,10 @@ urlpatterns = [
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
-    path('users/', include('users.urls')),
-    path('authors/', include('authors.urls')),
-    path('events/', include('events.urls')),
-    path('artpieces/', include('artpiece.urls')),
+    path('api/users/', include('users.urls')),
+    path('api/authors/', include('authors.urls')),
+    path('api/events/', include('events.urls')),
+    path('api/artpieces/', include('artpiece.urls')),
     re_path(r'^', include(wagtail_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

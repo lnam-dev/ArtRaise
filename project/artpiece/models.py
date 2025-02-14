@@ -30,7 +30,7 @@ class ArtPiece(models.Model):
     #     upload_to="certificates/",
     #     null=True,
     #     blank=True
-    # )
+    #  )
     author = models.ForeignKey(
         Author,
         on_delete=models.CASCADE,
@@ -51,10 +51,6 @@ class ArtPiece(models.Model):
             return f"{self.creating_date_start}"
         else:
             return f"Unknown"
-
-    @property
-    def creating_date(self):
-        return self.creating_date_start
 
     api_fields = [
         APIField('title'),

@@ -7,24 +7,10 @@ from .models import Author
 class WagtailAuthorProfileViewSet(SnippetViewSet):
     model = Author
     icon = "author"
-    list_display = [
-        "fullname",
-        "bio_text",
-        "style",
-        "theme",
-        "expression_type",
-        "event",
-    ]
+    list_display = [field.name for field in Author._meta.get_fields()]
     search_filters = ["fullname", "style"]
     ordering = ["fullname"]
-    form_fields = [
-        "fullname",
-        "bio_text",
-        "style",
-        "theme",
-        "expression_type",
-        "event",
-    ]
+    form_fields = [field.name for field in Author._meta.get_fields()]
 
 
 class AuthorsViewSetGroup(SnippetViewSetGroup):

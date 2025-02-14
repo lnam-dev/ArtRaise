@@ -7,26 +7,10 @@ from .models import Event
 class WagtailEventProfileViewSet(SnippetViewSet):
     model = Event
     icon = "event"
-    list_display = [
-        "title",
-        "location_name",
-        "location_details",
-        "ticket_price",
-        "description",
-        "start_date",
-        "end_date",
-    ]
+    list_display = [field.name for field in Event._meta.get_fields()]
     search_filters = ["title", "start_date", "end_date"]
     ordering = ["start_date"]
-    form_fields = [
-        "title",
-        "location_name",
-        "location_details",
-        "ticket_price",
-        "description",
-        "start_date",
-        "end_date",
-    ]
+    form_fields = [field.name for field in Event._meta.get_fields()]
 
 
 class EventViewSetGroup(SnippetViewSetGroup):

@@ -17,7 +17,7 @@ class Author(models.Model):
         APIField('fullname'),
         APIField('bio_text'),
         APIField('style'),
-        APIField('theme'),
+        APIField('theme'), 
         APIField('expression_type'),
         APIField('event'),
     ]
