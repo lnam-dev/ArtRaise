@@ -10,7 +10,7 @@ class ArtPieceFilter(django_filters.FilterSet):
     material = django_filters.CharFilter(field_name="material", lookup_expr="icontains")  # Пошук по матеріалу
     theme = django_filters.CharFilter(field_name="theme", lookup_expr="icontains")  # Пошук по темі
     style = django_filters.CharFilter(field_name="style", lookup_expr="icontains")  # Пошук по стилю
-    author = django_filters.ModelChoiceFilter(queryset=Author.objects.all())  # Фільтрація по автору
+    author = django_filters.CharFilter(field_name="author__fullname", lookup_expr="icontains")  # Пошук по імені автора
 
     class Meta:
         model = ArtPiece

@@ -11,7 +11,7 @@ class Author(models.Model):
     theme = models.CharField(max_length=255)
     expression_type = models.CharField(max_length=255)
 
-    event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.SET_NULL, null=True, blank=True, related_name='authors')
 
     api_fields = [
         APIField('fullname'),
