@@ -1,12 +1,10 @@
 from rest_framework import serializers
-
 from .models import ArtPiece
-from authors.serializers import AuthorSerializer
 
 
 class ArtPieceDetailSerializer(serializers.ModelSerializer):
     creating_date = serializers.SerializerMethodField()
-    author = AuthorSerializer()
+    author = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
@@ -27,9 +25,17 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
     def get_creating_date(self, obj):
         return obj.get_display_date()
 
+    def get_author(self, obj):
+        return {
+            'id': obj.author.id,
+            'fullname': obj.author.fullname,
+            'bio_text': obj.author.bio_text,
+
+        }
+
 
 class ArtPieceSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source="author.fullname")
+    author = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
@@ -41,3 +47,9 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "width_cm",
             "author",
         ]
+
+    def get_author(self, obj):
+        return {
+            'id': obj.author.id,
+            'fullname': obj.author.fullname,
+        }

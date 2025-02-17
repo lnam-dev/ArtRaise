@@ -1,5 +1,4 @@
 from django.db import models
-from wagtail.api import APIField
 from authors.models import Author
 
 
@@ -51,18 +50,3 @@ class ArtPiece(models.Model):
             return f"{self.creating_date_start}"
         else:
             return f"Unknown"
-
-    api_fields = [
-        APIField('title'),
-        APIField('price'),
-        APIField('type'),
-        APIField('material'),
-        APIField('theme'),
-        APIField('style'),
-        APIField('length_cm'),
-        APIField('width_cm'),
-        APIField('creating_date'),
-        APIField('description'),
-        APIField('author'),
-    ]
-
