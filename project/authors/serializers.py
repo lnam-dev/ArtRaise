@@ -4,6 +4,7 @@ from .models import Author
 
 class AuthorDetailSerializer(serializers.ModelSerializer):
     artpieces = serializers.SerializerMethodField()
+    events = serializers.SerializerMethodField()
 
     class Meta:
         model = Author
@@ -18,6 +19,19 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
              'width_cm': artpiece.width_cm,
              }
             for artpiece in obj.artpieces.all()
+        ]
+
+    def get_events(self, obj):
+        return [
+            {
+                'id': event.id,
+                'title': event.title,
+                'ticket_price': event.ticket_price,
+                'location_name': event.location_name,
+                'start_date': event.start_date,
+                'end_date': event.end_date
+            }
+            for event in obj.events.all()
         ]
 
 
