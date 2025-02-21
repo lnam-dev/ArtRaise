@@ -14,6 +14,7 @@ class EventDetailSerializer(serializers.ModelSerializer):
             {
                 'id': author.id,
                 'fullname': author.fullname,
+                'artpieces_count': len(author.artpieces.all())
             }
             for author in obj.authors.all()
         ]
