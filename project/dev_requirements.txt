@@ -4,3 +4,4 @@ wagtail==6.4
 psycopg2==2.9.10
 djangorestframework_simplejwt==5.4.0
 django-debug-toolbar==5.0.1
+locust==2.32.10
