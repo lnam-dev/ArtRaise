@@ -19,18 +19,23 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             "width_cm",
             "creating_date",
             "description",
+            "certificate",
             "author",
         ]
 
     def get_creating_date(self, obj):
-        return obj.get_display_date()
+        if obj.creating_date_start and obj.creating_date_end:
+            return f"{obj.creating_date_start}-{obj.creating_date_end}"
+        elif obj.creating_date_start:
+            return f"{obj.creating_date_start}"
+        else:
+            return f"Unknown"
 
     def get_author(self, obj):
         return {
             'id': obj.author.id,
             'fullname': obj.author.fullname,
             'bio_text': obj.author.bio_text,
-
         }
 
 

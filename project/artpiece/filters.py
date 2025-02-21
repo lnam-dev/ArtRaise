@@ -2,6 +2,7 @@ import django_filters
 from .models import ArtPiece, ArtPieceType
 from authors.models import Author
 
+
 class ArtPieceFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(field_name="title", lookup_expr="icontains")  # Пошук по частині назви
     price_max = django_filters.NumberFilter(field_name="price", lookup_expr="lte")  # Максимальна ціна

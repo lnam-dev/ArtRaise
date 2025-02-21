@@ -1,0 +1,41 @@
+# Ігноруємо середовище розробки
+.vscode/
+.idea/
+__pycache__/
+project/__pycache__/
+project/*/__pycache__/
+project/*/*/__pycache__/
+project/*/*/*/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ігноруємо віртуальне середовище
+venv/
+.env
+*.env
+
+# Ігноруємо файли залежностей та кешу
+pip-log.txt
+pip-delete-this-directory.txt
+poetry.lock
+Pipfile
+Pipfile.lock
+
+# Логи
+logs/
+*.log
+debug.log
+
+# База даних та міграції
+*.sqlite3
+db.sqlite3
+migrations/
+
+# Docker файли
+Dockerfile
+.dockerignore
+
+# Git файли
+.git
+.gitignore

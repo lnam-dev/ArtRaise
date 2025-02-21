@@ -36,6 +36,11 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    artpieces_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Author
-        fields = ['id', 'fullname', 'style']
+        fields = ['id', 'fullname', 'artpieces_count']
+
+    def get_artpieces_count(self, obj):
+        return len(obj.artpieces.all())
