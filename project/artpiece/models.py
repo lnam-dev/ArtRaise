@@ -25,11 +25,11 @@ class ArtPiece(models.Model):
     creating_date_start = models.IntegerField(null=True, blank=True)
     creating_date_end = models.IntegerField(null=True, blank=True)
     description = models.TextField(max_length=1000)
-    # certificate = models.FileField(
-    #     upload_to="certificates/",
-    #     null=True,
-    #     blank=True
-    #  )
+    certificate = models.FileField(
+         upload_to="certificates/",
+         null=True,
+         blank=True
+      )
     author = models.ForeignKey(
         Author,
         on_delete=models.CASCADE,
@@ -43,10 +43,4 @@ class ArtPiece(models.Model):
     #     related_name='artpieces'
     # )
 
-    def get_display_date(self):
-        if self.creating_date_start and self.creating_date_end:
-            return f"{self.creating_date_start}-{self.creating_date_end}"
-        elif self.creating_date_start:
-            return f"{self.creating_date_start}"
-        else:
-            return f"Unknown"
+

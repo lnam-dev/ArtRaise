@@ -1,0 +1,29 @@
+services:
+  project:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./project:/project
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=artraise
+      - DB_USER=artraise
+      - DB_PASS=artraise
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17-alpine
+    volumes:
+      - dev-db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=artraise
+      - POSTGRES_USER=artraise
+      - POSTGRES_PASSWORD=artraise
+
+volumes:
+  dev-db_data:
