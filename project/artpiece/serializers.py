@@ -4,6 +4,8 @@ from .models import ArtPiece
 
 class ArtPieceDetailSerializer(serializers.ModelSerializer):
     creating_date = serializers.SerializerMethodField()
+
+    # Використовуємо стандартний PrimaryKeyRelatedField для отримання всіх даних про автора
     author = serializers.SerializerMethodField()
 
     class Meta:
@@ -29,15 +31,15 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
         elif obj.creating_date_start:
             return f"{obj.creating_date_start}"
         else:
-            return f"Unknown"
+            return "Unknown"
 
     def get_author(self, obj):
+        # Тепер використовуємо об'єкт автора, завантаженого завдяки select_related
         return {
             'id': obj.author.id,
             'fullname': obj.author.fullname,
             'bio_text': obj.author.bio_text,
         }
-
 
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
@@ -58,3 +60,9 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             'id': obj.author.id,
             'fullname': obj.author.fullname,
         }
+class ArtPieceSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all())  # Просто передаємо ID автора
+
+    class Meta:
+        model = ArtPiece
+        fields = ["id", "title", "price", "length_cm", "width_cm", "author"]

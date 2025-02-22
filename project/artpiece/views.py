@@ -8,11 +8,11 @@ from .filters import ArtPieceFilter
 
 class ArtPieceViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
-    queryset = ArtPiece.objects.all()
-    filter_backends = (DjangoFilterBackend, OrderingFilter)  # Додаємо фільтрацію та сортування
-    filterset_class = ArtPieceFilter  # Ваш фільтр для ArtPiece
-    ordering_fields = ['price', 'creating_date_start', 'title']  # Поля, за якими можна сортувати
-    ordering = ['title']  # За замовчуванням сортуємо за title
+    queryset = ArtPiece.objects.all().select_related('author')  # Оптимізація запитів через select_related
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_class = ArtPieceFilter
+    ordering_fields = ['price', 'creating_date_start', 'title']
+    ordering = ['title']
 
     def get_serializer_class(self):
         if self.action == 'list':
