@@ -14,6 +14,13 @@ class Event(models.Model):
         Author,
         related_name='events'
     )
+    class Meta:
+        indexes = [
+            models.Index(fields=['start_date']),
+            models.Index(fields=['title']),
+            models.Index(fields=['start_date']),
+            models.Index(fields=['ticket_price']),
+        ]
 
     def __str__(self):
         return self.title

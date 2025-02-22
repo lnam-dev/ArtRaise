@@ -3,7 +3,7 @@ from .models import Event
 
 
 class EventFilter(django_filters.FilterSet):
-    name = django_filters.CharFilter(lookup_expr='icontains')  # Пошук по частині назви
+    title = django_filters.CharFilter(lookup_expr='icontains')  # Пошук по частині назви
     start_date = django_filters.DateFilter(lookup_expr='gte')  # (>=)
     end_date = django_filters.DateFilter(lookup_expr='lte')  # (<=)
     ticket_price_min = django_filters.NumberFilter(
@@ -18,7 +18,7 @@ class EventFilter(django_filters.FilterSet):
     class Meta:
         model = Event
         fields = [
-            'name',
+            'title',
             'ticket_price',
             'start_date',
             'end_date',

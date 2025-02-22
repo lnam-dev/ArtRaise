@@ -13,7 +13,7 @@ class EventViewSet(ModelViewSet):
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_class = EventFilter
     ordering_fields = ['start_date', 'end_date', 'ticket_price']
-    queryset = Event.objects.all()
+    queryset = Event.objects.all().prefetch_related('authors')
 
     def get_serializer_class(self):
         if self.action == 'list':
