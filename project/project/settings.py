@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'authors',
     'events',
     'users',
+    'search',
+    'tags',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -62,6 +64,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #CORS
     'corsheaders',
+
 ]
 
 REST_FRAMEWORK = {
