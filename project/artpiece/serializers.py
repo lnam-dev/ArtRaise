@@ -51,6 +51,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "length_cm",
             "width_cm",
             "author",
+            "certificate",
         ]
 
     def get_author(self, obj):
