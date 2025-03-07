@@ -20,6 +20,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             "creating_date",
             "description",
             "certificate",
+            "image_artpiece",
             "author",
         ]
 
@@ -51,7 +52,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "length_cm",
             "width_cm",
             "author",
-            "certificate",
+            "image_artpiece",
         ]
 
     def get_author(self, obj):

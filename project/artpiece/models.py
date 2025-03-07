@@ -29,7 +29,7 @@ class ArtPiece(models.Model):
          upload_to="certificates/",
          null=True,
          blank=True
-      )
+    )
     author = models.ForeignKey(
         Author,
         on_delete=models.CASCADE,
