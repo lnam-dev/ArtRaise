@@ -42,6 +42,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
 
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
+    image_artpiece = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
@@ -60,3 +61,8 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             'id': obj.author.id,
             'fullname': obj.author.fullname,
         }
+
+    def get_image_artpiece(self, obj):
+        if obj.image_artpiece:
+            return obj.image_artpiece.url
+        return None
