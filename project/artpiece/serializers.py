@@ -9,6 +9,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArtPiece
         fields = [
+            "id",
             "title",
             "price",
             "type",
