@@ -60,6 +60,9 @@ INSTALLED_APPS = [
     #DRF and apps
     'rest_framework',
     'rest_framework_simplejwt',
+    #CORS
+    'corsheaders',
+
 ]
 
 REST_FRAMEWORK = {
@@ -89,6 +92,7 @@ WAGTAILUSERS_USER_MODEL = 'users.CustomUser'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -97,6 +101,9 @@ MIDDLEWARE = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 
 ]
+# Налаштування CORS (dev)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 # Налаштування Wagtail
 WAGTAIL_SITE_NAME = 'My Example Site'

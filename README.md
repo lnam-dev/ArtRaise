@@ -15,3 +15,33 @@
 # 5.    Щоб увійти в адмінку, переходитe за 
         http://localhost:8000/cms
 #       Вводите попередньо вказані дані суперюзера
+
+
+# Список API
+{GET}
+
+/api/authors/       
+
+/api/authors/{id}
+
+/api/events/
+
+/api/events/{id}
+
+/api/artpieces/
+
+/api/artpieces/{id}
+
+/api/users
+
+{POST}
+
+/api/users/register/
+
+/api/users/login/
+
+/api/users/token/refresh
+
+/api/users/token/verify
+
+

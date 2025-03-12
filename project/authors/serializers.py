@@ -17,6 +17,7 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
              'price': artpiece.price,
              'length_cm': artpiece.length_cm,
              'width_cm': artpiece.width_cm,
+             'image_artpiece': artpiece.image_artpiece.url,
              }
             for artpiece in obj.artpieces.all()
         ]

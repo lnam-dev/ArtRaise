@@ -1,18 +1,15 @@
 from rest_framework import serializers
-
-from authors.models import Author
 from .models import ArtPiece
 
 
 class ArtPieceDetailSerializer(serializers.ModelSerializer):
     creating_date = serializers.SerializerMethodField()
-
-    # Використовуємо стандартний PrimaryKeyRelatedField для отримання всіх даних про автора
     author = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
         fields = [
+            "id",
             "title",
             "price",
             "type",
@@ -24,6 +21,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             "creating_date",
             "description",
             "certificate",
+            "image_artpiece",
             "author",
         ]
 
@@ -33,18 +31,19 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
         elif obj.creating_date_start:
             return f"{obj.creating_date_start}"
         else:
-            return "Unknown"
+            return f"Unknown"
 
     def get_author(self, obj):
-        # Тепер використовуємо об'єкт автора, завантаженого завдяки select_related
         return {
             'id': obj.author.id,
             'fullname': obj.author.fullname,
             'bio_text': obj.author.bio_text,
         }
 
+
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
+    image_artpiece = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
@@ -55,6 +54,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "length_cm",
             "width_cm",
             "author",
+            "image_artpiece",
         ]
 
     def get_author(self, obj):
@@ -62,9 +62,8 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             'id': obj.author.id,
             'fullname': obj.author.fullname,
         }
-class ArtPieceSerializer(serializers.ModelSerializer):
-    author = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all())  # Просто передаємо ID автора
 
-    class Meta:
-        model = ArtPiece
-        fields = ["id", "title", "price", "length_cm", "width_cm", "author"]
+    def get_image_artpiece(self, obj):
+        if obj.image_artpiece:
+            return obj.image_artpiece.url
+        return None

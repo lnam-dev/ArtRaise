@@ -14,7 +14,9 @@ class ArtPieceType(models.TextChoices):
 class ArtPiece(models.Model):
     title = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    type = models.CharField(max_length=20, choices=ArtPieceType.choices)
+    type = models.CharField(
+        max_length=20,
+        choices=ArtPieceType.choices)
     material = models.CharField(max_length=255)
     theme = models.CharField(max_length=255)
     style = models.CharField(max_length=255)
@@ -23,18 +25,21 @@ class ArtPiece(models.Model):
     creating_date_start = models.IntegerField(null=True, blank=True)
     creating_date_end = models.IntegerField(null=True, blank=True)
     description = models.TextField(max_length=1000)
-    certificate = models.FileField(upload_to="certificates/", null=True, blank=True)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='artpieces')
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['price']),
-            models.Index(fields=['material']),
-            models.Index(fields=['theme']),
-            models.Index(fields=['author']),
-            models.Index(fields=['type']),
-        ]
-
+    certificate = models.FileField(
+         upload_to="certificates/",
+         null=True,
+         blank=True
+    )
+    image_artpiece = models.ImageField(
+        upload_to="images_artpiece/",
+        blank=True,
+        null=True
+    )
+    author = models.ForeignKey(
+        Author,
+        on_delete=models.CASCADE,
+        related_name='artpieces'
+    )
     # fond = models.ForeignKey(
     #     Fond,
     #     on_delete=models.SET_NULL,
@@ -42,5 +47,4 @@ class ArtPiece(models.Model):
     #     blank=True,
     #     related_name='artpieces'
     # )
-
 
