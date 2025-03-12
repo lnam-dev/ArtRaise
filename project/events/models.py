@@ -18,7 +18,7 @@ class Event(models.Model):
         indexes = [
             models.Index(fields=['start_date']),
             models.Index(fields=['title']),
-            models.Index(fields=['start_date']),
+            models.Index(fields=['end_date']),
             models.Index(fields=['ticket_price']),
         ]
 

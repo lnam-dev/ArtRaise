@@ -4,6 +4,17 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "artraise",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "localhost",
+        "PORT": "5432",
+    }
+}
+
 INSTALLED_APPS += [
     "debug_toolbar",
 ]
