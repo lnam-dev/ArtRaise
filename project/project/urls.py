@@ -17,6 +17,7 @@ urlpatterns += [
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
     path('api/users/', include('users.urls')),
+    path('search/', include('search.urls')),  # Підключаємо маршрути пошуку
     path('api/authors/', include('authors.urls')),
     path('api/events/', include('events.urls')),
     path('api/artpieces/', include('artpiece.urls')),
