@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'authors',
     'events',
     'users',
+    'faq',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',

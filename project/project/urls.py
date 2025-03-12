@@ -21,5 +21,6 @@ urlpatterns += [
     path('api/authors/', include('authors.urls')),
     path('api/events/', include('events.urls')),
     path('api/artpieces/', include('artpiece.urls')),
+    path('api/faq/', include('faq.urls')),
     re_path(r'^', include(wagtail_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
