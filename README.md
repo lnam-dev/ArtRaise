@@ -44,4 +44,9 @@
 
 /api/users/token/verify
 
+# Апі для пошуку по сайту
+
+/api/search/
+
+
 
