@@ -25,6 +25,7 @@ class ArtPiece(models.Model):
     creating_date_start = models.IntegerField(null=True, blank=True)
     creating_date_end = models.IntegerField(null=True, blank=True)
     description = models.TextField(max_length=1000)
+    certificate_text = models.TextField(max_length=1000, blank=True, null=True)
     certificate = models.FileField(
          upload_to="certificates/",
          null=True,

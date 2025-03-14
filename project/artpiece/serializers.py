@@ -21,6 +21,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             "creating_date",
             "description",
             "certificate",
+            "certificate_text",
             "image_artpiece",
             "author",
         ]
@@ -38,6 +39,7 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             'id': obj.author.id,
             'fullname': obj.author.fullname,
             'bio_text': obj.author.bio_text,
+            'image_author': obj.author.image_author.url,
         }
 
 
@@ -53,6 +55,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "price",
             "length_cm",
             "width_cm",
+            "style",
             "author",
             "image_artpiece",
         ]

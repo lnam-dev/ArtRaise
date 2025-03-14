@@ -7,6 +7,11 @@ class Author(models.Model):
     style = models.CharField(max_length=255)
     theme = models.CharField(max_length=255)
     expression_type = models.CharField(max_length=255)
+    image_author = models.ImageField(
+        upload_to='images_author/',
+        blank=True,
+        null=True
+    )
 
     def __str__(self):
         return self.fullname

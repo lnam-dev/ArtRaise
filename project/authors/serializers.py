@@ -5,6 +5,7 @@ from .models import Author
 class AuthorDetailSerializer(serializers.ModelSerializer):
     artpieces = serializers.SerializerMethodField()
     events = serializers.SerializerMethodField()
+    image_author = serializers.SerializerMethodField()
 
     class Meta:
         model = Author
@@ -35,13 +36,25 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
             for event in obj.events.all()
         ]
 
+    def get_image_author(self, obj):
+        if obj.image_author:
+            return obj.image_author.url
+        return None
+
 
 class AuthorSerializer(serializers.ModelSerializer):
     artpieces_count = serializers.SerializerMethodField()
+    image_author = serializers.SerializerMethodField()
+
 
     class Meta:
         model = Author
-        fields = ['id', 'fullname', 'artpieces_count']
+        fields = ['id', 'fullname', 'artpieces_count', 'image_author']
 
     def get_artpieces_count(self, obj):
         return len(obj.artpieces.all())
+
+    def get_image_author(self, obj):
+        if obj.image_author:
+            return obj.image_author.url
+        return None
