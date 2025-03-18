@@ -1,15 +1,13 @@
 # ArtRaise
 
-# Docker
+# Docker DEV
 
 # 1.    Запуcr Docker-контейнера
         docker-compose build
 # 2.    Додавання та виконання міграції
-        docker-compose run --rm project sh -c "python manage.py makemigrations"
-        
-        docker-compose run --rm project sh -c "python manage.py migrate"
+        docker-compose run --rm project sh -c "python manage.py makemigrations --settings=project.settings.dev"
 # 3.    Створення суперкористувача
-        docker-compose run --rm project sh -c "python manage.py createsuperuser"
+        docker-compose run --rm project sh -c "python manage.py createsuperuser --settings=project.settings.dev"
 # 4.    Запуск сервера
         docker-compose up
 # 5.    Щоб увійти в адмінку, переходитe за 

@@ -2,12 +2,15 @@ services:
   project:
     build:
       context: .
+      args:
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:
       - ./project:/project
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate --settings=project.settings.dev &&
+             python manage.py runserver --settings=project.settings.dev 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=artraise
@@ -18,6 +21,8 @@ services:
 
   db:
     image: postgres:17-alpine
+    ports:
+      - "5432:5432"
     volumes:
       - dev-db_data:/var/lib/postgresql/data
     environment:

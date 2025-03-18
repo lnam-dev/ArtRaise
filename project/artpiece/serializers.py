@@ -21,7 +21,6 @@ class ArtPieceDetailSerializer(serializers.ModelSerializer):
             "creating_date",
             "description",
             "certificate",
-            "certificate_text",
             "image_artpiece",
             "author",
         ]
