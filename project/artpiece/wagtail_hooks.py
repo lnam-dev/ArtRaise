@@ -7,8 +7,17 @@ from .models import ArtPiece
 class WagtailArtPieceProfileViewSet(SnippetViewSet):
     model = ArtPiece
     icon = "art_piece"
-    list_display = [field.name for field in ArtPiece._meta.get_fields()]
-    form_fields = [field.name for field in ArtPiece._meta.get_fields()]
+    list_display = [
+        "id",
+        "title",
+        "price",
+        "length_cm",
+        "width_cm",
+        "height_cm",
+        "style",
+        "author"
+    ]
+    form_fields = ['__all__']
 
 
 class ArtPieceViewSetGroup(SnippetViewSetGroup):
