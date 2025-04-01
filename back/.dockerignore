@@ -1,6 +1,6 @@
 # Ігноруємо середовище розробки
 .vscode/
-.idea/
+../.idea/
 __pycache__/
 project/__pycache__/
 project/*/__pycache__/
@@ -33,7 +33,7 @@ db.sqlite3
 migrations/
 
 # Docker файли
-Dockerfile
+back/Dockerfile
 .dockerignore
 
 # Git файли

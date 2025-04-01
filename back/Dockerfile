@@ -3,8 +3,8 @@ LABEL maintainer="ARTRAISE"
 
 ENV PYTHONUNBUFFERED=1
 
-COPY ./requirements.txt /tmp/requirements.txt
-COPY ./dev_requirements.txt /tmp/dev_requirements.txt
+COPY requirements.txt /tmp/requirements.txt
+COPY dev_requirements.txt /tmp/dev_requirements.txt
 COPY ./project /project
 WORKDIR /project
 EXPOSE 8000
