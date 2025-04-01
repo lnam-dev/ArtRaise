@@ -33,7 +33,7 @@ db.sqlite3
 migrations/
 
 # Docker файли
-back/Dockerfile
+backend/Dockerfile
 .dockerignore
 
 # Git файли

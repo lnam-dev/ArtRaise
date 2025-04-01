@@ -1,13 +1,13 @@
 services:
-  project:
+  backend:
     build:
-      context: .
+      context: ./backend
       args:
         - DEV=true
     ports:
       - "8000:8000"
     volumes:
-      - ./project:/project
+      - ./backend:/backend
     command: >
       sh -c "python manage.py migrate --settings=project.settings.dev &&
              python manage.py runserver --settings=project.settings.dev 0.0.0.0:8000"
