@@ -80,7 +80,7 @@ export const Header: React.FC<{
 		<header className="header">
 			<div className="sectionPC">
 				{/* Логотип */}
-				<Link to={path("/")} className="logoHeader">
+				<Link to={"/"} className="logoHeader">
 					ARTRAISE{isSmall ? "" : "©"}
 				</Link>
 

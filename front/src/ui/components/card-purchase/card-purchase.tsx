@@ -7,6 +7,7 @@ interface CardPurchaseProps {
 }
 
 export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
+	const path = `/products/${Number(card.id)}`;
 	return (
 		<article className="break-inside-avoid" {...props}>
 			<figure>
@@ -31,7 +32,7 @@ export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
 				aria-label={`Ціна: ${card.price} гривень`}>
 				&#8372;{card.price}
 			</p>
-			<LinkButton cardId={Number(card.id)} className="w-full" type="solid">
+			<LinkButton href={path} className="w-full" variant="solid">
 				Переглянути картину
 			</LinkButton>
 		</article>
