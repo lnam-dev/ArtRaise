@@ -18,6 +18,7 @@ enum SelectedInfo {
 
 const tempPhotoArdSrc = "https://i.pinimg.com/736x/f9/84/1a/f9841acfb5a3187087560caf09147d42.jpg"
 const Home = ({params}: { params: Promise<{ id: string }> }) => {
+    console.log("params",params)
     const {id} = use(params);
     const [author, setAuthor] = useState<TAuthor>()
     const [artpieces, setArtpieces] = useState<TArtPiece[]>()
@@ -28,10 +29,9 @@ const Home = ({params}: { params: Promise<{ id: string }> }) => {
             const responseAuthor = await axios.get(`http://localhost:8000/api/authors/${id}`)
             const authors = await axios.get(`http://localhost:8000/api/authors`)
             const responseArtpiece = await axios.get(`http://localhost:8000/api/authors/${id}/artpieces`)
-            // const responseArtpiece = await axios.get(`http://localhost:8000/api/artpieces/`)
             const authorData: TAuthor = responseAuthor.data;
             authorData.image_author = `http://localhost:8000${authorData.image_author}`;
-            setFamiliarArtists(authors.data.filter(author => author.id !== authorData.id));
+            setFamiliarArtists(authors.data.filter((author:TAuthor) => author.id !== authorData.id));
             let artpieces: TArtPiece[] = responseArtpiece.data;
             artpieces = artpieces.map(piece => ({
                 ...piece,

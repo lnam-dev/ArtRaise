@@ -1,10 +1,11 @@
 "use client"
 import React, {FC, useEffect, useLayoutEffect, useRef, useState} from 'react';
 type Props = {
-    availableLetters: string[];
+    setSelectedLetterIndex: (letterIndex:number)=>void,
+    availableLetters: string[],
+    selectedLetterIndex: number,
 }
-const LettersMenu:FC<Props> = ({availableLetters}) => {
-    const [selectedLetterIndex, setSelectedLetterIndex] = useState<number>(-1);//-1 mean that no letter selected
+const LettersMenu:FC<Props> = ({setSelectedLetterIndex,availableLetters,selectedLetterIndex}) => {
     const [bgStyle, setBgStyle] = useState({ width: "0px", left: "0px" });
     const containerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -20,11 +21,8 @@ const LettersMenu:FC<Props> = ({availableLetters}) => {
 
             {availableLetters.map((tag, index) => (
                 <button key={tag} className={`px-2 py-1 z-10 ${selectedLetterIndex === index && "text-white"}`}
-                        onClick={() => {
-                            if (selectedLetterIndex !== index) {
-                                setSelectedLetterIndex(index)
-                            }else{
-                                setSelectedLetterIndex(-1)}
+                        onClick={()=> {
+                            setSelectedLetterIndex(index === selectedLetterIndex ? -1 : index);//pass -1 if we click on already selected letter
                         }}>{tag}</button>
             ))}
            <div
