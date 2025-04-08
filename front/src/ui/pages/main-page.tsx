@@ -10,11 +10,11 @@ import CallToActionSection from "../components/cta-section/cta-section";
 export default ({ data }: { data: TMainPage }) => {
 	const { artPieces, slides } = data;
 	return (
-		<div>
+		<main>
 			<Slider className="mb-12 lg:mb-8" slides={slides} />
 			<div className="container mx-auto min-h-[100vh]">
 				<SearchBar className="mb-12" />
-				<main className="px-4 xl:px-0">
+				<article className="px-4 xl:px-0">
 					<section className="mb-10">
 						<SegmentTitle
 							className="mb-10"
@@ -39,7 +39,7 @@ export default ({ data }: { data: TMainPage }) => {
 							className="mb-10"
 							link={{ to: "/", name: "всі з фонду" }}>
 							Фонд
-						</SegmentTitle>{" "}
+						</SegmentTitle>
 					</section>
 					<section>
 						<SegmentTitle
@@ -51,8 +51,8 @@ export default ({ data }: { data: TMainPage }) => {
 					<PartnersSection className="mb-10" />
 					<CertificatesSection />
 					<CallToActionSection />
-				</main>
+				</article>
 			</div>
-		</div>
+		</main>
 	);
 };
