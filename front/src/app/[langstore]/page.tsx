@@ -1,6 +1,5 @@
-import MainPage from "~/ui/pages/main-page";
+import MainPage from "~/ui/pages/main-page/main-page";
 import { MainPage as TMainPage } from "~/use-cases/contracts/main-page";
-import axios from "axios";
 
 const SLIDES = [
 	{
@@ -35,8 +34,11 @@ export const revalidate = 21600;
 
 async function getData(): Promise<TMainPage> {
 	try {
-		const response = await axios.get(`${process.env.API_URL}artpieces/`);
-		const artPieces = response.data;
+		const response = await fetch(`${process.env.API_URL}artpieces/`);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch art pieces: ${response.status}`);
+		}
+		const artPieces = await response.json();
 		return { artPieces, slides: SLIDES };
 	} catch (error) {
 		console.error(`Помилка при завантаженні мистецьких творів: ${error}`);

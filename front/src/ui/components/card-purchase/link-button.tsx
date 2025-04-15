@@ -1,22 +1,22 @@
 "use client";
 import Button from "../button/button";
+import React from "react";
 import { useAppContext } from "~/ui/app-context/provider";
 
 interface LinkButtonProps extends React.ComponentProps<typeof Button> {
-	cardId: number;
+	href?: string;
 	children: React.ReactNode;
 }
 
 export default function LinkButton({
-	cardId,
+	href = "#",
 	children,
 	...props
 }: LinkButtonProps) {
-	const productPath = `/product/${cardId}`;
 	const { path } = useAppContext();
 
 	return (
-		<Button href={path(productPath)} {...props}>
+		<Button href={path(href)} {...props}>
 			{children}
 		</Button>
 	);

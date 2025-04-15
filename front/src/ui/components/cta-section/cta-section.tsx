@@ -1,6 +1,6 @@
 import SegmentTitle from "../segment-title/segment-title";
 import CallToActionForm from "./cta-form";
-import CallToActionFAQItems from "./сta-faq-items";
+import CallToActionAccordion from "./cta-accordion";
 
 export default function CallToActionSection({
 	className = "",
@@ -22,7 +22,7 @@ export default function CallToActionSection({
 					<CallToActionForm />
 				</div>
 				<div>
-					<CallToActionFAQItems />
+					<CallToActionAccordion />
 				</div>
 			</div>
 		</section>
