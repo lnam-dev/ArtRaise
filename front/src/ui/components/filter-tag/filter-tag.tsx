@@ -21,12 +21,12 @@ const FilterTag: FC<FilterTagProps> = ({
 			onClick={onClick}>
 			<Hash
 				className={`inline-block ${
-					isSelected ? "stroke-white" : "stroke-gray-950"
+					isSelected ? "stroke-white text-white" : "stroke-gray-950"
 				}`}
 				height={12}
 				width={12}
 			/>
-			<span className="font-fixel font-normal lg:font-medium text-4 text-black leading-relaxed whitespace-nowrap">
+			<span className={`font-fixel font-normal lg:font-medium text-4 text-black leading-relaxed whitespace-nowrap ${isSelected ? "text-white" : "text-gray-950"}`}>
 				{children}
 			</span>
 		</div>
