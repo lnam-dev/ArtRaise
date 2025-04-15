@@ -10,14 +10,14 @@ export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
 	const path = `/products/${Number(card.id)}`;
 	return (
 		<article className="break-inside-avoid" {...props}>
-			<figure>
+			<figure className="relative w-full aspect-[16/9] mb-2">
 				<Image
-					src={card.image_artpiece ?? "/default.png"}
-					alt={card.title} // Додано описовий alt
+					src={card.image_artpiece ?? process.env.DEFAULT_IMAGE}
+					alt={card.title}
 					layout="responsive"
 					width={16}
 					height={9}
-					className="object-cover mb-2"
+					className="object-cover"
 				/>
 			</figure>
 			<p className="font-fixel font-normal text-5 mb-1">

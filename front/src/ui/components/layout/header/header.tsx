@@ -19,14 +19,12 @@ import SearchMobile from "~/assets/search-mobile.svg";
 import SearchPC from "~/assets/search-pc.svg";
 import Arrow from "~/assets/arrow-right-mobile-menu.svg";
 
-import "./module.header.scss";
+// import { CategoryMegaMenu } from "../../category-menu/category-mega-menu";
+import React from "react";
+// import BurgerMenu from "~/assets/burger-menu.svg";
+import Cross from "~/assets/cross.svg";
 
-export const Header: React.FC<{
-	navigation: {
-		folders: Tree[];
-		topics: Tree[];
-	};
-}> = ({ navigation }) => {
+export const Header = () => {
 	const { path } = useAppContext();
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
@@ -77,50 +75,70 @@ export const Header: React.FC<{
 	}, []);
 
 	return (
-		<header className="header">
-			<div className="sectionPC">
+		<header className="flex items-center w-full xl:h-[3.5rem] lg:h-[3rem] h-[2.25rem] sm:bg-[#232327E5] bg-[#131315] text-white fixed top-0 left-0 z-50">
+			<div className="container flex justify-between items-center mx-auto  w-full">
 				{/* Логотип */}
-				<Link to={"/"} className="logoHeader">
+				<Link
+					to={path("/")}
+					className="xl:text-[5rem] xl:h-[6rem] 
+           lg:text-[4rem] lg:leading-[6rem] lg:h-[6rem] lg:-mt-[0.625rem] lg:-ml-[0.875rem] 
+           tracking-[-5%] font-medium 
+           md:text-[2.75rem] md:leading-[2.75rem] md:h-[3.5rem] md:w-[160px] md:mt-[0.75rem] md:ml-[1.5rem]
+           sm:text-[2.5rem] sm:leading-[2.5rem] 
+           text-[2.25rem] leading-[2rem]">
 					ARTRAISE{isSmall ? "" : "©"}
 				</Link>
+				<nav className="xl:h-[3.5rem] lg:h-[3rem] hidden lg:flex space-x-6 px-4 justify-center pt-5">
+					{paths.map((item) => {
+						const isActive = location.pathname === path(item.path);
+						if (item.path === "/authors") {
+							return (
+								<React.Fragment key={item.path}>
+									<Link
+										to={path(item.path)}
+										className={`text-[#F0F0F4] transition-all duration-300 ease-out hover:border-b-4 hover:border-white 2xl:text-[1.25rem] xl:text-[1rem] lg:text-[0.75rem] ${
+											isActive ? "border-b-4" : "border-transparent"
+										}`}>
+										{item.name}
+									</Link>
+									{/* <CategoryMegaMenu /> */}
+								</React.Fragment>
+							);
+						}
 
-				{/* Меню */}
-				<nav className="navigationPC">
-					{paths.map((item) => (
-						<Link
-							key={item.path}
-							to={path(item.path)}
-							className={`navigationPCLink
-              ${
-								location.pathname === path(item.path)
-									? "border-b-4"
-									: "border-transparent"
-							}`}>
-							{item.name}
-						</Link>
-					))}
+						return item.path !== "/categories" ? (
+							<Link
+								key={item.path}
+								to={path(item.path)}
+								className={`text-[#F0F0F4] transition-all duration-300 ease-out hover:border-b-4 hover:border-white 2xl:text-[1.25rem] xl:text-[1rem] lg:text-[0.75rem] ${
+									isActive ? "border-b-4" : "border-transparent"
+								}`}>
+								{item.name}
+							</Link>
+						) : null;
+					})}
 				</nav>
 
 				{/* Панель управління (пошук, обране, акаунт, перемикач мови) */}
-				<div className="controlPanel">
+				<div className="flex items-center lg:gap-[2.5rem] gap-[1rem]">
 					{isSmall ? (
-						<Link to={path("/search")} className="opacity75">
+						<Link to={path("/search")} className="hover:opacity-75">
 							<SearchMobile />
 						</Link>
 					) : (
-						<Link to={path("/search")} className="opacity75">
+						<Link to={path("/search")} className="hover:opacity-75">
 							<SearchPC />
 						</Link>
 					)}
 
-					<div className="accountAndLanguageSection">
-						<Link to={path("/cart")} className="opacity75">
+					<div className="hidden sm:flex items-center gap-[1.5rem]">
+						<Link to={path("/cart")} className="hover:opacity-75">
 							<Account />
 						</Link>
 
 						{/* <LanguageSwitcher /> */}
 						{/* Кнопка переключення мови */}
-						<div className="languageSwitcher">
+						<div className="flex lg:w-[3.5rem] lg:h-[1.5rem] gap-2 hidden">
 							<button
 								className={`${
 									language === "UA" ? "text-white" : "text-[#62636D]"
@@ -142,66 +160,36 @@ export const Header: React.FC<{
 					{/* Кнопка мобільного меню */}
 					<button
 						onClick={() => setIsOpen(!isOpen)}
-						className="buttonMobileMenu">
-						{!isOpen ? (
-							<svg
-								className="block h-6 w-6"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true">
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M4 6h16M4 12h16M4 18h16"
-								/>
-							</svg>
-						) : (
-							<svg
-								className="block h-6 w-6 max-sm:w-[24px] max-sm:h-[24px]"
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke="currentColor"
-								aria-hidden="true">
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									strokeWidth="2"
-									d="M6 18L18 6M6 6l12 12"
-								/>
-							</svg>
-						)}
+						className="lg:hidden text-white text-[1.5rem] w-[1.5rem] h-[1.5rem]">
+						{/* {!isOpen ? <BurgerMenu /> : <Cross />} */}
 					</button>
 				</div>
 			</div>
 
 			{/* Мобільне меню */}
 			{isOpen && (
-				<nav className="mobileMenu">
-					<div className="languageSitcherMobileMenu">
+				<nav className="lg:hidden bg-[#fff] p-7 absolute top-full left-0 w-full h-screen space-y-4">
+					<div className="flex lg:w-[3.5rem] lg:h-[1.5rem] gap-2">
 						<button
-							className={`${language === "UA" ? "text-[#000]" : ""}`}
+							className={`underline ${language === "UA" ? "text-[#000]" : ""}`}
 							onClick={() => changeLanguage("UA")}>
 							UA
 						</button>
 
 						<button
-							className={`${language === "EN" ? "text-[#000]" : ""}`}
+							className={`underline ${language === "EN" ? "text-[#000]" : ""}`}
 							onClick={() => changeLanguage("EN")}>
 							EN
 						</button>
 					</div>
 
-					<div className="mobileMenuFirstSection">
-						<div className="authors">
+					<div className="flex flex-col text-[#1F1F1F]  space-y-5">
+						<div className="flex items-center justify-between cursor-pointer">
 							<Link to={path("/authors")}>Автори</Link>
 							<Arrow />
 						</div>
 
-						<div className="categories">
+						<div className="flex items-center justify-between cursor-pointer">
 							<Link to={path("/categories")}>Категорії</Link>
 							<Arrow />
 						</div>
@@ -209,18 +197,18 @@ export const Header: React.FC<{
 
 					<hr className="border-[#B9BBC8]" />
 
-					<div className="mobileMenuSecondSection">
-						<div className="howToBuy">
+					<div className="flex flex-col space-y-5 text-[#1F1F1F]">
+						<div className="flex items-center justify-between cursor-pointer">
 							<Link to={path("/how-to-buy")}>Як купити?</Link>
 							<Arrow />
 						</div>
 
-						<div className="qa">
+						<div className="flex items-center justify-between cursor-pointer">
 							<Link to={path("/qa")}>Q&A</Link>
 							<Arrow />
 						</div>
 
-						<div className="aboutFound">
+						<div className="flex items-center justify-between cursor-pointer">
 							<Link to={path("/about-fond")}>Про фонд</Link>
 							<Arrow />
 						</div>

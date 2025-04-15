@@ -5,7 +5,7 @@
 // import { headers } from "next/headers";
 // import dataFetcherForShapePage from "~/use-cases/dataFetcherForShapePage.server";
 
-import MainPage from "~/ui/pages/main-page";
+import MainPage from "~/ui/pages/main-page/main-page";
 import { MainPage as TMainPage } from "~/use-cases/contracts/main-page";
 import axios from "axios";
 

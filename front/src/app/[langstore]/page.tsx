@@ -1,4 +1,4 @@
-import MainPage from "~/ui/pages/main-page";
+import MainPage from "~/ui/pages/main-page/main-page";
 import { MainPage as TMainPage } from "~/use-cases/contracts/main-page";
 
 const SLIDES = [

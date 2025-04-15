@@ -9,24 +9,8 @@ import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page"
 import { useAppContext } from "~/ui/app-context/provider";
 import { useMemo } from "react";
 
-// Статичні константи для аккордеону
-const STATIC_ACCORDION_ITEMS = [
-	{ title: "Умови придбання", content: "Інформація про умови придбання" },
-	{ title: "Сертифікати автентичності", content: "Інформація про сертифікати" },
-	{ title: "FAQ", content: "Часті запитання" },
-];
-
-// Статичні лейбли для характеристик твору
-const ART_DETAIL_LABELS = {
-	MATERIAL: "Матеріал",
-	THEME: "Тема",
-	STYLE: "Стиль",
-	DATE: "Дата створення",
-	SIZE: "Розмір",
-};
-
 function ProductPage({ data }: { data: TProductPage }) {
-	const { artPiece } = data;
+	const { artPiece, ACCORDION_ITEMS, ART_DETAIL_LABELS } = data;
 
 	// Меморизуємо size, щоб уникнути перерахунку при кожному рендері
 	const size = useMemo(() => {
@@ -50,16 +34,14 @@ function ProductPage({ data }: { data: TProductPage }) {
 		size,
 	]);
 
-	// Меморизуємо елементи аккордеона
 	const accordionItems = useMemo(() => {
 		return [
 			{ title: "Опис твору", content: artPiece.description },
 			{ title: "Про автора", content: artPiece.author?.bio_text || "" },
-			...STATIC_ACCORDION_ITEMS,
+			...ACCORDION_ITEMS,
 		];
 	}, [artPiece.description, artPiece.author?.bio_text]);
 
-	// Меморизуємо ціну
 	const formattedPrice = useMemo(() => {
 		return artPiece.price ? parseFloat(artPiece.price) : 0;
 	}, [artPiece.price]);
@@ -164,7 +146,6 @@ function ProductPage({ data }: { data: TProductPage }) {
 	);
 }
 
-// Мемоізація всього компонента щоб уникнути перерендерингу, якщо пропси не змінилися
 export default React.memo(ProductPage, (prevProps, nextProps) => {
 	return (
 		prevProps.data.artPiece.id === nextProps.data.artPiece.id &&

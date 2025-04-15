@@ -1,6 +1,6 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
 import useDevice from "~/ui/hooks/useDevice";
 import "swiper/css";
@@ -9,22 +9,23 @@ import Image from "next/image";
 import SliderNavPanel from "./slider-nav-panel";
 import SliderButtonExpand from "./slider-button-expand";
 import SliderPagination from "./slider-pagination";
-import { Turnabout } from "../turnabout/turnabout";
+import Turnabout from "../turnabout/turnabout";
 import { TSlide } from "~/types/slider";
 
 type SliderProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
+	children: (currentSlideIdx: number) => JSX.Element | ReactNode;
 };
 
 const PADDING_FOR_MOBILE = 16;
 
-export const Slider: React.FC<SliderProps> = ({ slides, ...props }) => {
+const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 	const { marginsAuto, isDesktop, isTablet, isMobile } = useDevice();
 
 	const swiperRef = useRef<SwiperType | null>(null);
 	const [currentSlideIdx, setSlideIdx] = useState(0);
 
-	function validationDevice() {
+	const validationDevice = () => {
 		if (isMobile) {
 			return 0;
 		} else if (isDesktop) {
@@ -32,7 +33,7 @@ export const Slider: React.FC<SliderProps> = ({ slides, ...props }) => {
 		} else if (isTablet) {
 			return -marginsAuto - PADDING_FOR_MOBILE;
 		}
-	}
+	};
 
 	useEffect(() => {
 		if (!swiperRef.current) return;
@@ -54,9 +55,9 @@ export const Slider: React.FC<SliderProps> = ({ slides, ...props }) => {
 				<Swiper
 					loop
 					centeredSlides
-					slidesPerView={1}
+					slidesPerGroup={1} // FIXME: значення тестове
 					spaceBetween={0}
-					slidesOffsetBefore={validationDevice()}
+					slidesOffsetBefore={validationDevice}
 					loopAdditionalSlides={1}
 					observer={true}
 					observeParents={true}
@@ -104,24 +105,7 @@ export const Slider: React.FC<SliderProps> = ({ slides, ...props }) => {
 			</div>
 			<div className="container mx-auto w-full text-left">
 				<div className="px-4 xl:px-0">
-					<Turnabout
-						currentIndex={currentSlideIdx}
-						text={slides.map(({ subtitle }) => subtitle)}
-						tag={"span"}
-						textClass="font-fixel font-medium lg:font-normal text-4 md:text-5 lg:text-6 text-black "
-						wrapperClass="mb-1"
-						animation="ease-in-out"
-						duration={600}
-					/>
-					<Turnabout
-						currentIndex={currentSlideIdx}
-						text={slides.map(({ description }) => description)}
-						tag={"h3"}
-						textClass="font-fixel text-4 font-medium lg:font-normal lg:font-namu md:text-6 lg:text-8 text-black"
-						wrapperClass="mb-2 xl:mb-0"
-						animation="ease-in-out"
-						duration={600}
-					/>
+					{children(currentSlideIdx)}
 					{!isDesktop && (
 						<SliderPagination
 							mode="dark"
@@ -135,3 +119,5 @@ export const Slider: React.FC<SliderProps> = ({ slides, ...props }) => {
 		</section>
 	);
 };
+
+export default Slider;

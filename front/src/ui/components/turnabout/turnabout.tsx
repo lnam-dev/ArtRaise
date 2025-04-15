@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 interface TurnaboutProps
@@ -12,7 +13,7 @@ interface TurnaboutProps
 	textClass?: string;
 }
 
-export const Turnabout: React.FC<TurnaboutProps> = ({
+const Turnabout: React.FC<TurnaboutProps> = ({
 	text,
 	tag: Tag,
 	type = "vertical",
@@ -68,3 +69,5 @@ export const Turnabout: React.FC<TurnaboutProps> = ({
 		</div>
 	);
 };
+
+export default Turnabout;

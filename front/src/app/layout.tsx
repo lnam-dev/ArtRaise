@@ -91,9 +91,9 @@ export default async ({ children }: { children: React.ReactNode }) => {
 				<Providers
 					initialState={frontConfiguration}
 					translations={translations}>
-					<Header navigation={navigation} />
-					<div>{children}</div>
-					<Footer footer={footer} />
+					<Header />
+					{children}
+					<Footer />
 				</Providers>
 			</body>
 		</html>

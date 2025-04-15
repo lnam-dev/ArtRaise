@@ -1,6 +1,20 @@
 import ProductPage from "~/ui/pages/product-page";
 import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
 
+const ACCORDION_ITEMS = [
+	{ title: "Умови придбання", content: "Інформація про умови придбання" },
+	{ title: "Сертифікати автентичності", content: "Інформація про сертифікати" },
+	{ title: "FAQ", content: "Часті запитання" },
+];
+
+const ART_DETAIL_LABELS = {
+	MATERIAL: "Матеріал",
+	THEME: "Тема",
+	STYLE: "Стиль",
+	DATE: "Дата створення",
+	SIZE: "Розмір",
+};
+
 export const revalidate = 21600;
 
 // async function getData(id: string): Promise<TProductPage> {
@@ -58,5 +72,7 @@ export default async ({
 	params: { id: string; langstore: string };
 }) => {
 	const data = await getData(params.id);
-	return <ProductPage data={data} />;
+	return (
+		<ProductPage data={{ ...data, ...ACCORDION_ITEMS, ...ART_DETAIL_LABELS }} />
+	);
 };

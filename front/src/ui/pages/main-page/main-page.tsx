@@ -1,17 +1,17 @@
 import { MainPage as TMainPage } from "~/use-cases/contracts/main-page";
-import SearchBar from "../components/search-bar/search-bar";
-import { Slider } from "../components/slider/slider";
-import SegmentTitle from "../components/segment-title/segment-title";
-import CardPurchase from "../components/card-purchase/card-purchase";
-import CertificatesSection from "../components/certificatesSection/certificate-section";
-import PartnersSection from "../components/partners-section/partners-section";
-import CallToActionSection from "../components/cta-section/cta-section";
+import SearchBar from "../../components/search-bar/search-bar";
+import SegmentTitle from "../../components/segment-title/segment-title";
+import CardPurchase from "../../components/card-purchase/card-purchase";
+import CertificatesSection from "../../components/certificatesSection/certificate-section";
+import PartnersSection from "../../components/partners-section/partners-section";
+import CallToActionSection from "../../components/cta-section/cta-section";
+import SliderWrapper from "./slider-wrapper";
 
 export default ({ data }: { data: TMainPage }) => {
 	const { artPieces, slides } = data;
 	return (
 		<main>
-			<Slider className="mb-12 lg:mb-8" slides={slides} />
+			<SliderWrapper className="mb-12 lg:mb-8" slides={slides} />
 			<div className="container mx-auto min-h-[100vh]">
 				<SearchBar className="mb-12" />
 				<article className="px-4 xl:px-0">
