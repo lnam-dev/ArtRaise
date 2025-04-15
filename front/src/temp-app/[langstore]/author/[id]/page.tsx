@@ -3,10 +3,7 @@ import React, {use, useEffect, useState} from 'react';
 import axios from "axios";
 import {TArtPiece, TAuthor} from "~/types";
 import QuickMenu from "~/ui/components/quick-menu/quick-menu";
-import {useQuickMenu} from "~/ui/components/quick-menu/useQuickMenu";
 import {truncateText} from "~/functions/truncateText";
-import FilterTag from "~/ui/components/filter-tag/filter-tag";
-import AuthorArtpieces from "~/app/[langstore]/author/[id]/AuthorArtpieces/AuthorArtpieces";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import AuthorCard from "~/ui/components/author-card/author-card";
@@ -51,7 +48,7 @@ const Home = ({params}: { params: Promise<{ id: string }> }) => {
                     <img
                         className="h-auto w-full object-cover max-h-[40vh] object-center"
                         src={author?.image_author} alt="imageAuthor"/>
-                    <div className={"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white px-4"}>
+                    <div className={"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white"}>
                         <h1 className={"flex font-bold text-8 w-fit md:text-10 md:text-nowrap"}>
                             {author?.fullname}
                         </h1>

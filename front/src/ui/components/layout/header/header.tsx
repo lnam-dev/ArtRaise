@@ -81,6 +81,7 @@ export const Header = () => {
 				<Link
 					to={path("/")}
 					className="xl:text-[5rem] xl:h-[6rem] 
+
            lg:text-[4rem] lg:leading-[6rem] lg:h-[6rem] lg:-mt-[0.625rem] lg:-ml-[0.875rem] 
            tracking-[-5%] font-medium 
            md:text-[2.75rem] md:leading-[2.75rem] md:h-[3.5rem] md:w-[160px] md:mt-[0.75rem] md:ml-[1.5rem]
