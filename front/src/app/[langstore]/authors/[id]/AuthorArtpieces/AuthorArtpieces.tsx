@@ -19,8 +19,8 @@ const AuthorArtpieces: FC<Props> = ({artpieces}) => {
         <div>
             <TagsMenu tags={filterArtTags} onSelectTag={setSelectedTag}/>
             <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-20">
-                    {filteredArtPieces.map((obj) => (
-                        <CardPurchase key={obj.id} card={obj}/>
+                    {filteredArtPieces.map((artpiece) => (
+                        <CardPurchase key={artpiece.id} card={artpiece}/>
                     ))}
             </div>
         </div>
