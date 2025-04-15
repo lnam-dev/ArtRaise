@@ -51,7 +51,7 @@ const Home = ({params}: { params: Promise<{ id: string }> }) => {
                     <img
                         className="h-auto w-full object-cover max-h-[40vh] object-center"
                         src={author?.image_author} alt="imageAuthor"/>
-                    <div className={"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white "}>
+                    <div className={"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white px-4"}>
                         <h1 className={"flex font-bold text-8 w-fit md:text-10 md:text-nowrap"}>
                             {author?.fullname}
                         </h1>
