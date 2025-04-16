@@ -10,6 +10,8 @@ import Arrow from '~/assets/arrow-right.svg';
 import axios from 'axios';
 import CardPurchaseMegaMenu from '../card-purchase/card-purchase-mega-menu';
 import { useAllArtPieces } from '../../hooks/useAllArtPieces';
+import Cross from '~/assets/cross.svg';
+// import FAQitem from '../faq-item/faq-item';
 
 const categorys = [
   {
@@ -69,6 +71,10 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
     }
   };
 
+  const handleCloseFilters = () => {
+    setActiveFilter(!activeFilter);
+  };
+
   useEffect(() => {
     if (activeIndex !== null && categorys[activeIndex]) {
       fetchArtpieces(activeIndex);
@@ -79,7 +85,11 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
 
   return (
     <div className='flex'>
-      <div className='w-full h-auto bg-white'>
+      <div
+        className={`w-full h-auto ${
+          activeFilter ? 'bg-[#232327]' : 'bg-white'
+        }`}
+      >
         <div className='grid grid-cols-2 gap-0 w-full h-[4rem] border-b-1 border-[#62636D] '>
           <Button
             href={
@@ -104,7 +114,7 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
                 ? 'text-[#62636D] bg-white'
                 : 'text-white bg-[#1F1F1F]'
             }`}
-            onClick={() => setActiveFilter(!activeFilter)}
+            onClick={handleCloseFilters}
           >
             <MegaMenu
               width={32}
@@ -116,7 +126,32 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
         </div>
 
         <div className='flex flex-col max-h-[382px] overflow-y-auto scrollbar-thin scrollbar-track-gray-300 divide-y divide-[#62636D]'>
-          {artpieces.map((artpiece) => (
+          {activeFilter ? (
+            <div className='p-4'>
+              {/* Фільтр-меню */}
+              <div className='flex justify-center'>
+                <button onClick={handleCloseFilters}>
+                  <Cross />
+                </button>
+              </div>
+              <div className='space-y-4'>
+                {/* Content */}
+                {/* <FAQitem question='Жанр' answer='Мистецтво' variant='light' /> */}
+              </div>
+            </div>
+          ) : (
+            <div className='flex flex-col max-h-[382px] overflow-y-auto scrollbar-thin scrollbar-track-gray-300 divide-y divide-[#62636D]'>
+              {artpieces.map((artpiece) => (
+                <CardPurchaseMegaMenu
+                  key={artpiece.id}
+                  card={artpiece}
+                  onCloseMenu={closeMenu}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* {artpieces.map((artpiece) => (
             <>
               <CardPurchaseMegaMenu
                 key={artpiece.id}
@@ -124,7 +159,7 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
                 onCloseMenu={closeMenu}
               />
             </>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>
