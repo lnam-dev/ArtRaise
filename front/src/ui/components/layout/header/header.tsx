@@ -1,31 +1,18 @@
 "use client";
 
-import Link from "~/bridge/ui/Link";
-import { SearchBar } from "../../search/search-bar";
-import { BasketButton } from "../basket-button";
-import { TopicNavigation } from "../topic-navigation";
 import { useEffect, useState } from "react";
-import { useAppContext } from "../../../app-context/provider";
-import { Image } from "@crystallize/reactjs-components";
-import { Price } from "../../price";
-import { LanguageSwitcher } from "../language-switcher";
-import { Tree } from "../../../../use-cases/contracts/Tree";
-import { TenantLogo } from "../../../lib/tenant-logo";
 import useLocation from "~/bridge/ui/useLocation";
-import items from "razorpay/dist/types/items";
+import Link from "next/link";
 
 import Account from "~/assets/account.svg";
 import SearchMobile from "~/assets/search-mobile.svg";
 import SearchPC from "~/assets/search-pc.svg";
 import Arrow from "~/assets/arrow-right-mobile-menu.svg";
 
-// import { CategoryMegaMenu } from "../../category-menu/category-mega-menu";
 import React from "react";
-// import BurgerMenu from "~/assets/burger-menu.svg";
 import Cross from "~/assets/cross.svg";
 
 export const Header = () => {
-	const { path } = useAppContext();
 	const location = useLocation();
 	const [isOpen, setIsOpen] = useState(false);
 	const [isSmall, setIsSmall] = useState(false);
@@ -62,7 +49,7 @@ export const Header = () => {
 
 	useEffect(() => {
 		const checkSize = () => setIsSmall(window.innerWidth < 640);
-		checkSize(); // Викликаємо одразу
+		checkSize();
 		window.addEventListener("resize", checkSize);
 		return () => window.removeEventListener("resize", checkSize);
 	}, []);
@@ -79,7 +66,7 @@ export const Header = () => {
 			<div className="container flex justify-between items-center mx-auto  w-full">
 				{/* Логотип */}
 				<Link
-					to={path("/")}
+					href={"/"}
 					className="xl:text-[5rem] xl:h-[6rem] 
 
            lg:text-[4rem] lg:leading-[6rem] lg:h-[6rem] lg:-mt-[0.625rem] lg:-ml-[0.875rem] 
@@ -91,18 +78,17 @@ export const Header = () => {
 				</Link>
 				<nav className="xl:h-[3.5rem] lg:h-[3rem] hidden lg:flex space-x-6 px-4 justify-center pt-5">
 					{paths.map((item) => {
-						const isActive = location.pathname === path(item.path);
+						const isActive = location.pathname === item.path;
 						if (item.path === "/authors") {
 							return (
 								<React.Fragment key={item.path}>
 									<Link
-										to={path(item.path)}
+										href={item.path}
 										className={`text-[#F0F0F4] transition-all duration-300 ease-out hover:border-b-4 hover:border-white 2xl:text-[1.25rem] xl:text-[1rem] lg:text-[0.75rem] ${
 											isActive ? "border-b-4" : "border-transparent"
 										}`}>
 										{item.name}
 									</Link>
-									{/* <CategoryMegaMenu /> */}
 								</React.Fragment>
 							);
 						}
@@ -110,7 +96,7 @@ export const Header = () => {
 						return item.path !== "/categories" ? (
 							<Link
 								key={item.path}
-								to={path(item.path)}
+								href={item.path}
 								className={`text-[#F0F0F4] transition-all duration-300 ease-out hover:border-b-4 hover:border-white 2xl:text-[1.25rem] xl:text-[1rem] lg:text-[0.75rem] ${
 									isActive ? "border-b-4" : "border-transparent"
 								}`}>
@@ -123,47 +109,25 @@ export const Header = () => {
 				{/* Панель управління (пошук, обране, акаунт, перемикач мови) */}
 				<div className="flex items-center lg:gap-[2.5rem] gap-[1rem]">
 					{isSmall ? (
-						<Link to={path("/search")} className="hover:opacity-75">
+						<Link href={"/search"} className="hover:opacity-75">
 							<SearchMobile />
 						</Link>
 					) : (
-						<Link to={path("/search")} className="hover:opacity-75">
+						<Link href={"/search"} className="hover:opacity-75">
 							<SearchPC />
 						</Link>
 					)}
 
 					<div className="hidden sm:flex items-center gap-[1.5rem]">
-						<Link to={path("/cart")} className="hover:opacity-75">
+						<Link href={"/cart"} className="hover:opacity-75">
 							<Account />
 						</Link>
-
-						{/* <LanguageSwitcher /> */}
-						{/* Кнопка переключення мови */}
-						<div className="flex lg:w-[3.5rem] lg:h-[1.5rem] gap-2 hidden">
-							<button
-								className={`${
-									language === "UA" ? "text-white" : "text-[#62636D]"
-								}`}
-								onClick={() => changeLanguage("UA")}>
-								UA
-							</button>
-
-							<button
-								className={`${
-									language === "EN" ? "text-white" : "text-[#62636D]"
-								}`}
-								onClick={() => changeLanguage("EN")}>
-								EN
-							</button>
-						</div>
 					</div>
 
 					{/* Кнопка мобільного меню */}
 					<button
 						onClick={() => setIsOpen(!isOpen)}
-						className="lg:hidden text-white text-[1.5rem] w-[1.5rem] h-[1.5rem]">
-						{/* {!isOpen ? <BurgerMenu /> : <Cross />} */}
-					</button>
+						className="lg:hidden text-white text-[1.5rem] w-[1.5rem] h-[1.5rem]"></button>
 				</div>
 			</div>
 
@@ -186,12 +150,12 @@ export const Header = () => {
 
 					<div className="flex flex-col text-[#1F1F1F]  space-y-5">
 						<div className="flex items-center justify-between cursor-pointer">
-							<Link to={path("/authors")}>Автори</Link>
+							<Link href={"/authors"}>Автори</Link>
 							<Arrow />
 						</div>
 
 						<div className="flex items-center justify-between cursor-pointer">
-							<Link to={path("/categories")}>Категорії</Link>
+							<Link href={"/categories"}>Категорії</Link>
 							<Arrow />
 						</div>
 					</div>
@@ -200,17 +164,17 @@ export const Header = () => {
 
 					<div className="flex flex-col space-y-5 text-[#1F1F1F]">
 						<div className="flex items-center justify-between cursor-pointer">
-							<Link to={path("/how-to-buy")}>Як купити?</Link>
+							<Link href={"/how-to-buy"}>Як купити?</Link>
 							<Arrow />
 						</div>
 
 						<div className="flex items-center justify-between cursor-pointer">
-							<Link to={path("/qa")}>Q&A</Link>
+							<Link href={"/qa"}>Q&A</Link>
 							<Arrow />
 						</div>
 
 						<div className="flex items-center justify-between cursor-pointer">
-							<Link to={path("/about-fond")}>Про фонд</Link>
+							<Link href={"/about-fond"}>Про фонд</Link>
 							<Arrow />
 						</div>
 					</div>

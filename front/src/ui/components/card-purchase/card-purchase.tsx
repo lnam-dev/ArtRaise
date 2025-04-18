@@ -1,15 +1,12 @@
-'use client';
-
-import Image from 'next/image';
-import LinkButton from './link-button';
-import { TArtPiece } from '~/types';
-import { useArtPiece } from '~/ui/hooks/useArtpPieces';
+import Image from "next/image";
+import LinkButton from "./link-button";
+import { TArtPiece } from "~/types";
 
 interface CardPurchaseProps {
-  card: TArtPiece;
+	card: TArtPiece;
 }
 
-export default function CardPurchase({ card, ...props }: CardPurchaseProps) 
+export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
 	const path = `/products/${Number(card.id)}`;
 	return (
 		<article className="break-inside-avoid" {...props}>
@@ -39,5 +36,5 @@ export default function CardPurchase({ card, ...props }: CardPurchaseProps)
 				Переглянути картину
 			</LinkButton>
 		</article>
-// 	);
+	);
 }
