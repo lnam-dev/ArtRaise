@@ -35,11 +35,11 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 			const responseArtpiece = await axios.get(
 				`http://localhost:8000/api/authors/${id}/artpieces`
 			);
-
+			// const responseArtpiece = await axios.get(`http://localhost:8000/api/artpieces/`)
 			const authorData: TAuthor = responseAuthor.data;
 			authorData.image_author = `http://localhost:8000${authorData.image_author}`;
 			setFamiliarArtists(
-				authors.data.filter((author: TAuthor) => author.id !== authorData.id)
+				authors.data.filter((author) => author.id !== authorData.id)
 			);
 			let artpieces: TArtPiece[] = responseArtpiece.data;
 			artpieces = artpieces.map((piece) => ({
@@ -70,7 +70,7 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 					/>
 					<div
 						className={
-							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white px-4"
+							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white "
 						}>
 						<h1
 							className={
@@ -81,9 +81,10 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 						<h2 className={"w-full font-thin text-black/50"}>
 							{author?.style}
 						</h2>
+
 						<div
 							className={"font-thin text-black text-8 hidden md:block w-full"}>
-							<h2>Біографія</h2>
+							<h2 className={""}>Біографія</h2>
 							<p className={"text-4 text-black/50"}>
 								{truncateText(author?.bio_text, 100)}
 							</p>

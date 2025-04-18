@@ -25,6 +25,7 @@ async function getData(id: string): Promise<TArtPiece> {
 		if (!response.ok) {
 			throw new Error(`Failed to fetch art pieces: ${response.status}`);
 		}
+
 		const artPiece = await response.json();
 		return artPiece;
 	} catch (error) {
