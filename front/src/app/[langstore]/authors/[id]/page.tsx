@@ -19,7 +19,6 @@ enum SelectedInfo {
 const tempPhotoArdSrc =
 	"https://i.pinimg.com/736x/f9/84/1a/f9841acfb5a3187087560caf09147d42.jpg";
 const Home = ({ params }: { params: Promise<{ id: string }> }) => {
-	console.log("params", params);
 	const { id } = use(params);
 	const [author, setAuthor] = useState<TAuthor>();
 	const [artpieces, setArtpieces] = useState<TArtPiece[]>();
@@ -36,6 +35,7 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 			const responseArtpiece = await axios.get(
 				`http://localhost:8000/api/authors/${id}/artpieces`
 			);
+
 			const authorData: TAuthor = responseAuthor.data;
 			authorData.image_author = `http://localhost:8000${authorData.image_author}`;
 			setFamiliarArtists(
@@ -83,7 +83,7 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 						</h2>
 						<div
 							className={"font-thin text-black text-8 hidden md:block w-full"}>
-							<h2 className={""}>Біографія</h2>
+							<h2>Біографія</h2>
 							<p className={"text-4 text-black/50"}>
 								{truncateText(author?.bio_text, 100)}
 							</p>

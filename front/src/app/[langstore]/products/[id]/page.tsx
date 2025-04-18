@@ -1,7 +1,6 @@
 import { TArtPiece } from "~/types";
 import { TParams } from "~/types/params";
 import ProductPage from "~/ui/pages/product-page";
-import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
 
 const ACCORDION_ITEMS = [
 	{ title: "Умови придбання", content: "Інформація про умови придбання" },
@@ -53,7 +52,6 @@ export async function generateStaticParams() {
 
 export default async ({ params }: TParams) => {
 	const { id } = await params;
-
 	const artPiece = await getData(id);
 
 	return (
