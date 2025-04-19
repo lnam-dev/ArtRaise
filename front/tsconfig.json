@@ -22,7 +22,8 @@
 			{
 				"name": "next"
 			}
-		]
+		],
+		"types": ["next", "next-env", "svgr"]
 	},
 	"include": [
 		"next-env.d.ts",
@@ -30,6 +31,7 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"next.config.js",
+		"src/types/**/*.d.ts",
 		"declarations.d.ts"
 	],
 	"exclude": ["node_modules"]
