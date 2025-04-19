@@ -5,7 +5,6 @@ const nextConfig = withImages({
 	webpack: (config) => {
 		config.resolve.symlinks = false;
 
-		// Видаляємо існуючі правила для SVG, щоб уникнути конфліктів
 		config.module.rules = config.module.rules.filter((rule) => {
 			if (rule.test && rule.test.toString().includes("svg")) {
 				return false;
@@ -13,7 +12,6 @@ const nextConfig = withImages({
 			return true;
 		});
 
-		// Додаємо правило для обробки SVG через @svgr/webpack
 		config.module.rules.push({
 			test: /\.svg$/,
 			use: ["@svgr/webpack"],
@@ -24,16 +22,15 @@ const nextConfig = withImages({
 	reactStrictMode: true,
 	serverExternalPackages: ["your-package"],
 	images: {
-		domains: ["localhost"], // Додаємо localhost як дозволений домен для зображень
-	},
-	async redirects() {
-		return [
+		remotePatterns: [
 			{
-				source: "/",
-				destination: "/en",
-				permanent: true,
+				protocol: "http",
+				hostname: "localhost",
 			},
-		];
+		],
+	},
+	devIndicators: {
+		allowedDevOrigins: ["http://192.168.31.89"],
 	},
 });
 

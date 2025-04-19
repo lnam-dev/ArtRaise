@@ -6,7 +6,7 @@ import { TArtPiece, TAuthor } from "~/types";
 // import {useQuickMenu} from "~/ui/components/quick-menu/useQuickMenu";
 import { truncateText } from "~/functions/truncateText";
 import FilterTag from "~/ui/components/filter-tag/filter-tag";
-import AuthorArtpieces from "~/app/[langstore]/authors/[id]/AuthorArtpieces/AuthorArtpieces";
+import AuthorArtpieces from "~/app/[locale]/authors/[id]/AuthorArtpieces/AuthorArtpieces";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import AuthorCard from "~/ui/components/author-card/author-card";
@@ -126,7 +126,7 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 			{/*all*/}
 			<SegmentTitle
 				className={"mt-20"}
-				link={{ to: "/en/authors", name: "Всі автори" }}>
+				link={{ to: "/authors", name: "Всі автори" }}>
 				Схожі автори
 			</SegmentTitle>
 			<div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-10">
