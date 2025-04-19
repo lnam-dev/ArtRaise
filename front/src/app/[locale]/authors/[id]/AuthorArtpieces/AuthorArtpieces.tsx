@@ -1,8 +1,8 @@
 import React, {FC, useState} from 'react';
 import {TArtPiece} from "~/types";
-import {getStylesFromArtPieces} from "~/app/[langstore]/authors/functionsAuthor";
+import {getStylesFromArtPieces} from "~/app/[locale]/authors/functionsAuthor";
 import CardPurchase from "~/ui/components/card-purchase/card-purchase";
-import TagsMenu from "~/app/[langstore]/authors/[id]/AuthorArtpieces/TagsMenu";
+import TagsMenu from "~/app/[locale]/authors/[id]/AuthorArtpieces/TagsMenu";
 
 
 type Props = {

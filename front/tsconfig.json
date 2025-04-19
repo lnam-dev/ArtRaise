@@ -30,7 +30,6 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"next.config.js",
-		"src/app/[langstore]/[[...page]]",
 		"declarations.d.ts"
 	],
 	"exclude": ["node_modules"]

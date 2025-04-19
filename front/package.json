@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "concurrently \"npm run dev:css\"  \"next dev\"",
-		"build": "npm run build:css && next build",
+		"build": "next build", 
 		"build:css": "tailwindcss -c tailwind.config.js -m -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"dev:css": "tailwindcss -c tailwind.config.js -w -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"start": "next start",

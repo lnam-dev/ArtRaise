@@ -39,7 +39,7 @@ const Home = ({ params }: { params: Promise<{ id: string }> }) => {
 			const authorData: TAuthor = responseAuthor.data;
 			authorData.image_author = `http://localhost:8000${authorData.image_author}`;
 			setFamiliarArtists(
-				authors.data.filter((author) => author.id !== authorData.id)
+				authors.data.filter((author: TAuthor) => author.id !== authorData.id)
 			);
 			let artpieces: TArtPiece[] = responseArtpiece.data;
 			artpieces = artpieces.map((piece) => ({

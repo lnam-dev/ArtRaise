@@ -1,6 +1,5 @@
 export type TParams = {
-	params: {
+	params: Promise<{
 		id: string;
-		langstore?: string;
-	};
+	}>;
 };
