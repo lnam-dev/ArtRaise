@@ -1,5 +1,4 @@
 "use client";
-import { Footer as FooterType } from "~/use-cases/contracts/Footer";
 import Link from "~/bridge/ui/Link";
 import ArrowInsert from "~/assets/arrow-insert.svg";
 

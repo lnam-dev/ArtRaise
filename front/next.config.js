@@ -1,37 +1,12 @@
-// /** @type {import('next').NextConfig} */
-// const withImages = require('next-images');
-
-// const nextConfig = {
-//     webpack: (config) => {
-//         config.resolve.symlinks = false;
-//         return config;
-//     },
-//     reactStrictMode: true,
-//     experimental: {
-//         serverComponentsExternalPackages: ['mjml'],
-//     },
-//     async redirects() {
-//         return [
-//             {
-//                 source: '/',
-//                 destination: '/en',
-//                 permanent: true,
-//             },
-//         ];
-//     },
-// };
-
-// module.exports = nextConfig;
-// module.exports = withImages(nextConfig);
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
-const withImages = require("next-images");
-
-const nextConfig = withImages({
-	webpack: (config) => {
+const nextConfig = withNextIntl({
+	webpack(config) {
 		config.resolve.symlinks = false;
 
-		// Видаляємо існуючі правила для SVG, щоб уникнути конфліктів
+		// Видаляємо старі svg rule (якщо є)
 		config.module.rules = config.module.rules.filter((rule) => {
 			if (rule.test && rule.test.toString().includes("svg")) {
 				return false;
@@ -39,7 +14,7 @@ const nextConfig = withImages({
 			return true;
 		});
 
-		// Додаємо правило для обробки SVG через @svgr/webpack
+		// Додаємо SVGR
 		config.module.rules.push({
 			test: /\.svg$/,
 			use: ["@svgr/webpack"],
@@ -48,16 +23,23 @@ const nextConfig = withImages({
 		return config;
 	},
 	reactStrictMode: true,
-	serverExternalPackages: ["your-package"],
 	images: {
-		domains: ["localhost"], // Додаємо localhost як дозволений домен для зображень
+		remotePatterns: [
+			{
+				protocol: "http",
+				hostname: "localhost",
+			},
+		],
+	},
+	devIndicators: {
+		allowedDevOrigins: ["http://192.168.31.89"],
 	},
 	async redirects() {
 		return [
 			{
 				source: "/",
-				destination: "/en",
-				permanent: true,
+				destination: "/ua",
+				permanent: false,
 			},
 		];
 	},

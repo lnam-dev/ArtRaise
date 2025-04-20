@@ -33,8 +33,8 @@ const useDevice = () => {
 			const screenWidth = window.innerWidth;
 
 			if (containerElement) {
-				const containerWidth = containerElement.offsetWidth;
-				const marginsAuto = Math.ceil((screenWidth - containerWidth) / 2); // Round up to the nearest whole number
+				const containerWidth = (containerElement as HTMLElement).offsetWidth;
+				const marginsAuto = Math.ceil((screenWidth - containerWidth) / 2);
 
 				setDevice((prevState) => ({
 					...prevState,

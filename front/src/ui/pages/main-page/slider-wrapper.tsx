@@ -1,12 +1,13 @@
 "use client";
 
-import { FC, HTMLAttributes, ReactNode } from "react";
+import { FC } from "react";
 import Slider from "../../components/slider/slider";
 import Turnabout from "../../components/turnabout/turnabout";
 import { TSlide } from "~/types/slider";
 
 interface SliderWrapperProps {
 	slides: TSlide[];
+	className?: string;
 }
 
 const SliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {

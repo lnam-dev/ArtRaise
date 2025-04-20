@@ -6,18 +6,17 @@ import Link from "~/bridge/ui/Link";
 import Buy from "~/assets/buy.svg";
 import LinkButton from "~/ui/components/card-purchase/link-button";
 import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
-import { useAppContext } from "~/ui/app-context/provider";
 import { useMemo } from "react";
 
-function ProductPage({ data }: { data: TProductPage }) {
-	const { artPiece, ACCORDION_ITEMS, ART_DETAIL_LABELS } = data;
-
-	// Меморизуємо size, щоб уникнути перерахунку при кожному рендері
+function ProductPage({
+	artPiece,
+	ACCORDION_ITEMS,
+	ART_DETAIL_LABELS,
+}: TProductPage) {
 	const size = useMemo(() => {
 		return `${artPiece.length_cm || "?"} см x ${artPiece.width_cm || "?"} см`;
 	}, [artPiece.length_cm, artPiece.width_cm]);
 
-	// Меморизуємо деталі твору мистецтва
 	const artDetails = useMemo(() => {
 		return [
 			{ label: ART_DETAIL_LABELS.MATERIAL, value: artPiece.material },
@@ -45,14 +44,6 @@ function ProductPage({ data }: { data: TProductPage }) {
 	const formattedPrice = useMemo(() => {
 		return artPiece.price ? parseFloat(artPiece.price) : 0;
 	}, [artPiece.price]);
-
-	if (!artPiece) {
-		return (
-			<p className="container mt-24 mx-auto">
-				Немає доступних творів мистецтва.
-			</p>
-		);
-	}
 
 	return (
 		<main className="container flex flex-col mt-24 mx-auto gap-10">
@@ -135,7 +126,9 @@ function ProductPage({ data }: { data: TProductPage }) {
 											₴{formattedPrice}
 										</p>
 									</div>
-									<LinkButton href={artPiece.id}>Перейти до твору</LinkButton>
+									<LinkButton href={`en/products/${artPiece.id}`}>
+										Перейти до твору
+									</LinkButton>
 								</footer>
 							</article>
 						</section>
@@ -148,8 +141,8 @@ function ProductPage({ data }: { data: TProductPage }) {
 
 export default React.memo(ProductPage, (prevProps, nextProps) => {
 	return (
-		prevProps.data.artPiece.id === nextProps.data.artPiece.id &&
-		prevProps.data.artPiece.price === nextProps.data.artPiece.price &&
-		prevProps.data.artPiece.title === nextProps.data.artPiece.title
+		prevProps.artPiece.id === nextProps.artPiece.id &&
+		prevProps.artPiece.price === nextProps.artPiece.price &&
+		prevProps.artPiece.title === nextProps.artPiece.title
 	);
 });

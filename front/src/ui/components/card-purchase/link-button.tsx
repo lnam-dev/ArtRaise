@@ -1,7 +1,6 @@
 "use client";
 import Button from "../button/button";
 import React from "react";
-import { useAppContext } from "~/ui/app-context/provider";
 
 interface LinkButtonProps extends React.ComponentProps<typeof Button> {
 	href?: string;
@@ -13,10 +12,9 @@ export default function LinkButton({
 	children,
 	...props
 }: LinkButtonProps) {
-	const { path } = useAppContext();
-
+	// FIXME Раніше тут був path(href), але це може зараз не коректно працювати
 	return (
-		<Button href={path(href)} {...props}>
+		<Button href={href} {...props}>
 			{children}
 		</Button>
 	);
