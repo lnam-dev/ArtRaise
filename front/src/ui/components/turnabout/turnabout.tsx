@@ -60,7 +60,7 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 				{text.map((textItem, index) => (
 					<Tag
 						key={index}
-						ref={(el) => setRef(el, index)}
+						ref={(el: any) => setRef(el, index)}
 						className={textClass}>
 						{textItem}
 					</Tag>

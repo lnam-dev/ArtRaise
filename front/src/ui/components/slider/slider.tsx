@@ -14,7 +14,7 @@ import { TSlide } from "~/types/slider";
 
 type SliderProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
-	children: (currentSlideIdx: number) => JSX.Element | ReactNode;
+	children: (currentSlideIdx: number) => ReactNode;
 };
 
 const PADDING_FOR_MOBILE = 16;
@@ -26,13 +26,12 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 	const [currentSlideIdx, setSlideIdx] = useState(0);
 
 	const validationDevice = () => {
-		if (isMobile) {
-			return 0;
-		} else if (isDesktop) {
+		if (isDesktop) {
 			return -marginsAuto + 8;
 		} else if (isTablet) {
 			return -marginsAuto - PADDING_FOR_MOBILE;
 		}
+		return 0;
 	};
 
 	useEffect(() => {
@@ -57,7 +56,7 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 					centeredSlides
 					slidesPerGroup={1} // FIXME: значення тестове
 					spaceBetween={0}
-					slidesOffsetBefore={validationDevice}
+					slidesOffsetBefore={validationDevice()}
 					loopAdditionalSlides={1}
 					observer={true}
 					observeParents={true}
