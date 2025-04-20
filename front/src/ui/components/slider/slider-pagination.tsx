@@ -1,7 +1,5 @@
 "use client";
 
-import { useSwiper } from "swiper/react";
-
 interface SliderPaginationProps {
 	mode?: "dark" | "light";
 	className?: string;
@@ -11,7 +9,7 @@ interface SliderPaginationProps {
 
 export default function SliderPagination({
 	mode = "light",
-	slidesLegnth,
+	slidesLegnth = 0,
 	currentSlide,
 	className,
 }: SliderPaginationProps) {
