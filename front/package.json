@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "concurrently \"npm run dev:css\"  \"next dev\"",
-		"build": "next build",
+		"build": "npm run build:css && next build",
 		"build:css": "tailwindcss -c tailwind.config.js -m -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"dev:css": "tailwindcss -c tailwind.config.js -w -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"start": "next start",
@@ -50,7 +50,7 @@
 		"autoprefixer": "^10.4.21",
 		"concurrently": "^9.1.2",
 		"postcss": "^8.5.3",
-		"tailwindcss": "^4.1.4",
+		"tailwindcss": "^3.4.17",
 		"typescript": "^5.8.3"
 	},
 	"overrides": {
