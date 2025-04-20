@@ -1,13 +1,15 @@
 import Image from "next/image";
 import LinkButton from "./link-button";
 import { TArtPiece } from "~/types";
+import usePath from "~/ui/hooks/usePath";
 
 interface CardPurchaseProps {
 	card: TArtPiece;
 }
 
 export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
-	const path = `/products/${Number(card.id)}`;
+	const path = usePath();
+
 	return (
 		<article className="break-inside-avoid" {...props}>
 			<figure className="relative w-full aspect-[16/9] mb-2">
@@ -32,7 +34,10 @@ export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
 				aria-label={`Ціна: ${card.price} гривень`}>
 				&#8372;{card.price}
 			</p>
-			<LinkButton href={path} className="w-full" variant="solid">
+			<LinkButton
+				href={path(`/products/${Number(card.id)}`)}
+				className="w-full"
+				variant="solid">
 				Переглянути картину
 			</LinkButton>
 		</article>
