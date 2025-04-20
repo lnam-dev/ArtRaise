@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
+		"typeRoots": ["./src/types", "./node_modules/@types"],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
@@ -22,16 +23,14 @@
 			{
 				"name": "next"
 			}
-		],
-		"types": ["next", "next-env", "svgr"]
+		]
 	},
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"next.config.js",
-		"src/types/**/*.d.ts",
+		"src",
 		"declarations.d.ts"
 	],
 	"exclude": ["node_modules"]

@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "concurrently \"npm run dev:css\"  \"next dev\"",
-		"build": "next build", 
+		"build": "next build",
 		"build:css": "tailwindcss -c tailwind.config.js -m -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"dev:css": "tailwindcss -c tailwind.config.js -w -i ./src/styles/index.css -o ./src/styles/tailwind.css",
 		"start": "next start",
@@ -22,7 +22,6 @@
 		"jwt-decode": "^4.0.0",
 		"lucide-react": "^0.501.0",
 		"next": "^15.3.1",
-		"next-images": "^1.8.5",
 		"next-intl": "^4.0.2",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
