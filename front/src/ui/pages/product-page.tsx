@@ -8,16 +8,19 @@ import LinkButton from '~/ui/components/card-purchase/link-button';
 import { ProductPage as TProductPage } from '~/use-cases/contracts/product-page';
 import { useMemo } from 'react';
 import usePath from '../hooks/usePath';
+// import { useAllArtPieces } from '../hooks/useAllArtPieces';
 
 function ProductPage({
   artPiece,
   ACCORDION_ITEMS,
   ART_DETAIL_LABELS,
+  allArtPieces,
 }: TProductPage) {
   const size = useMemo(() => {
     return `${artPiece.length_cm || '?'} см x ${artPiece.width_cm || '?'} см`;
   }, [artPiece.length_cm, artPiece.width_cm]);
   const path = usePath();
+  //   const allArtPieces = useAllArtPieces();
 
   const artDetails = useMemo(() => {
     return [
@@ -46,6 +49,14 @@ function ProductPage({
   const formattedPrice = useMemo(() => {
     return artPiece.price ? parseFloat(artPiece.price) : 0;
   }, [artPiece.price]);
+
+  // Фільтрація схожих робіт за стилем
+  const similarArtPieces = useMemo(() => {
+    return allArtPieces.filter(
+      (piece: typeof artPiece) =>
+        piece.style === artPiece.style && piece.id !== artPiece.id
+    );
+  }, [allArtPieces, artPiece.style, artPiece.id]);
 
   return (
     <main className='container flex flex-col mt-24 mx-auto gap-10'>
@@ -100,39 +111,45 @@ function ProductPage({
                 Роботи інших авторів у схожій стилістиці
               </h2>
 
-              <article className='flex flex-col'>
-                <figure className='w-full'>
-                  <Image
-                    src={artPiece.image_artpiece}
-                    alt={`Art piece ${artPiece.title}`}
-                    width={300}
-                    height={200}
-                    className='w-full h-auto'
-                  />
-                </figure>
+              {similarArtPieces.length > 0 ? (
+                <div className='space-y-4'>
+                  {similarArtPieces.map((piece) => (
+                    <article key={piece.id} className='flex flex-col'>
+                      <figure className='w-full'>
+                        <Image
+                          src={piece.image_artpiece}
+                          alt={`Art piece ${piece.title}`}
+                          width={300}
+                          height={200}
+                          className='w-full h-auto'
+                        />
+                      </figure>
 
-                <footer className='flex justify-between items-center px-4 py-2 bg-[#131315]'>
-                  <div className='flex flex-col space-y-2'>
-                    <p className='font-fixel 2xl:text-xl text-[#B9BBC8]'>
-                      {artPiece.author?.fullname || 'Невідомий автор'}
-                    </p>
+                      <footer className='flex justify-between items-center px-4 py-2 bg-[#131315]'>
+                        <div className='flex flex-col space-y-2'>
+                          <p className='font-fixel 2xl:text-xl text-[#B9BBC8]'>
+                            {piece.author?.fullname || 'Невідомий автор'}
+                          </p>
 
-                    <div className='2xl:text-2xl'>
-                      <p className='font-namu text-white'>
-                        {artPiece.title || 'Без назви'}
-                      </p>
-                      <p className='font-fixel text-[#B9BBC8]'>{size}</p>
-                    </div>
+                          <div className='2xl:text-2xl'>
+                            <p className='font-namu text-white'>
+                              {piece.title || 'Без назви'}
+                            </p>
+                            <p className='font-fixel text-[#B9BBC8]'>{size}</p>
+                          </div>
 
-                    <p className='font-fixel font-medium 2xl:text-2xl text-gray-100'>
-                      ₴{formattedPrice}
-                    </p>
-                  </div>
-                  <LinkButton
-                    href={path(`/products/${artPiece.id}`)}
-                  ></LinkButton>
-                </footer>
-              </article>
+                          <p className='font-fixel font-medium 2xl:text-2xl text-gray-100'>
+                            ₴{formattedPrice}
+                          </p>
+                        </div>
+                        <LinkButton href={path(`/products/${piece.id}`)} />
+                      </footer>
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p>Немає робіт, схожих за стилем.</p>
+              )}
             </section>
           </aside>
         </div>
