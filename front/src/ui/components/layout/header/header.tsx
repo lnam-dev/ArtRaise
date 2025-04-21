@@ -67,7 +67,7 @@ export const Header = () => {
       <div className='container flex justify-between items-center mx-auto  w-full'>
         {/* Логотип */}
         <Link
-          href={path('/')}
+          href={'/'}
           className='xl:text-[5rem] xl:h-[6rem] 
 
            lg:text-[4rem] lg:leading-[6rem] lg:h-[6rem] lg:-mt-[0.625rem] lg:-ml-[0.875rem] 
