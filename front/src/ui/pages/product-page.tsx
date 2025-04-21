@@ -64,7 +64,7 @@ function ProductPage({
         <div className='grid lg:grid-cols-3 w-full gap-7'>
           <section className='lg:col-span-2 lg:-mt-20 bg-white opacity-90'>
             <header className='mb-7'>
-              <h1 className='font-namu 2xl:text-6xl xl:text-5xl lg:text-4xl'>
+              <h1 className='font-namu 2xl:text-6xl xl:text-5xl md:text-4xl text-4xl'>
                 {artPiece.title || 'Без назви'}
               </h1>
               <p className='flex items-center font-fixel font-medium 2xl:text-4xl xl:text-3xl lg:text-2xl'>
@@ -111,9 +111,9 @@ function ProductPage({
                   />
                 </figure>
 
-                <footer className='flex justify-between items-center px-4 py-2 bg-gray-900'>
+                <footer className='flex justify-between items-center px-4 py-2 bg-[#131315]'>
                   <div className='flex flex-col space-y-2'>
-                    <p className='font-fixel 2xl:text-xl text-gray-400'>
+                    <p className='font-fixel 2xl:text-xl text-[#B9BBC8]'>
                       {artPiece.author?.fullname || 'Невідомий автор'}
                     </p>
 
@@ -121,16 +121,16 @@ function ProductPage({
                       <p className='font-namu text-white'>
                         {artPiece.title || 'Без назви'}
                       </p>
-                      <p className='font-fixel text-gray-400'>{size}</p>
+                      <p className='font-fixel text-[#B9BBC8]'>{size}</p>
                     </div>
 
                     <p className='font-fixel font-medium 2xl:text-2xl text-gray-100'>
                       ₴{formattedPrice}
                     </p>
                   </div>
-                  <LinkButton href={path(`/products/${artPiece.id}`)}>
-                    Перейти до твору
-                  </LinkButton>
+                  <LinkButton
+                    href={path(`/products/${artPiece.id}`)}
+                  ></LinkButton>
                 </footer>
               </article>
             </section>
