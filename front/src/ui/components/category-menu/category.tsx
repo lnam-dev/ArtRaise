@@ -28,6 +28,7 @@ import CardPurchaseMegaMenu from '../card-purchase/card-purchase-mega-menu';
 import { useAllArtPieces } from '../../hooks/useAllArtPieces';
 import usePath from '~/ui/hooks/usePath';
 import Cross from '~/assets/cross.svg';
+import FilterMenu from '../filter-tag/filter-menu';
 
 const categorys = [
   {
@@ -152,8 +153,7 @@ export const Category = ({ closeMenu, activeIndex }: CategoryProps) => {
                 </button>
               </div>
               <div className='space-y-4'>
-                {/* Content */}
-                {/* <FAQitem question='Жанр' answer='Мистецтво' variant='light' /> */}
+                <FilterMenu />
               </div>
             </div>
           ) : (
