@@ -75,10 +75,10 @@ function ProductPage({
         <div className='grid lg:grid-cols-3 w-full gap-7'>
           <section className='lg:col-span-2 lg:-mt-20 bg-white opacity-90'>
             <header className='mb-7'>
-              <h1 className='font-namu 2xl:text-6xl xl:text-5xl md:text-4xl text-4xl'>
+              <h1 className='font-namu 2xl:text-[5rem] xl:text-[3.5rem] md:text-[3rem]'>
                 {artPiece.title || 'Без назви'}
               </h1>
-              <p className='flex items-center font-fixel font-medium 2xl:text-4xl xl:text-3xl lg:text-2xl'>
+              <p className='flex items-center font-fixel font-medium 2xl:text-[1.5rem] xl:text-[1.25rem] lg:text-[1rem]'>
                 {artPiece.author?.fullname || 'Невідомий автор'}{' '}
                 {artPiece.author?.id && (
                   <Link to={path(`/authors/${artPiece.author.id}`)}>
@@ -95,19 +95,19 @@ function ProductPage({
 
           <aside className='flex flex-col justify-start col-span-1 w-full'>
             <div className='price-section'>
-              <p className='font-fixel 2xl:text-2xl lg:text-xl text-gray-700'>
+              <p className='font-fixel 2xl:text-[2.5rem] xl:text-[2rem] lg:text-[1.5rem] text-gray-700'>
                 Вартість картини
               </p>
-              <p className='font-namu 2xl:text-6xl xl:text-5xl lg:text-4xl'>
+              <p className='font-namu 2xl:text-[3rem] xl:text-[2.5rem] lg:text-[2.25rem]'>
                 ₴{formattedPrice}
               </p>
-              <button className='flex justify-center w-full gap-3 py-2 mt-4 font-fixel font-medium 2xl:text-2xl xl:text-xl text-gray-100 bg-gray-900'>
+              <button className='flex justify-center w-full gap-3 py-2 mt-4 font-fixel font-medium  text-gray-100 bg-gray-900'>
                 <Buy /> Придбати
               </button>
             </div>
 
             <section className='mt-7'>
-              <h2 className='w-4/5 mb-4 font-fixel font-medium 2xl:text-4xl xl:text-2xl lg:text-xl'>
+              <h2 className='w-4/5 mb-4 font-fixel font-medium 2xl:text-[2.25rem] xl:text-[1.75rem] lg:text-[1rem]'>
                 Роботи інших авторів у схожій стилістиці
               </h2>
 
