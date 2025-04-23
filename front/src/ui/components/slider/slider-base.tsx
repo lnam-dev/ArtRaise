@@ -10,29 +10,23 @@ import SliderNavPanel from "./slider-nav-panel";
 import SliderButtonExpand from "./slider-button-expand";
 import SliderPagination from "./slider-pagination";
 import Turnabout from "../turnabout/turnabout";
-import { TSlide } from "~/types/slider";
+import { TSliderBaseProps } from "~/types/slider";
+import { wrap } from "module";
 
-type SliderProps = React.HTMLAttributes<HTMLElement> & {
-	slides: TSlide[];
-	children: (currentSlideIdx: number) => ReactNode;
-};
-
-const PADDING_FOR_MOBILE = 16;
-
-const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
-	const { marginsAuto, isDesktop, isTablet, isMobile } = useDevice();
+const SliderBase: React.FC<TSliderBaseProps> = ({
+	slides,
+	children,
+	swiperProps,
+	unpackedSlides,
+	headerStyle,
+	wrapperStyle,
+	expandStyle,
+	...props
+}) => {
+	const { isDesktop } = useDevice();
 
 	const swiperRef = useRef<SwiperType | null>(null);
 	const [currentSlideIdx, setSlideIdx] = useState(0);
-
-	const validationDevice = () => {
-		if (isDesktop) {
-			return -marginsAuto + 8;
-		} else if (isTablet) {
-			return -marginsAuto - PADDING_FOR_MOBILE;
-		}
-		return 0;
-	};
 
 	useEffect(() => {
 		if (!swiperRef.current) return;
@@ -54,9 +48,8 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 				<Swiper
 					loop
 					centeredSlides
-					slidesPerGroup={1} // FIXME: значення тестове
+					slidesPerGroup={1}
 					spaceBetween={0}
-					slidesOffsetBefore={validationDevice()}
 					loopAdditionalSlides={1}
 					observer={true}
 					observeParents={true}
@@ -65,22 +58,13 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 					onSwiper={(swiper) => {
 						swiperRef.current = swiper;
 					}}
-					className="mb-2 w-full overflow-visible relative">
-					{slides.map((obj, index) => (
-						<SwiperSlide key={index}>
-							<div className="relative w-full aspect-[16/9] h-[70vh] lg:min-h-[80vh] xl:min-h-[90vh] 2xl:min-h-[75vh]">
-								<Image
-									src={obj.imgSrc}
-									alt={`Slide ${index + 1}`}
-									fill
-									className="object-cover"
-									loading="lazy"
-								/>
-							</div>
-						</SwiperSlide>
-					))}
-					<div className="container absolute bottom-0 left-0 w-full z-20 flex items-end justify-between px-4 xl:px-0 xl:justify-normal -translate-x-1/2 left-1/2">
-						<div className="bg-gradient-light backdrop-blur-md pr-4 xl:pr-0 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full sm:pr-0 xl:w-full">
+					className="mb-2 w-full overflow-visible relative"
+					{...swiperProps}>
+					{unpackedSlides && unpackedSlides(slides)}
+					<div
+						className={`container absolute bottom-0 left-0 w-full z-20 flex items-end justify-between -translate-x-1/2 left-1/2 ${wrapperStyle}`}>
+						<div
+							className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full ${headerStyle}`}>
 							<Turnabout
 								currentIndex={currentSlideIdx}
 								text={slides.map(({ title }) => title)}
@@ -90,9 +74,7 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 								duration={600}
 							/>
 						</div>
-						{!isDesktop && (
-							<SliderButtonExpand className="translate-x-4 sm:translate-x-0" />
-						)}
+						{!isDesktop && <SliderButtonExpand className={`${expandStyle}`} />}
 						{isDesktop && (
 							<SliderNavPanel
 								currentSlide={currentSlideIdx}
@@ -110,7 +92,6 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 							mode="dark"
 							currentSlide={currentSlideIdx}
 							slidesLegnth={slides.length}
-							className=""
 						/>
 					)}
 				</div>
@@ -119,4 +100,4 @@ const Slider: React.FC<SliderProps> = ({ slides, children, ...props }) => {
 	);
 };
 
-export default Slider;
+export default SliderBase;

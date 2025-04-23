@@ -1,6 +1,6 @@
 import { TArtPiece } from "~/types";
 import { TParams } from "~/types/params";
-import ProductPage from "~/ui/pages/product-page";
+import ProductPage from "~/ui/pages/product-page/product-page";
 
 const ACCORDION_ITEMS = [
 	{ title: "Умови придбання", content: "Інформація про умови придбання" },

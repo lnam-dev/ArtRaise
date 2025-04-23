@@ -24,6 +24,8 @@ export default function SliderPagination({
 			break;
 	}
 
+	if (slidesLegnth <= 1) return;
+
 	return (
 		<div className={`flex flex-1 gap-4 items-center ${className}`}>
 			{Array.from({ length: slidesLegnth }, (_, index) => (

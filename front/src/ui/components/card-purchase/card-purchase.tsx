@@ -35,7 +35,7 @@ export default function CardPurchase({ card, ...props }: CardPurchaseProps) {
 				&#8372;{card.price}
 			</p>
 			<LinkButton
-				href={path(`/products/${Number(card.id)}`)}
+				href={path(`products/${Number(card.id)}`)}
 				className="w-full"
 				variant="solid">
 				Переглянути картину

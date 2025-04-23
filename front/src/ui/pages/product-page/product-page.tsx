@@ -7,6 +7,7 @@ import Buy from "~/assets/buy.svg";
 import LinkButton from "~/ui/components/card-purchase/link-button";
 import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
 import { useMemo } from "react";
+import SliderWrapper from "./card-wrapper";
 
 function ProductPage({
 	artPiece,
@@ -45,42 +46,24 @@ function ProductPage({
 		return artPiece.price ? parseFloat(artPiece.price) : 0;
 	}, [artPiece.price]);
 
+	const slides = [
+		{
+			imgSrc: artPiece.image_artpiece,
+			title: artPiece.title,
+		},
+	];
+
 	return (
-		<main className="container flex flex-col mt-24 mx-auto gap-10">
-			<article className="flex flex-col lg:col-span-3 gap-10">
-				<figure className="w-full">
-					<Image
-						src={artPiece.image_artpiece}
-						alt={`Art piece ${artPiece.title}`}
-						width={800}
-						height={400}
-						priority
-						className="w-full h-auto"
-					/>
-				</figure>
-
+		<main className="">
+			<SliderWrapper slides={slides} author={artPiece.author} />
+			<article className="container mx-auto flex flex-col lg:col-span-3 gap-10">
 				<div className="grid lg:grid-cols-3 w-full gap-7">
-					<section className="lg:col-span-2 lg:-mt-20 bg-white opacity-90">
-						<header className="mb-7">
-							<h1 className="font-namu 2xl:text-6xl xl:text-5xl lg:text-4xl">
-								{artPiece.title || "Без назви"}
-							</h1>
-							<p className="flex items-center font-fixel font-medium 2xl:text-4xl xl:text-3xl lg:text-2xl">
-								{artPiece.author?.fullname || "Невідомий автор"}{" "}
-								{artPiece.author?.id && (
-									<Link to={`/authors/${artPiece.author.id}`}>
-										<LinkToAuthor className="ml-3" />
-									</Link>
-								)}
-							</p>
-						</header>
-
+					{/* <section className="lg:col-span-2 lg:-mt-20 bg-white opacity-90">
 						<ArtDetails details={artDetails} />
-
 						<Accordion accordionItems={accordionItems} />
-					</section>
+					</section> */}
 
-					<aside className="flex flex-col justify-start col-span-1 w-full">
+					{/* <aside className="flex flex-col justify-start col-span-1 w-full">
 						<div className="price-section">
 							<p className="font-fixel 2xl:text-2xl lg:text-xl text-gray-700">
 								Вартість картини
@@ -132,7 +115,7 @@ function ProductPage({
 								</footer>
 							</article>
 						</section>
-					</aside>
+					</aside> */}
 				</div>
 			</article>
 		</main>

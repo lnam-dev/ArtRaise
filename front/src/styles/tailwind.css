@@ -801,20 +801,12 @@ select {
   margin-bottom: 1.5rem;
 }
 
-.mb-7 {
-  margin-bottom: 1.75rem;
-}
-
 .mb-8 {
   margin-bottom: 2rem;
 }
 
 .mb-\[0\.375rem\] {
   margin-bottom: 0.375rem;
-}
-
-.ml-3 {
-  margin-left: 0.75rem;
 }
 
 .ml-4 {
@@ -843,10 +835,6 @@ select {
 
 .mt-20 {
   margin-top: 5rem;
-}
-
-.mt-24 {
-  margin-top: 6rem;
 }
 
 .mt-3 {
@@ -1456,6 +1444,10 @@ select {
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
+.fill-gray-950 {
+  fill: #131315;
+}
+
 .fill-white {
   fill: #fff;
 }
@@ -1615,6 +1607,10 @@ select {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pr-0 {
+  padding-right: 0px;
 }
 
 .text-left {
@@ -2093,10 +2089,6 @@ select {
     background-color: #232327E5;
   }
 
-  .sm\:pr-0 {
-    padding-right: 0px;
-  }
-
   .sm\:text-\[2\.5rem\] {
     font-size: 2.5rem;
   }
@@ -2323,6 +2315,11 @@ select {
     border-top-width: 2px;
   }
 
+  .lg\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .lg\:py-1 {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
@@ -2455,6 +2452,11 @@ select {
   .xl\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  .xl\:px-1 {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
   }
 
   .xl\:pl-0 {
