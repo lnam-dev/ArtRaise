@@ -23,7 +23,7 @@ const SliderClassic: FC<TSliderBaseProps> = ({
 				<>
 					{slides.map((obj, index) => (
 						<SwiperSlide key={index}>
-							<div className="container mx-auto relative w-full aspect-[16/9] ">
+							<div className="relative w-full aspect-[16/9] ">
 								<Image
 									src={obj.imgSrc}
 									alt={`Slide ${index + 1}`}
