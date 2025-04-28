@@ -1,17 +1,16 @@
 "use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
 import useDevice from "~/ui/hooks/useDevice";
 import "swiper/css";
 
-import Image from "next/image";
 import SliderNavPanel from "./slider-nav-panel";
 import SliderButtonExpand from "./slider-button-expand";
 import SliderPagination from "./slider-pagination";
 import Turnabout from "../turnabout/turnabout";
 import { TSliderBaseProps } from "~/types/slider";
-import { wrap } from "module";
 
 const SliderBase: React.FC<TSliderBaseProps> = ({
 	slides,
@@ -24,7 +23,6 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 	...props
 }) => {
 	const { isDesktop } = useDevice();
-
 	const swiperRef = useRef<SwiperType | null>(null);
 	const [currentSlideIdx, setSlideIdx] = useState(0);
 
@@ -47,14 +45,18 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 			<div className="w-full relative">
 				<Swiper
 					loop
-					centeredSlides
+					centeredSlides={false}
+					slidesPerView={1}
 					slidesPerGroup={1}
 					spaceBetween={0}
-					loopAdditionalSlides={3}
 					observer={true}
 					observeParents={true}
-					simulateTouch={false}
+					simulateTouch={true}
+					allowTouchMove={true}
 					speed={600}
+					longSwipes={false}
+					threshold={20}
+					touchRatio={1}
 					onSwiper={(swiper) => {
 						swiperRef.current = swiper;
 					}}
