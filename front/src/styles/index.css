@@ -58,6 +58,24 @@
 		scrollbar-width: none;
 	}
 
+	.scrollbar {
+		scrollbar-width: thin; /* Firefox */
+		scrollbar-color: #ccc;
+	}
+
+	.scrollbar::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		scrollbar-color: #ccc;
+		border-radius: 3px;
+	}
+
 	.focal-point-container {
 		container-type: size;
 	}

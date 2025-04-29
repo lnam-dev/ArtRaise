@@ -25,7 +25,7 @@ export default async ({
 	}
 
 	return (
-		<html lang={locale}>
+		<html lang={locale} className="scrollbar">
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
