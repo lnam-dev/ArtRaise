@@ -20,6 +20,8 @@ export default function SliderNavPanel({
 	useKeyPress("ArrowLeft", handlePrevSlide);
 	useKeyPress("ArrowRight", handleNextSlide);
 
+	if (slidesLegnth < 2) return;
+
 	return (
 		<div className="flex bg-[#000212] shadow-sm bg-opacity-[64%]">
 			<SliderNavButton variable={"left"} onClick={handlePrevSlide} />

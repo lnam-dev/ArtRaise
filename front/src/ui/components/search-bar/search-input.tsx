@@ -17,7 +17,7 @@ const SearchInput = ({ className }: { className: string }) => {
 			/>
 			<Button
 				includeArrow={false}
-				className="md:w-[21rem] w-14 py-2 px-4 bg-black text-white text-base font-medium">
+				className="w-[3.5rem] md:w-[21rem] py-2 px-4 bg-black text-white text-base font-medium">
 				{isMobile ? (
 					<Search height={24} width={24} className="fill-white" />
 				) : (

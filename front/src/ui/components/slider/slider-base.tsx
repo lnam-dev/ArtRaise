@@ -49,6 +49,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 					slidesPerView={1}
 					slidesPerGroup={1}
 					spaceBetween={0}
+					loopAdditionalSlides={1}
 					observer={true}
 					observeParents={true}
 					simulateTouch={true}

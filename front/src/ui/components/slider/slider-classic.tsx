@@ -15,6 +15,7 @@ const SliderClassic: FC<TSliderBaseProps> = ({
 	return (
 		<SliderBase
 			slides={slides}
+			headerStyle="w-[60%]"
 			wrapperStyle="pl-4 xl:pl-0"
 			swiperProps={{
 				...swiperProps,

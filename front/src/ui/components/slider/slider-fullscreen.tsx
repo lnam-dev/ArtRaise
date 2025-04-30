@@ -19,7 +19,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 
 	const validationDevice = () => {
 		if (isDesktop) {
-			return -marginsAuto + 8;
+			return -marginsAuto;
 		} else if (isTablet) {
 			return -marginsAuto - PADDING_FOR_MOBILE;
 		}

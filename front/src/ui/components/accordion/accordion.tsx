@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, isValidElement, ReactNode } from "react";
-import { text } from "stream/consumers";
 import Arrow from "~/assets/arrow-up-right.svg";
 
 interface AccordionProps {
-	question: string;
-	children: ReactNode;
+	title: string;
+	children: ReactNode | string;
+	size?: "sm" | "bg";
 }
 
 const textComponent = (children: string) => {
@@ -16,18 +16,30 @@ const textComponent = (children: string) => {
 	);
 };
 
-const Accordion = ({ question, children }: AccordionProps) => {
+const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
+	let style;
+	switch (size) {
+		case "sm":
+			style = "py-[0.625rem] mb-8";
+			break;
+		case "bg":
+			style = "pb-5 pt-3";
+			break;
+	}
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleToggle = () => setIsOpen(!isOpen);
 
 	return (
-		<div className="border-b-1 lg:border-b-2 border-gray-500 py-[0.625rem] mb-8">
+		<div className={`border-bottom ${style}`}>
 			<button
 				className="flex justify-between items-center gap-2 w-full"
 				onClick={handleToggle}>
-				<span className="font-fixel font-medium text-4 text-left">
-					{question}
+				<span
+					className={`font-fixel font-medium ${
+						size === "bg" ? "text-5" : "text-4"
+					} text-left`}>
+					{title}
 				</span>
 				<div className="w-6 h-6">
 					<Arrow

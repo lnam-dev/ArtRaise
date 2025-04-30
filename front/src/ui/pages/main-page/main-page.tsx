@@ -14,7 +14,7 @@ export default ({ data }: { data: TMainPage }) => {
 			<MainSliderWrapper className="mb-12 lg:mb-8" slides={slides} />
 			<div className="container mx-auto min-h-[100vh]">
 				<SearchBar className="mb-12" />
-				<article className="px-4 xl:px-0">
+				<article className="mobile-spacing">
 					<section className="mb-10">
 						<SegmentTitle
 							className="mb-10"

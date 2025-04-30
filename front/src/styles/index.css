@@ -49,6 +49,10 @@
 		display: none;
 	}
 
+	.border-bottom {
+		@apply border-b-1 lg:border-b-2 border-gray-500;
+	}
+
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
 	}
@@ -74,6 +78,10 @@
 	.scrollbar::-webkit-scrollbar-thumb {
 		scrollbar-color: #ccc;
 		border-radius: 3px;
+	}
+
+	.mobile-spacing {
+		@apply px-4 xl:px-0;
 	}
 
 	.focal-point-container {
