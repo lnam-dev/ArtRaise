@@ -5,16 +5,16 @@ import CardPurchase from "../../components/card-purchase/card-purchase";
 import CertificatesSection from "../../components/certificatesSection/certificate-section";
 import PartnersSection from "../../components/partners-section/partners-section";
 import CallToActionSection from "../../components/cta-section/cta-section";
-import SliderWrapper from "./slider-wrapper";
+import MainSliderWrapper from "./main-slider-wrapper";
 
 export default ({ data }: { data: TMainPage }) => {
 	const { artPieces, slides } = data;
 	return (
 		<main>
-			<SliderWrapper className="mb-12 lg:mb-8" slides={slides} />
+			<MainSliderWrapper className="mb-12 lg:mb-8" slides={slides} />
 			<div className="container mx-auto min-h-[100vh]">
 				<SearchBar className="mb-12" />
-				<article className="px-4 xl:px-0">
+				<article className="mobile-spacing">
 					<section className="mb-10">
 						<SegmentTitle
 							className="mb-10"

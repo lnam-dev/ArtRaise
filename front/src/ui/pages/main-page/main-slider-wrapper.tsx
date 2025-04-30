@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import Slider from "../../components/slider/slider";
+import SliderFullscreen from "~/ui/components/slider/slider-fullscreen";
 import Turnabout from "../../components/turnabout/turnabout";
 import { TSlide } from "~/types/slider";
 
@@ -10,9 +10,9 @@ interface SliderWrapperProps {
 	className?: string;
 }
 
-const SliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
+const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 	return (
-		<Slider slides={slides} {...props}>
+		<SliderFullscreen slides={slides} {...props}>
 			{/* @ts-ignore */}
 			{(currentSlideIdx) => (
 				<>
@@ -36,8 +36,8 @@ const SliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 					/>
 				</>
 			)}
-		</Slider>
+		</SliderFullscreen>
 	);
 };
 
-export default SliderWrapper;
+export default MainSliderWrapper;

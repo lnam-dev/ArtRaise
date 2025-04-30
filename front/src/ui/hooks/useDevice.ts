@@ -14,8 +14,8 @@ const useDevice = () => {
 
 	const updateDevice = () => {
 		const screenWidth = window.innerWidth;
-		const isMobile = screenWidth <= 767;
-		const isTablet = screenWidth >= 768 && screenWidth <= 992;
+		const isMobile = screenWidth <= 768;
+		const isTablet = screenWidth > 768 && screenWidth <= 992;
 		const isDesktop = screenWidth > 1344;
 
 		setDevice((prevState) => ({
@@ -27,7 +27,7 @@ const useDevice = () => {
 		}));
 	};
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const updateDimensions = () => {
 			const containerElement = document.querySelector(".container");
 			const screenWidth = window.innerWidth;
@@ -53,7 +53,7 @@ const useDevice = () => {
 		};
 	}, []);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		updateDevice();
 		const mediaQueryMobile = window.matchMedia("(max-width: 767px)");
 		const mediaQueryTablet = window.matchMedia(

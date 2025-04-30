@@ -1,11 +1,31 @@
 import { StoreProvider } from "~/store/client/StoreProvider";
 import { Header } from "~/ui/components/layout/header/header";
 import { Footer } from "~/ui/components/layout/footer/footer";
+
+import { NextIntlClientProvider } from "next-intl";
+import { notFound } from "next/navigation";
+import { getMessages } from "next-intl/server";
+
 import "~/styles/tailwind.css";
 
-export default async ({ children }: { children: React.ReactNode }) => {
+export default async ({
+	children,
+	params,
+}: {
+	children: React.ReactNode;
+	params: { locale: string };
+}) => {
+	const { locale } = params;
+	let messages;
+
+	try {
+		messages = await getMessages({ locale });
+	} catch (error) {
+		notFound();
+	}
+
 	return (
-		<html lang={"ua"}>
+		<html lang={locale} className="scrollbar">
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -19,12 +39,14 @@ export default async ({ children }: { children: React.ReactNode }) => {
 					}
 				</script>
 			</head>
-			<body data-theme={"light"}>
-				<StoreProvider>
-					<Header />
-					{children}
-					<Footer />
-				</StoreProvider>
+			<body data-theme="light">
+				<NextIntlClientProvider locale={locale} messages={messages}>
+					<StoreProvider>
+						<Header />
+						{children}
+						<Footer />
+					</StoreProvider>
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	);

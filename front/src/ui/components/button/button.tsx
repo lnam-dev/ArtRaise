@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Link from "~/bridge/ui/Link";
 import Arrow from "~/assets/arrow-right.svg";
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
@@ -48,5 +48,5 @@ export default function Button({
 		</button>
 	);
 
-	return href ? <Link href={href}>{button}</Link> : button;
+	return href ? <Link to={href}>{button}</Link> : button;
 }

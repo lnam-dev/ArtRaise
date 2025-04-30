@@ -49,6 +49,10 @@
 		display: none;
 	}
 
+	.border-bottom {
+		@apply border-b-1 lg:border-b-2 border-gray-500;
+	}
+
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none;
 	}
@@ -56,6 +60,28 @@
 	.scrollbar-hide {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
+	}
+
+	.scrollbar {
+		scrollbar-width: thin; /* Firefox */
+		scrollbar-color: #ccc;
+	}
+
+	.scrollbar::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+		scrollbar-color: #ccc;
+		border-radius: 3px;
+	}
+
+	.mobile-spacing {
+		@apply px-4 xl:px-0;
 	}
 
 	.focal-point-container {

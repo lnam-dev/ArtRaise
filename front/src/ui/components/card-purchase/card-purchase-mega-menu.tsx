@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import LinkButton from "./link-button";
 import { TArtPiece } from "~/types";
 
 interface CardPurchaseProps {
@@ -67,13 +66,13 @@ export default function CardPurchaseMegaMenu({
 				aria-label={`Ціна: ${card.price} гривень`}>
 				${card.price}
 			</p>
-			<LinkButton
+			{/* <LinkButton
 				// cardId={Number(card.id)}
 				className="w-full"
 				variant="light"
 				onClick={handleClick}>
 				Placeholder
-			</LinkButton>
+			</LinkButton> */}
 		</article>
 	);
 }

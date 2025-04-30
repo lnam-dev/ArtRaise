@@ -1,34 +1,30 @@
 import Accordion from "../accordion/accordion";
 import Link from "next/link";
 import Script from "next/script";
+import { TAccordion } from "~/types/accordion";
 
-interface QuestionAndAnswer {
-	question: string;
-	answer: string;
-}
-
-const QuestionAndAnswer: QuestionAndAnswer[] = [
+const QuestionAndAnswer: TAccordion[] = [
 	{
-		question:
+		title:
 			"Чи є можливість отримати додаткову інформацію про художника та його творчий шлях?",
-		answer:
+		content:
 			"Так, багато платформ надають інформацію про художника, його біографію та попередні роботи. Деякі також дозволяють зв'язатися з художником безпосередньо для отримання додаткової інформації.",
 	},
 	{
-		question:
+		title:
 			"Як я можу перевірити автентичність та якість мистецького твору перед покупкою?",
-		answer:
+		content:
 			"На платформі ArtRaise ми надаємо гарантію автентичності кожного твору мистецтва. Кожна картина проходить перевірку на автентичність, а також має сертифікат, що підтверджує її оригінальність.",
 	},
 	{
-		question:
+		title:
 			"Які умови повернення та обміну застосовуються до мистецьких творів, придбаних онлайн?",
-		answer:
+		content:
 			"Ми пропонуємо політику повернення протягом 14 днів з моменту отримання товару, якщо він не відповідає вашим вимогам або має дефекти. Повернення здійснюється за рахунок покупця, якщо товар відповідає умовам повернення.",
 	},
 	{
-		question: "Що таке ArtRaise",
-		answer:
+		title: "Що таке ArtRaise",
+		content:
 			"ArtRaise — це маркетплейс для покупки картин та різного мерча від Львівської Академії мистецтв. Ми пропонуємо унікальні твори мистецтва, створені талановитими студентами та викладачами Академії, а також різноманітний мерч, пов'язаний з мистецтвом та культурою.",
 	},
 ];
@@ -37,10 +33,10 @@ export default function CallToActionAccordion() {
 	const schema = {
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
-		mainEntity: QuestionAndAnswer.map(({ question, answer }) => ({
+		mainEntity: QuestionAndAnswer.map(({ title, content }) => ({
 			"@type": "Question",
-			name: question,
-			acceptedAnswer: { "@type": "Answer", text: answer },
+			name: title,
+			acceptedAnswer: { "@type": "Answer", text: content },
 		})),
 	};
 
@@ -52,9 +48,9 @@ export default function CallToActionAccordion() {
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
 			/>
 
-			{QuestionAndAnswer.map(({ question, answer }) => (
-				<Accordion key={question} question={question}>
-					{answer}
+			{QuestionAndAnswer.map(({ title, content }) => (
+				<Accordion key={title} title={title}>
+					{content}
 				</Accordion>
 			))}
 

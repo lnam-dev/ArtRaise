@@ -1,6 +1,5 @@
 import ArrowRight from "~/assets/arrow-right.svg";
 import { useState, useEffect } from "react";
-import LinkButton from "../card-purchase/link-button";
 import Button from "../button/button";
 import MegaMenu from "~/assets/megaMenu.svg";
 import { TArtPiece } from "~/types";
