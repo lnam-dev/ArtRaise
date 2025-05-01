@@ -21,6 +21,7 @@ urlpatterns = [
     # Wagtail catch-all для сторінок - зазвичай має бути останнім серед основних маршрутів
     re_path(r'^', include(wagtail_urls)),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # # Додавання маршрутів для DEBUG режиму
 # if settings.DEBUG:
@@ -32,4 +33,3 @@ urlpatterns = [
 #         pass # Якщо debug_toolbar не встановлено, ігноруємо
 
     # Додаємо маршрути для роздачі медіафайлів
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
