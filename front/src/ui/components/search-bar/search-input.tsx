@@ -6,7 +6,7 @@ import Search from "~/assets/search.svg";
 import Input from "../input/input";
 
 const SearchInput = ({ className }: { className: string }) => {
-	const { isMobile, isTablet, isDesktop } = useDevice();
+	const { isMobile } = useDevice();
 
 	return (
 		<div className={`flex ${className}`}>
@@ -15,13 +15,11 @@ const SearchInput = ({ className }: { className: string }) => {
 				placeholder="Пошук за ім’ям автора та/або назвою"
 				className="text-4 text-gray-950 w-full"
 			/>
-			<Button
-				includeArrow={false}
-				className="w-[3.5rem] md:w-[21rem] py-2 px-4 bg-black text-white text-base font-medium">
+			<Button className="w-[3.5rem] md:w-[21rem] py-2 px-4 bg-black text-white text-base font-medium">
 				{isMobile ? (
 					<Search height={24} width={24} className="fill-white" />
 				) : (
-					"Шукати"
+					<span>Шукати</span>
 				)}
 			</Button>
 		</div>

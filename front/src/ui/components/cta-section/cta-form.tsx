@@ -2,7 +2,7 @@
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import InputFormik from "../input/input-formik";
-import Button from "../button/button";
+import ButtonArrow from "../button/button-arrow";
 
 const validationSchema = Yup.object({
 	name: Yup.string()
@@ -36,7 +36,7 @@ export default function CallToActionForm() {
 						className="min-h-[8rem]"
 					/>
 				</div>
-				<Button className="w-full mt-4 sm:w-[60%]">Надіслати</Button>
+				<ButtonArrow className="w-full mt-4 sm:w-[60%]">Надіслати</ButtonArrow>
 			</Form>
 		</Formik>
 	);
