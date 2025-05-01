@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { TArtPiece } from "~/types";
-import Button from "~/ui/components/button/button";
+import ButtonArrow from "~/ui/components/button/button-arrow";
 import classes from "./card-purchase.module.scss";
 import Arrow from "~/assets/arrow-right.svg";
 import Link from "~/bridge/ui/Link";
@@ -55,12 +55,12 @@ const CardPurchase = ({
 						&#8372;{card.price}
 					</p>
 					{isLight && (
-						<Button
+						<ButtonArrow
 							href={`products/${Number(card.id)}`}
 							className="w-full"
-							variant="solid">
+							variant="dark">
 							Переглянути картину
-						</Button>
+						</ButtonArrow>
 					)}
 				</div>
 				{!isLight && <Arrow height={48} width={48} className="fill-white" />}
