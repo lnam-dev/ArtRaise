@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 import SegmentTitle from "../segment-title/segment-title";
-import Button from "../button/button";
+import ButtonArrow from "../button/button-arrow";
 
 type CertificateSectionProps = React.HTMLAttributes<HTMLElement>;
 
@@ -18,9 +18,9 @@ const CertificateSection: FC<CertificateSectionProps> = ({
 						Немає кращого подарунка, ніж мистецтво, на весілля, ювілей,
 						випускний чи іншу особливу подію.
 					</h2>
-					<Button className="font-fixel font-medium text-4 w-full sm:w-3/4">
+					<ButtonArrow className="font-fixel font-medium text-4 w-full sm:w-3/4">
 						Дізнатися більше
-					</Button>
+					</ButtonArrow>
 				</div>
 				<div className="order-1 sm:order-2 relative w-full aspect-[16/9]">
 					<Image
