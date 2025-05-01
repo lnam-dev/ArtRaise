@@ -22,14 +22,14 @@ urlpatterns = [
     re_path(r'^', include(wagtail_urls)),
 ]
 
-# Додавання маршрутів для DEBUG режиму
-if settings.DEBUG:
-    try:
-        import debug_toolbar
-        # Додаємо маршрут для Django Debug Toolbar
-        urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
-    except ImportError:
-        pass # Якщо debug_toolbar не встановлено, ігноруємо
+# # Додавання маршрутів для DEBUG режиму
+# if settings.DEBUG:
+#     try:
+#         import debug_toolbar
+#         # Додаємо маршрут для Django Debug Toolbar
+#         urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
+#     except ImportError:
+#         pass # Якщо debug_toolbar не встановлено, ігноруємо
 
     # Додаємо маршрути для роздачі медіафайлів
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
