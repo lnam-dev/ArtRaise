@@ -16,7 +16,9 @@ const PriceBar = ({ title, price, href, ...props }: PriceBarProps) => {
 			<p className="font-namu text-8  xl:text-12 leading-none mb-6">{`₴${parseInt(
 				price
 			)}`}</p>
-			<Button href={href}>Придбати</Button>
+			<Button href={href} className="w-full">
+				Придбати
+			</Button>
 		</div>
 	);
 };

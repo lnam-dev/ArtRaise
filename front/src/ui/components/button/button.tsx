@@ -35,7 +35,7 @@ export default function Button({
 	}
 
 	const button = (
-		<button className={`${style} ${className} relative w-full`} {...props}>
+		<button className={`${style} ${className} relative`} {...props}>
 			<span>{children}</span>
 			{includeArrow && (
 				<Arrow
