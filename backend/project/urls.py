@@ -8,6 +8,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 # Основні маршрути вашого додатку та Wagtail
 # Змінені маршути з приставкою API для правильної маршутизації
 urlpatterns = [
+    path("healthz/", lambda request: HttpResponse("OK")), 
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     # Можливо, 'pages/' краще залишити для catch-all нижче, якщо він обробляє сторінки
