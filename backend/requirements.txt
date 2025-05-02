@@ -4,3 +4,4 @@ wagtail==6.4
 psycopg2==2.9.10
 djangorestframework_simplejwt==5.4.0
 django-cors-headers==4.7.0
+gunicorn==21.2.0
