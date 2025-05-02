@@ -28,6 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+#Додано для автоматичного прослуховування /api
+FORCE_SCRIPT_NAME = "/api"
+USE_X_FORWARDED_HOST = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
