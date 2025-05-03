@@ -2,7 +2,6 @@ from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.http import HttpResponse
-from rest_framework import status
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -10,7 +9,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 # Основні маршрути вашого додатку та Wagtail
 # Змінені маршути з приставкою API для правильної маршутизації
 urlpatterns = [
-    path("health/", lambda request: HttpResponse(status.HTTP_200_OK)),
+    path("health/", lambda request: HttpResponse("OK", status=200)),
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     # Можливо, 'pages/' краще залишити для catch-all нижче, якщо він обробляє сторінки
