@@ -1,12 +1,3 @@
-# """
-# WSGI config for project project.
-
-# It exposes the WSGI callable as a module-level variable named ``application``.
-
-# For more information on this file, see
-# https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
-# """
-
 # import os
 
 # from django.core.wsgi import get_wsgi_application
@@ -27,9 +18,9 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 
 import os
 import sys  # Додано для виводу помилок
-import django # Потрібно для get_wsgi_application
-import psycopg2 # Додано для прямої перевірки БД
-from datetime import datetime # Додано для міток часу
+from django.core.wsgi import get_wsgi_application
+import psycopg2  # Додано для прямої перевірки БД
+from datetime import datetime  # Додано для міток часу
 
 def log_message(message):
     """Допоміжна функція для логування з міткою часу."""
@@ -58,7 +49,7 @@ if not all([db_name, db_user, db_pass, db_host]):
      # sys.exit("FATAL: Missing DB credentials in environment")
 else:
     log_message(f"Connecting with: host='{db_host}' dbname='{db_name}' user='{db_user}' sslmode='{db_sslmode}'")
-    conn = None # Ініціалізуємо conn
+    conn = None  # Ініціалізуємо conn
     try:
         log_message("Calling psycopg2.connect...")
         # Додаємо таймаут з'єднання (наприклад, 15 секунд)
@@ -88,7 +79,7 @@ else:
 
 log_message("Attempting to get WSGI application...")
 try:
-    application = django.core.wsgi.get_wsgi_application()
+    application = get_wsgi_application()
     log_message(">>> WSGI application obtained successfully.")
 except Exception as e:
     log_message(f"!!! FAILED to get WSGI application: {type(e).__name__} - {e}")
