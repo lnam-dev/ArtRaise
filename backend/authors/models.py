@@ -8,9 +8,7 @@ class Author(models.Model):
     theme = models.CharField(max_length=255)
     expression_type = models.CharField(max_length=255)
     image_author = models.ImageField(
-        upload_to='images_author/',
-        blank=True,
-        null=True
+        upload_to='images_author/'
     )
 
     def __str__(self):
