@@ -28,6 +28,11 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+#Додано для автоматичного прослуховування /api
+FORCE_SCRIPT_NAME = "/api"
+USE_X_FORWARDED_HOST = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -194,5 +199,3 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
-
-
