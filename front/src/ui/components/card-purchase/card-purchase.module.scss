@@ -36,7 +36,7 @@
 }
 
 .fullname {
-	@apply font-fixel font-normal text-5;
+	@apply font-fixel font-normal self-stretch leading-6 text-5 self-stretch;
 
 	&_light {
 		@apply fullname;
@@ -50,20 +50,20 @@
 }
 
 .title {
-	@apply font-medium text-5;
+	@apply font-namu font-medium text-5 self-stretch leading-normal;
 
 	&_light {
-		@apply font-fixel title mb-1;
+		@apply title mb-1;
 	}
 
 	&_dark {
 		@apply title;
-		@apply font-namu text-white leading-none;
+		@apply text-white leading-6;
 	}
 }
 
 .size {
-	@apply font-fixel font-normal text-4;
+	@apply font-fixel font-normal text-4 self-stretch;
 
 	&_light {
 		@apply size;
@@ -71,7 +71,7 @@
 	}
 
 	&_dark {
-		@apply text-gray-500 mb-4;
+		@apply text-gray-500 mb-4 leading-[150%];
 	}
 }
 
