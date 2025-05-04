@@ -4,6 +4,7 @@ import { TArtPiece } from "~/types";
 import ButtonArrow from "~/ui/components/button/button-arrow";
 import classes from "./card-purchase.module.scss";
 import Arrow from "~/assets/arrow-right.svg";
+import CardHeart from "./card-heart";
 import Link from "~/bridge/ui/Link";
 
 interface CardPurchaseProps {
@@ -32,6 +33,7 @@ const CardPurchase = ({
 					height={9}
 					className="object-cover"
 				/>
+				{!isLight && <CardHeart />}
 			</figure>
 			<Tag
 				className={isLight ? classes.wrapper_light : classes.wrapper_dark}
@@ -45,6 +47,7 @@ const CardPurchase = ({
 					</p>
 					<h3 className={isLight ? classes.title : classes.title_dark}>
 						{card.title}
+						{card.creating_date != null && `, ${card.creating_date}`}
 					</h3>
 					<p className={isLight ? classes.size_light : classes.size_dark}>
 						{`${card.length_cm} см x ${card.width_cm} см`}
@@ -52,7 +55,7 @@ const CardPurchase = ({
 					<p
 						className={isLight ? classes.price_light : classes.price_dark}
 						aria-label={`Ціна: ${card.price} гривень`}>
-						&#8372;{card.price}
+						&#8372;{parseInt(card.price).toLocaleString("uk-UA")}
 					</p>
 					{isLight && (
 						<ButtonArrow

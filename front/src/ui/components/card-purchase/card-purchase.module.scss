@@ -20,6 +20,21 @@
 	}
 }
 
+.heart {
+	@apply p-2 rounded-full absolute bottom-4 right-4 duration-300 transition-all;
+	&_light {
+		@apply heart;
+	}
+
+	&_dark {
+		@apply heart;
+		@apply bg-gray-950.9;
+	}
+	&_solid {
+		@apply fill-white;
+	}
+}
+
 .fullname {
 	@apply font-fixel font-normal text-5;
 
