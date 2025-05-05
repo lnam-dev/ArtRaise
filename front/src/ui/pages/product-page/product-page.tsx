@@ -17,7 +17,7 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 		const width = parseInt(artPiece.width_cm);
 
 		if (length && width) {
-			return `${length} см x ${width} см`;
+			return `${length} см × ${width} см`;
 		}
 
 		if (length) {

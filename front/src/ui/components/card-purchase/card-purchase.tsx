@@ -50,7 +50,7 @@ const CardPurchase = ({
 						{card.creating_date != null && `, ${card.creating_date}`}
 					</h3>
 					<p className={isLight ? classes.size_light : classes.size_dark}>
-						{`${parseInt(card.length_cm)} cm × ${parseInt(card.width_cm)} cm`}
+						{`${parseInt(card.length_cm)} см × ${parseInt(card.width_cm)} см`}
 					</p>
 					<p
 						className={isLight ? classes.price_light : classes.price_dark}
