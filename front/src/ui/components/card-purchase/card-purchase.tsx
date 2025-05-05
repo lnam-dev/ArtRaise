@@ -24,7 +24,7 @@ const CardPurchase = ({
 		<article
 			className={isLight ? classes.card_light : classes.card_dark}
 			{...props}>
-			<figure className="relative w-full aspect-[16/9]">
+			<figure className="group relative w-full aspect-[16/9]">
 				<Image
 					src={card.image_artpiece ?? process.env.DEFAULT_IMAGE}
 					alt={card.title}

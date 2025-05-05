@@ -1,7 +1,7 @@
 "use client";
-import clases from "./card-purchase.module.scss";
-import Heart from "~/assets/heart.svg";
 import { useState } from "react";
+import Heart from "~/assets/heart.svg";
+import clases from "./card-purchase.module.scss";
 
 const CardHeart = () => {
 	const [isActive, setIsActive] = useState(false);
