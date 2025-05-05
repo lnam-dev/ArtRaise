@@ -201,7 +201,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static/')
 # MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media/')
-MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.{AWS_S3_ENDPOINT_URL.split("https://")[1]}/'
+MEDIA_URL = os.environ.get('MEDIA_URL')
 STATIC_URL = '/static/'
 
 # Default primary key field type
