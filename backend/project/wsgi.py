@@ -1,3 +1,12 @@
+# import os
+
+# from django.core.wsgi import get_wsgi_application
+
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings.base')
+
+# application = get_wsgi_application()
+
+# backend/project/wsgi.py
 """
 WSGI config for project project.
 
@@ -8,9 +17,10 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
-
+print("[WSGI] Starting WSGI application...", flush=True)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings.base')
 application = get_wsgi_application()
+print("[WSGI] WSGI application loaded successfully", flush=True)
+

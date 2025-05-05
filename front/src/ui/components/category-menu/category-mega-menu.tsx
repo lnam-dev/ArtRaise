@@ -1,7 +1,6 @@
 // 'use client';
 
 // import { useState, useEffect } from 'react';
-// import Link from '~/bridge/ui/Link';
 // import { Category } from './category';
 // import ArrowRight from '~/assets/arrow-right.svg';
 // import axios from 'axios';

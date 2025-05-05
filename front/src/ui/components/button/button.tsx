@@ -1,10 +1,8 @@
 "use client";
-
 import React from "react";
 import Link from "~/bridge/ui/Link";
 import { TButtonProps } from "~/types/button";
 import classes from "./button.module.scss";
-import Arrow from "~/assets/arrow-right.svg";
 
 export default function Button({
 	children,
