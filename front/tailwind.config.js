@@ -146,8 +146,8 @@ module.exports = {
 		},
 		fontFamily: {
 			text: ["Raleway", "sans-serif"],
-			fixel: ["Fixel", "sans-serif"],
-			namu: ["Namu", "sans-serif"],
+			fixel: ["fixel", "sans-serif"],
+			namu: ["namu", "sans-serif"],
 			museo: ['"Museo Sans Cyr"', "sans-serif"],
 		},
 	},
