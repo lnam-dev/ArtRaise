@@ -1,5 +1,5 @@
 import Accordion from "../accordion/accordion";
-import Link from "next/link";
+import Link from "~/bridge/ui/Link";
 import Script from "next/script";
 import { TAccordion } from "~/types/accordion";
 
@@ -41,7 +41,7 @@ export default function CallToActionAccordion() {
 	};
 
 	return (
-		<div>
+		<div className="space-y-6">
 			<Script
 				id="faq-schema"
 				type="application/ld+json"
@@ -53,10 +53,13 @@ export default function CallToActionAccordion() {
 					{content}
 				</Accordion>
 			))}
-
-			<Link className="font-fixel font-normal text-4 text-gray-950" href="/">
-				Більше
-			</Link>
+			<div>
+				<Link
+					className="font-fixel font-normal text-4 text-gray-950 box-border"
+					href="#">
+					Більше
+				</Link>
+			</div>
 		</div>
 	);
 }
