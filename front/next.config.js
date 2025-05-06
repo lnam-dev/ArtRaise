@@ -29,6 +29,10 @@ const nextConfig = withNextIntl({
 				protocol: "http",
 				hostname: "localhost",
 			},
+			{
+				protocol: "https",
+				hostname: "artraise-media.fra1.cdn.digitaloceanspaces.com",
+			},
 		],
 	},
 	devIndicators: {
