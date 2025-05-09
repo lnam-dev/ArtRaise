@@ -21,7 +21,7 @@ const AuthorCard: FC<Props> = ({ author }) => {
 				{" "}
 				{/* Aspect ratio for consistent image size */}
 				<img
-					src={`http://localhost:8000${image_author}`}
+					src={`${image_author}`}
 					alt="Author"
 					className={"inline-block w-full h-auto aspect-[16/9] object-cover"}
 				/>
