@@ -59,7 +59,7 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
 			/>
-			<section className="mb-6">
+			<section className="mb-10 lg:mb-6">
 				<BreadcrumbsWrapper activeIndex={2} className="mb-3">
 					<BreadcrumbsLink>Категорії</BreadcrumbsLink>
 					<BreadcrumbsLink>Живопис</BreadcrumbsLink>
@@ -70,32 +70,35 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				</LinkBackTo>
 				<SliderWrapper slides={slides} author={artPiece.author} />
 			</section>
-			<div className="grid grid-cols-[5fr_3fr] gap-12 mobile-spacing">
-				<article className="space-y-4">
+			<div className="grid grid-cols-1 gap-12 gap-y-0 lg:grid-cols-[5fr_3fr] mobile-spacing">
+				<article className="order-2 mb-8 lg:row-span-2 lg:mb-0 lg:order-none space-y-4">
 					<Character title="Матеріал" value={artPiece.material} />
 					<Character title="Тема" value={artPiece.theme} />
 					<Character title="Стиль" value={artPiece.style} />
 					<Character title="Дата створення" value={artPiece.creating_date} />
 					<Character title="Розмір" value={size} />
-
 					{accordionItems.map(({ title, content }) => (
 						<Accordion key={title} title={title} size="bg">
 							{content}
 						</Accordion>
 					))}
 				</article>
-				<aside className="flex flex-col justify-start col-span-1 w-full">
+				<aside className="order-1 lg:order-none flex flex-col justify-start col-sp w-full">
 					<PriceBar
 						title="Вартість картини"
 						price={artPiece.price}
-						className="mb-[4rem]"
+						className="mb-8 xl:mb-[4rem]"
 					/>
-					<div className="space-y-8">
+				</aside>
+				<aside className="order-3 lg:order-none lg:col-start-2">
+					<div>
 						<h2 className="font-fixel font-medium tracking-[-0.04rem] text-left text-6 xl:text-8 mb-4">
 							Роботи інших авторів у схожій стилістиці
 						</h2>
-						<CardPurchase card={artPiece} variable="dark" />
-						<CardPurchase card={artPiece} variable="dark" />
+						<div className="space-y-8">
+							<CardPurchase card={artPiece} variable="dark" />
+							<CardPurchase card={artPiece} variable="dark" />
+						</div>
 					</div>
 				</aside>
 			</div>
