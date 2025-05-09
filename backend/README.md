@@ -1,4 +1,48 @@
-# ArtRaise
+# 🖼️ ArtRaise Backend Documentation
+
+This is the backend for the **ArtRaise** platform, built with **Django** and **Django REST Framework**.
+
+---
+
+## 📦 Tech Stack
+
+- Python 3.11+
+- Django 4.x
+- Django REST Framework
+- PostgreSQL
+- DigitalOcean (for deployment and database)  
+  ➤ [How To Deploy](https://www.digitalocean.com/community/tutorials/how-to-deploy-django-to-app-platform#step-4-mdash-deploying-to-digitalocean-with-app-platform)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository & Set Up Environment
+
+```bash
+# Clone the project
+git clone https://github.com/makson2006/ArtRaise.git
+cd artraise/backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# For Windows:
+venv\Scripts\activate
+``` 
+```bash
+
+# For Linux/macOS:
+source venv/bin/activate
+``` 
+```bash
+
+# Install dependencies
+pip install -r requirements.txt
+``` 
+
+```bash
 
 # Docker DEV
 
@@ -13,9 +57,10 @@
 # 5.    Запуск сервера
         docker-compose up
 # 6.    Щоб увійти в адмінку, переходитe за 
-        http://localhost:8000/cms
+        websitedoman/cms
 #       Вводите попередньо вказані дані суперюзера
 
+``` 
 
 # Список API
 {GET}
