@@ -22,6 +22,9 @@ This is the backend for the **ArtRaise** platform, built with **Django** and **D
 ```bash
 # Clone the project
 git clone https://github.com/makson2006/ArtRaise.git
+``` 
+```bash
+
 cd artraise/backend
 
 # Create virtual environment
@@ -47,15 +50,28 @@ pip install -r requirements.txt
 # Docker DEV
 
 # 1.    Запуcr Docker-контейнера
-        docker-compose build
+docker-compose build
+``` 
+```bash
+
 # 2.    Додавання міграції
         docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
+``` 
+```bash
+
 # 3.    Виконання міграції
-        docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
+docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
+``` 
+```bash
+
 # 4.    Створення суперкористувача
         docker-compose run --rm backend sh -c "python manage.py createsuperuser --settings=project.settings.dev"
+``` 
+```bash
+
 # 5.    Запуск сервера
         docker-compose up
+``` 
 # 6.    Щоб увійти в адмінку, переходитe за 
         websitedoman/cms
 #       Вводите попередньо вказані дані суперюзера
