@@ -31,7 +31,7 @@ COPY --from=builder /app/public public
 COPY --from=builder /app/package.json ./
 
 # Expose the port Next.js runs on
-EXPOSE 3000
+EXPOSE 8080
 
 # Set production environment
 ENV NODE_ENV=production
