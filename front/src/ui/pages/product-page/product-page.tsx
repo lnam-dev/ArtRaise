@@ -35,13 +35,6 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 		];
 	}, [artPiece.description, artPiece.author?.bio_text]);
 
-	const slides = [
-		{
-			imgSrc: artPiece.image_artpiece,
-			title: artPiece.title,
-		},
-	];
-
 	const schema = {
 		"@context": "https://schema.org",
 		"@type": "FAQPage",
@@ -68,7 +61,7 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				<LinkBackTo path="/" className="mb-8">
 					назад до Категорій
 				</LinkBackTo>
-				<SliderWrapper slides={slides} author={artPiece.author} />
+				<SliderWrapper artPiece={artPiece} />
 			</section>
 			<div className="grid grid-cols-1 gap-12 gap-y-0 lg:grid-cols-[5fr_3fr] mobile-spacing">
 				<article className="order-2 mb-8 lg:row-span-2 lg:mb-0 lg:order-none space-y-4">
