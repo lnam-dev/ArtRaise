@@ -5,7 +5,6 @@ import AuthorsPage from "~/ui/pages/authors-page/authors-page";
 
 const getAuthorsData = async (): Promise<TAuthor[]> => {
 	try {
-		console.log("try")
 		const responseAuthors = await fetch(`${process.env.API_URL}authors`);
 		if (!responseAuthors.ok) {
 			console.error(`Failed to fetch art pieces: ${responseAuthors.status}`);
