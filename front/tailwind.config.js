@@ -58,6 +58,7 @@ module.exports = {
 					950: "#131315",
 					950.9: "rgba(35, 35, 39, 0.9)", // HOVER 90%
 				},
+				black: "rgba(35, 35, 39, 1)",
 				focus: "#687CB0",
 				error: "#FF2424",
 			},
@@ -120,6 +121,7 @@ module.exports = {
 		},
 		boxShadow: {
 			DEFAULT: "0 4px 8px rgba(0, 0, 0, 0.15)",
+			line: "inset 0 -4px 0 0 white",
 			sm: "0 4px 4px rgba(0, 0, 0, 0.25)",
 		},
 		colors: {

@@ -27,6 +27,8 @@ export default async ({
 	return (
 		<html lang={locale} className="scrollbar">
 			<head>
+				<title>ARTRAISE</title>
+				<link rel="icon" href="/lnaa-logo.png" />
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />

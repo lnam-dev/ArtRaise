@@ -1,5 +1,6 @@
 "use client";
 
+import { current } from "@reduxjs/toolkit";
 import { useState, useEffect, useLayoutEffect } from "react";
 
 const useDevice = () => {
@@ -7,6 +8,7 @@ const useDevice = () => {
 		isMobile: false,
 		isTablet: false,
 		isDesktop: false,
+		currentDevice: "desktop",
 		containerWidth: 0,
 		screenWidth: 0,
 		marginsAuto: 0,
@@ -18,12 +20,17 @@ const useDevice = () => {
 		const isTablet = screenWidth > 768 && screenWidth <= 992;
 		const isDesktop = screenWidth > 1344;
 
+		let currentElement: "mobile" | "tablet" | "desktop" = "desktop";
+		if (isMobile) currentElement = "mobile";
+		else if (isTablet) currentElement = "tablet";
+
 		setDevice((prevState) => ({
 			...prevState,
 			isMobile,
 			isTablet,
 			isDesktop,
 			screenWidth,
+			currentDevice: currentElement,
 		}));
 	};
 
