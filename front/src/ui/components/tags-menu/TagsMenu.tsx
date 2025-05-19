@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import FilterTag from "~/ui/components/filter-tag/filter-tag";
+import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 type Props = {
     tags: string[];//arrays of tag
     onSelectTag: (tag: string) => void;//callback to setSelectedTag in parent component

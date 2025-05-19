@@ -2,7 +2,7 @@
 import React, {FC, useState} from 'react';
 import FilterDropdown from "~/ui/components/search-bar/filter-dropdown";
 import {ChevronDown} from "lucide-react";
-import FilterTag from "~/ui/components/filter-tag/filter-tag";
+import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import LettersMenu from "~/ui/components/authors/authors-filtermenu/LettersMenu";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {setSelectedLetterIndex} from "~/store/client/slices/AuthorsPageSlice";
