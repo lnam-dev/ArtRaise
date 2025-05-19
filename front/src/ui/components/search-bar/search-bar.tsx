@@ -7,6 +7,7 @@ import Hash from "~/assets/hash.svg";
 import {useRouter} from "next/navigation";
 import usePath from "~/ui/hooks/usePath";
 import DefaultTag from "~/ui/components/tag/default-tag";
+import {useLocale} from "next-intl";
 
 const TAGS = [
 	"Pop Art до $500",
@@ -23,12 +24,12 @@ const SearchBar: FC<React.HTMLAttributes<HTMLElement>> = ({
 }) => {
 	const [inputString, setInputString] = useState<string>("")
 	const router = useRouter();
-	const path = usePath();
+	const path = usePath()
 	return (
 		<div
 			className={`container flex flex-col gap-2 mx-auto ${className}`}
 			{...props}>
-			<SearchInput className="px-4 xl:px-0 mb-6" handleOnSearchClick={()=>router.push(`${path}search?title=${inputString}`)} setInputString={setInputString} searchString={inputString} />
+			<SearchInput className="px-4 xl:px-0 mb-6" handleOnSearchClick={()=>router.push(path(`search?title=${inputString}`))} setInputString={setInputString} searchString={inputString} />
 			<SegmentTitle className="px-4 xl:px-0 mb-8 hidden xl:block">
 				Шукайте за тегами
 			</SegmentTitle>

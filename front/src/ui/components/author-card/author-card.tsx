@@ -27,7 +27,7 @@ const AuthorCard: FC<Props> = ({ author }) => {
 				/>
 				<div
 					className={
-						"flex flex-row justify-center items-center cursor-pointer"
+						"flex flex-row justify-between px-4 items-center cursor-pointer"
 					}>
 					<div className={"px-6 py-4 text-5"}>
 						<h3 className={""}>{fullname}</h3>

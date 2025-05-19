@@ -18,7 +18,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>
-                <div className={"flex w-full flex-wrap gap-3"}>
+                <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         ArtTypeArray.map((value) => {
                             const isSelected = filterState.type === value;
@@ -41,7 +41,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 </div>
             </Accordion>
             <Accordion title={"Стиль"}>
-                <div className={"flex w-full flex-wrap gap-3"}>
+                <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         ArtStyleArray.map((value) => {
                             const isSelected = filterState.style === value;
@@ -63,7 +63,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 </div>
             </Accordion>
             <Accordion title={"Тема"}>
-                <div className={"flex w-full flex-wrap gap-3"}>
+                <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         ArtThemeArray.map((value) => {
                             const isSelected = filterState.theme === value;
