@@ -1,0 +1,92 @@
+.card {
+	@apply break-inside-avoid;
+
+	&_light {
+		@apply card;
+	}
+
+	&_dark {
+		@apply card;
+		@apply bg-gray-950;
+	}
+}
+
+.wrapper {
+	&_light {
+	}
+
+	&_dark {
+		@apply flex justify-between items-center px-6 py-4 transition-all duration-300 hover:bg-gray-950.9;
+	}
+}
+
+.heart {
+	@apply p-2 rounded-full absolute bottom-4 right-4 duration-300 transition-all;
+
+	&_light {
+		@apply heart;
+	}
+
+	&_dark {
+		@apply heart;
+		@apply bg-gray-950.9;
+	}
+
+	&_solid {
+		@apply fill-white;
+	}
+}
+
+.fullname {
+	@apply font-fixel font-normal self-stretch leading-6 text-5 self-stretch;
+
+	&_light {
+		@apply fullname;
+		@apply mb-1 mt-2;
+	}
+
+	&_dark {
+		@apply fullname;
+		@apply text-gray-500 mb-2;
+	}
+}
+
+.title {
+	@apply font-namu font-medium text-5 self-stretch leading-normal;
+
+	&_light {
+		@apply title mb-1;
+	}
+
+	&_dark {
+		@apply title;
+		@apply text-white leading-6;
+	}
+}
+
+.size {
+	@apply font-fixel font-normal text-4 self-stretch;
+
+	&_light {
+		@apply size;
+		@apply text-gray-700 mb-6;
+	}
+
+	&_dark {
+		@apply text-gray-500 mb-4 leading-[150%];
+	}
+}
+
+.price {
+	@apply font-fixel font-medium text-5;
+
+	&_light {
+		@apply price;
+		@apply mb-6;
+	}
+
+	&_dark {
+		@apply price;
+		@apply text-white;
+	}
+}

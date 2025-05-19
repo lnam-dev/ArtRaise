@@ -1,29 +1,50 @@
 services:
-  project:
+  backend:
     build:
-      context: .
+      context: ./backend
+      args:
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:
-      - ./project:/project
+      - ./backend:/backend
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py migrate --settings=project.settings.base &&
+             python manage.py runserver --settings=project.settings.base 0.0.0.0:8000"
     environment:
-      - DB_HOST=db
-      - DB_NAME=artraise
-      - DB_USER=artraise
-      - DB_PASS=artraise
+      - DB_HOST=artraise-db-do-user-20452403-0.j.db.ondigitalocean.com
+      - DB_NAME=defaultdb
+      - DB_USER=doadmin
+      - DB_PASS=AVNS_4xGPtpfhtxZYkY71Z_V
+      - DB_PORT=25060
+#    depends_on:
+#      - db
+
+#  db:
+#    image: postgres:17-alpine
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - dev-db_data:/var/lib/postgresql/data
+#    environment:
+#      - POSTGRES_DB=artraise
+#      - POSTGRES_USER=artraise
+#      - POSTGRES_PASSWORD=artraise
+  front:
+    build:
+      context: ./front
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - SERVER_PORT=3000
     depends_on:
-      - db
-
-  db:
-    image: postgres:17-alpine
-    volumes:
-      - dev-db_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=artraise
-      - POSTGRES_USER=artraise
-      - POSTGRES_PASSWORD=artraise
-
-volumes:
-  dev-db_data:
+      - backend
+    env_file:
+      - ./front/.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+#volumes:
+#  dev-db_data:
