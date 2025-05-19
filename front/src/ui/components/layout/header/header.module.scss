@@ -1,0 +1,16 @@
+.link {
+	@apply font-fixel font-normal text-4 box-content h-full px-4 transition-all duration-300 hover:shadow-line 2xl:text-[1.25rem] xl:text-[1rem] lg:text-[0.75rem] flex items-center;
+}
+
+.switch {
+	@apply flex items-center gap-2;
+
+	&_language {
+		@apply font-fixel font-normal text-4 text-gray-700;
+
+		&__active {
+			@extend .switch_language;
+			@apply text-white;
+		}
+	}
+}
