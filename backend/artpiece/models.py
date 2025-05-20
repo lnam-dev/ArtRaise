@@ -63,7 +63,6 @@ class ArtPiece(models.Model):
     orientation = models.CharField(
         max_length=10,
         choices=ArtPieceOrientation.choices,
-        blank=True
     )
     gamma = models.CharField(max_length=255, blank=True)
     dominant_color = models.CharField(max_length=255, blank=True)

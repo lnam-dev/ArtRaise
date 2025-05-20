@@ -24,11 +24,15 @@ const nextConfig = withNextIntl({
 	},
 	reactStrictMode: true,
 	images: {
-		domains: ["localhost","artraise-media.fra1.cdn.digitaloceanspaces.com"],
+		domains: ["localhost", "artraise-media.fra1.cdn.digitaloceanspaces.com"],
 		remotePatterns: [
 			{
 				protocol: "http",
 				hostname: "localhost",
+			},
+			{
+				protocol: "https",
+				hostname: "artraise-dev-pidyo.ondigitalocean.app",
 			},
 			{
 				protocol: "https",

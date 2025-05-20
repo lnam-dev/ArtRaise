@@ -84,8 +84,11 @@
 		@apply px-4 xl:px-0;
 	}
 
-	.focal-point-container {
-		container-type: size;
+	.hover_button__light {
+		transition: all 0.2s;
+	}
+	.hover_button__light:hover {
+		opacity: 75%;
 	}
 
 	.focal-point-container img {

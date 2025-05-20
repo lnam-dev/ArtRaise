@@ -18,7 +18,6 @@ export default async ({
 }) => {
     const {locale} = params;
     let messages;
-
     try {
         messages = await getMessages({locale});
     } catch (error) {
