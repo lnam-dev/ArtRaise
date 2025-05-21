@@ -2,17 +2,22 @@ import django_filters
 from .models import ArtPiece, ArtPieceType
 from authors.models import Author
 
+# Заготовка під множинне значення через кому
+class CharInFilter(django_filters.BaseInFilter, django_filters.CharFilter):
+    pass
 
 class ArtPieceFilter(django_filters.FilterSet):
-    title = django_filters.CharFilter(field_name="title", lookup_expr="icontains")  # Пошук по частині назви
-    price_max = django_filters.NumberFilter(field_name="price", lookup_expr="lte")  # Максимальна ціна
-    price_min = django_filters.NumberFilter(field_name="price", lookup_expr="gte")  # Мінімальна ціна
+    title = django_filters.CharFilter(field_name="title", lookup_expr="icontains")
+    price_max = django_filters.NumberFilter(field_name="price", lookup_expr="lte")
+    price_min = django_filters.NumberFilter(field_name="price", lookup_expr="gte")
     price_range = django_filters.RangeFilter(field_name="price")
-    type = django_filters.ChoiceFilter(field_name="type", choices=ArtPieceType.choices)  # Тип твору мистецтва
-    material = django_filters.CharFilter(field_name="material", lookup_expr="icontains")  # Пошук по матеріалу
-    theme = django_filters.CharFilter(field_name="theme", lookup_expr="icontains")  # Пошук по темі
-    style = django_filters.CharFilter(field_name="style", lookup_expr="icontains")  # Пошук по стилю
-    author = django_filters.CharFilter(field_name="author__fullname", lookup_expr="icontains")  # Пошук по імені автора
+
+    # Поля з множинною фільтрацією
+    type = CharInFilter(field_name="type", lookup_expr="in")
+    material = CharInFilter(field_name="material", lookup_expr="in")
+    theme = CharInFilter(field_name="theme", lookup_expr="in")
+    style = CharInFilter(field_name="style", lookup_expr="in")
+    author = django_filters.CharFilter(field_name="author__fullname", lookup_expr="icontains")  # тут можна залишити як є
 
     class Meta:
         model = ArtPiece

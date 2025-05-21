@@ -27,6 +27,7 @@ export type TArtPiece = {
 	description: string;
 	certificate: string;
 	image_artpiece: string;
+	orientation: "landscape" | "portrait" | "square";
 	author: {
 		id: number;
 		fullname: string;

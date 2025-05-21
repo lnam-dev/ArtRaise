@@ -1,5 +1,5 @@
-import { Swiper as SwiperType } from "swiper";
 import { SwiperOptions } from "swiper/types";
+import { TArtPiece } from "./art";
 
 export type TSlide = {
 	imgSrc: string;
@@ -7,6 +7,9 @@ export type TSlide = {
 	subtitle?: string;
 	description?: string;
 };
+
+export type TSliderClassicProps = TSliderBaseProps &
+	Pick<TArtPiece, "orientation">;
 
 export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
