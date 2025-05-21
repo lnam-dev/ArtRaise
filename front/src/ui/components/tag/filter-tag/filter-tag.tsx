@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import Hash from "~/assets/hash.svg";
 import DefaultTag from "~/ui/components/tag/default-tag";
 
 interface FilterTagProps {

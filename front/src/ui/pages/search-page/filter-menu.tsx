@@ -1,20 +1,29 @@
 "use client"
-import React from 'react';
+import React, {useEffect} from 'react';
 import Accordion from "~/ui/components/accordion/accordion";
-import {ArtStyleArray, ArtThemeArray, ArtTypeArray, ArtTypeEnum} from "~/types/filter-types/filterenums";
+import {ArtStyleArray, ArtThemeArray, ArtTypeArray} from "~/types/filter-types/filterenums";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
-import {append} from "domutils";
-import {appendFilter, removeFilter} from "~/store/client/slices/SearchPageSlice";
-import {state} from "sucrase/dist/types/parser/traverser/base";
+import {appendFilter, removeFilter, setTitle} from "~/store/client/slices/SearchPageSlice";
+import {useSearchParams} from "next/navigation";
+import {FilterKeyEnum, filterKeys} from "~/types/filter-types/filter";
 
 type Props = {
     className?: string;
 }
 
 const FilterMenu: React.FC<Props> = ({className}) => {
+    const searchParams = useSearchParams();
     const dispatch = useAppDispatch()
     const filterState = useAppSelector(state => state.searchPageReducer)
+    //set filters state when refresh page by parsing url
+    useEffect(() => {
+        dispatch(setTitle(searchParams.get("title")??""));
+        //TODO price
+        for(const key of filterKeys) {
+            dispatch(appendFilter({filterKey: key, filterValue: searchParams.get(key)??""}))
+        }
+    }, []);
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>
