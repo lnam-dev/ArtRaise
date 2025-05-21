@@ -4,7 +4,7 @@ import Button from "../button/button";
 import useDevice from "~/ui/hooks/useDevice";
 import Search from "~/assets/search.svg";
 import Input from "../input/input";
-import {FC} from "react";
+import {FC, FormEvent} from "react";
 type Props = {
 	className?: string;
 	setInputString: (s:string) => void;
@@ -14,9 +14,12 @@ type Props = {
 
 const SearchInput: FC<Props> = ({className,setInputString,handleOnSearchClick,searchString}) => {
 	const { isMobile } = useDevice();
-
+	const handleSubmit = (e:FormEvent<HTMLFormElement>)=> {
+		e.preventDefault();
+		handleOnSearchClick();
+	}
 	return (
-		<div className={`flex ${className}`}>
+		<form className={`flex ${className}`} onSubmit={handleSubmit}>
 			<Input
 				type="text"
 				placeholder="Пошук за ім’ям автора та/або назвою"
@@ -25,7 +28,7 @@ const SearchInput: FC<Props> = ({className,setInputString,handleOnSearchClick,se
 				onChange={(e) => setInputString(e.target.value)}
 			/>
 			<Button className="w-[3.5rem] md:w-[21rem] py-2 px-4 bg-black text-white text-base font-medium"
-				onClick={handleOnSearchClick}
+				type={"submit"}
 			>
 				{isMobile ? (
 					<Search height={24} width={24} className="fill-white" />
@@ -33,7 +36,7 @@ const SearchInput: FC<Props> = ({className,setInputString,handleOnSearchClick,se
 					<span>Шукати</span>
 				)}
 			</Button>
-		</div>
+		</form>
 	);
 };
 

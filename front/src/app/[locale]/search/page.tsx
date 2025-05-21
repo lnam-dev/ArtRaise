@@ -6,7 +6,8 @@ import {TArtPiece} from "~/types";
 import CardPurchase from "~/ui/components/card-purchase/card-purchase";
 import FilterMenu from "~/ui/pages/search-page/filter-menu";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
-import MobileFilterMenu from "~/ui/pages/search-page/mobile-filter-menu";
+import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
+import FilterMapper from "~/ui/pages/search-page/filter-mapper";
 
 const getArtpiecesByQueryParams = async (queryParams: string): Promise<TArtPiece[]> => {
     try {
@@ -36,7 +37,8 @@ export default async function Page({searchParams}: { searchParams: Promise<Recor
                 <BreadcrumbsLink>Пошук</BreadcrumbsLink>
             </BreadcrumbsWrapper>
             <SearchPageInput className={"col-span-full pl-0 mb-8"}/>
-            <MobileFilterMenu className={`md:hidden col-span-full`}/>
+            <FilterMapper className={"col-span-full"}/>
+            <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <FilterMenu className={"py-2 hidden md:block"}/>
             <main className={"md:col-start-2 md:col-end-[-1] col-span-full"}>
                 {
