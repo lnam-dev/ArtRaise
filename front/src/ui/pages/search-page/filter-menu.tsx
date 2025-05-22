@@ -4,7 +4,13 @@ import Accordion from "~/ui/components/accordion/accordion";
 import {ArtStyleArray, ArtThemeArray, ArtTypeArray} from "~/types/filter-types/filterenums";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
-import {appendFilter, removeFilter, setTitle} from "~/store/client/slices/SearchPageSlice";
+import {
+    appendFilter,
+    removeFilter,
+    setTitle,
+    setupFilterKeysValues,
+    TFilterKeysValues
+} from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
 import {FilterKeyEnum, filterKeys} from "~/types/filter-types/filter";
 
@@ -18,30 +24,38 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     const filterState = useAppSelector(state => state.searchPageReducer)
     //set filters state when refresh page by parsing url
     useEffect(() => {
+        const getFilterKeys = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
+            if(response.ok){
+                dispatch(setupFilterKeysValues(await response.json() as TFilterKeysValues));
+            }
+        }
+        getFilterKeys();
         dispatch(setTitle(searchParams.get("title")??""));
         //TODO price
         for(const key of filterKeys) {
             dispatch(appendFilter({filterKey: key, filterValue: searchParams.get(key)??""}))
         }
     }, []);
+    console.log(filterState.filterKeysValues)
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        ArtTypeArray.map((value) => {
-                            const isSelected = filterState.type === value;
+                        filterState.filterKeysValues.type.map((filter) => {
+                            const isSelected = filterState.type === filter.name;
                             const handleOnClick = () => {
                                 if (!isSelected) {
-                                    dispatch(appendFilter({filterKey: 'type', filterValue: value}))
+                                    dispatch(appendFilter({filterKey: 'type', filterValue: filter.name}))
                                 } else {
                                     dispatch(removeFilter({filterKey: 'type'}))
                                 }
                             }
                             return (
-                                <FilterTag key={value} className={`py-1`} onClick={handleOnClick}
+                                <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {value}
+                                    {`${filter.name}(${filter.count})`}
                                 </FilterTag>
                             )
                         })
@@ -52,41 +66,42 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Стиль"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        ArtStyleArray.map((value) => {
-                            const isSelected = filterState.style === value;
+                        filterState.filterKeysValues.style.map((filter) => {
+                            const isSelected = filterState.style === filter.name;
                             const handleOnClick = () => {
                                 if (!isSelected) {
-                                    dispatch(appendFilter({filterKey: 'style', filterValue: value}))
+                                    dispatch(appendFilter({filterKey: 'style', filterValue: filter.name}))
                                 } else {
                                     dispatch(removeFilter({filterKey: 'style'}))
                                 }
                             }
                             return (
-                                <FilterTag key={value} className={`py-1`} onClick={handleOnClick}
+                                <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {value}
+                                    {`${filter.name}(${filter.count})`}
                                 </FilterTag>
                             )
                         })
                     }
+
                 </div>
             </Accordion>
             <Accordion title={"Тема"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        ArtThemeArray.map((value) => {
-                            const isSelected = filterState.theme === value;
+                        filterState.filterKeysValues.theme.map((filter) => {
+                            const isSelected = filterState.theme === filter.name;
                             const handleOnClick = () => {
                                 if (!isSelected) {
-                                    dispatch(appendFilter({filterKey: 'theme', filterValue: value}))
+                                    dispatch(appendFilter({filterKey: 'theme', filterValue: filter.name}))
                                 } else {
                                     dispatch(removeFilter({filterKey: 'theme'}))
                                 }
                             }
                             return (
-                                <FilterTag key={value} className={`py-1`} onClick={handleOnClick}
+                                <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {value}
+                                    {`${filter.name}(${filter.count})`}
                                 </FilterTag>
                             )
                         })
