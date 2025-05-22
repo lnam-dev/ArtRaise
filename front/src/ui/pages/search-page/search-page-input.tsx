@@ -20,7 +20,7 @@ const SearchPageInput: React.FC<Props> = ({className}) => {
     const router = useRouter();
     // const queryParams = getFilteredUrlParamsFromObject(searchPageState.searchFilters).toString();
     return (
-        <SearchInput className={`pl-2 ${className}`} setInputString={(titleValue) => dispatch(setTitle(titleValue))}
+        <SearchInput className={`${className}`} setInputString={(titleValue) => dispatch(setTitle(titleValue))}
                      handleOnSearchClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromObject(searchFilterState)}`)}
                      searchString={searchPageState.title}/>
     );
