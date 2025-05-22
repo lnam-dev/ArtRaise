@@ -14,7 +14,7 @@
 
 # production
 /build
-
+/styles/tailwind.css
 # misc
 .DS_Store
 *.pem
