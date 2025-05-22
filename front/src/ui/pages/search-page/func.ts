@@ -12,10 +12,13 @@ export const getFilteredUrlParamsFromObject = (object: ISearchPageState): URLSea
 
 
     for (const key of filterKeys) {
-        const filterValue = object[key];//array of filters values
-        if(filterValue.trim() !== "") {
-            params.append(key, filterValue);
-        }
+        const filterValues = object[key];//array of filters values
+        filterValues.forEach(filterValue => {
+            if(filterValue.trim() !== "") {
+                params.append(key, filterValue);
+            }
+        });
+
     }
     new URLSearchParams(params)
     return new URLSearchParams(params)
