@@ -1,7 +1,6 @@
 "use client"
 import React, {useEffect} from 'react';
 import Accordion from "~/ui/components/accordion/accordion";
-import {ArtStyleArray, ArtThemeArray, ArtTypeArray} from "~/types/filter-types/filterenums";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
@@ -12,7 +11,7 @@ import {
     TFilterKeysValues
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
-import {FilterKeyEnum, filterKeys} from "~/types/filter-types/filter";
+import {filterKeys} from "~/types/filter-types/filter";
 
 type Props = {
     className?: string;
@@ -26,30 +25,36 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     useEffect(() => {
         const getFilterKeys = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
-            if(response.ok){
+            if (response.ok) {
                 dispatch(setupFilterKeysValues(await response.json() as TFilterKeysValues));
+            }
+            //get params from current URL
+            dispatch(setTitle(searchParams.get("title") ?? ""));
+            for (const key of filterKeys) {
+                const filterKeys = searchParams.getAll(key)//get all params that appear in url
+                filterKeys.forEach(filterValue => {
+                    if (filterValue.trim() !== "") {
+                        dispatch(appendFilter({filterKey: key, filterValue: filterValue}))
+                    }
+                })
+
             }
         }
         getFilterKeys();
-        dispatch(setTitle(searchParams.get("title")??""));
         //TODO price
-        for(const key of filterKeys) {
-            dispatch(appendFilter({filterKey: key, filterValue: searchParams.get(key)??""}))
-        }
     }, []);
-    console.log(filterState.filterKeysValues)
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         filterState.filterKeysValues.type.map((filter) => {
-                            const isSelected = filterState.type === filter.name;
+                            const isSelected = filterState.type.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
                                     dispatch(appendFilter({filterKey: 'type', filterValue: filter.name}))
                                 } else {
-                                    dispatch(removeFilter({filterKey: 'type'}))
+                                    dispatch(removeFilter({filterKey: 'type', filterValue: filter.name}))
                                 }
                             }
                             return (
@@ -67,12 +72,12 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         filterState.filterKeysValues.style.map((filter) => {
-                            const isSelected = filterState.style === filter.name;
+                            const isSelected = filterState.style.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
                                     dispatch(appendFilter({filterKey: 'style', filterValue: filter.name}))
                                 } else {
-                                    dispatch(removeFilter({filterKey: 'style'}))
+                                    dispatch(removeFilter({filterKey: 'style', filterValue: filter.name}))
                                 }
                             }
                             return (
@@ -90,12 +95,12 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
                         filterState.filterKeysValues.theme.map((filter) => {
-                            const isSelected = filterState.theme === filter.name;
+                            const isSelected = filterState.theme.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
                                     dispatch(appendFilter({filterKey: 'theme', filterValue: filter.name}))
                                 } else {
-                                    dispatch(removeFilter({filterKey: 'theme'}))
+                                    dispatch(removeFilter({filterKey: 'theme', filterValue: filter.name}))
                                 }
                             }
                             return (
@@ -110,7 +115,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 </div>
             </Accordion>
             <Accordion title={"Ціна"}>
-                <div>hello</div>
+                <div className={"w-fit"}>hello</div>
             </Accordion>
             <Accordion title={"Матеріал"}>
                 <div>hello</div>
