@@ -4,12 +4,19 @@ module.exports = {
 	mode: "jit",
 	content: ["./src/**/*.{ts,tsx,jsx,js}"],
 	theme: {
+		container: {
+			center: false,
+			screens: {
+				xl: "81.25rem", // 1300px / 16
+				"2xl": "96rem", // 1536px / 16
+			},
+		},
 		screens: {
-			sm: "640px",
-			md: "768px",
-			lg: "1024px",
-			xl: "1344px",
-			"2xl": "1600px",
+			sm: "40rem", // 640px
+			md: "48rem", // 768px
+			lg: "64rem", // 1024px
+			xl: "84rem", // 1344px
+			"2xl": "100rem", // 1600px
 		},
 		spacing: {
 			auto: "auto",
@@ -20,7 +27,6 @@ module.exports = {
 			max: "max-content",
 			layout: "1600px",
 			content: "1040px",
-			container: "1400px",
 			card: "730px",
 		},
 		fontSize: {
