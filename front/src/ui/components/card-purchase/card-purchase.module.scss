@@ -7,7 +7,7 @@
 
 	&_dark {
 		@apply card;
-		@apply bg-gray-950;
+		@apply bg-black;
 	}
 }
 
@@ -16,7 +16,7 @@
 	}
 
 	&_dark {
-		@apply flex justify-between items-center px-6 py-4 transition-all duration-300 hover:bg-gray-950.9;
+		@apply flex justify-between items-center px-6 py-4 transition-all duration-300 hover:bg-gray-950/90;
 	}
 }
 
@@ -29,7 +29,7 @@
 
 	&_dark {
 		@apply heart;
-		@apply bg-gray-950.9;
+		@apply bg-gray-950/90;
 	}
 
 	&_solid {

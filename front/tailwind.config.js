@@ -55,10 +55,9 @@ module.exports = {
 					700: "#62636D", //SOLID
 					500: "#B9BBC8", //BORDERS
 					900: "#2D2D2D",
-					950: "#131315",
-					950.9: "rgba(35, 35, 39, 0.9)", // HOVER 90%
+					950: "rgba(35, 35, 39, 1)",
 				},
-				black: "rgba(35, 35, 39, 1)",
+				black: "rgba(19, 19, 21, 1)",
 				focus: "#687CB0",
 				error: "#FF2424",
 			},

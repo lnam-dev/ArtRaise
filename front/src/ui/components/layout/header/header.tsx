@@ -14,7 +14,7 @@ import classes from "./header.module.scss";
 export const Header = () => {
 	const { isDesktop, isMobile } = useDevice();
 	return (
-		<header className="flex items-center w-full h-10 xl:h-[3.5rem] lg:h-[3.75rem] bg-black/90 backdrop-blur-sm text-white fixed top-0 left-0 z-50">
+		<header className="flex items-center w-full h-10 xl:h-[3.5rem] lg:h-[3.75rem] bg-gray-950/90 backdrop-blur-sm text-white fixed top-0 left-0 z-50">
 			<div className="flex justify-between items-center container mx-auto h-full w-full">
 				<Link
 					to="/"
