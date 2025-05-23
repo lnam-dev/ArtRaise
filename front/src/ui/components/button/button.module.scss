@@ -4,7 +4,7 @@
 
 	&_dark {
 		@apply button;
-		@apply text-white bg-black hover:bg-gray-950.9;
+		@apply text-white bg-black hover:bg-gray-950/90;
 	}
 
 	&_light {

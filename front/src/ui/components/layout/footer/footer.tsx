@@ -8,7 +8,7 @@ import DepartmentGDLogo from "~/assets/department-gd-logo.svg";
 
 export const Footer = () => {
 	return (
-		<footer className="w-full mt-[5rem] bg-[#131315] text-white  ">
+		<footer className="w-full mt-[5rem] bg-black text-white  ">
 			<div className="container mx-auto mobile-spacing">
 				<div className="flex justify-between">
 					{/* Logo Section */}

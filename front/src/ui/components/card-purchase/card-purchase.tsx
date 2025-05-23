@@ -33,7 +33,7 @@ const CardPurchase = ({
 					height={9}
 					className="object-cover"
 				/>
-				{!isLight && <CardHeart />}
+				{/* {!isLight && <CardHeart />} */}
 			</figure>
 			<Tag
 				className={isLight ? classes.wrapper_light : classes.wrapper_dark}
