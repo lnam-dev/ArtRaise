@@ -19,6 +19,7 @@ const DefaultQA: React.FC<{ qa: TQuestionAnswer }> = ({qa}) => {
 }
 const OpenCloseQA: React.FC<{ qa: TQuestionAnswer }> = ({qa}) => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    //TODO fix underline height, sometimes one differ to one despite they have same height
     return (
         <li className={"w-full transition-all overflow-hidden md:text-5 mb-8"}>
             <div className={"relative col-span-full flex flex-row justify-between items-center pb-5 cursor-pointer"}
@@ -26,7 +27,7 @@ const OpenCloseQA: React.FC<{ qa: TQuestionAnswer }> = ({qa}) => {
                 <p className={"font-semibold"}>{qa.question}</p>
                 <Chevron height={20} width={20}
                          className={`transition-all duration-500 ${isOpen ? "-rotate-180" : "rotate-0"}`}/>
-                <UnderLine height={1}/>
+                <UnderLine />
             </div>
             <p className={`transition-all duration-500 ${isOpen ? "max-h-96" : "max-h-0"}`}>{qa.answer}</p>
         </li>
