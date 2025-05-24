@@ -25,10 +25,10 @@ const OpenCloseQA: React.FC<{ qa: TQuestionAnswer }> = ({qa}) => {
                  onClick={() => setIsOpen(!isOpen)}>
                 <p className={"font-semibold"}>{qa.question}</p>
                 <Chevron height={20} width={20}
-                         className={`transition-all duration-500 ${isOpen ? "rotate-0" : "-rotate-180"}`}/>
+                         className={`transition-all duration-500 ${isOpen ? "-rotate-180" : "rotate-0"}`}/>
                 <UnderLine height={1}/>
             </div>
-            <p className={`transition-all duration-500 ${isOpen ? "max-h-0" : "max-h-96"}`}>{qa.answer}</p>
+            <p className={`transition-all duration-500 ${isOpen ? "max-h-96" : "max-h-0"}`}>{qa.answer}</p>
         </li>
     )
 }
