@@ -1,14 +1,13 @@
 "use client";
 import Link from "~/bridge/ui/Link";
 import ArrowInsert from "~/assets/arrow-insert.svg";
-
 import LnaaLogo from "~/assets/lnaa-logo.svg";
 import FriendsLnaaLogo from "~/assets/friends-logo.svg";
 import DepartmentGDLogo from "~/assets/department-gd-logo.svg";
 
 export const Footer = () => {
 	return (
-		<footer className="w-full mt-[5rem] bg-black text-white  ">
+		<footer className="w-full mt-[5rem] bg-black text-white">
 			<div className="container mx-auto mobile-spacing">
 				<div className="flex justify-between">
 					{/* Logo Section */}
@@ -18,7 +17,7 @@ export const Footer = () => {
 						</h2>
 					</div>
 					{/* Contact */}
-					<div className="lg:flex flex-col xl:text-[1.25rem] ml-[1rem] space-y-1 font-namu text-grayCustom hidden">
+					<div className="lg:flex flex-col xl:text-[1.25rem] ml-[1rem] space-y-1 font-namu text-gray-300 hidden">
 						<Link to="mailto:friendsofinaa@gmail.com">
 							friendsofinaa@gmail.com
 						</Link>
@@ -71,40 +70,40 @@ export const Footer = () => {
 						to="/">
 						Хто ми є?
 					</Link>
-					<Link className="text-grayCustom pt-3" to="/">
+					<Link className="text-gray-300 pt-3" to="/">
 						Про нас
 					</Link>
-					<Link className="text-grayCustom pt-3" to="/">
+					<Link className="text-gray-300 pt-3" to="/">
 						Зв’язатися з нами
 					</Link>
-					<Link className="text-grayCustom pt-3" to="/">
+					<Link className="text-gray-300 pt-3" to="/">
 						Довідник колекціонера
 					</Link>
-					<Link className="text-grayCustom pt-3" to="/">
+					<Link className="text-gray-300 pt-3" to="/">
 						Збір на мистецтво
 					</Link>
 				</div>
 
-				<div className="lg:hidden py-[1.25rem] text-[#fff] opacity-50">
+				<div className="lg:hidden py-[1.25rem] text-white">
 					<Link to="mailto:friendsofinaa@gmail.com">
 						friendsofinaa@gmail.com
 					</Link>
 					<p>+380 98 859 39 00</p>
 				</div>
 
-				<div className="flex justify-between items-center mt-3 py-3 border-t-1 lg:border-t-2 lg:mt-8 lg:pt-3 lg:pb-3 border-[rgba(209,209,209,0.5)]">
+				<div className="flex justify-between items-center mt-3 py-3 border-t-1 lg:border-t-2 lg:mt-8 lg:pt-3 lg:pb-3 border-gray-300/50">
 					<div className="flex lg:gap-[6rem]">
-						<p className="lg:h-[1rem] lg:text-[0.875rem] lg:tracking-[-5%] lg:opacity-50 font-namu text-grayCustom">
+						<p className="lg:h-[1rem] lg:text-[0.875rem] lg:tracking-[-5%] lg:opacity-50 font-namu text-gray-300">
 							© {new Date().getFullYear()}, ArtRaise Services.
 						</p>
-						<p className="lg:flex lg:h-[1rem] lg:text-[0.875rem] font-namu text-grayCustom opacity-50 hidden">
+						<p className="lg:flex lg:h-[1rem] lg:text-[0.875rem] font-namu text-gray-300/50 hidden">
 							All Rights Reserved
 						</p>
 					</div>
 
 					<div className="flex items-center lg:gap-[9rem]">
 						<Link
-							className="flex items-center gap-1 lg:flex lg:h-[1.25rem] lg:text-[1rem] text-grayCustom hidden"
+							className="flex items-center gap-1 lg:flex lg:h-[1.25rem] lg:text-[1rem] text-gray-300 hidden"
 							to=""
 							onClick={(e: any) => {
 								e.preventDefault();
@@ -113,7 +112,7 @@ export const Footer = () => {
 							Догори
 							<ArrowInsert />
 						</Link>
-						<p className="lg:flex lg:mr-[6rem] lg:h-[1rem] lg:text-[0.875rem] text-grayCustom opacity-50 font-namu hidden">
+						<p className="lg:flex lg:mr-[6rem] lg:h-[1rem] lg:text-[0.875rem] text-gray-300/50 font-namu hidden">
 							Design by &lt;5
 						</p>
 					</div>
