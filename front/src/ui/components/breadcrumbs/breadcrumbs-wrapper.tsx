@@ -13,7 +13,7 @@ const BreadcrumbsWrapper = React.memo(
 
 		return (
 			<nav {...props}>
-				<ul className="flex items-center gap-2 list-none pl-4 xl:pl-0">
+				<ul className="flex items-center gap-2 list-none xl:pl-0">
 					{Children.map(children, (child: ReactNode, index: number) => {
 						const isActive = index === activeIndex;
 

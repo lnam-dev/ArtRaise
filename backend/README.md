@@ -109,5 +109,22 @@ docker-compose run --rm backend sh -c "python manage.py makemigrations --setting
 
 /api/search/
 
+# Для перегляду кількості айтемів в фільтрах
 
+GET /api/artpieces/stats/
 
+Формат відповіді
+{
+  "type": [
+    {"name": "painting", "count": 12},
+    {"name": "sculpture", "count": 5}
+  ],
+  "style": [
+    {"name": "abstract", "count": 13},
+    {"name": "modern", "count": 7}
+  ],
+  "theme": [
+    {"name": "nature", "count": 4},
+    {"name": "portrait", "count": 8}
+  ]
+}
