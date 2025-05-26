@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import classes from "./header.module.scss";
+import "./header.scss";
 
 const HeaderSwitchLang = () => {
 	const router = useRouter();
@@ -19,18 +19,18 @@ const HeaderSwitchLang = () => {
 	};
 
 	return (
-		<div className={classes.switch}>
+		<div className="switch">
 			<button
 				onClick={() => handleChangeLocale("ua")}
-				className={`${classes.switch_language} ${
-					currentLocale("ua") ? classes.switch_language__active : null
+				className={`switch__button ${
+					currentLocale("ua") ? "switch__button--active" : null
 				}`}>
 				UA
 			</button>
 			<button
 				onClick={() => handleChangeLocale("en")}
-				className={`${classes.switch_language} ${
-					currentLocale("en") ? classes.switch_language__active : null
+				className={`switch__button ${
+					currentLocale("en") ? "switch__button--active" : null
 				}`}>
 				EN
 			</button>

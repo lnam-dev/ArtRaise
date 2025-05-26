@@ -1,0 +1,19 @@
+.link {
+	@apply font-fixel font-normal text-4 box-content h-full px-4 transition-all duration-300 hover:shadow-line xl:text-4 flex items-center;
+
+	&--active {
+		@apply shadow-line;
+	}
+}
+
+.switch {
+	@apply flex items-center gap-2;
+
+	&__button {
+		@apply font-fixel font-normal text-4 text-gray-700;
+
+		&--active {
+			@apply text-white;
+		}
+	}
+}

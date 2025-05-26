@@ -126,7 +126,7 @@ module.exports = {
 		},
 		boxShadow: {
 			DEFAULT: "0 4px 8px rgba(0, 0, 0, 0.15)",
-			line: "inset 0 -4px 0 0 white",
+			line: "inset 0 -4px 0 0 rgb(255,255,255)",
 			sm: "0 4px 4px rgba(0, 0, 0, 0.25)",
 		},
 		colors: {
