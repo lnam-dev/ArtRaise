@@ -1,4 +1,4 @@
-import colors, { black } from "tailwindcss/colors";
+import colors from "tailwindcss/colors";
 
 module.exports = {
 	mode: "jit",
@@ -62,7 +62,10 @@ module.exports = {
 					900: "rgba(45, 45, 45, 1)",
 					950: "rgba(35, 35, 39, 1)",
 				},
-				black: "rgba(19, 19, 21, 1)",
+				black: {
+					950: "rgba(31, 31, 31, 1)",
+					1000: "rgba(19, 19, 21, 1)",
+				},
 				focus: "#687CB0",
 				error: "#FF2424",
 			},

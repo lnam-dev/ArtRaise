@@ -13,13 +13,15 @@ export default function Button({
 }: TButtonProps) {
 	const isDark = variant === "dark";
 	const button = (
-		<button
-			className={`${
-				isDark ? classes.button_dark : classes.button_light
-			} ${className}`}
-			{...props}>
-			{children}
-		</button>
+		<div className="disabled">
+			<button
+				className={`${
+					isDark ? classes.button_dark : classes.button_light
+				} ${className}`}
+				{...props}>
+				{children}
+			</button>
+		</div>
 	);
 	return href ? <Link to={href}>{button}</Link> : button;
 }

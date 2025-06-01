@@ -4,12 +4,16 @@
 
 	&_dark {
 		@apply button;
-		@apply text-white bg-black hover:bg-gray-950/90;
+		@apply text-white bg-black-1000 hover:bg-gray-950/90;
+		&:disabled,
+		.disabled & {
+			@apply text-gray-500 bg-gray-100 hover:bg-gray-100 cursor-not-allowed;
+		}
 	}
 
 	&_light {
 		@apply button;
-		@apply text-gray-700 bg-white;
+		@apply text-black-950 bg-white;
 	}
 }
 
@@ -24,5 +28,5 @@
 
 .button_light .arrow {
 	@apply arrow-base;
-	@apply fill-black;
+	@apply fill-black-1000;
 }

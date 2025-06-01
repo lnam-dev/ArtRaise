@@ -10,7 +10,7 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitProps) => {
 	const { isDesktop } = useDevice();
 	return (
 		<div className="flex flex-row gap-6">
-			<figure className="relative w-full 2xl:w-[80%]">
+			<figure className="relative w-full h-[80vh] 2xl:w-[80%]">
 				<Image
 					src={imgSrc}
 					alt={`Slide ${index + 1}`}
@@ -22,18 +22,16 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitProps) => {
 				/>
 			</figure>
 			{isDesktop && (
-				<div className="w-[20%]">
-					<div className="space-y-6 w-full h-full">
-						<figure className="relative h-[100%]">
-							<Image
-								src={imgSrc}
-								alt={`Slide ${index + 1}`}
-								fill
-								className="object-cover filter sepia-[50%] contrast-125 brightness-90"
-								loading="lazy"
-							/>
-						</figure>
-					</div>
+				<div className="w-full">
+					<figure className="relative w-full h-full">
+						<Image
+							src={imgSrc}
+							alt={`Slide ${index + 1}`}
+							fill
+							className="object-cover"
+							loading="lazy"
+						/>
+					</figure>
 				</div>
 			)}
 		</div>
