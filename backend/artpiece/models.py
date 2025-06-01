@@ -26,6 +26,7 @@ class ArtPieceOrientation(models.TextChoices):
 
 
 class ArtPiece(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     price = models.DecimalField(
         max_digits=10,
