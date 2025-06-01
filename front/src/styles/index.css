@@ -24,25 +24,17 @@
 }
 
 @layer components {
+	:root {
+		--bg-light: white;
+		--bg-dark: #1f1f1f;
+	}
 	html,
 	body {
-		background: #fff;
+		background: var(--bg-color);
 	}
-	ol {
-		list-style: none;
-		counter-reset: my-awesome-counter;
-	}
-	ol li {
-		counter-increment: my-awesome-counter;
-	}
-	ol li::before {
-		content: counter(my-awesome-counter) ". ";
-	}
+
 	img {
 		max-width: none;
-	}
-	button:hover {
-		transform: scale(1, 1);
 	}
 
 	figcaption {

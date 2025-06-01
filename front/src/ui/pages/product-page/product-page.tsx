@@ -10,6 +10,7 @@ import Script from "next/script";
 import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card-purchase/card-purchase";
+import "~/styles/bg-light.css";
 
 function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	const size = useMemo(() => {
@@ -79,7 +80,7 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				<aside className="order-1 lg:order-none flex flex-col justify-start col-sp w-full">
 					<PriceBar
 						title="Вартість картини"
-						price={artPiece.price}
+						artPiece={artPiece}
 						className="mb-8 xl:mb-[4rem]"
 					/>
 				</aside>
