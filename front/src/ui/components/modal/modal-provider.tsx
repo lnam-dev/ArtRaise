@@ -33,9 +33,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 	return (
 		<ModalContext.Provider value={{ showModal, hideModal }}>
 			{children}
-			<BaseModalWindow isActive={isOpen} setIsActive={setIsOpen}>
-				{content}
-			</BaseModalWindow>
+			<BaseModalWindow isActive={isOpen}>{content}</BaseModalWindow>
 		</ModalContext.Provider>
 	);
 };

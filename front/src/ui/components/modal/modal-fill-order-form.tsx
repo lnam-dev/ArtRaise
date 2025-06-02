@@ -21,7 +21,6 @@ const validationSchema = Yup.object({
 		.email("Введіть коректний email"),
 	question: Yup.string(),
 });
-
 export default function ModalFillOrderForm({ className = "" }) {
 	return (
 		<Formik
@@ -34,35 +33,41 @@ export default function ModalFillOrderForm({ className = "" }) {
 			}}
 			validationSchema={validationSchema}
 			validateOnBlur={false}
-			validateOnChange={false}
+			validateOnChange={true}
 			onSubmit={(values) => console.log("Form submitted:", values)}>
-			<Form>
-				<h1 className="font-namu text-8 leading-9 mb-7">
-					Заповніть форму для <br />
-					оформлення вашого замовлення:
-				</h1>
-				<div className={`space-y-5 w-full ${className}`}>
-					<div className="flex flex-row gap-5">
-						<InputFormik name="firstName" placeholder="Ім'я" />
-						<InputFormik name="lastName" placeholder="Прізвище" />
+			{({ isValid, dirty }) => (
+				<Form className="flex flex-col gap-8 h-full justify-between">
+					<div>
+						<h1 className="font-namu text-8 leading-9 mb-7">
+							Заповніть форму для <br />
+							оформлення вашого замовлення:
+						</h1>
+						<div className={`space-y-6 w-full ${className}`}>
+							<div className="flex flex-row gap-6">
+								<InputFormik name="lastName" placeholder="Прізвище" />
+								<InputFormik name="firstName" placeholder="Ім'я" />
+							</div>
+							<InputFormik name="email" placeholder="Email" />
+							<InputFormik name="phone" placeholder="Телефон" />
+						</div>
+						<h1 className="font-namu text-8 leading-9 mb-7">
+							Якщо є питання — надамо <br /> відповідь на Ваш email
+						</h1>
+						<InputFormik
+							name="question"
+							placeholder="Залиште своє запитання тут"
+							as="textarea"
+							className="w-full min-h-[6rem]"
+						/>
 					</div>
-
-					<InputFormik name="email" placeholder="Email" />
-					<InputFormik name="phone" placeholder="Телефон" />
-				</div>
-				<h1 className="font-namu text-8 leading-9 mb-7">
-					Якщо є питання — надамо <br /> відповідь на Ваш email
-				</h1>
-				<div className="mb-9">
-					<InputFormik
-						name="question"
-						placeholder="Залиште своє запитання тут"
-						as="textarea"
-						className="min-h-[8rem]"
-					/>
-				</div>
-				<ButtonArrow className="w-full">Надіслати</ButtonArrow>
-			</Form>
+					<ButtonArrow
+						className="w-full"
+						variant={isValid && dirty ? "dark" : "disabled"}
+						type="submit">
+						Надіслати
+					</ButtonArrow>
+				</Form>
+			)}
 		</Formik>
 	);
 }

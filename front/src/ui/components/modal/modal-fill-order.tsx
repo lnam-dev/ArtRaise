@@ -1,6 +1,7 @@
 import { TArtPiece } from "~/types";
 import CardPurchase from "../card-purchase/card-purchase";
 import ModalFillOrderForm from "./modal-fill-order-form";
+import ModalButtonClose from "./modal-button-close";
 
 interface ModalFillOrderProps {
 	artPiece: TArtPiece;
@@ -13,11 +14,12 @@ const ModalFillOrder: React.FC<ModalFillOrderProps> = ({ artPiece }) => {
 			aria-modal="true"
 			aria-labelledby="modal-title"
 			aria-describedby="modal-description"
-			className="flex flex-row bg-white">
-			<div className="flex flex-row h-[50%]">
-				<CardPurchase card={artPiece} variable="dark" includeButton={false} />
+			className="flex flex-row bg-white w-fit h-fit relative xl:max-w-[90vw] xl:max-h-[90vh]">
+			<ModalButtonClose variable="light" />
+			<div className="flex-grow-1 overflow-auto scrollbar-hide bg-black-1000">
+				<CardPurchase card={artPiece} variable="modal" />
 			</div>
-			<div className="p-8">
+			<div className="p-8 flex-grow-2">
 				<ModalFillOrderForm className="mb-9" />
 			</div>
 		</section>
