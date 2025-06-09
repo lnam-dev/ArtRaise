@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "~/bridge/ui/Link";
 import { TButtonProps } from "~/types/button";
-import classes from "./button.module.scss";
+import "./button.scss";
 
 export default function Button({
 	children,
@@ -11,17 +11,10 @@ export default function Button({
 	href,
 	...props
 }: TButtonProps) {
-	const isDark = variant === "dark";
 	const button = (
-		<div className="disabled">
-			<button
-				className={`${
-					isDark ? classes.button_dark : classes.button_light
-				} ${className}`}
-				{...props}>
-				{children}
-			</button>
-		</div>
+		<button className={`button button--${variant} ${className}`} {...props}>
+			{children}
+		</button>
 	);
 	return href ? <Link to={href}>{button}</Link> : button;
 }
