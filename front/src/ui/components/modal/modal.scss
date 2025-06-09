@@ -1,0 +1,15 @@
+.button_close {
+	@apply absolute top-6 right-6;
+
+	&__icon {
+		@apply transition ease-in duration-200 hover:stroke-red-500;
+
+		&--light {
+			@apply stroke-gray-900;
+		}
+
+		&--dark {
+			@apply stroke-white;
+		}
+	}
+}
