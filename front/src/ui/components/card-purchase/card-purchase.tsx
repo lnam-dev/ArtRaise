@@ -2,14 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { TArtPiece } from "~/types";
 import ButtonArrow from "~/ui/components/button/button-arrow";
-import classes from "./card-purchase.module.scss";
+import "./card-purchase.scss";
 import Arrow from "~/assets/arrow-right.svg";
 import CardHeart from "./card-heart";
 import Link from "~/bridge/ui/Link";
 
 interface CardPurchaseProps {
 	card: TArtPiece;
-	variable?: "light" | "dark";
+	variable?: "light" | "dark" | "modal";
 }
 
 const CardPurchase = ({
@@ -17,16 +17,15 @@ const CardPurchase = ({
 	variable = "light",
 	...props
 }: CardPurchaseProps) => {
-	const isLight = variable === "light";
-	const Tag = isLight ? "div" : Link;
-	const prop = !isLight ? { href: `products/${Number(card.id)}` } : null;
+	const Tag = variable === "dark" ? Link : "div";
+	const prop =
+		variable === "dark" ? { href: `products/${Number(card.id)}` } : null;
+
 	return (
-		<article
-			className={isLight ? classes.card_light : classes.card_dark}
-			{...props}>
-			<figure className="group relative w-full aspect-[2/1]">
+		<article className={`card card--${variable}`} {...props}>
+			<figure className={`image image--${variable} group`}>
 				<Image
-					src={card.image_artpiece ?? process.env.DEFAULT_IMAGE}
+					src={card.image_artpiece}
 					alt={card.title}
 					layout="responsive"
 					width={16}
@@ -35,29 +34,24 @@ const CardPurchase = ({
 				/>
 				{/* {!isLight && <CardHeart />} */}
 			</figure>
-			<Tag
-				className={isLight ? classes.wrapper_light : classes.wrapper_dark}
-				{...prop}>
-				<div className="flex-1">
-					<p
-						className={
-							isLight ? classes.fullname_light : classes.fullname_dark
-						}>
+			<Tag className={`wrapper wrapper--${variable}`} {...prop}>
+				<div className={`description description--${variable}`}>
+					<p className={`fullname fullname--${variable}`}>
 						{card.author.fullname}
 					</p>
-					<h3 className={isLight ? classes.title : classes.title_dark}>
+					<h3 className={`title title--${variable}`}>
 						{card.title}
 						{card.creating_date != null && `, ${card.creating_date}`}
 					</h3>
-					<p className={isLight ? classes.size_light : classes.size_dark}>
+					<p className={`size size--${variable}`}>
 						{`${parseInt(card.length_cm)} см × ${parseInt(card.width_cm)} см`}
 					</p>
 					<p
-						className={isLight ? classes.price_light : classes.price_dark}
+						className={`price price--${variable}`}
 						aria-label={`Ціна: ${card.price} гривень`}>
 						&#8372;{parseInt(card.price).toLocaleString("uk-UA")}
 					</p>
-					{isLight && (
+					{variable === "light" && (
 						<ButtonArrow
 							href={`products/${Number(card.id)}`}
 							className="w-full"
@@ -66,7 +60,9 @@ const CardPurchase = ({
 						</ButtonArrow>
 					)}
 				</div>
-				{!isLight && <Arrow height={48} width={48} className="fill-white" />}
+				{variable === "dark" && (
+					<Arrow height={48} width={48} className="fill-white" />
+				)}
 			</Tag>
 		</article>
 	);

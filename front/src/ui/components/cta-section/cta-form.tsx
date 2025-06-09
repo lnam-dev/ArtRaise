@@ -21,23 +21,30 @@ export default function CallToActionForm() {
 			initialValues={{ name: "", email: "", question: "" }}
 			validationSchema={validationSchema}
 			validateOnBlur={false}
-			validateOnChange={false}
+			validateOnChange={true}
 			onSubmit={(values) => console.log("Form submitted:", values)}>
-			<Form className="mb-6">
-				<div className="mb-6">
-					<div className="flex flex-col w-full gap-6 mb-6 sm:flex-row sm:w-[80%]">
-						<InputFormik name="name" placeholder="Ім'я" />
-						<InputFormik name="email" placeholder="Email" />
+			{({ isValid, dirty }) => (
+				<Form className="mb-6">
+					<div className="mb-6">
+						<div className="flex flex-col w-full gap-6 mb-6 sm:flex-row sm:w-[80%]">
+							<InputFormik name="name" placeholder="Ім'я" />
+							<InputFormik name="email" placeholder="Email" />
+						</div>
+						<InputFormik
+							name="question"
+							placeholder="Залиште своє запитання тут"
+							as="textarea"
+							className="min-h-[8rem]"
+						/>
 					</div>
-					<InputFormik
-						name="question"
-						placeholder="Залиште своє запитання тут"
-						as="textarea"
-						className="min-h-[8rem]"
-					/>
-				</div>
-				<ButtonArrow className="w-full mt-4 sm:w-[60%]">Надіслати</ButtonArrow>
-			</Form>
+					<ButtonArrow
+						className="w-full mt-4 sm:w-[60%]"
+						variant={isValid && dirty ? "dark" : "disabled"}
+						type="submit">
+						Надіслати
+					</ButtonArrow>
+				</Form>
+			)}
 		</Formik>
 	);
 }
