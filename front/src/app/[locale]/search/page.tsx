@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, {useEffect} from 'react';
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import SearchPageInput from "~/ui/pages/search-page/search-page-input";
@@ -9,11 +10,16 @@ import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
 import FilterMapper from "~/ui/pages/search-page/filter-mapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
+import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
+import {useRouter, useSearchParams} from "next/navigation";
+import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
+import {setupDisplayedArtpieces} from "~/store/client/slices/SearchPageSlice";
+import Button from "~/ui/components/button/button";
 
-const getArtpiecesByQueryParams = async (queryParams: string): Promise<TArtPiece[]> => {
+export const getArtpiecesByQueryParams = async (queryParams: string): Promise<TArtPiece[]> => {
     try {
 
-        const response = await fetch(`${process.env.API_URL}artpieces/?${queryParams}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces?${queryParams}`);
         if (!response.ok) {
             return [];
         }
@@ -24,10 +30,24 @@ const getArtpiecesByQueryParams = async (queryParams: string): Promise<TArtPiece
         return []
     }
 }
-export default async function Page({searchParams}: { searchParams: Promise<Record<string, string | undefined>> }) {
-    const params = await searchParams
-    const queryParams = new URLSearchParams(params as Record<string, string>).toString()
-    const artpieces = await getArtpiecesByQueryParams(queryParams);
+export default function Page() {
+    const filterState = useAppSelector(state => state.searchPageReducer)
+    const artpieces = filterState.displayArtpieces;
+    const isArtpiecesNotEmpty = filterState.displayArtpieces.length !== 0;
+    const searchParams = useSearchParams();
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    useEffect(() => {
+        const setupArtpieces = async () => {
+            const arpieces: TArtPiece[] = await getArtpiecesByQueryParams(searchParams.toString());
+            dispatch(setupDisplayedArtpieces(arpieces));
+        }
+        setupArtpieces();
+        console.log(searchParams)
+    }, [searchParams]);
+    useEffect(() => {
+
+    })
     return (
         <div
             className={
@@ -41,9 +61,13 @@ export default async function Page({searchParams}: { searchParams: Promise<Recor
                 до головної
             </LinkBackTo>
             <SearchPageInput className={"col-span-full pl-0 my-4"}/>
-            <FilterMapper className={"col-span-full"}/>
-            <MobileFilterNavigation className={`md:hidden col-span-full`}/>
-            <FilterMenu className={"py-2 hidden md:block"}/>
+            {/*<FilterMapper className={"col-span-full"}/>*/}
+            {/*<MobileFilterNavigation className={`md:hidden col-span-full`}/>*/}
+            <aside className={"py-2 hidden md:block"}>
+                <Button className={"w-full my-3"}
+                        onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( знайдено ${filterState.previewArtPiecesCount} )`}</Button>
+                <FilterMenu/>
+            </aside>
             <main className={"md:col-start-2 md:col-end-[-1] col-span-full"}>
                 {
                     <div className={"grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-5 columns-3"}>
@@ -51,7 +75,7 @@ export default async function Page({searchParams}: { searchParams: Promise<Recor
                         <div className={"columns-1 md:columns-2 lg:columns-3 col-span-full space-y-12 mt-10"}>
 
                             {
-                                artpieces.length > 0 ?
+                                isArtpiecesNotEmpty ?
                                     artpieces.map((a) => <CardPurchase key={a.id} card={a}/>)
                                     :
                                     <p className={"md:text-6 col-span-full"}>Результатів із заданими фільтрами не
