@@ -1,11 +1,18 @@
 .link {
-	@apply font-fixel font-normal text-4 box-content h-full px-4 transition-all duration-300 hover:shadow-line xl:text-4 flex items-center;
+	@apply font-fixel relative font-normal text-4 box-content h-full px-4 transition-all duration-300 hover:after:block  xl:text-4 flex items-center;
+	&::after {
+		content: "";
+		@apply absolute left-0 bottom-0 w-full h-1 bg-white opacity-0 transition-all duration-300;
+	}
 
-	&--active {
-		@apply shadow-line;
+	&:hover::after {
+		@apply opacity-100;
+	}
+
+	&--active::after {
+		@apply opacity-100;
 	}
 }
-
 .switch {
 	@apply flex items-center gap-2;
 
