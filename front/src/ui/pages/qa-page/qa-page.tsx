@@ -1,5 +1,5 @@
-import React from 'react';
-import {TQAPage} from "~/use-cases/contracts/qa-page";
+import React from "react";
+import { TQAPage } from "~/use-cases/contracts/qa-page";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import LinkBackTo from "~/ui/components/link/link-back-to";
@@ -30,6 +30,7 @@ const QAPage: React.FC<Props> = ({frequentlyAskedQuestions, questionsCategories}
             <CallToActionSection className={"col-span-full"}/>
         </div>
     );
+
 };
 
 export default QAPage;
