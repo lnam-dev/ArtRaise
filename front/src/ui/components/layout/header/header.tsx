@@ -21,27 +21,16 @@ export const Header = () => {
   const isActive = (path: string) =>
     path === currentPath.split("/").filter(Boolean)[1];
 
-  // Закриваємо меню при зміні маршруту
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [currentPath]);
 
-  // Закриваємо меню при зміні розміру екрану на десктоп
-  useEffect(() => {
-    if (isDesktop) {
-      setIsMobileMenuOpen(false);
-    }
-  }, [isDesktop]);
-
-  // Блокуємо скрол коли меню відкрите
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-
-    // Cleanup функція
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -66,7 +55,6 @@ export const Header = () => {
             ARTRAISE
           </Link>
 
-          {/* Десктоп навігація */}
           <nav className="absolute flex flex-row hidden h-full transform -translate-x-1/2 left-1/2 lg:flex">
             <Link
               to={"authors"}
