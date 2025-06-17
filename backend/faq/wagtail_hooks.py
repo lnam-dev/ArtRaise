@@ -7,7 +7,7 @@ from .models import FAQ
 class WagtailFAQProfileViewSet(SnippetViewSet):
     model = FAQ
     icon = "FAQ"
-    list_display = ["question", "answer"]
+    list_display = ["question", "answer", "created_at"]
     search_filters = ["question"]
     ordering = ["-id"]
     form_fields = ["question", "answer"]
