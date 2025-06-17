@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 
 import "~/styles/tailwind.css";
+import { ModalProvider } from "~/ui/components/modal/modal-provider";
 
 export default async ({
 	children,
@@ -17,13 +18,12 @@ export default async ({
 }) => {
 	const { locale } = params;
 	let messages;
-
 	try {
 		messages = await getMessages({ locale });
 	} catch (error) {
 		notFound();
 	}
-
+	//TODO providers component
 	return (
 		<html lang={locale} className="scrollbar">
 			<head>
@@ -42,9 +42,11 @@ export default async ({
 			<body data-theme="light">
 				<NextIntlClientProvider locale={locale} messages={messages}>
 					<StoreProvider>
-						<Header />
-						{children}
-						<Footer />
+						<ModalProvider>
+							<Header />
+							{children}
+							<Footer />
+						</ModalProvider>
 					</StoreProvider>
 				</NextIntlClientProvider>
 			</body>

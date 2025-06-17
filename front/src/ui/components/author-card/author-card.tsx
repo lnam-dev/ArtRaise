@@ -21,13 +21,13 @@ const AuthorCard: FC<Props> = ({ author }) => {
 				{" "}
 				{/* Aspect ratio for consistent image size */}
 				<img
-					src={`http://localhost:8000${image_author}`}
+					src={`${image_author}`}
 					alt="Author"
 					className={"inline-block w-full h-auto aspect-[16/9] object-cover"}
 				/>
 				<div
 					className={
-						"flex flex-row justify-center items-center cursor-pointer"
+						"flex flex-row justify-between px-4 items-center cursor-pointer"
 					}>
 					<div className={"px-6 py-4 text-5"}>
 						<h3 className={""}>{fullname}</h3>

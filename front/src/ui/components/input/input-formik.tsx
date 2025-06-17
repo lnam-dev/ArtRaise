@@ -5,14 +5,16 @@ interface InputProps {
 	name: string;
 	type?: string;
 	placeholder?: string;
+	required?: boolean;
 	className?: string;
-	as?: "input" | "textarea"; // Додано підтримку textarea
+	as?: "input" | "textarea";
 }
 
 const InputFormik: React.FC<InputProps> = ({
 	name,
 	type = "text",
 	placeholder,
+	required = false,
 	className = "",
 	as = "input",
 	...props
@@ -29,7 +31,9 @@ const InputFormik: React.FC<InputProps> = ({
 							type={type}
 							placeholder={placeholder}
 							className={`${style} ${
-								as === "textarea" ? "h-full resize-none  py-2" : "h-14 py-4"
+								as === "textarea"
+									? "w-full h-full resize-none  py-2"
+									: "h-14 py-4"
 							} ${className}`}
 							{...props}
 						/>
@@ -39,7 +43,7 @@ const InputFormik: React.FC<InputProps> = ({
 			<ErrorMessage
 				name={name}
 				component="div"
-				className="font-fixel font-normal text-3 text-error px-3 absolute bottom-[-1.3rem]"
+				className="font-fixel font-normal text-3 text-error px-3 absolute bottom-[-1.3rem] whitespace-nowrap"
 			/>
 		</div>
 	);

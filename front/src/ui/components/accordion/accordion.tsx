@@ -20,10 +20,10 @@ const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
 	let style;
 	switch (size) {
 		case "sm":
-			style = "py-[0.625rem] mb-8";
+			style = "py-[0.625rem]";
 			break;
 		case "bg":
-			style = "pb-5 pt-3";
+			style = "pb-4 pt-2 lg:pb-5 lg:pt-3";
 			break;
 	}
 	const [isOpen, setIsOpen] = useState(false);
@@ -37,14 +37,14 @@ const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
 				onClick={handleToggle}>
 				<span
 					className={`font-fixel font-medium ${
-						size === "bg" ? "text-5" : "text-4"
+						size === "bg" ? "text-4 lg:text-5" : "text-4"
 					} text-left`}>
 					{title}
 				</span>
 				<div className="w-6 h-6">
 					<Arrow
 						className={`transition-transform duration-200 ${
-							isOpen! ? "rotate-90" : ""
+							isOpen! ? "rotate-90" : null
 						}`}
 						width={24}
 						height={24}
@@ -52,8 +52,8 @@ const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
 				</div>
 			</button>
 			<div
-				className={`overflow-hidden transition-all ${
-					isOpen ? "max-h-40" : "max-h-0"
+				className={`overflow-y-hidden w-fit transition-all ${
+					isOpen ? "max-h-96" : "max-h-0"
 				} duration-300`}>
 				{isValidElement(children)
 					? children

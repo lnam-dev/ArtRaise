@@ -26,6 +26,7 @@ class ArtPieceOrientation(models.TextChoices):
 
 
 class ArtPiece(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     price = models.DecimalField(
         max_digits=10,
@@ -63,7 +64,6 @@ class ArtPiece(models.Model):
     orientation = models.CharField(
         max_length=10,
         choices=ArtPieceOrientation.choices,
-        blank=True
     )
     gamma = models.CharField(max_length=255, blank=True)
     dominant_color = models.CharField(max_length=255, blank=True)

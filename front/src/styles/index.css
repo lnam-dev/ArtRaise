@@ -24,25 +24,17 @@
 }
 
 @layer components {
+	:root {
+		--bg-light: white;
+		--bg-dark: #1f1f1f;
+	}
 	html,
 	body {
-		background: #fff;
+		background: var(--bg-color);
 	}
-	ol {
-		list-style: none;
-		counter-reset: my-awesome-counter;
-	}
-	ol li {
-		counter-increment: my-awesome-counter;
-	}
-	ol li::before {
-		content: counter(my-awesome-counter) ". ";
-	}
+
 	img {
 		max-width: none;
-	}
-	button:hover {
-		transform: scale(1, 1);
 	}
 
 	figcaption {
@@ -83,9 +75,18 @@
 	.mobile-spacing {
 		@apply px-4 xl:px-0;
 	}
+	.response-text-8{
+		@apply text-5 md:text-6 lg:text-8
+	}
+	.response-text-6{
+		@apply text-4 md:text-5 lg:text-6
+	}
 
-	.focal-point-container {
-		container-type: size;
+	.hover_button__light {
+		transition: all 0.2s;
+	}
+	.hover_button__light:hover {
+		opacity: 75%;
 	}
 
 	.focal-point-container img {

@@ -6,6 +6,7 @@ import CertificatesSection from "../../components/certificatesSection/certificat
 import PartnersSection from "../../components/partners-section/partners-section";
 import CallToActionSection from "../../components/cta-section/cta-section";
 import MainSliderWrapper from "./main-slider-wrapper";
+import "~/styles/bg-light.css";
 
 export default ({ data }: { data: TMainPage }) => {
 	const { artPieces, slides } = data;
