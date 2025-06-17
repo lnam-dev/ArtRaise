@@ -6,6 +6,7 @@ from .models import ArtPiece
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
     image_artpiece = serializers.SerializerMethodField()
+    creating_date = serializers.SerializerMethodField()
 
     class Meta:
         model = ArtPiece
@@ -16,6 +17,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "length_cm",
             "width_cm",
             "height_cm",
+            "creating_date",
             "style",
             "author",
             "image_artpiece",
@@ -26,6 +28,14 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             'id': obj.author.id,
             'fullname': obj.author.fullname,
         }
+
+    def get_creating_date(self, obj):
+        if obj.creating_date_start and obj.creating_date_end:
+            return f"{obj.creating_date_start}-{obj.creating_date_end}"
+        elif obj.creating_date_start:
+            return f"{obj.creating_date_start}"
+        else:
+            return f"Unknown"
 
     def get_image_artpiece(self, obj):
         if not obj.image_artpiece and not hasattr(obj.image_artpiece, "url"):
@@ -39,7 +49,6 @@ class ArtPieceSerializer(serializers.ModelSerializer):
 
 
 class ArtPieceDetailSerializer(ArtPieceSerializer):
-    creating_date = serializers.SerializerMethodField()
     author = serializers.SerializerMethodField()
 
     class Meta:
@@ -57,14 +66,6 @@ class ArtPieceDetailSerializer(ArtPieceSerializer):
             "certificate",
             "author",
         ]
-
-    def get_creating_date(self, obj):
-        if obj.creating_date_start and obj.creating_date_end:
-            return f"{obj.creating_date_start}-{obj.creating_date_end}"
-        elif obj.creating_date_start:
-            return f"{obj.creating_date_start}"
-        else:
-            return f"Unknown"
 
     def get_author(self, obj):
         return {

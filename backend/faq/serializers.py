@@ -4,6 +4,11 @@ from .models import FAQ
 
 
 class FAQSerializer(serializers.ModelSerializer):
+    question = serializers.CharField(
+        required=True,
+        min_length=5,
+        max_length=255
+    )
 
     class Meta:
         model = FAQ
@@ -11,5 +16,7 @@ class FAQSerializer(serializers.ModelSerializer):
             "id",
             "question",
             "answer",
+            "created_at"
         ]
+        read_only_fields = ['id', 'created_at']
         
