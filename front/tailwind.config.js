@@ -1,15 +1,22 @@
-import colors, { black } from "tailwindcss/colors";
+import colors from "tailwindcss/colors";
 
 module.exports = {
 	mode: "jit",
 	content: ["./src/**/*.{ts,tsx,jsx,js}"],
 	theme: {
+		container: {
+			center: false,
+			screens: {
+				xl: "81.25rem", // 1300px / 16
+				"2xl": "96rem", // 1536px / 16
+			},
+		},
 		screens: {
-			sm: "640px",
-			md: "768px",
-			lg: "1024px",
-			xl: "1344px",
-			"2xl": "1600px",
+			sm: "40rem", // 640px
+			md: "48rem", // 768px
+			lg: "64rem", // 1024px
+			xl: "84rem", // 1344px
+			"2xl": "100rem", // 1600px
 		},
 		spacing: {
 			auto: "auto",
@@ -20,7 +27,6 @@ module.exports = {
 			max: "max-content",
 			layout: "1600px",
 			content: "1040px",
-			container: "1400px",
 			card: "730px",
 		},
 		fontSize: {
@@ -48,15 +54,17 @@ module.exports = {
 		extend: {
 			colors: {
 				white: colors.white,
-				black: colors.black,
 				gray: {
-					default: colors.gray,
-					100: "#F0F0F4", //HOVER
-					700: "#62636D", //SOLID
-					500: "#B9BBC8", //BORDERS
-					900: "#2D2D2D",
-					950: "#131315",
-					950.9: "rgba(35, 35, 39, 0.9)", // HOVER 90%
+					100: "rgba(240, 240, 244, 1)", //HOVER
+					300: "rgba(209,209,209,1)", // FOOTER USED
+					500: "rgba(185, 187, 200, 1)", //BORDERS
+					700: "rgba(98, 99, 109, 1)", //SOLID
+					900: "rgba(45, 45, 45, 1)",
+					950: "rgba(35, 35, 39, 1)",
+				},
+				black: {
+					950: "rgba(31, 31, 31, 1)",
+					1000: "rgba(19, 19, 21, 1)",
 				},
 				focus: "#687CB0",
 				error: "#FF2424",
@@ -120,34 +128,13 @@ module.exports = {
 		},
 		boxShadow: {
 			DEFAULT: "0 4px 8px rgba(0, 0, 0, 0.15)",
+			line: "inset 0 -4px 0 0 rgb(255,255,255)",
 			sm: "0 4px 4px rgba(0, 0, 0, 0.25)",
-		},
-		colors: {
-			ctaBlue: "#BEE1E6",
-			black: "#0E0E0E",
-			white: "#ffffff",
-			grey: "#F5F5F5",
-			grey2: "#F9F9F9",
-			grey3: "#8F8F8F",
-			grey4: "#DFDFDF",
-			grey5: "#BBBBBB",
-			grey6: "#565959",
-			buttonBg1: "#FBDCCE",
-			buttonBg2: "#FAD2E1",
-			buttonText: "#9E8376",
-			green: "#DAF5CB",
-			green2: "#3C583F",
-			textBlack: "#0E0E0E",
-			pink: "#FCE8F0",
-			red: "#ef233c",
-			footerBg: "#17282B",
-			grayCustom: "#D1D1D1",
-			lightGrayCustom: "#F0F0F4",
 		},
 		fontFamily: {
 			text: ["Raleway", "sans-serif"],
-			fixel: ["Fixel", "sans-serif"],
-			namu: ["Namu", "sans-serif"],
+			fixel: ["fixel", "sans-serif"],
+			namu: ["namu", "sans-serif"],
 			museo: ['"Museo Sans Cyr"', "sans-serif"],
 		},
 	},

@@ -43,7 +43,7 @@ export const useArtPiece = () => {
               id: response.data.author?.id,
               fullname: response.data.author?.fullname || 'Невідомий автор',
               bio_text: response.data.author?.bio_text || '',
-              image_author: `http://localhost:8000${response.data.author?.image_author}`,
+              image_author: `${response.data.author?.image_author}`,
             },
             imageSrc: response.data.image_artpiece,
             certificate: response.data.certificate,

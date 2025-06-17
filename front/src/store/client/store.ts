@@ -1,9 +1,11 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import authorsPageReducer from "./slices/AuthorsPageSlice"
+import searchPageReducer from "./slices/SearchPageSlice"
 
 
 const rootReducer = combineReducers({
-	authorsPageReducer
+	authorsPageReducer,
+	searchPageReducer
 })
 
 export const setupStore = () => {

@@ -4,6 +4,6 @@ export default function usePath() {
 	const locale = useLocale();
 
 	return (path: string) => {
-		return `/${locale}${path}`;
+		return `/${locale}/${path}`;
 	};
 }

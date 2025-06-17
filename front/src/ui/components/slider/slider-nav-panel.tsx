@@ -1,8 +1,8 @@
 import { ComponentProps } from "react";
 import { useSwiper } from "swiper/react";
 
-import Chewron from "~/assets/chevron-slider.svg";
 import SliderPagination from "./slider-pagination";
+import SliderNavButton from "./slider-nav-button";
 
 import useKeyPress from "~/ui/hooks/useKeyPress";
 
@@ -10,7 +10,7 @@ type SliderNavPanelProps = ComponentProps<typeof SliderPagination>;
 
 export default function SliderNavPanel({
 	currentSlide,
-	slidesLegnth,
+	slidesLegnth = 0,
 }: SliderNavPanelProps) {
 	const swiper = useSwiper();
 
@@ -20,18 +20,16 @@ export default function SliderNavPanel({
 	useKeyPress("ArrowLeft", handlePrevSlide);
 	useKeyPress("ArrowRight", handleNextSlide);
 
+	if (slidesLegnth < 2) return;
+
 	return (
 		<div className="flex bg-[#000212] shadow-sm bg-opacity-[64%]">
-			<button className="all-unset px-7 py-2" onClick={handlePrevSlide}>
-				<Chewron height="44" width="44" />
-			</button>
+			<SliderNavButton variable={"left"} onClick={handlePrevSlide} />
 			<SliderPagination
 				currentSlide={currentSlide}
 				slidesLegnth={slidesLegnth}
 			/>
-			<button className="all-unset px-7 py-2" onClick={handleNextSlide}>
-				<Chewron height="44" width="44" className="-rotate-180" />
-			</button>
+			<SliderNavButton variable={"right"} onClick={handleNextSlide} />
 		</div>
 	);
 }

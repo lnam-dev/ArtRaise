@@ -1,52 +1,20 @@
 "use client";
-
 import React from "react";
-import Link from "next/link";
-import Arrow from "~/assets/arrow-right.svg";
-
-interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-	children: React.ReactNode;
-	variant?: "solid" | "light";
-	includeArrow?: boolean;
-	className?: string;
-	href?: string;
-}
+import Link from "~/bridge/ui/Link";
+import { TButtonProps } from "~/types/button";
+import "./button.scss";
 
 export default function Button({
 	children,
-	variant = "solid",
-	includeArrow = true,
+	variant = "dark",
 	className,
 	href,
 	...props
-}: ButtonProps) {
-	let style = "";
-	let arrowColor = "";
-
-	switch (variant) {
-		case "solid":
-			style = `font-fixel font-medium text-4 text-white bg-black h-14 transition-all duration-300 hover:bg-gray-950.9`;
-			arrowColor = "#FFFFFF";
-			break;
-		case "light":
-			style = `font-fixel font-medium text-[#62636D] bg-white h-14 `;
-			arrowColor = "#1F1F1F";
-			break;
-	}
-
+}: TButtonProps) {
 	const button = (
-		<button className={`${style} ${className} relative w-full`} {...props}>
-			<span>{children}</span>
-			{includeArrow && (
-				<Arrow
-					className=" absolute right-4 top-1/2 transform -translate-y-1/2"
-					width={32}
-					height={32}
-					style={{ fill: arrowColor }}
-				/>
-			)}
+		<button className={`button button--${variant} ${className}`} {...props}>
+			{children}
 		</button>
 	);
-
-	return href ? <Link href={href}>{button}</Link> : button;
+	return href ? <Link to={href}>{button}</Link> : button;
 }
