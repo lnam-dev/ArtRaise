@@ -141,87 +141,84 @@ export const Header = () => {
             >
               <div className="p-4 space-y-6 max-h-[calc(100vh-2.5rem)] overflow-y-auto">
                 <div className="flex flex-col text-[#1F1F1F] space-y-5">
-                  <div className="pt-4">
-                    <HeaderSwitchLang />
-                  </div>
-                  <div className="flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200">
-                    <Link
-                      to={"/authors"}
-                      className={`text-lg font-namu transition-colors ${
-                        isActive("authors")
-                          ? "text-gray-900 font-medium"
-                          : "hover:text-gray-700"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
+                  <Link
+                    to={"/authors"}
+                    className={`flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200 ${
+                      isActive("authors")
+                        ? "text-gray-900 font-medium"
+                        : "hover:text-gray-700"
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-lg transition-colors font-namu">
                       Автори
-                    </Link>
+                    </span>
                     <Arrow className="text-gray-400 transition-transform hover:translate-x-1" />
-                  </div>
+                  </Link>
 
-                  <div className="flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200">
-                    <Link
-                      to={"/categories"}
-                      className={`text-lg font-namu transition-colors ${
-                        isActive("categories")
-                          ? "text-gray-900 font-medium"
-                          : "hover:text-gray-700"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
+                  <Link
+                    to={"/categories"}
+                    className={`flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200 ${
+                      isActive("categories")
+                        ? "text-gray-900 font-medium"
+                        : "hover:text-gray-700"
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-lg transition-colors font-namu">
                       Категорії
-                    </Link>
+                    </span>
                     <Arrow className="text-gray-400 transition-transform hover:translate-x-1" />
-                  </div>
+                  </Link>
                 </div>
 
                 <hr className="border-[#B9BBC8]" />
 
                 <div className="flex flex-col space-y-5 text-[#1F1F1F]">
-                  <div className="flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200">
-                    <Link
-                      to={"/how-to-buy"}
-                      className={`text-lg font-namu transition-colors ${
-                        isActive("how-to-buy")
-                          ? "text-gray-900 font-medium"
-                          : "hover:text-gray-700"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
+                  <Link
+                    to={"/how-to-buy"}
+                    className={`flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200 ${
+                      isActive("how-to-buy")
+                        ? "text-gray-900 font-medium"
+                        : "hover:text-gray-700"
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-lg transition-colors font-namu">
                       Як купити?
-                    </Link>
+                    </span>
                     <Arrow className="text-gray-400 transition-transform hover:translate-x-1" />
-                  </div>
+                  </Link>
 
-                  <div className="flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200">
-                    <Link
-                      to={"/questions-and-answers"}
-                      className={`text-lg font-namu transition-colors ${
-                        isActive("questions-and-answers")
-                          ? "text-gray-900 font-medium"
-                          : "hover:text-gray-700"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
+                  <Link
+                    to={"/questions-and-answers"}
+                    className={`flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200 ${
+                      isActive("questions-and-answers")
+                        ? "text-gray-900 font-medium"
+                        : "hover:text-gray-700"
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-lg transition-colors font-namu">
                       Q&A
-                    </Link>
+                    </span>
                     <Arrow className="text-gray-400 transition-transform hover:translate-x-1" />
-                  </div>
+                  </Link>
 
-                  <div className="flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200">
-                    <Link
-                      to={"/about-fund"}
-                      className={`text-lg font-namu transition-colors ${
-                        isActive("about-fund")
-                          ? "text-gray-900 font-medium"
-                          : "hover:text-gray-700"
-                      }`}
-                      onClick={closeMobileMenu}
-                    >
+                  <Link
+                    to={"/about-fund"}
+                    className={`flex items-center justify-between py-2 transition-colors border-b border-transparent hover:border-gray-200 ${
+                      isActive("about-fund")
+                        ? "text-gray-900 font-medium"
+                        : "hover:text-gray-700"
+                    }`}
+                    onClick={closeMobileMenu}
+                  >
+                    <span className="text-lg transition-colors font-namu">
                       Про фонд
-                    </Link>
+                    </span>
                     <Arrow className="text-gray-400 transition-transform hover:translate-x-1" />
-                  </div>
+                  </Link>
                 </div>
               </div>
             </nav>
