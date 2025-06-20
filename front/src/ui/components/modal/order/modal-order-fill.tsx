@@ -1,14 +1,14 @@
 import { TArtPiece } from "~/types";
-import CardPurchase from "../card-purchase/card-purchase";
-import ModalFillOrderForm from "./modal-fill-order-form";
-import ModalButtonClose from "./modal-button-close";
+import CardPurchase from "../../card-purchase/card-purchase";
+import ModalOrderFillForm from "./modal-order-fill-form";
+import ModalButtonClose from "../modal-button-close";
 import useDevice from "~/ui/hooks/useDevice";
 
 interface ModalFillOrderProps {
 	artPiece: TArtPiece;
 }
 
-const ModalFillOrder: React.FC<ModalFillOrderProps> = ({ artPiece }) => {
+const ModalOrderFill: React.FC<ModalFillOrderProps> = ({ artPiece }) => {
 	const { isMobile } = useDevice();
 	return (
 		<section
@@ -24,9 +24,9 @@ const ModalFillOrder: React.FC<ModalFillOrderProps> = ({ artPiece }) => {
 				</div>
 			)}
 			<div className="px-6 py-8 xl:p-8 flex-grow-2">
-				<ModalFillOrderForm className="mb-9" />
+				<ModalOrderFillForm className="mb-9" />
 			</div>
 		</section>
 	);
 };
-export default ModalFillOrder;
+export default ModalOrderFill;

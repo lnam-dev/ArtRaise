@@ -1,5 +1,5 @@
 import ArrowExpand from "~/assets/arrow-expand.svg";
-import ModalFillOrder from "~/ui/components/modal/modal-fill-order";
+import ModalFillOrder from "~/ui/components/modal/order/modal-order-fill";
 import SliderModal from "./slider-modal";
 import { useModal } from "~/ui/hooks/useModal";
 import type { TSlide } from "~/types/slider";

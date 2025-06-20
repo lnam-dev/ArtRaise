@@ -1,8 +1,12 @@
 "use client";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import InputFormik from "../input/input-formik";
-import ButtonArrow from "../button/button-arrow";
+
+import { useModal } from "../../../hooks/useModal";
+import ModalOrderSuccess from "./modal-order-success";
+
+import InputFormik from "../../input/input-formik";
+import ButtonArrow from "../../button/button-arrow";
 
 const validationSchema = Yup.object({
 	firstName: Yup.string()
@@ -21,7 +25,13 @@ const validationSchema = Yup.object({
 		.email("Введіть коректний email"),
 	question: Yup.string(),
 });
-export default function ModalFillOrderForm({ className = "" }) {
+export default function ModalOrderFillForm({ className = "" }) {
+	const { showModal } = useModal();
+
+	const handleSubmitForm = () => {
+		showModal(<ModalOrderSuccess />);
+	};
+
 	return (
 		<Formik
 			initialValues={{
@@ -34,7 +44,7 @@ export default function ModalFillOrderForm({ className = "" }) {
 			validationSchema={validationSchema}
 			validateOnBlur={false}
 			validateOnChange={true}
-			onSubmit={(values) => console.log("Form submitted:", values)}>
+			onSubmit={handleSubmitForm}>
 			{({ isValid, dirty }) => (
 				<Form className="flex flex-col gap-8 h-full justify-between">
 					<div>
