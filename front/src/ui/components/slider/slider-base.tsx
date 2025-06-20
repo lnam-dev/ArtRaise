@@ -78,19 +78,8 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 								duration={600}
 							/>
 						</div>
-						{variant === "classic" ? (
-							<SliderButtonExpand
-								className={`${expandStyle}`}
-								slides={slides}
-							/>
-						) : (
-							!isDesktop && (
-								<SliderPagination
-									mode="dark"
-									currentSlide={currentSlideIdx}
-									slidesLegnth={slides.length}
-								/>
-							)
+						{(variant === "classic" || !isDesktop) && (
+							<SliderButtonExpand className={expandStyle} slides={slides} />
 						)}
 						{isDesktop && (
 							<SliderNavPanel
