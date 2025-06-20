@@ -1,7 +1,10 @@
 import ModalButtonClose from "../modal-button-close";
 import Button from "../../button/button";
+import { useModal } from "~/ui/hooks/useModal";
 
 const ModalOrderSuccess = () => {
+	const { hideModal } = useModal();
+
 	return (
 		<section
 			role="dialog"
@@ -17,7 +20,11 @@ const ModalOrderSuccess = () => {
 				<h3 className="font-fixel font-normal text-900 text-4 xl:text-6 mb-8 leading-normal">
 					З вами зв’яжеться адміністрація ArtRaise впродовж 3-х днів
 				</h3>
-				<Button variant="dark" className="w-full">
+				<Button
+					variant="dark"
+					className="w-full"
+					href="/"
+					onClick={() => hideModal()}>
 					Повернутися на головну
 				</Button>
 			</div>

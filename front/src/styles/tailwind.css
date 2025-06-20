@@ -823,6 +823,11 @@ select {
   margin-bottom: 2rem;
 }
 
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -1040,6 +1045,10 @@ select {
   height: 100vh;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .max-h-0 {
   max-height: 0px;
 }
@@ -1135,6 +1144,10 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .max-w-4xl {
@@ -1650,6 +1663,10 @@ select {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-1 {
@@ -2697,12 +2714,24 @@ select {
     margin-top: 5rem;
   }
 
+  .xl\:mb-7 {
+    margin-bottom: 1.75rem;
+  }
+
   .xl\:block {
     display: block;
   }
 
   .xl\:h-\[3\.5rem\] {
     height: 3.5rem;
+  }
+
+  .xl\:h-14 {
+    height: 3.5rem;
+  }
+
+  .xl\:h-8 {
+    height: 2rem;
   }
 
   .xl\:max-h-\[90vh\] {
@@ -2715,6 +2744,10 @@ select {
 
   .xl\:w-full {
     width: 100%;
+  }
+
+  .xl\:w-8 {
+    width: 2rem;
   }
 
   .xl\:max-w-\[90vw\] {
@@ -2730,8 +2763,30 @@ select {
          columns: 4;
   }
 
+  .xl\:flex-row {
+    flex-direction: row;
+  }
+
   .xl\:justify-normal {
     justify-content: normal;
+  }
+
+  .xl\:gap-8 {
+    gap: 2rem;
+  }
+
+  .xl\:gap-6 {
+    gap: 1.5rem;
+  }
+
+  .xl\:space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+  }
+
+  .xl\:p-8 {
+    padding: 2rem;
   }
 
   .xl\:px-0 {
@@ -2785,6 +2840,10 @@ select {
 
   .xl\:text-\[4\.65rem\] {
     font-size: 4.65rem;
+  }
+
+  .xl\:text-6 {
+    font-size: 1.5rem;
   }
 
   .xl\:after\:content-\[\'\A9\'\]::after {
