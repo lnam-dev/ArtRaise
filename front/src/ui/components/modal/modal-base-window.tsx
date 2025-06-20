@@ -26,7 +26,10 @@ const ModalBaseWindow: React.FC<ModalBaseWindowProps> = ({
 		isActive && (
 			<div
 				className={`fixed flex justify-center items-center z-50 -inset-x-0 -inset-y-0 bg-[rgba(0,0,0,0.8)] filter backdrop-blur-[24px]`}>
-				<div className={"flex justify-center items-center w-full h-full"}>
+				<div
+					className={
+						"flex justify-center items-center w-full h-full px-4 xl:px-0"
+					}>
 					{children}
 				</div>
 			</div>

@@ -11,9 +11,7 @@ const ModalButtonClose = ({ variable = "dark" }: ModalButtonCloseProps) => {
 	return (
 		<button onClick={hideModal} className={`button_close`}>
 			<Close
-				height={32}
-				width={32}
-				className={`button_close__icon button_close__icon--${variable}`}
+				className={`button_close__icon button_close__icon--${variable} h-6 w-6 xl:h-8 xl:w-8`}
 			/>
 		</button>
 	);
