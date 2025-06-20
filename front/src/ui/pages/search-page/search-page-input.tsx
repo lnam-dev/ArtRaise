@@ -3,7 +3,7 @@ import React from 'react';
 import SearchInput from "~/ui/components/search-bar/search-input";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {useRouter} from "next/navigation";
-import {getFilteredUrlParamsFromObject} from "~/ui/pages/search-page/func";
+import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 import {TFilterKeys} from "~/types/filter-types/filter";
 import {setTitle} from "~/store/client/slices/SearchPageSlice";
 
@@ -21,8 +21,8 @@ const SearchPageInput: React.FC<Props> = ({className}) => {
     // const queryParams = getFilteredUrlParamsFromObject(searchPageState.searchFilters).toString();
     return (
         <SearchInput className={`${className}`} setInputString={(titleValue) => dispatch(setTitle(titleValue))}
-                     handleOnSearchClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromObject(searchFilterState)}`)}
-                     searchString={searchPageState.title}/>
+                     handleOnSearchClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(searchFilterState)}`)}
+                     searchString={searchPageState.filters.title}/>
     );
 };
 

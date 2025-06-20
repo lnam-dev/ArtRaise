@@ -4,7 +4,7 @@ import Button from "~/ui/components/button/button";
 import { useModal } from "~/ui/hooks/useModal";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "~/store/client/hooks";
-import { getFilteredUrlParamsFromObject } from "~/ui/pages/search-page/func";
+import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 
 type Props = {};
 
@@ -14,7 +14,7 @@ const MobileFilterMenu: React.FC<Props> = ({}) => {
 	const searchFilterState = useAppSelector((state) => state.searchPageReducer);
 	const onSearchHandler = () => {
 		router.push(
-			`/ua/search/?${getFilteredUrlParamsFromObject(searchFilterState)}`
+			`/ua/search/?${getFilteredUrlParamsFromFilterState(searchFilterState)}`
 		);
 		hideModal();
 	};
