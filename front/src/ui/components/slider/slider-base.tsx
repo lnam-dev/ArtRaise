@@ -14,6 +14,7 @@ import { TSliderBaseProps } from "~/types/slider";
 
 const SliderBase: React.FC<TSliderBaseProps> = ({
 	slides,
+	variant = "classic",
 	children,
 	swiperProps,
 	unpackedSlides,
@@ -77,7 +78,20 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 								duration={600}
 							/>
 						</div>
-						{!isDesktop && <SliderButtonExpand className={`${expandStyle}`} />}
+						{variant === "classic" ? (
+							<SliderButtonExpand
+								className={`${expandStyle}`}
+								slides={slides}
+							/>
+						) : (
+							!isDesktop && (
+								<SliderPagination
+									mode="dark"
+									currentSlide={currentSlideIdx}
+									slidesLegnth={slides.length}
+								/>
+							)
+						)}
 						{isDesktop && (
 							<SliderNavPanel
 								currentSlide={currentSlideIdx}

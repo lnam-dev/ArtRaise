@@ -13,6 +13,7 @@ export type TSliderClassicProps = TSliderBaseProps &
 
 export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
+	variant: "classic" | "fullscreen";
 	swiperProps: SwiperOptions;
 	headerStyle?: string;
 	wrapperStyle?: string;

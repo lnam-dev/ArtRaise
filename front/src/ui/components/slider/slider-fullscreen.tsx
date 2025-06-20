@@ -53,7 +53,8 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 					))}
 				</>
 			)}
-			{...props}>
+			{...props}
+			variant="fullscreen">
 			{children}
 		</SliderBase>
 	);
