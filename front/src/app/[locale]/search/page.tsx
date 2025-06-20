@@ -7,29 +7,14 @@ import {TArtPiece} from "~/types";
 import CardPurchase from "~/ui/components/card-purchase/card-purchase";
 import FilterMenu from "~/ui/pages/search-page/filter-menu";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
-import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
-import FilterMapper from "~/ui/pages/search-page/filter-mapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {useRouter, useSearchParams} from "next/navigation";
-import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
+import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 import {setupDisplayedArtpieces} from "~/store/client/slices/SearchPageSlice";
 import Button from "~/ui/components/button/button";
+import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
 
-export const getArtpiecesByQueryParams = async (queryParams: string): Promise<TArtPiece[]> => {
-    try {
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces?${queryParams}`);
-        if (!response.ok) {
-            return [];
-        }
-        const artPieces = await response.json();
-        return artPieces;
-    } catch (error) {
-        console.log(error)
-        return []
-    }
-}
 export default function Page() {
     const filterState = useAppSelector(state => state.searchPageReducer)
     const artpieces = filterState.displayArtpieces;
@@ -62,7 +47,7 @@ export default function Page() {
             </LinkBackTo>
             <SearchPageInput className={"col-span-full pl-0 my-4"}/>
             {/*<FilterMapper className={"col-span-full"}/>*/}
-            {/*<MobileFilterNavigation className={`md:hidden col-span-full`}/>*/}
+            <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
                 <Button className={"w-full my-3"}
                         onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( знайдено ${filterState.previewArtPiecesCount} )`}</Button>

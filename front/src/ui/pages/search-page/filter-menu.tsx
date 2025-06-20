@@ -12,8 +12,7 @@ import {
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
 import {filterKeys} from "~/types/filter-types/filter";
-import {getArtpiecesByQueryParams} from "~/app/[locale]/search/page";
-import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
+import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 
 type Props = {
     className?: string;
