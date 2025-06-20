@@ -91,7 +91,6 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 						</h2>
 						<div className="space-y-8">
 							<CardPurchase card={artPiece} variable="dark" />
-							<CardPurchase card={artPiece} variable="dark" />
 						</div>
 					</div>
 				</aside>
