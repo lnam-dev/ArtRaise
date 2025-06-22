@@ -56,12 +56,12 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 					className="mb-2 w-full overflow-visible relative">
 					{slides.map((slide, index) => (
 						<SwiperSlide key={index}>
-							<figure className="aspect-[16/9] relative h-[70vh]">
+							<figure className="relative h-[75vh]">
 								<Image
 									src={slide.imgSrc}
 									alt={slide.description || slide.title}
 									fill
-									className="object-scale-down"
+									className="object-cover"
 								/>
 								<SliderModalClose className="absolute top-0 right-0" />
 							</figure>
