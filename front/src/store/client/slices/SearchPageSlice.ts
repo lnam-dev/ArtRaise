@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {TFilterKeys} from "~/types/filter-types/filter";
+import {TArtPiece} from "~/types";
 
 //fields like type, material , and so on. Need to select multiply values of this filter
 export type TFilterFields = {
@@ -12,30 +13,46 @@ export type TFilterKeysValues = {
     }[]
 }
 
-export interface ISearchPageState extends TFilterFields {
-    title: string,
-    price_range: {
-        min: number,
-        max: number
-    },
-    filterKeysValues: TFilterKeysValues
+export interface ISearchPageState  {
+    displayArtpieces: TArtPiece[]
+    allArtpieces: TArtPiece[]
+    artPiecesCount: number
+    previewArtPiecesCount: number
+    currentPage: number
+    countPage: number
+    filters: {
+        title: string,
+        price_range: {
+            min: number,
+            max: number
+        }
+        filterKeysValues: TFilterKeysValues
+    }& TFilterFields,
 }
 
 const initialState: ISearchPageState = {
-    title: "",
-    price_range: {
-        min: 0,
-        max: 20000000
-    },
-    type: [],
-    material: [],
-    style: [],
-    theme: [],
-    filterKeysValues: {
+    allArtpieces: [],
+    displayArtpieces: [],
+    countPage: 0,
+    currentPage: 0,
+    artPiecesCount: 0, //count of current artpieces displayed
+    previewArtPiecesCount: 0, //count of artpieces, that match filter state , but not currently displayed(used for preview count artpieces)
+    filters: {
+        title: "",
+        price_range: {
+            min: 0,
+            max: 20000000
+        },
         type: [],
         material: [],
         style: [],
         theme: [],
+        filterKeysValues: {
+            type: [],
+            material: [],
+            style: [],
+            theme: [],
+        }
     }
 }
 
@@ -44,28 +61,35 @@ const SearchPageSlice = createSlice({
     initialState: initialState,
     reducers: {
         setTitle: (state, action: PayloadAction<string>) => {
-            state.title = action.payload;
+            state.filters.title = action.payload;
         },
         setPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
-            state.price_range.min = action.payload.min;
-            state.price_range.max = action.payload.max;
+            state.filters.price_range.min = action.payload.min;
+            state.filters.price_range.max = action.payload.max;
         },
         appendFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys, filterValue: string }>) => {
             const {filterKey, filterValue} = action.payload;
-            const modifiedArray = Array.from(state[filterKey]);
+            const modifiedArray = Array.from(state.filters[filterKey]);
             modifiedArray.push(filterValue);
-            state[filterKey] = modifiedArray;
+            state.filters[filterKey] = modifiedArray;
         },
-        removeFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys , filterValue: string}>) => {
+        removeFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys, filterValue: string }>) => {
             const {filterKey, filterValue} = action.payload;
-            const modifiedArray = Array.from(state[filterKey]);
-            state[filterKey] = modifiedArray.filter(filterVal => filterVal !== filterValue);
+            const modifiedArray = Array.from(state.filters[filterKey]);
+            state.filters[filterKey] = modifiedArray.filter(filterVal => filterVal !== filterValue);
         },
         setupFilterKeysValues: (state, action: PayloadAction<TFilterKeysValues>) => {
-            state.filterKeysValues = action.payload;
-        }
+            state.filters.filterKeysValues = action.payload;
+        },
+        setupDisplayedArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
+            state.displayArtpieces = action.payload;
+        },
+        setPreviewArtpiecesCount: (state, action: PayloadAction<number>) => {
+            state.previewArtPiecesCount = action.payload;
+        },
+
     }
 })
 
-export const {setTitle, setPriceRange, appendFilter, removeFilter,setupFilterKeysValues} = SearchPageSlice.actions;
+export const {setTitle, setPriceRange, appendFilter, removeFilter, setupFilterKeysValues,setupDisplayedArtpieces,setPreviewArtpiecesCount} = SearchPageSlice.actions;
 export default SearchPageSlice.reducer;
