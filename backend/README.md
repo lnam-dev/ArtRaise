@@ -2,31 +2,74 @@
 
 # Tech Stack
 
+### Python 3.11+
 ### _Backend_: Django, Django Rest Framework
 ### _Auth_: JWT (Simple JWT)
 ### _Database_: PostgreSQL
 ### _DEV environment_: Docker, docker-compose
 ### _CMS_: Wagtail Headless
+### [How to deploy](https://www.digitalocean.com/community/tutorials/how-to-deploy-django-to-app-platform#step-4-mdash-deploying-to-digitalocean-with-app-platform)
 
 
+# Getting started
+
+## 1. Clone the Repository & Set Up Environment
+# Clone the project
+```bash
+git clone https://github.com/makson2006/ArtRaise.git
+```
+
+# Create virtual environment
+
+```bash
+cd artraise/backend
+python -m venv venv
+```
+
+# Activate virtual environment
+# For Windows:
+```bash
+venv\Scripts\activate
+```
+# For Linux/macOS:
+```bash
+source venv/bin/activate
+```
+# Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
 # Docker DEV
-
-# 1.    Запуcr Docker-контейнера
-        docker-compose build
-# 2.    Додавання міграції
-        docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
-# 3.    Виконання міграції
-        docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
-# 4.    Створення суперкористувача
-        docker-compose run --rm backend sh -c "python manage.py createsuperuser --settings=project.settings.dev"
-# 5.    Запуск сервера
-        docker-compose up
-# 6.    Щоб увійти в адмінку, переходитe за
-        http://localhost:8000/cms
-# 7.    Адмінка на dev сервері (аналогічно)
-        https://{domen}/cms
-#       Вводите попередньо вказані дані суперюзера
+## 1.    Запуcr Docker-контейнера
+```bash
+docker-compose build
+```
+## 2.    Додавання міграції
+```bash
+docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
+```
+## 3.    Виконання міграції
+```bash
+docker-compose run --rm backend sh -c "python manage.py makemigrations --settings=project.settings.dev"
+```
+## 4.    Створення суперкористувача
+```bash
+docker-compose run --rm backend sh -c "python manage.py createsuperuser --settings=project.settings.dev"
+```
+## 5.    Запуск сервера
+```bash
+docker-compose up
+```
+## 6.    Щоб увійти в адмінку, переходитe за
+```bash
+http://localhost:8000/cms
+```
+## 7.    Адмінка на dev сервері (аналогічно)
+```bash
+https://{domen}/cms
+```
+##       Вводите попередньо вказані дані суперюзера
 
 ## Автоматичний деплой на DigitalOcean App Platform
 
