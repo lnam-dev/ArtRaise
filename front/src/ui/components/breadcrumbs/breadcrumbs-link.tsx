@@ -8,7 +8,7 @@ const BreadcrumbsLink = ({
 }: TBreadcrumbsLinkProps) => {
 	return (
 		<Link
-			className={`font-fixel font-light text-[0.875rem] ${
+			className={`font-fixel font-light text-[0.875rem] whitespace-nowrap truncate ${
 				isActive ? "text-gray-950" : "text-gray-500"
 			}`}
 			{...props}>

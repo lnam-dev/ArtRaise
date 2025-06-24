@@ -47,19 +47,19 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	};
 
 	return (
-		<main className="container mx-auto mt-14 xl:mt-[5rem]">
+		<main className="container mx-auto mt-14 lg:mt-18 xl:mt-[5rem]">
 			<Script
 				id="faq-schema"
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
 			/>
 			<section className="mb-10 lg:mb-6">
-				<BreadcrumbsWrapper activeIndex={2} className="mb-3">
+				<BreadcrumbsWrapper activeIndex={2} className="mb-3 mobile-spacing">
 					<BreadcrumbsLink>Категорії</BreadcrumbsLink>
 					<BreadcrumbsLink>Живопис</BreadcrumbsLink>
 					<BreadcrumbsLink>{artPiece.title}</BreadcrumbsLink>
 				</BreadcrumbsWrapper>
-				<LinkBackTo path="/" className="mb-8">
+				<LinkBackTo path="/" className="mb-8 mobile-spacing">
 					назад до Категорій
 				</LinkBackTo>
 				<SliderWrapper artPiece={artPiece} />

@@ -7,12 +7,14 @@ type SliderImgLandscapeProps = Pick<TSlide, "imgSrc"> & {
 
 const SliderImgLandscape = ({ imgSrc, index }: SliderImgLandscapeProps) => {
 	return (
-		<figure className="relative w-full aspect-[2/1] h-[70vh]">
+		<figure className="relative w-full max-h-[70vh]">
 			<Image
 				src={imgSrc}
 				alt={`Slide ${index + 1}`}
-				fill
-				className="object-cover"
+				layout="responsive"
+				width={16}
+				height={9}
+				className="object-contain"
 				loading="lazy"
 			/>
 		</figure>
