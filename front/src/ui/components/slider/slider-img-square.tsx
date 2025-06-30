@@ -13,8 +13,8 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
 
 	return (
 		<div className="flex flex-row justify-end gap-2 md:gap-4 xl:gap-6 max-h-[90vh] lg:max-h-[75vh] xl:max-h-[70vh]">
-			{Array.from({ length: columnsCount }, () => (
-				<figure className="flex-grow-[2] relative aspect-square">
+			{Array.from({ length: columnsCount }, (_, i) => (
+				<figure key={i} className="flex-grow-[2] relative aspect-square">
 					<Image
 						src={imgSrc}
 						alt={`Slide`}
@@ -31,7 +31,7 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
 					width={0}
 					height={0}
 					sizes="100vw"
-					className="w-full h-auto object-contain object-right"
+					className="w-full h-auto"
 					loading="lazy"
 				/>
 			</figure>

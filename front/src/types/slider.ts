@@ -8,8 +8,9 @@ export type TSlide = {
 	description?: string;
 };
 
-export type TSliderClassicProps = TSliderBaseProps &
-	Pick<TArtPiece, "orientation">;
+export interface TSliderClassicProps extends TSliderBaseProps {
+	orientation: TArtPiece["orientation"];
+}
 
 export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
@@ -20,4 +21,5 @@ export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	expandStyle?: string;
 	unpackedSlides?: (slides: TSlide[]) => React.ReactNode;
 	children: (currentSlideIdx: number) => React.ReactNode;
+	headerElements?: () => React.ReactNode;
 };

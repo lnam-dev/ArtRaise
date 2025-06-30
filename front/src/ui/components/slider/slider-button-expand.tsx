@@ -1,22 +1,26 @@
 import ArrowExpand from "~/assets/arrow-expand.svg";
-import ModalFillOrder from "~/ui/components/modal/order/modal-order-fill";
 import SliderModal from "./slider-modal";
+
 import { useModal } from "~/ui/hooks/useModal";
+
 import type { TSlide } from "~/types/slider";
+import type { TArtPiece } from "~/types";
 
 interface SliderButtonExpandProps {
 	className?: string;
+	orientation?: TArtPiece["orientation"];
 	slides: TSlide[];
 }
 
 export default function SliderButtonExpand({
 	className = "",
+	orientation,
 	slides,
 }: SliderButtonExpandProps) {
 	const { showModal } = useModal();
 
 	const handleExpandButton = () => {
-		showModal(<SliderModal slides={slides} />);
+		showModal(<SliderModal slides={slides} orientation={orientation} />);
 	};
 
 	return (

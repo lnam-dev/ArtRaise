@@ -2,11 +2,13 @@
 
 import { FC } from "react";
 import { SwiperSlide } from "swiper/react";
+
 import SliderBase from "./slider-base";
 import SliderImgPortrait from "./slider-img-portrait";
 import SliderImgLandscape from "./slider-img-landscape";
 import SliderImgSquare from "./slider-img-square";
-import { TSliderClassicProps } from "~/types/slider";
+import SliderButtonExpand from "./slider-button-expand";
+import type { TSliderClassicProps } from "~/types/slider";
 
 const orientationMapping = {
 	portrait: SliderImgPortrait,
@@ -38,6 +40,9 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 						</SwiperSlide>
 					))}
 				</>
+			)}
+			headerElements={() => (
+				<>{<SliderButtonExpand slides={slides} orientation={orientation} />}</>
 			)}
 			{...props}>
 			{children}

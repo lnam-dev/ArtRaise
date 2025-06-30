@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useEffect, useRef, useState } from "react";
-import { Swiper as SwiperType } from "swiper";
 import { Zoom } from "swiper/modules";
 
 import "swiper/css";
@@ -18,25 +16,9 @@ import { TArtPiece } from "~/types/art";
 
 const SliderModal: React.FC<{
 	slides: TSliderBaseProps["slides"];
-	orientation: Pick<TArtPiece, "orientation">;
-}> = ({ slides, ...props }) => {
-	const { isDesktop, currentDevice } = useDevice();
-	const swiperRef = useRef<SwiperType | null>(null);
-	const [currentSlideIdx, setSlideIdx] = useState(0);
-
-	useEffect(() => {
-		if (!swiperRef.current) return;
-
-		const handleSlideChange = () => {
-			setSlideIdx(swiperRef.current?.realIndex || 0);
-		};
-
-		swiperRef.current.on("slideChange", handleSlideChange);
-
-		return () => {
-			swiperRef.current?.off("slideChange", handleSlideChange);
-		};
-	}, [swiperRef]);
+	orientation?: TArtPiece["orientation"];
+}> = ({ slides, orientation = "landscape", ...props }) => {
+	const { currentDevice } = useDevice();
 
 	return (
 		<section {...props}>
@@ -58,9 +40,6 @@ const SliderModal: React.FC<{
 					longSwipes={false}
 					threshold={20}
 					touchRatio={1}
-					onSwiper={(swiper) => {
-						swiperRef.current = swiper;
-					}}
 					className="slider-modal__swiper">
 					{slides.map((slide, index) => (
 						<SwiperSlide key={index}>
@@ -69,15 +48,15 @@ const SliderModal: React.FC<{
 									className={`slider-modal__container slider-modal__container--${currentDevice}`}>
 									<div
 										className={`slider-modal__content slider-modal__content--${currentDevice}`}>
-										<figure className="slider-modal__image">
+										<figure
+											className={`slider-modal__image-wrapper slider-modal__image-wrapper--${orientation}`}>
 											<Image
 												src={slide.imgSrc}
 												alt={slide.description || slide.title}
 												width={0}
 												height={0}
 												sizes="100vw"
-												className="w-auto h-full max-w-[90vw] lg:max-w-full"
-												loading="lazy"
+												className={`slider-modal__image slider-modal__image--${orientation}`}
 											/>
 										</figure>
 										<SliderModalClose />
