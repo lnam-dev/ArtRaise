@@ -4,7 +4,9 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
+import { Zoom } from "swiper/modules";
 import "swiper/css";
+
 import useDevice from "~/ui/hooks/useDevice";
 import SliderPagination from "./slider-pagination";
 import { TSliderBaseProps } from "~/types/slider";
@@ -37,6 +39,8 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 			<div className="h-full w-full relative">
 				<Swiper
 					loop
+					modules={[Zoom]}
+					zoom={true}
 					centeredSlides={true}
 					slidesPerView={1}
 					slidesPerGroup={1}
@@ -56,21 +60,30 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 					className="mb-2 w-full overflow-visible relative">
 					{slides.map((slide, index) => (
 						<SwiperSlide key={index}>
-							<figure className="relative h-[75vh]">
-								<Image
-									src={slide.imgSrc}
-									alt={slide.description || slide.title}
-									fill
-									className="object-cover"
-								/>
-								<SliderModalClose className="absolute top-0 right-0" />
-							</figure>
+							<div className="w-[100vw] h-[100vh] swiper-zoom-container">
+								<div className="flex items-center justify-center w-full h-full translate-x-8">
+									<div className="flex flex-row items-start">
+										<figure className="relative w-auto h-[90vh]">
+											<Image
+												src={slide.imgSrc}
+												alt={slide.description || slide.title}
+												width={0}
+												height={0}
+												sizes="100vw"
+												className="w-auto h-full"
+												loading="lazy"
+											/>
+										</figure>
+										<SliderModalClose />
+									</div>
+								</div>
+							</div>
 						</SwiperSlide>
 					))}
 				</Swiper>
 			</div>
 			<div className="container mx-auto w-full text-left">
-				<div className="px-4 xl:px-0">
+				<div className="mobile-spacing">
 					{!isDesktop && (
 						<SliderPagination
 							mode="dark"
