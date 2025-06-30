@@ -3,7 +3,7 @@
 }
 
 .button {
-	@apply font-fixel font-medium text-4 h-14 transition-all duration-300 relative;
+	@apply font-fixel font-medium text-4 h-12 xl:h-14 transition-all duration-300 relative;
 	@apply flex flex-row justify-center items-center gap-2;
 
 	&--dark {

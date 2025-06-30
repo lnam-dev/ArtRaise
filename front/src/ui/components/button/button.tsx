@@ -11,10 +11,15 @@ export default function Button({
 	href,
 	...props
 }: TButtonProps) {
-	const button = (
-		<button className={`button button--${variant} ${className}`} {...props}>
+	const Tag = href ? Link : "button";
+	const linkProps = href ? { to: href } : null;
+
+	return (
+		<Tag
+			className={`button button--${variant} ${className}`}
+			{...linkProps}
+			{...props}>
 			{children}
-		</button>
+		</Tag>
 	);
-	return href ? <Link to={href}>{button}</Link> : button;
 }

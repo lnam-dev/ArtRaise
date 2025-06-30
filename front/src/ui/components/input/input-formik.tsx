@@ -31,9 +31,7 @@ const InputFormik: React.FC<InputProps> = ({
 							type={type}
 							placeholder={placeholder}
 							className={`${style} ${
-								as === "textarea"
-									? "w-full h-full resize-none  py-2"
-									: "h-14 py-4"
+								as === "textarea" && "w-full h-full resize-none py-2"
 							} ${className}`}
 							{...props}
 						/>

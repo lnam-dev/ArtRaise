@@ -1,8 +1,12 @@
 "use client";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import InputFormik from "../input/input-formik";
-import ButtonArrow from "../button/button-arrow";
+
+import { useModal } from "../../../hooks/useModal";
+import ModalOrderSuccess from "./modal-order-success";
+
+import InputFormik from "../../input/input-formik";
+import ButtonArrow from "../../button/button-arrow";
 
 const validationSchema = Yup.object({
 	firstName: Yup.string()
@@ -21,7 +25,13 @@ const validationSchema = Yup.object({
 		.email("Введіть коректний email"),
 	question: Yup.string(),
 });
-export default function ModalFillOrderForm({ className = "" }) {
+export default function ModalOrderFillForm({ className = "" }) {
+	const { showModal } = useModal();
+
+	const handleSubmitForm = () => {
+		showModal(<ModalOrderSuccess />);
+	};
+
 	return (
 		<Formik
 			initialValues={{
@@ -34,23 +44,23 @@ export default function ModalFillOrderForm({ className = "" }) {
 			validationSchema={validationSchema}
 			validateOnBlur={false}
 			validateOnChange={true}
-			onSubmit={(values) => console.log("Form submitted:", values)}>
+			onSubmit={handleSubmitForm}>
 			{({ isValid, dirty }) => (
 				<Form className="flex flex-col gap-8 h-full justify-between">
 					<div>
-						<h1 className="font-namu text-8 leading-9 mb-7">
+						<h1 className="font-namu text-6 xl:text-8 leading-9 mb-4 xl:mb-7">
 							Заповніть форму для <br />
 							оформлення вашого замовлення:
 						</h1>
-						<div className={`space-y-6 w-full ${className}`}>
-							<div className="flex flex-row gap-6">
+						<div className={`space-y-4 xl:space-y-6 w-full ${className}`}>
+							<div className="flex flex-col xl:flex-row gap-4 xl:gap-6">
 								<InputFormik name="lastName" placeholder="Прізвище" />
 								<InputFormik name="firstName" placeholder="Ім'я" />
 							</div>
 							<InputFormik name="email" placeholder="Email" />
 							<InputFormik name="phone" placeholder="Телефон" />
 						</div>
-						<h1 className="font-namu text-8 leading-9 mb-7">
+						<h1 className="font-namu text-6 xl:text-8leading-9 mb-4 xl:mb-7">
 							Якщо є питання — надамо <br /> відповідь на Ваш email
 						</h1>
 						<InputFormik

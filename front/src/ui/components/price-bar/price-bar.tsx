@@ -3,7 +3,7 @@ import Buy from "~/assets/buy.svg";
 import Button from "../button/button";
 import { TArtPiece } from "~/types";
 import { useModal } from "~/ui/hooks/useModal";
-import ModalFillOrder from "~/ui/components/modal/modal-fill-order";
+import ModalOrderFill from "~/ui/components/modal/order/modal-order-fill";
 
 interface PriceBarProps extends React.HTMLAttributes<HTMLElement> {
 	title: string;
@@ -15,7 +15,7 @@ const PriceBar = ({ title, artPiece, href, ...props }: PriceBarProps) => {
 	const { showModal } = useModal();
 
 	const handlePurchaseButton = () => {
-		showModal(<ModalFillOrder artPiece={artPiece} />);
+		showModal(<ModalOrderFill artPiece={artPiece} />);
 	};
 
 	return (

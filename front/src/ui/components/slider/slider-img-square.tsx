@@ -2,38 +2,39 @@ import Image from "next/image";
 import { TSlide } from "~/types/slider";
 import useDevice from "~/ui/hooks/useDevice";
 
-type SliderImgPortraitProps = Pick<TSlide, "imgSrc"> & {
+type SliderImgPortraitSquare = Pick<TSlide, "imgSrc"> & {
 	index: number;
 };
 
-const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitProps) => {
-	const { isDesktop } = useDevice();
+const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
+	const { isTablet, isDesktop } = useDevice();
+
+	const columnsCount = isTablet ? 1 : isDesktop ? 2 : 0;
+
 	return (
-		<div className="flex flex-row gap-6">
-			<figure className="relative w-full h-[80vh] 2xl:w-[80%]">
+		<div className="flex flex-row justify-end gap-2 md:gap-4 xl:gap-6 max-h-[90vh] lg:max-h-[75vh] xl:max-h-[70vh]">
+			{Array.from({ length: columnsCount }, (_, i) => (
+				<figure key={i} className="flex-grow-[2] relative aspect-square">
+					<Image
+						src={imgSrc}
+						alt={`Slide`}
+						className="object-cover opacity-30"
+						fill
+						loading="lazy"
+					/>
+				</figure>
+			))}
+			<figure className="flex-grow-[2] flex-shrink-0 w-auto h-auto relative">
 				<Image
 					src={imgSrc}
 					alt={`Slide ${index + 1}`}
-					layout="responsive"
-					width={9}
-					height={16}
-					className="object-contain"
+					width={0}
+					height={0}
+					sizes="100vw"
+					className="w-full h-auto"
 					loading="lazy"
 				/>
 			</figure>
-			{isDesktop && (
-				<div className="w-full">
-					<figure className="relative w-full h-full">
-						<Image
-							src={imgSrc}
-							alt={`Slide ${index + 1}`}
-							fill
-							className="object-cover"
-							loading="lazy"
-						/>
-					</figure>
-				</div>
-			)}
 		</div>
 	);
 };

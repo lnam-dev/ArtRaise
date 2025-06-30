@@ -7,19 +7,19 @@ import useDevice from "~/ui/hooks/useDevice";
 import "swiper/css";
 
 import SliderNavPanel from "./slider-nav-panel";
-import SliderButtonExpand from "./slider-button-expand";
 import SliderPagination from "./slider-pagination";
 import Turnabout from "../turnabout/turnabout";
 import { TSliderBaseProps } from "~/types/slider";
 
 const SliderBase: React.FC<TSliderBaseProps> = ({
 	slides,
+	variant = "classic",
 	children,
 	swiperProps,
 	unpackedSlides,
+	headerElements,
 	headerStyle,
 	wrapperStyle,
-	expandStyle,
 	...props
 }) => {
 	const { isDesktop } = useDevice();
@@ -77,24 +77,24 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 								duration={600}
 							/>
 						</div>
-						{!isDesktop && <SliderButtonExpand className={`${expandStyle}`} />}
+						{headerElements && headerElements()}
 						{isDesktop && (
 							<SliderNavPanel
 								currentSlide={currentSlideIdx}
-								slidesLegnth={slides.length}
+								slidesLength={slides.length}
 							/>
 						)}
 					</div>
 				</Swiper>
 			</div>
 			<div className="container mx-auto w-full text-left">
-				<div className="px-4 xl:px-0">
+				<div className="mobile-spacing">
 					{children(currentSlideIdx)}
 					{!isDesktop && (
 						<SliderPagination
 							mode="dark"
 							currentSlide={currentSlideIdx}
-							slidesLegnth={slides.length}
+							slidesLength={slides.length}
 						/>
 					)}
 				</div>
