@@ -41,11 +41,11 @@ const SliderModal: React.FC<{
 					threshold={20}
 					touchRatio={1}
 					className="slider-modal__swiper">
-					{slides.map((slide, index) => (
-						<SwiperSlide key={index}>
-							<div className="slider-modal__swiper-wrapper swiper-zoom-container">
+					<div className="slider-modal__swiper-wrapper">
+						{slides.map((slide, index) => (
+							<SwiperSlide key={index}>
 								<div
-									className={`slider-modal__container slider-modal__container--${currentDevice}`}>
+									className={`slider-modal__container slider-modal__container--${currentDevice} swiper-zoom-container`}>
 									<div
 										className={`slider-modal__content slider-modal__content--${currentDevice}`}>
 										<figure
@@ -62,9 +62,9 @@ const SliderModal: React.FC<{
 										<SliderModalClose />
 									</div>
 								</div>
-							</div>
-						</SwiperSlide>
-					))}
+							</SwiperSlide>
+						))}
+					</div>
 				</Swiper>
 			</div>
 		</section>
