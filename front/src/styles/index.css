@@ -75,6 +75,12 @@
 	.mobile-spacing {
 		@apply px-4 xl:px-0;
 	}
+	.response-text-8{
+		@apply text-5 md:text-6 lg:text-8
+	}
+	.response-text-6{
+		@apply text-4 md:text-5 lg:text-6
+	}
 
 	.hover_button__light {
 		transition: all 0.2s;
