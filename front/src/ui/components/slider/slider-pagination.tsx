@@ -4,12 +4,12 @@ interface SliderPaginationProps {
 	mode?: "dark" | "light";
 	className?: string;
 	currentSlide: number;
-	slidesLegnth: number | undefined;
+	slidesLength: number | undefined;
 }
 
 export default function SliderPagination({
 	mode = "light",
-	slidesLegnth = 0,
+	slidesLength = 0,
 	currentSlide,
 	className,
 }: SliderPaginationProps) {
@@ -24,11 +24,11 @@ export default function SliderPagination({
 			break;
 	}
 
-	if (slidesLegnth <= 1) return;
+	if (slidesLength <= 1) return;
 
 	return (
 		<div className={`flex flex-1 gap-4 items-center ${className}`}>
-			{Array.from({ length: slidesLegnth }, (_, index) => (
+			{Array.from({ length: slidesLength }, (_, index) => (
 				<div
 					key={index}
 					className={`h-2 transition-all duration-[600ms] ${

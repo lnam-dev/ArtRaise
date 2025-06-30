@@ -1,0 +1,32 @@
+.slider-modal {
+	&__wrapper {
+		@apply h-full w-full relative;
+	}
+
+	&__swiper {
+		@apply mb-2 w-full overflow-visible relative;
+
+		&-wrapper {
+			@apply w-[100vw] h-[100vh];
+		}
+	}
+
+	&__container {
+		@apply flex items-center justify-center w-full h-full translate-x-8;
+
+		&--mobile {
+			@apply translate-x-0;
+		}
+	}
+
+	&__content {
+		@apply flex flex-row items-start;
+
+		&--mobile {
+			@apply flex-col-reverse items-end;
+		}
+	}
+	&__image {
+		@apply relative w-auto h-[85vh];
+	}
+}

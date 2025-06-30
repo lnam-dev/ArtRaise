@@ -84,7 +84,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 						{isDesktop && (
 							<SliderNavPanel
 								currentSlide={currentSlideIdx}
-								slidesLegnth={slides.length}
+								slidesLength={slides.length}
 							/>
 						)}
 					</div>
@@ -97,7 +97,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 						<SliderPagination
 							mode="dark"
 							currentSlide={currentSlideIdx}
-							slidesLegnth={slides.length}
+							slidesLength={slides.length}
 						/>
 					)}
 				</div>

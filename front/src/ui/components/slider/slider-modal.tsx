@@ -5,18 +5,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
 import { Zoom } from "swiper/modules";
+
 import "swiper/css";
+import "./slider-modal.scss";
 
 import useDevice from "~/ui/hooks/useDevice";
-import SliderPagination from "./slider-pagination";
-import { TSliderBaseProps } from "~/types/slider";
+
 import SliderModalClose from "./slider-modal-close";
 
-const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
-	slides,
-	...props
-}) => {
-	const { isDesktop } = useDevice();
+import { TSliderBaseProps } from "~/types/slider";
+import { TArtPiece } from "~/types/art";
+
+const SliderModal: React.FC<{
+	slides: TSliderBaseProps["slides"];
+	orientation: Pick<TArtPiece, "orientation">;
+}> = ({ slides, ...props }) => {
+	const { isDesktop, currentDevice } = useDevice();
 	const swiperRef = useRef<SwiperType | null>(null);
 	const [currentSlideIdx, setSlideIdx] = useState(0);
 
@@ -36,7 +40,7 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 
 	return (
 		<section {...props}>
-			<div className="h-full w-full relative">
+			<div className="slider-modal__wrapper">
 				<Swiper
 					loop
 					modules={[Zoom]}
@@ -57,20 +61,22 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 					onSwiper={(swiper) => {
 						swiperRef.current = swiper;
 					}}
-					className="mb-2 w-full overflow-visible relative">
+					className="slider-modal__swiper">
 					{slides.map((slide, index) => (
 						<SwiperSlide key={index}>
-							<div className="w-[100vw] h-[100vh] swiper-zoom-container">
-								<div className="flex items-center justify-center w-full h-full translate-x-8">
-									<div className="flex flex-row items-start">
-										<figure className="relative w-auto h-[90vh]">
+							<div className="slider-modal__swiper-wrapper swiper-zoom-container">
+								<div
+									className={`slider-modal__container slider-modal__container--${currentDevice}`}>
+									<div
+										className={`slider-modal__content slider-modal__content--${currentDevice}`}>
+										<figure className="slider-modal__image">
 											<Image
 												src={slide.imgSrc}
 												alt={slide.description || slide.title}
 												width={0}
 												height={0}
 												sizes="100vw"
-												className="w-auto h-full"
+												className="w-auto h-full max-w-[90vw] lg:max-w-full"
 												loading="lazy"
 											/>
 										</figure>
@@ -81,17 +87,6 @@ const SliderModal: React.FC<{ slides: TSliderBaseProps["slides"] }> = ({
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</div>
-			<div className="container mx-auto w-full text-left">
-				<div className="mobile-spacing">
-					{!isDesktop && (
-						<SliderPagination
-							mode="dark"
-							currentSlide={currentSlideIdx}
-							slidesLegnth={slides.length}
-						/>
-					)}
-				</div>
 			</div>
 		</section>
 	);
