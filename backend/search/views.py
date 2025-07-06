@@ -17,7 +17,6 @@ class ArtPiecePagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100
 
-"""
 class SearchView(APIView):
     renderer_classes = [JSONRenderer]
     pagination_class = ArtPiecePagination
@@ -162,8 +161,8 @@ class SearchView(APIView):
                 "sort_direction": sort_direction
             }
         }, status=status.HTTP_200_OK)
-"""
 
+"""
 # Альтернативна версія з використанням django-filter
 class SearchView(APIView):
     renderer_classes = [JSONRenderer]
@@ -228,3 +227,4 @@ class SearchView(APIView):
                 "page_size": page_size
             }
         }, status=status.HTTP_200_OK)
+"""
