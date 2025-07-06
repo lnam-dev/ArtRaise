@@ -93,7 +93,7 @@ export const Header = () => {
 						<Link to={"/search"} className="hover_button__light">
 							{!isDesktop ? <SearchMobile /> : <SearchPC />}
 						</Link>
-						{isDesktop && <HeaderSwitchLang />}
+						{/* {isDesktop && <HeaderSwitchLang />} */}
 
 						{!isDesktop && (
 							<button
