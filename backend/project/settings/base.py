@@ -200,7 +200,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media/')
-MEDIA_URL = os.environ.get('MEDIA_URL')
+MEDIA_URL = os.environ.get('MEDIA_URL', 'https://artraise-media.fra1.cdn.digitaloceanspaces.com/')
 STATIC_URL = '/static/'
 
 # Default primary key field type

@@ -1,4 +1,5 @@
 from .base import *
+from decouple import config
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
@@ -7,11 +8,14 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "artraise",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": config('DEV_DB_NAME'),
+        "USER": config('DEV_DB_USER'),
+        "PASSWORD": config('DEV_DB_PASSWORD'),
+        "HOST": config('DEV_DB_HOST'),
+        "PORT": config('DEV_DB_PORT'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
@@ -26,6 +30,8 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.dummy.DummyCache",
     }
 }
+
+MEDIA_URL = config('MEDIA_URL', default='https://artraise-media.fra1.cdn.digitaloceanspaces.com/')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mailhog'

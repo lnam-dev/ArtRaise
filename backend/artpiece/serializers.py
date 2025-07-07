@@ -21,6 +21,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "style",
             "author",
             "image_artpiece",
+            "creating_date",
         ]
 
     def get_author(self, obj):
@@ -38,14 +39,19 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             return f"Unknown"
 
     def get_image_artpiece(self, obj):
-        if not obj.image_artpiece and not hasattr(obj.image_artpiece, "url"):
+        # Перевіряємо наявність зображення
+        if not obj.image_artpiece or not obj.image_artpiece.name:
             return None
+        # Повертаємо URL зображення
+        return f"{settings.MEDIA_URL}{obj.image_artpiece.name}"
 
-        request = self.context.get("request")
-        if request:
-            return request.build_absolute_uri(obj.image_artpiece.url)
-
-        return f"{settings.MEDIA_URL}{obj.image_artpiece.url}"
+    def get_creating_date(self, obj):
+        if obj.creating_date_start and obj.creating_date_end:
+            return f"{obj.creating_date_start}-{obj.creating_date_end}"
+        elif obj.creating_date_start:
+            return f"{obj.creating_date_start}"
+        else:
+            return f"Unknown"
 
 
 class ArtPieceDetailSerializer(ArtPieceSerializer):
