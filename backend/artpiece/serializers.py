@@ -111,6 +111,6 @@ class ArtPieceBuyFormSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        if not data.get('first_name') or not data.get('last_name'):
-            raise serializers.ValidationError("Ім'я та прізвище є обов'язковими")
+        if not data.get('first_name') or not data.get('last_name') or not data.get('email') or not data.get('phone_number'):
+            raise serializers.ValidationError("Пропущені обов'язкові поля")
         return data
