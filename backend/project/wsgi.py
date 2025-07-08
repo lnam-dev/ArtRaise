@@ -19,6 +19,13 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 import os
 from django.core.wsgi import get_wsgi_application
 
+# Завантажуємо змінні середовища з файла .env, якщо він існує
+try:
+    from dotenv import load_dotenv
+    load_dotenv()  # Автоматично шукає файл .env в кореневій директорії проекту
+except ImportError:
+    pass  # В продакшн-середовищі dotenv може не бути встановлено
+
 print("[WSGI] Starting WSGI application...", flush=True)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings.base')
 application = get_wsgi_application()

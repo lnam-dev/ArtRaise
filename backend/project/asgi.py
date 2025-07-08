@@ -8,9 +8,15 @@ https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 """
 
 import os
-
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
+# завантажуємо перемінні середовища з файлу .env, якщо він існує
+try:
+    from dotenv import load_dotenv
+    load_dotenv()  # Автоматично шукає файл .env в кореневій директорії проекту
+except ImportError:
+    pass  # В продакшн-середовищі dotenv може не бути встановлено
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings.base')
 
 application = get_asgi_application()

@@ -14,6 +14,15 @@ from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 
+# Завантажуємо змінні середовища з файлу .env, якщо він існует
+try:
+    from dotenv import load_dotenv
+    # Шукає файл .env в кореневій директорії проекту
+    env_path = Path(__file__).resolve().parent.parent.parent / '.env'
+    load_dotenv(env_path)
+except ImportError:
+    pass  # В продакшн-середовищі dotenv може не бути встановлено
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -75,7 +84,16 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL')
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
 
+# Додаткові налаштування для DigitalOcean Spaces
 AWS_S3_FILE_OVERWRITE = False
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_REGION_NAME = 'fra1'  # Регіон DigitalOcean (Frankfurt)
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_ADDRESSING_STYLE = 'virtual'  # Важливо для S3-сумісних хостингів
+AWS_S3_VERIFY = True
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
@@ -199,9 +217,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static/')
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media/')
-MEDIA_URL = os.environ.get('MEDIA_URL', 'https://artraise-media.fra1.cdn.digitaloceanspaces.com/')
 STATIC_URL = '/static/'
+
+# Media files - використовуємо DigitalOcean Spaces
+MEDIA_URL = os.environ.get('MEDIA_URL', 'https://artraise-media.fra1.cdn.digitaloceanspaces.com/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
