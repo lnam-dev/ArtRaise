@@ -86,3 +86,28 @@ class ArtPiece(models.Model):
         related_name='artpieces'
     )
 
+
+
+class ArtPieceBuyForm(models.Model):
+    first_name = models.CharField(
+        max_length=100,
+    )
+    last_name = models.CharField(
+        max_length=100,
+    )
+    email = models.EmailField()
+    phone_number = models.CharField()
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+    )
+
+    artpiece = models.ForeignKey(
+        ArtPiece, 
+        on_delete=models.CASCADE,
+        related_name='buy_requests'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )

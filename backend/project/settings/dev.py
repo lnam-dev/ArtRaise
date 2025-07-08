@@ -8,11 +8,11 @@ ALLOWED_HOSTS = ["*"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config('DEV_DB_NAME'),
-        "USER": config('DEV_DB_USER'),
-        "PASSWORD": config('DEV_DB_PASSWORD'),
-        "HOST": config('DEV_DB_HOST'),
-        "PORT": config('DEV_DB_PORT'),
+        "NAME": config('DB_NAME'),
+        "USER": config('DB_USER'),
+        "PASSWORD": config('DB_PASS'),
+        "HOST": config('DB_HOST'),
+        "PORT": config('DB_PORT'),
         'OPTIONS': {
             'sslmode': 'require',
         },
