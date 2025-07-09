@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
-from .models import ArtPiece
+from phonenumber_field.serializerfields import PhoneNumberField
+from .models import ArtPiece, ArtPieceBuyForm
 
 
 class ArtPieceSerializer(serializers.ModelSerializer):
@@ -80,3 +81,36 @@ class ArtPieceDetailSerializer(ArtPieceSerializer):
             'bio_text': obj.author.bio_text,
             'image_author': obj.author.image_author.url,
         }
+
+
+class ArtPieceBuyFormSerializer(serializers.ModelSerializer):
+    artpiece_title = serializers.CharField(source='artpiece.title', read_only=True)
+    artpiece_author = serializers.CharField(source='artpiece.author.fullname', read_only=True)
+    phone_number = PhoneNumberField()
+
+    class Meta:
+        model = ArtPieceBuyForm
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "description",
+            "artpiece",
+            "artpiece_title",
+            "artpiece_author",
+            "created_at",
+            "is_processed"
+        ]
+        read_only_fields = ['id', 'created_at', 'is_processed', 'artpiece_title', 'artpiece_author']
+
+    def validate_email(self, value):
+        if not value:
+            raise serializers.ValidationError("Email є обов'язковим полем")
+        return value
+
+    def validate(self, data):
+        if not data.get('first_name') or not data.get('last_name') or not data.get('email') or not data.get('phone_number'):
+            raise serializers.ValidationError("Пропущені обов'язкові поля")
+        return data

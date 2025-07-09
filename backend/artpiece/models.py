@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from phonenumber_field.modelfields import PhoneNumberField
 
 from authors.models import Author
 
@@ -86,3 +87,34 @@ class ArtPiece(models.Model):
         related_name='artpieces'
     )
 
+
+
+class ArtPieceBuyForm(models.Model):
+    first_name = models.CharField(
+        max_length=100,
+    )
+    last_name = models.CharField(
+        max_length=100,
+    )
+    email = models.EmailField()
+    phone_number = PhoneNumberField(
+        region='UA',
+    )
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+    )
+
+    artpiece = models.ForeignKey(
+        ArtPiece, 
+        on_delete=models.CASCADE,
+        related_name='buy_requests'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    
+    is_processed = models.BooleanField(
+        default=False,  
+    )
