@@ -22,11 +22,11 @@ print(f"Settings file path: {__file__}")
 BASE_DIR = Path(__file__).resolve().parent.parent
 print(f"BASE_DIR: {BASE_DIR}")
 
-# Завантажуємо змінні середовища з файлу .env, якщо він існует
+# Завантажуємо змінні середовища з файлу .env, якщо він існує
 print("Loading environment variables from .env...")
 try:
     from dotenv import load_dotenv
-    # Шукає файл .env в кореневій директорії проекту
+    # Шукаємо файл .env в кореневій директорії проекту
     env_path = Path(__file__).resolve().parent.parent.parent / '.env'
     print(f"Looking for .env at: {env_path}")
     print(f".env exists: {env_path.exists()}")
@@ -37,7 +37,7 @@ try:
             print(f".env content length: {len(content)} characters")
             lines = content.strip().split('\n')
             print(f".env has {len(lines)} lines")
-            for i, line in enumerate(lines[:5]):  # Показываем первые 5 строк
+            for i, line in enumerate(lines[:5]):  # Показуємо перші 5 рядків
                 if '=' in line:
                     key, value = line.split('=', 1)
                     if 'SECRET' in key or 'PASS' in key:
@@ -45,10 +45,10 @@ try:
                     else:
                         print(f"  Line {i+1}: {key}={value}")
     
-    load_dotenv(env_path, override=True)  # Принудительно перезаписываем
+    load_dotenv(env_path, override=True)  # Примусово перезаписуємо
     print("✓ dotenv loaded successfully")
     
-    # Проверяем ключевые переменные после загрузки
+    # Перевіряємо ключові змінні після завантаження
     print("Environment variables after .env loading:")
     key_vars = ['DB_NAME', 'DB_HOST', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 
                 'AWS_STORAGE_BUCKET_NAME', 'AWS_S3_ENDPOINT_URL', 'MEDIA_URL']
@@ -112,7 +112,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #DRF and apps
+    #DRF та додатки
     'rest_framework',
     'rest_framework_simplejwt',
     #CORS
@@ -124,17 +124,20 @@ INSTALLED_APPS = [
 print("=== CONFIGURING AWS/DIGITALOCEAN SPACES ===")
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-
-print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID[:8]}*** (length: {len(AWS_ACCESS_KEY_ID) if AWS_ACCESS_KEY_ID else 0})")
-print(f"AWS_SECRET_ACCESS_KEY: {AWS_SECRET_ACCESS_KEY[:8]}*** (length: {len(AWS_SECRET_ACCESS_KEY) if AWS_SECRET_ACCESS_KEY else 0})")
-
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL')
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
 
-print(f"AWS_STORAGE_BUCKET_NAME: {AWS_STORAGE_BUCKET_NAME}")
-print(f"AWS_S3_ENDPOINT_URL: {AWS_S3_ENDPOINT_URL}")
-print(f"AWS_S3_CUSTOM_DOMAIN: {AWS_S3_CUSTOM_DOMAIN}")
+# Перевіряємо критичні налаштування
+if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
+    print("❌ AWS credentials not set")
+else:
+    print("✓ AWS credentials configured")
+
+if not AWS_STORAGE_BUCKET_NAME:
+    print("❌ AWS bucket not set")
+else:
+    print("✓ AWS bucket configured")
 
 # Додаткові налаштування для DigitalOcean Spaces
 AWS_S3_FILE_OVERWRITE = False
@@ -147,13 +150,23 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_ADDRESSING_STYLE = 'virtual'  # Важливо для S3-сумісних хостингів
 AWS_S3_VERIFY = True
 
-print(f"AWS_S3_REGION_NAME: {AWS_S3_REGION_NAME}")
-print(f"AWS_S3_SIGNATURE_VERSION: {AWS_S3_SIGNATURE_VERSION}")
-print(f"AWS_S3_ADDRESSING_STYLE: {AWS_S3_ADDRESSING_STYLE}")
-print(f"AWS_DEFAULT_ACL: {AWS_DEFAULT_ACL}")
+# Django 5.1+ використовує нове налаштування STORAGES
+STORAGES = {
+    "default": {
+        "BACKEND": "project.storage_backends.DebugS3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-print(f"DEFAULT_FILE_STORAGE: {DEFAULT_FILE_STORAGE}")
+# Для сумісності з більш старими версіями Django
+DEFAULT_FILE_STORAGE = 'project.storage_backends.DebugS3Boto3Storage'
+
+print("✓ Storage backends configured:")
+print(f"  Default storage: {STORAGES['default']['BACKEND']}")
+print(f"  Static storage: {STORAGES['staticfiles']['BACKEND']}")
+print(f"  Legacy DEFAULT_FILE_STORAGE: {DEFAULT_FILE_STORAGE}")
 
 print("=== AWS/DIGITALOCEAN SPACES CONFIGURED ===")
 
