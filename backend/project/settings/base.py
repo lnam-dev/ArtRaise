@@ -14,17 +14,61 @@ from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 
+print("=== SETTINGS/BASE.PY START ===")
+print(f"Current working directory: {os.getcwd()}")
+print(f"Settings file path: {__file__}")
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(f"BASE_DIR: {BASE_DIR}")
+
 # Завантажуємо змінні середовища з файлу .env, якщо він існует
+print("Loading environment variables from .env...")
 try:
     from dotenv import load_dotenv
     # Шукає файл .env в кореневій директорії проекту
     env_path = Path(__file__).resolve().parent.parent.parent / '.env'
-    load_dotenv(env_path)
-except ImportError:
-    pass  # В продакшн-середовищі dotenv може не бути встановлено
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+    print(f"Looking for .env at: {env_path}")
+    print(f".env exists: {env_path.exists()}")
+    
+    if env_path.exists():
+        with open(env_path, 'r') as f:
+            content = f.read()
+            print(f".env content length: {len(content)} characters")
+            lines = content.strip().split('\n')
+            print(f".env has {len(lines)} lines")
+            for i, line in enumerate(lines[:5]):  # Показываем первые 5 строк
+                if '=' in line:
+                    key, value = line.split('=', 1)
+                    if 'SECRET' in key or 'PASS' in key:
+                        print(f"  Line {i+1}: {key}={value[:8]}***")
+                    else:
+                        print(f"  Line {i+1}: {key}={value}")
+    
+    load_dotenv(env_path, override=True)  # Принудительно перезаписываем
+    print("✓ dotenv loaded successfully")
+    
+    # Проверяем ключевые переменные после загрузки
+    print("Environment variables after .env loading:")
+    key_vars = ['DB_NAME', 'DB_HOST', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 
+                'AWS_STORAGE_BUCKET_NAME', 'AWS_S3_ENDPOINT_URL', 'MEDIA_URL']
+    for key in key_vars:
+        value = os.environ.get(key)
+        if value:
+            if 'SECRET' in key or 'PASS' in key:
+                print(f"  {key}: {value[:8]}***")
+            else:
+                print(f"  {key}: {value}")
+        else:
+            print(f"  {key}: NOT SET")
+            
+except ImportError as e:
+    print(f"❌ dotenv import failed: {e}")
+    print("In production environment, dotenv may not be installed")
+except Exception as e:
+    print(f"❌ Error loading .env: {e}")
+    import traceback
+    traceback.print_exc()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -77,12 +121,20 @@ INSTALLED_APPS = [
     'storages',
 ]
 
+print("=== CONFIGURING AWS/DIGITALOCEAN SPACES ===")
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+
+print(f"AWS_ACCESS_KEY_ID: {AWS_ACCESS_KEY_ID[:8]}*** (length: {len(AWS_ACCESS_KEY_ID) if AWS_ACCESS_KEY_ID else 0})")
+print(f"AWS_SECRET_ACCESS_KEY: {AWS_SECRET_ACCESS_KEY[:8]}*** (length: {len(AWS_SECRET_ACCESS_KEY) if AWS_SECRET_ACCESS_KEY else 0})")
 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL')
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
+
+print(f"AWS_STORAGE_BUCKET_NAME: {AWS_STORAGE_BUCKET_NAME}")
+print(f"AWS_S3_ENDPOINT_URL: {AWS_S3_ENDPOINT_URL}")
+print(f"AWS_S3_CUSTOM_DOMAIN: {AWS_S3_CUSTOM_DOMAIN}")
 
 # Додаткові налаштування для DigitalOcean Spaces
 AWS_S3_FILE_OVERWRITE = False
@@ -95,8 +147,17 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 AWS_S3_ADDRESSING_STYLE = 'virtual'  # Важливо для S3-сумісних хостингів
 AWS_S3_VERIFY = True
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+print(f"AWS_S3_REGION_NAME: {AWS_S3_REGION_NAME}")
+print(f"AWS_S3_SIGNATURE_VERSION: {AWS_S3_SIGNATURE_VERSION}")
+print(f"AWS_S3_ADDRESSING_STYLE: {AWS_S3_ADDRESSING_STYLE}")
+print(f"AWS_DEFAULT_ACL: {AWS_DEFAULT_ACL}")
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+print(f"DEFAULT_FILE_STORAGE: {DEFAULT_FILE_STORAGE}")
+
+print("=== AWS/DIGITALOCEAN SPACES CONFIGURED ===")
+
+print("=== CONFIGURING REST FRAMEWORK ===")
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -167,19 +228,35 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+print("=== CONFIGURING DATABASE ===")
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASS = os.environ.get('DB_PASS')
+DB_HOST = os.environ.get('DB_HOST')
+DB_PORT = os.environ.get('DB_PORT')
+
+print(f"DB_NAME: {DB_NAME}")
+print(f"DB_USER: {DB_USER}")
+print(f"DB_PASS: {DB_PASS[:8]}*** (length: {len(DB_PASS) if DB_PASS else 0})")
+print(f"DB_HOST: {DB_HOST}")
+print(f"DB_PORT: {DB_PORT}")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
         "OPTIONS": {
             "sslmode": "require",
         },
     }
 }
+
+print("✓ Database configuration completed")
+print("=== DATABASE CONFIGURED ===")
 
 
 
@@ -219,11 +296,22 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static/')
 STATIC_URL = '/static/'
 
+print("=== CONFIGURING STATIC AND MEDIA FILES ===")
+print(f"STATIC_ROOT: {STATIC_ROOT}")
+print(f"STATIC_URL: {STATIC_URL}")
+
 # Media files - використовуємо DigitalOcean Spaces
 MEDIA_URL = os.environ.get('MEDIA_URL', 'https://artraise-media.fra1.cdn.digitaloceanspaces.com/')
+print(f"MEDIA_URL: {MEDIA_URL}")
+print("=== STATIC AND MEDIA FILES CONFIGURED ===")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
+
+print("=== OTHER SETTINGS ===")
+print(f"DEFAULT_AUTO_FIELD: {DEFAULT_AUTO_FIELD}")
+print(f"DATA_UPLOAD_MAX_NUMBER_FIELDS: {DATA_UPLOAD_MAX_NUMBER_FIELDS}")
+print("=== SETTINGS/BASE.PY COMPLETED ===")
