@@ -21,7 +21,7 @@ export interface ISearchPageState  {
     currentPage: number
     countPage: number
     filters: {
-        title: string,
+        query: string,
         price_range: {
             min: number,
             max: number
@@ -38,7 +38,7 @@ const initialState: ISearchPageState = {
     artPiecesCount: 0, //count of current artpieces displayed
     previewArtPiecesCount: 0, //count of artpieces, that match filter state , but not currently displayed(used for preview count artpieces)
     filters: {
-        title: "",
+        query: "",
         price_range: {
             min: 0,
             max: 20000000
@@ -61,7 +61,7 @@ const SearchPageSlice = createSlice({
     initialState: initialState,
     reducers: {
         setTitle: (state, action: PayloadAction<string>) => {
-            state.filters.title = action.payload;
+            state.filters.query = action.payload;
         },
         setPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.filters.price_range.min = action.payload.min;

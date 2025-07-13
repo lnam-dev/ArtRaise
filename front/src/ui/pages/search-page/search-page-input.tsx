@@ -22,7 +22,7 @@ const SearchPageInput: React.FC<Props> = ({className}) => {
     return (
         <SearchInput className={`${className}`} setInputString={(titleValue) => dispatch(setTitle(titleValue))}
                      handleOnSearchClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(searchFilterState)}`)}
-                     searchString={searchPageState.filters.title}/>
+                     searchString={searchPageState.filters.query}/>
     );
 };
 

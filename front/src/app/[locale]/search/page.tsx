@@ -50,7 +50,7 @@ export default function Page() {
             <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
                 <Button className={"w-full my-3"}
-                        onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( знайдено ${filterState.previewArtPiecesCount} )`}</Button>
+                        onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( ${filterState.previewArtPiecesCount} )`}</Button>
                 <FilterMenu/>
             </aside>
             <main className={"md:col-start-2 md:col-end-[-1] col-span-full"}>
