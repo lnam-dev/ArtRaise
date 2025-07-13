@@ -11,7 +11,7 @@ export const getStylesFromArtPieces = (artpieces:TArtPiece[]):string[] => {
 export const getFirstLettersOfAuthorsName = (authors:TAuthor[]):string[] => {
     let letters:string[] = [];
     authors.forEach((author,index) => {
-        if(letters.indexOf(author.fullname[0]) === -1 ) letters.push(author.fullname[0]);
+        if(letters.indexOf(author.fullname[0].toUpperCase()) === -1 ) letters.push(author.fullname[0].toUpperCase());
     })
     return letters.sort();
 }
@@ -23,7 +23,7 @@ export const getMapOfLettersAuthors = (authors: TAuthor[], letters: string[]): R
     }, {} as Record<string, TAuthor[]>);
     // Заповнюємо об'єкт авторами
     authors.forEach((author) => {
-        const firstLetter = author.fullname[0]; // Перша літера імені
+        const firstLetter = author.fullname[0].toUpperCase(); // Перша літера імені
         if (map[firstLetter]) {
             map[firstLetter].push(author);
         }

@@ -42,6 +42,7 @@ export const authorsPageSlice = createSlice({
 			const updatedAvailableLetters = getFirstLettersOfAuthorsName([
 				...action.payload,
 			]);
+			console.log(updatedAvailableLetters);
 			state.availableLetters = updatedAvailableLetters;
 			state.mapLetterAuthor = getMapOfLettersAuthors(
 				[...action.payload],
