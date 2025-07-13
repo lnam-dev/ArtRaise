@@ -26,7 +26,7 @@ const LettersMenu:FC<Props> = ({setSelectedLetterIndex,availableLetters,selected
                         }}>{tag}</button>
             ))}
            <div
-                className={`${selectedLetterIndex < 0 && "opacity-0"} absolute -bottom-0 h-full bg-black transition-all duration-300`}
+                className={`${selectedLetterIndex < 0 && "opacity-0"} absolute -bottom-0 h-full bg-black-1000 transition-all duration-300`}
                 style={bgStyle}
             />
         </div>

@@ -28,7 +28,7 @@ const SliderWrapper: FC<SliderWrapperProps> = ({ artPiece, ...props }) => {
 			{/* @ts-ignore */}
 			{() => (
 				<Link
-					to={`author/${artPiece.author.id}`}
+					to={`authors/${artPiece.author.id}`}
 					className="flex gap-2 items-center">
 					<p className="font-fixel font-medium leading-0 lg:font-normal text-4 md:text-5 lg:text-6 text-gray-950">
 						{artPiece.author.fullname}

@@ -3,11 +3,14 @@ import { TAuthor } from "~/types";
 import Image from "next/image";
 import Arrow from "~/assets/arrow-right.svg";
 import { redirect } from "next/navigation";
+import useLocation from "~/bridge/ui/useLocation";
+import usePath from "~/ui/hooks/usePath";
 
 type Props = {
 	author: TAuthor;
 };
 const AuthorCard: FC<Props> = ({ author }) => {
+	const pathMaker = usePath()
 	const { fullname, image_author, artpieces } = author;
 	return (
 		<figure
@@ -15,7 +18,7 @@ const AuthorCard: FC<Props> = ({ author }) => {
 				"flex flex-shrink flex-col w-full h-full bg-gray-950 break-inside-avoid"
 			}
 			onClick={() => {
-				redirect(`/authors/${author.id}`);
+				redirect(pathMaker(`/authors/${author.id}`));
 			}}>
 			<div className="relative block w-full text-white/90 font-namu">
 				{" "}
