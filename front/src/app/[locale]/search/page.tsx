@@ -49,7 +49,7 @@ export default function Page() {
             {/*<FilterMapper className={"col-span-full"}/>*/}
             <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
-                <Button className={"w-full my-3"}
+                <Button className={"w-full my-3 text-nowrap"}
                         onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( ${filterState.previewArtPiecesCount} )`}</Button>
                 <FilterMenu/>
             </aside>
