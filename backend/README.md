@@ -87,9 +87,162 @@ https://{domen}/cms
 
 ---
 
-### Authors
-- `GET /api/authors/` — Отримати список авторів
-- `GET /api/authors/{id}` — Отримати автора за ID
+### Authors API
+
+#### Endpoints
+
+##### 1. Отримати список авторів
+**`GET /api/authors/`**
+
+Повертає список усіх авторів з базовою інформацією.
+
+**Параметри запиту:**
+- `fullname` (опціонально) — Фільтрація за ім'ям автора (пошук за частковим збігом)
+- `style` (опціонально) — Фільтрація за стилем автора (пошук за частковим збігом)
+- `ordering` (опціонально) — Сортування за полем `fullname` (можливі значення: `fullname`, `-fullname`)
+
+**Приклад запиту:**
+```
+GET /api/authors/?fullname=Іван&style=реалізм&ordering=fullname
+```
+
+**Структура відповіді:**
+```json
+[
+  {
+    "id": 1,
+    "fullname": "Іван Петренко",
+    "artpieces_count": 5,
+    "image_author": "/media/images_author/ivan.jpg"
+  },
+  {
+    "id": 2,
+    "fullname": "Марія Коваленко",
+    "artpieces_count": 3,
+    "image_author": "/media/images_author/maria.jpg"
+  }
+]
+```
+
+**Поля відповіді:**
+- `id` — Унікальний ідентифікатор автора
+- `fullname` — Повне ім'я автора
+- `artpieces_count` — Кількість творів автора
+- `image_author` — URL зображення автора (може бути null)
+
+##### 2. Отримати детальну інформацію про автора
+**`GET /api/authors/{id}/`**
+
+Повертає детальну інформацію про конкретного автора, включно з його творами та подіями.
+
+**Структура відповіді:**
+```json
+{
+  "id": 1,
+  "fullname": "Іван Петренко",
+  "bio_text": "Відомий український художник, що працює в стилі сучасного реалізму...",
+  "style": "Сучасний реалізм",
+  "theme": "Пейзажі та портрети",
+  "expression_type": "Живопис олією",
+  "image_author": "/media/images_author/ivan.jpg",
+  "artpieces": [
+    {
+      "id": 1,
+      "title": "Весняний пейзаж",
+      "price": "1500.00",
+      "length_cm": 50,
+      "width_cm": 40,
+      "image_artpiece": "/media/images_artpiece/spring.jpg"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Виставка сучасного мистецтва",
+      "ticket_price": "100.00",
+      "location_name": "Галерея Мистецтв",
+      "start_date": "2024-01-15",
+      "end_date": "2024-01-30"
+    }
+  ]
+}
+```
+
+**Поля відповіді:**
+- `id` — Унікальний ідентифікатор автора
+- `fullname` — Повне ім'я автора
+- `bio_text` — Біографічний текст автора (до 3000 символів)
+- `style` — Стиль роботи автора
+- `theme` — Основна тематика творів
+- `expression_type` — Тип художнього вираження
+- `image_author` — URL зображення автора (може бути null)
+- `artpieces` — Масив творів автора з базовою інформацією
+- `events` — Масив подій, пов'язаних з автором
+
+##### 3. Отримати твори конкретного автора
+**`GET /api/authors/{id}/artpieces/`**
+
+Повертає детальний список усіх творів конкретного автора.
+
+**Структура відповіді:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Весняний пейзаж",
+    "price": "1500.00",
+    "description": "Прекрасний весняний пейзаж, написаний олією на полотні...",
+    "length_cm": 50,
+    "width_cm": 40,
+    "author": {
+      "id": 1,
+      "fullname": "Іван Петренко"
+    },
+    "category": "Пейзаж",
+    "image_artpiece": "/media/images_artpiece/spring.jpg",
+    "format": "Вертикальний",
+    "orientation": "portrait",
+    "dominant_color": "#4a7c59",
+    "year": 2023,
+    "technique": "Олія на полотні"
+  }
+]
+```
+
+#### Коди відповідей
+
+- **200 OK** — Успішне виконання запиту
+- **404 Not Found** — Автор з вказаним ID не знайдений
+- **400 Bad Request** — Неправильні параметри запиту
+
+#### Приклади використання
+
+**Пошук авторів за ім'ям:**
+```bash
+curl "http://localhost:8000/api/authors/?fullname=Петр"
+```
+
+**Отримання інформації про автора:**
+```bash
+curl "http://localhost:8000/api/authors/1/"
+```
+
+**Отримання творів автора:**
+```bash
+curl "http://localhost:8000/api/authors/1/artpieces/"
+```
+
+#### Фільтрація та сортування
+
+API підтримує наступні можливості фільтрації:
+- Пошук за ім'ям автора (case-insensitive)
+- Пошук за стилем роботи (case-insensitive)
+- Сортування за алфавітом (за ім'ям автора)
+
+Приклад використання всіх фільтрів:
+```
+GET /api/authors/?fullname=Іван&style=реал&ordering=-fullname
+```
 
 ---
 
@@ -127,128 +280,6 @@ https://{domen}/cms
 - `GET /api/slider/stats/` — Отримати статистику слайдера
 - `GET /api/slider/info/` — Отримати інформацію про систему слайдера
 
-# Models
-
-## CustomUser
-
-Користувацька модель, що розширює стандартний `AbstractUser` з авторизацією через email.
-
-| Поле | Тип | Опис |
-|------|-----|------|
-| `email` | `EmailField` *(унікальне)* | Основне поле для авторизації |
-| `username` | `CharField` | Залишається обов'язковим при реєстрації |
-| `created_on` | `DateTimeField` | Дата створення користувача |
-| + всі стандартні поля `AbstractUser` | `password`, `is_active`, `is_staff`, `is_superuser`, `first_name`, `last_name`, тощо |
-
-#### Аутентифікація
-- **USERNAME_FIELD**: `email`  
-- **REQUIRED_FIELDS**: `username`
-
-## ArtPiece
-
-Модель, яка представляє мистецький твір (живопис, скульптура, графіка тощо). Містить детальну інформацію про фізичні характеристики, стиль, формат і автора.
-
-| Поле | Тип | Опис |
-|------|-----|------|
-| `title` | `CharField` | Назва роботи |
-| `price` | `DecimalField` | Ціна (до 2 знаків після коми, лише додатні значення) |
-| `type` | `ChoiceField` | Тип мистецтва: `painting`, `sculpture`, `graphics`, `architecture`, `aplied_art`, `design` |
-| `material` | `CharField` | Матеріал, з якого створено роботу |
-| `theme` | `CharField` | Тематика твору |
-| `style` | `CharField` | Художній стиль |
-| `length_cm` | `DecimalField` | Довжина (см) |
-| `width_cm` | `DecimalField` | Ширина (см) |
-| `height_cm` | `DecimalField` *(nullable)* | Висота (см), опціонально |
-| `format` | `ChoiceField` | Формат: `small`, `medium`, `big` |
-| `orientation` | `ChoiceField` | Орієнтація: `square`, `portrait`, `landscape` |
-| `gamma` | `CharField` *(optional)* | Кольорова гама |
-| `dominant_color` | `CharField` *(optional)* | Домінантний колір |
-| `creating_date_start` | `PositiveIntegerField` *(optional)* | Рік початку створення |
-| `creating_date_end` | `PositiveIntegerField` *(optional)* | Рік завершення створення |
-| `description` | `TextField` | Опис твору |
-| `certificate` | `FileField` *(optional)* | Сертифікат автентичності (файл) |
-| `image_artpiece` | `ImageField` *(optional)* | Зображення твору |
-| `author` | `ForeignKey` → `Author` | Посилання на автора твору |
-
----
-
-#### ArtPieceType
-
-- `painting` — живопис  
-- `sculpture` — скульптура  
-- `graphics` — графіка  
-- `architecture` — архітектура  
-- `aplied_art` — прикладне мистецтво  
-- `design` — дизайн
-
-#### ArtPieceFormat
-
-- `small` — малий  
-- `medium` — середній  
-- `big` — великий
-
-#### ArtPieceOrientation
-
-- `square` — квадратна  
-- `portrait` — портретна  
-- `landscape` — пейзажна
-
-## Author
-
-Модель, що описує автора мистецьких творів. Містить базову інформацію, стиль, тематику творчості та зображення.
-
-| Поле | Тип | Опис |
-|------|-----|------|
-| `fullname` | `CharField` | Повне ім’я автора |
-| `bio_text` | `TextField` | Біографічна довідка (до 3000 символів) |
-| `style` | `CharField` | Стиль, у якому працює автор |
-| `theme` | `CharField` | Основна тематика творчості |
-| `expression_type` | `CharField` | Тип художнього вираження (напр., реалізм, абстракція тощо) |
-| `image_author` | `ImageField` *(optional)* | Фото або портрет автора |
-
-
-## Event
-
-Модель, що представляє подію — виставку, арт-подію чи інший захід, у якому беруть участь автори.
-
-| Поле | Тип | Опис |
-|------|-----|------|
-| `title` | `CharField` | Назва події |
-| `location_name` | `CharField` | Назва локації |
-| `location_details` | `CharField` *(optional)* | Деталі про локацію (поверх, зал, адреса тощо) |
-| `ticket_price` | `DecimalField` | Вартість квитка (до 2 знаків після коми) |
-| `description` | `TextField` | Короткий опис події (до 1000 символів) |
-| `start_date` | `DateField` *(optional)* | Дата початку |
-| `end_date` | `DateField` *(optional)* | Дата завершення |
-| `authors` | `ManyToManyField` → `Author` | Список авторів, що беруть участь у події |
-
-#### Індекси
-- `start_date`
-- `end_date`
-- `ticket_price`
-- `title`
-
-
-## Order
-
-Модель, що представляє замовлення на артоб'єкт. Містить контактні дані клієнта, дату замовлення та статус виконання.
-
-| Поле | Тип | Опис |
-|------|-----|------|
-| `artpiece` | `ForeignKey` → `ArtPiece` | Артоб'єкт, що замовляється |
-| `email` | `EmailField` | Email замовника |
-| `phone_number` | `CharField` | Телефон замовника |
-| `first_name` | `CharField` | Ім’я замовника |
-| `last_name` | `CharField` | Прізвище замовника |
-| `created_at` | `DateTimeField` | Дата та час створення замовлення (встановлюється автоматично) |
-| `status` | `CharField` *(choices)* | Статус замовлення (за замовчуванням `pending`) |
-
-#### Статуси:
-- `pending` — очікує підтвердження  
-- `accepted` — підтверджене  
-- `in progress` — виконується  
-- `completed` — виконане  
-- `cancelled` — скасоване
 
 # API Documentation
 
