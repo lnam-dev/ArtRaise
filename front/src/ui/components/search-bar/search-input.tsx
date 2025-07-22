@@ -10,6 +10,7 @@ type Props = {
 	setInputString: (s: string) => void;
 	handleOnSearchClick: () => any;
 	searchString: string;
+	inputPlaceholder?: string;
 };
 
 const SearchInput: FC<Props> = ({
@@ -17,6 +18,7 @@ const SearchInput: FC<Props> = ({
 	setInputString,
 	handleOnSearchClick,
 	searchString,
+	inputPlaceholder = "Пошук за ім’ям автора та/або назвою",
 }) => {
 	const { isMobile } = useDevice();
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -27,7 +29,7 @@ const SearchInput: FC<Props> = ({
 		<form className={`flex ${className}`} onSubmit={handleSubmit}>
 			<Input
 				type="text"
-				placeholder="Пошук за ім’ям автора та/або назвою"
+				placeholder={inputPlaceholder}
 				className="text-4 text-gray-950 w-full"
 				value={searchString}
 				onChange={(e) => setInputString(e.target.value)}
@@ -38,7 +40,7 @@ const SearchInput: FC<Props> = ({
 				{isMobile ? (
 					<Search height={24} width={24} className="fill-white" />
 				) : (
-					<span>Шукати</span>
+					<span>Пошук</span>
 				)}
 			</Button>
 		</form>

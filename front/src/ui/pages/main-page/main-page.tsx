@@ -1,7 +1,7 @@
 import { MainPage as TMainPage } from "~/use-cases/contracts/main-page";
 import SearchBar from "../../components/search-bar/search-bar";
 import SegmentTitle from "../../components/segment-title/segment-title";
-import CardPurchase from "../../components/card-purchase/card-purchase";
+import CardPurchase from "../../components/card/card-purchase";
 import CertificatesSection from "../../components/certificatesSection/certificate-section";
 import PartnersSection from "../../components/partners-section/partners-section";
 import CallToActionSection from "../../components/cta-section/cta-section";

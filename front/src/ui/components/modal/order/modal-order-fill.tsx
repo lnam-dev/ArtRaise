@@ -1,5 +1,5 @@
 import { TArtPiece } from "~/types";
-import CardPurchase from "../../card-purchase/card-purchase";
+import CardPurchase from "../../card/card-purchase";
 import ModalOrderFillForm from "./modal-order-fill-form";
 import ModalButtonClose from "../modal-button-close";
 import useDevice from "~/ui/hooks/useDevice/useDevice";
