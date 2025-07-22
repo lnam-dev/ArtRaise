@@ -1,17 +1,20 @@
-"use client"
-import React, {useEffect} from 'react';
+"use client";
+import React, { useEffect } from "react";
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import SearchPageInput from "~/ui/pages/search-page/search-page-input";
-import {TArtPiece} from "~/types";
-import CardPurchase from "~/ui/components/card-purchase/card-purchase";
+import { TArtPiece } from "~/types";
+import CardPurchase from "~/ui/components/card/card-purchase";
 import FilterMenu from "~/ui/pages/search-page/filter-menu";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import LinkBackTo from "~/ui/components/link/link-back-to";
-import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
-import {useRouter, useSearchParams} from "next/navigation";
-import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
-import {setupDisplayedArtpieces} from "~/store/client/slices/SearchPageSlice";
+import { useAppDispatch, useAppSelector } from "~/store/client/hooks";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+	getArtpiecesByQueryParams,
+	getFilteredUrlParamsFromFilterState,
+} from "~/ui/pages/search-page/func";
+import { setupDisplayedArtpieces } from "~/store/client/slices/SearchPageSlice";
 import Button from "~/ui/components/button/button";
 import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
 

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { TArtPiece } from "~/types";
 import ButtonArrow from "~/ui/components/button/button-arrow";
-import "./card-purchase.scss";
+import "./card.scss";
 import Arrow from "~/assets/arrow-right.svg";
 import CardHeart from "./card-heart";
 import Link from "~/bridge/ui/Link";

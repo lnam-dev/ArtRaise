@@ -9,7 +9,7 @@ import Character from "~/ui/components/character/character";
 import Script from "next/script";
 import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
-import CardPurchase from "~/ui/components/card-purchase/card-purchase";
+import CardPurchase from "~/ui/components/card/card-purchase";
 import "~/styles/bg-light.css";
 
 function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
