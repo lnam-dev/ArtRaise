@@ -240,4 +240,187 @@ https://{domen}/cms
 - `completed` — виконане  
 - `cancelled` — скасоване
 
+# API Documentation
+
+## Search API
+
+**Endpoint:** `GET /api/search/`
+
+**Опис:** Пошук та фільтрація творів мистецтва з пагінацією та статистикою цін.
+
+### Параметри запиту
+
+#### Текстовий пошук
+| Параметр | Тип | Опис |
+|----------|-----|------|
+| `q` | `string` | Пошуковий запит (пошук за назвою, ім'ям автора, описом) |
+
+#### Фільтри (підтримують множинні значення)
+| Параметр | Тип | Опис |
+|----------|-----|------|
+| `category` | `string[]` | Категорії творів |
+| `type` | `string[]` | Типи творів (`painting`, `sculpture`, `graphics`, `architecture`, `aplied_art`, `design`) |
+| `material` | `string[]` | Матеріали |
+| `theme` | `string[]` | Теми творів |
+| `style` | `string[]` | Стилі творів |
+| `expression_method` | `string[]` | Методи вираження |
+| `size` | `string[]` | Розміри (`small`, `medium`, `big`) |
+| `color` | `string[]` | Домінуючі кольори |
+| `orientation` | `string[]` | Орієнтація (`square`, `portrait`, `landscape`) |
+| `gamma` | `string[]` | Гама |
+
+#### Цінові фільтри
+| Параметр | Тип | Опис |
+|----------|-----|------|
+| `price_min` | `float` | Мінімальна ціна |
+| `price_max` | `float` | Максимальна ціна |
+
+#### Фільтр за автором
+| Параметр | Тип | Опис |
+|----------|-----|------|
+| `author` | `string` | Пошук за ім'ям автора |
+
+#### Сортування
+| Параметр | Тип | Опис | Значення |
+|----------|-----|------|----------|
+| `sort_by` | `string` | Поле для сортування | `title`, `price`, `date`, `author` |
+| `sort_direction` | `string` | Напрямок сортування | `asc`, `desc` |
+
+#### Пагінація
+| Параметр | Тип | Опис |
+|----------|-----|------|
+| `page` | `int` | Номер сторінки (за замовчуванням: 1) |
+| `page_size` | `int` | Кількість елементів на сторінці (за замовчуванням: 20, максимум: 100) |
+
+### Приклади запитів
+
+```bash
+# Пошук за назвою
+GET /api/search/?q=пейзаж
+
+# Фільтрація за типом та матеріалом
+GET /api/search/?type=painting&material=олія
+
+# Множинні значення фільтра
+GET /api/search/?type=painting&type=sculpture&style=реалізм
+
+# Фільтрація за ціною
+GET /api/search/?price_min=1000&price_max=5000
+
+# Сортування за ціною
+GET /api/search/?sort_by=price&sort_direction=desc
+
+# Пагінація
+GET /api/search/?page=2&page_size=10
+
+# Комбінований запит
+GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&page=1&page_size=20
+```
+
+### Структура відповіді
+
+```json
+{
+  "results": [
+    {
+      "id": 1,
+      "title": "Назва твору",
+      "price": "2500.00",
+      "type": "painting",
+      "material": "Олія",
+      "theme": "Портрет",
+      "style": "Реалізм",
+      "length_cm": "50.00",
+      "width_cm": "70.00",
+      "height_cm": "3.00",
+      "format": "medium",
+      "orientation": "portrait",
+      "gamma": "теплий",
+      "dominant_color": "червоний",
+      "creating_date_start": 2020,
+      "creating_date_end": 2020,
+      "description": "Опис твору",
+      "image_artpiece": "https://example.com/image.jpg",
+      "certificate": "https://example.com/certificate.pdf",
+      "author": {
+        "id": 1,
+        "fullname": "Ім'я Автора",
+        "bio_text": "Біографія автора",
+        "image_author": "https://example.com/author.jpg"
+      }
+    }
+  ],
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 5,
+    "total_items": 100,
+    "has_next": true,
+    "has_previous": false,
+    "page_size": 20
+  },
+  "price_range": {
+    "min_price": "500.00",
+    "max_price": "15000.00"
+  },
+  "filters_applied": {
+    "query": "пейзаж",
+    "categories": [],
+    "types": ["painting"],
+    "materials": ["олія"],
+    "themes": [],
+    "styles": [],
+    "expression_methods": [],
+    "sizes": [],
+    "colors": [],
+    "orientations": [],
+    "gammas": [],
+    "price_min": "1000",
+    "price_max": "5000",
+    "author": null,
+    "sort_by": "title",
+    "sort_direction": "asc"
+  }
+}
+```
+
+### Опис полів відповіді
+
+#### `results`
+Масив об'єктів творів мистецтва, що відповідають критеріям пошуку.
+
+#### `pagination`
+Інформація про пагінацію:
+- `current_page` - поточна сторінка
+- `total_pages` - загальна кількість сторінок
+- `total_items` - загальна кількість елементів
+- `has_next` - чи є наступна сторінка
+- `has_previous` - чи є попередня сторінка
+- `page_size` - кількість елементів на сторінці
+
+#### `price_range`
+Статистика цін для поточного набору результатів:
+- `min_price` - мінімальна ціна серед знайдених творів
+- `max_price` - максимальна ціна серед знайдених творів
+
+#### `filters_applied`
+Застосовані фільтри та параметри пошуку для відлагодження та відображення активних фільтрів в UI.
+
+### Коди відповідей
+
+- `200 OK` - Успішний запит
+- `400 Bad Request` - Некоректні параметри запиту
+- `500 Internal Server Error` - Внутрішня помилка сервера
+
+### Примітки
+
+1. **Множинні значення**: Більшість фільтрів підтримують множинні значення. Використовуйте один і той же параметр кілька разів: `?type=painting&type=sculpture`
+
+2. **Регістронезалежний пошук**: Текстовий пошук (`q`) та пошук за автором (`author`) працюють без урахування регістра.
+
+3. **Валідація цін**: Некоректні значення `price_min` та `price_max` ігноруються.
+
+4. **Продуктивність**: Використовується `select_related('author')` для оптимізації запитів до бази даних.
+
+5. **Статистика цін**: `price_range` розраховується для поточного відфільтрованого набору даних, а не для всієї бази даних.
+
 
