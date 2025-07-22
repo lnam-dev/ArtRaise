@@ -102,6 +102,7 @@ https://{domen}/cms
 ### ArtPieces
 - `GET /api/artpieces/` — Отримати список творів мистецтва
 - `GET /api/artpieces/{id}` — Отримати твір за ID
+- `GET /api/artpieces/categories/` — Отримати категорії (типи) творів мистецтва
 
 ---
 
@@ -431,6 +432,144 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 4. **Продуктивність**: Використовується `select_related('author')` для оптимізації запитів до бази даних.
 
 5. **Статистика цін**: `price_range` розраховується для поточного відфільтрованого набору даних, а не для всієї бази даних.
+
+## ArtPieces Categories API
+
+**Endpoint:** `GET /api/artpieces/categories/`
+
+**Опис:** Повертає список усіх категорій (типів) творів мистецтва з українською та англійською локалізацією, включаючи кількість творів у кожній категорії.
+
+### Приклад відповіді
+
+```json
+{
+  "categories": [
+    {
+      "value": "painting",
+      "label_en": "painting",
+      "label_ua": "живопис",
+      "count": 8,
+      "is_available": true
+    },
+    {
+      "value": "sculpture",
+      "label_en": "sculpture", 
+      "label_ua": "скульптура",
+      "count": 1,
+      "is_available": true
+    },
+    {
+      "value": "graphics",
+      "label_en": "graphics",
+      "label_ua": "графіка", 
+      "count": 1,
+      "is_available": true
+    },
+    {
+      "value": "architecture",
+      "label_en": "architecture",
+      "label_ua": "архітектура",
+      "count": 0,
+      "is_available": false
+    },
+    {
+      "value": "aplied_art", 
+      "label_en": "aplied_art",
+      "label_ua": "прикладне_мистецтво",
+      "count": 0,
+      "is_available": false
+    },
+    {
+      "value": "design",
+      "label_en": "design",
+      "label_ua": "дизайн",
+      "count": 0,
+      "is_available": false
+    }
+  ],
+  "meta": {
+    "total_categories": 6,
+    "available_categories": 3,
+    "total_artpieces": 10,
+    "cache_generated_at": "2025-07-22T19:15:30.123456Z"
+  }
+}
+```
+
+### Опис полів
+
+#### Поля категорії
+| Поле | Тип | Опис |
+|------|-----|------|
+| `value` | `string` | Англійське значення категорії для використання в API |
+| `label_en` | `string` | Англійська назва категорії |
+| `label_ua` | `string` | Українська назва категорії |
+| `count` | `integer` | Кількість творів мистецтва в цій категорії |
+| `is_available` | `boolean` | Чи є твори мистецтва в цій категорії |
+
+#### Метадані (`meta`)
+| Поле | Тип | Опис |
+|------|-----|------|
+| `total_categories` | `integer` | Загальна кількість категорій |
+| `available_categories` | `integer` | Кількість категорій, які мають твори |
+| `total_artpieces` | `integer` | Загальна кількість творів мистецтва |
+| `cache_generated_at` | `datetime` | Час генерації кешу |
+
+### Категорії творів мистецтва
+
+| Англійська назва | Українська назва | Опис |
+|------------------|------------------|------|
+| `painting` | `живопис` | Картини, малюнки олією, акрилом тощо |
+| `sculpture` | `скульптура` | Скульптурні роботи |
+| `graphics` | `графіка` | Графічні роботи, гравюри, літографії |
+| `architecture` | `архітектура` | Архітектурні проекти та моделі |
+| `aplied_art` | `прикладне_мистецтво` | Декоративно-прикладне мистецтво |
+| `design` | `дизайн` | Дизайнерські роботи |
+
+### Приклади використання у фронтенді
+
+#### Отримання категорій для фільтрів
+```javascript
+const response = await fetch('/api/artpieces/categories/');
+const data = await response.json();
+
+// Створення випадаючого списку
+data.categories.forEach(category => {
+  if (category.is_available) {
+    console.log(`${category.label_ua} (${category.count})`);
+  }
+});
+```
+
+#### Відображення статистики
+```javascript
+const { meta } = await fetch('/api/artpieces/categories/').then(r => r.json());
+
+console.log(`Доступно ${meta.available_categories} з ${meta.total_categories} категорій`);
+console.log(`Загалом ${meta.total_artpieces} творів мистецтва`);
+```
+
+#### Фільтрація тільки доступних категорій
+```javascript
+const availableCategories = data.categories.filter(cat => cat.is_available);
+```
+
+### Коди відповідей
+
+- `200 OK` - Успішний запит
+- `500 Internal Server Error` - Внутрішня помилка сервера
+
+### Примітки
+
+1. **Кешування**: Дані кешуються на 1 годину для покращення продуктивності.
+
+2. **Повні дані**: Повертаються всі категорії, навіть ті, що не мають творів (`count: 0`).
+
+3. **Локалізація**: Кожна категорія має англійську та українську назви.
+
+4. **Фільтрація**: Використовуйте поле `is_available` для відображення тільки категорій з творами.
+
+5. **API інтеграція**: Значення поля `value` використовуйте для фільтрації в `/api/search/?type=painting`.
 
 ## Slider API
 
