@@ -87,6 +87,9 @@ class ArtPiece(models.Model):
         related_name='artpieces'
     )
 
+    def __str__(self):
+        return self.title
+
 
 
 class ArtPieceBuyForm(models.Model):

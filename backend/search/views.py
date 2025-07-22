@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Min, Max
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -17,7 +17,6 @@ class ArtPiecePagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100
 
-# Альтернативна версія з використанням django-filter
 class SearchView(APIView):
     renderer_classes = [JSONRenderer]
 
@@ -116,6 +115,12 @@ class SearchView(APIView):
 
         queryset = queryset.order_by(sort_field)
 
+        # Вычисляем минимальную и максимальную цену для текущего набора результатов
+        price_stats = queryset.aggregate(
+            min_price=Min('price'),
+            max_price=Max('price')
+        )
+
         # Пагінація
         try:
             page = int(request.GET.get("page", 1))
@@ -144,6 +149,10 @@ class SearchView(APIView):
                 "has_next": page_obj.has_next(),
                 "has_previous": page_obj.has_previous(),
                 "page_size": page_size
+            },
+            "price_range": {
+                "min_price": price_stats['min_price'],
+                "max_price": price_stats['max_price']
             },
             "filters_applied": {
                 "query": query,
