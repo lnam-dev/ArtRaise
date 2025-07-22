@@ -117,6 +117,15 @@ https://{domen}/cms
 ### FAQ
 - `GET /api/faq/` — Отримати список частих запитань
 
+---
+
+### Slider (Слайдер)
+- `GET /api/slider/` — Отримати активні слайди для головної сторінки
+- `GET /api/slider/{id}/` — Отримати конкретний слайд за ID
+- `GET /api/slider/management/` — Отримати всі слайди (включно з неактивними)
+- `GET /api/slider/stats/` — Отримати статистику слайдера
+- `GET /api/slider/info/` — Отримати інформацію про систему слайдера
+
 # Models
 
 ## CustomUser
@@ -422,5 +431,226 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 4. **Продуктивність**: Використовується `select_related('author')` для оптимізації запитів до бази даних.
 
 5. **Статистика цін**: `price_range` розраховується для поточного відфільтрованого набору даних, а не для всієї бази даних.
+
+## Slider API
+
+**Опис:** API для управління слайдером головної сторінки сайту. Слайди можуть посилатися на твори мистецтва, авторів, події або мати довільні посилання.
+
+### Endpoints
+
+#### 1. Отримати активні слайди
+**Endpoint:** `GET /api/slider/`
+
+**Опис:** Повертає список усіх активних слайдів, відсортованих за порядком відображення.
+
+**Приклад відповіді:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Нова виставка",
+    "subtitle": "Сучасне мистецтво XXI століття",
+    "description": "<p>Детальний опис виставки...</p>",
+    "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/slider/slide1.jpg",
+    "order": 1,
+    "is_active": true,
+    "link_url": "/events/1/",
+    "link_type": "event",
+    "linked_object_id": 1,
+    "linked_object_info": {
+      "type": "event",
+      "id": 1,
+      "title": "Виставка сучасного мистецтва",
+      "start_date": "2025-02-01",
+      "end_date": "2025-02-28"
+    },
+    "created_at": "2025-01-15T10:30:00Z",
+    "updated_at": "2025-01-15T10:30:00Z"
+  }
+]
+```
+
+#### 2. Отримати конкретний слайд
+**Endpoint:** `GET /api/slider/{id}/`
+
+**Опис:** Повертає детальну інформацію про конкретний слайд.
+
+**Приклад відповіді:**
+```json
+{
+  "id": 1,
+  "title": "Портрет художника",
+  "subtitle": "Знайомтеся з талановитими авторами",
+  "description": "<p>Опис слайда...</p>",
+  "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/slider/author_slide.jpg",
+  "order": 2,
+  "is_active": true,
+  "link_url": "/authors/1/",
+  "link_type": "author",
+  "linked_object_id": 1,
+  "linked_object_info": {
+    "type": "author",
+    "id": 1,
+    "name": "Олександр Семерня",
+    "bio": "Український художник, що працює у стилі сучасного реалізму..."
+  },
+  "created_at": "2025-01-15T10:30:00Z",
+  "updated_at": "2025-01-15T10:30:00Z"
+}
+```
+
+#### 3. Отримати всі слайди (управління)
+**Endpoint:** `GET /api/slider/management/`
+
+**Опис:** Повертає всі слайди (включно з неактивними) для адміністративних цілей.
+
+**Приклад відповіді:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Активний слайд",
+    "subtitle": "Підзаголовок",
+    "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/slider/slide1.jpg",
+    "order": 1,
+    "is_active": true,
+    "link_info": "Твір мистецтва: Думи, мої думи...",
+    "created_at": "2025-01-15T10:30:00Z",
+    "updated_at": "2025-01-15T10:30:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Неактивний слайд",
+    "subtitle": "Підзаголовок",
+    "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/slider/slide2.jpg",
+    "order": 2,
+    "is_active": false,
+    "link_info": "Автор: Петро Іваненко",
+    "created_at": "2025-01-14T15:20:00Z",
+    "updated_at": "2025-01-16T11:45:00Z"
+  }
+]
+```
+
+#### 4. Отримати статистику слайдера
+**Endpoint:** `GET /api/slider/stats/`
+
+**Опис:** Повертає статистичну інформацію про слайди.
+
+**Приклад відповіді:**
+```json
+{
+  "total_slides": 5,
+  "active_slides": 3,
+  "inactive_slides": 2,
+  "slides_with_artpiece": 1,
+  "slides_with_author": 1,
+  "slides_with_event": 1,
+  "slides_with_custom_link": 0
+}
+```
+
+#### 5. Отримати інформацію про систему
+**Endpoint:** `GET /api/slider/info/`
+
+**Опис:** Повертає загальну інформацію про функціональність слайдера.
+
+**Приклад відповіді:**
+```json
+{
+  "name": "ArtRaise Slider",
+  "version": "1.0",
+  "description": "Система управління слайдером головної сторінки ArtRaise",
+  "features": [
+    "Підтримка зв'язків з творами мистецтва, авторами та подіями",
+    "Можливість додавання довільних посилань",
+    "Управління порядком відображення слайдів",
+    "Активація/деактивація слайдів",
+    "Завантаження зображень",
+    "Wagtail CMS інтеграція для зручного управління"
+  ]
+}
+```
+
+### Опис полів слайда
+
+| Поле | Тип | Опис |
+|------|-----|------|
+| `id` | `integer` | Унікальний ідентифікатор |
+| `title` | `string` | Заголовок слайда (макс. 200 символів) |
+| `subtitle` | `string` | Підзаголовок слайда (макс. 300 символів, опціонально) |
+| `description` | `string` | Rich text опис слайда (HTML) |
+| `image_url` | `string` | URL зображення слайда |
+| `order` | `integer` | Порядок відображення (менші числа з'являються першими) |
+| `is_active` | `boolean` | Чи активний слайд |
+| `link_url` | `string` | URL для переходу при кліці на слайд |
+| `link_type` | `string` | Тип посилання (`artpiece`, `author`, `event`, `custom`, або `null`) |
+| `linked_object_id` | `integer` | ID пов'язаного об'єкта (якщо застосовно) |
+| `linked_object_info` | `object` | Додаткова інформація про пов'язаний об'єкт |
+| `created_at` | `datetime` | Час створення |
+| `updated_at` | `datetime` | Час останнього оновлення |
+
+### Типи посилань
+
+1. **`artpiece`** - Посилання на твір мистецтва (`/artpiece/{id}/`)
+   - `linked_object_info` містить: `type`, `id`, `title`, `price`, `author_name`
+
+2. **`author`** - Посилання на автора (`/authors/{id}/`)
+   - `linked_object_info` містить: `type`, `id`, `name`, `bio`
+
+3. **`event`** - Посилання на подію (`/events/{id}/`)
+   - `linked_object_info` містить: `type`, `id`, `title`, `start_date`, `end_date`
+
+4. **`custom`** - Довільне посилання
+   - `linked_object_info` містить: `type`, `url`
+
+5. **`null`** - Посилання не вказано
+
+### Приклади використання у фронтенді
+
+#### Отримання слайдів для головної сторінки
+```javascript
+const response = await fetch('/api/slider/');
+const slides = await response.json();
+
+slides.forEach(slide => {
+  console.log(`Слайд: ${slide.title}`);
+  console.log(`Зображення: ${slide.image_url}`);
+  console.log(`Посилання: ${slide.link_url}`);
+});
+```
+
+#### Обробка кліку по слайду
+```javascript
+const handleSlideClick = (slide) => {
+  if (slide.link_url) {
+    if (slide.link_type === 'custom') {
+      // Зовнішнє посилання - відкриваємо в новій вкладці
+      window.open(slide.link_url, '_blank');
+    } else {
+      // Внутрішнє посилання - навігація в додатку
+      router.push(slide.link_url);
+    }
+  }
+};
+```
+
+### Коди відповідей
+
+- `200 OK` - Успішний запит
+- `404 Not Found` - Слайд не знайдено (для `/api/slider/{id}/`)
+- `500 Internal Server Error` - Внутрішня помилка сервера
+
+### Примітки
+
+1. **Сортування**: Слайди повертаються відсортованими за полем `order` (за зростанням), потім за датою створення (за спаданням).
+
+2. **Тільки активні**: Endpoint `/api/slider/` повертає лише активні слайди (`is_active=true`).
+
+3. **Валідація**: Кожен слайд повинен мати рівно одне посилання (або на об'єкт, або довільний URL).
+
+4. **Зображення**: Зображення завантажуються через Django і зберігаються в DigitalOcean Spaces.
+
+5. **Управління**: Слайди можна створювати та редагувати через Django Admin (`/admin/slider/slide/`) або Wagtail CMS (`/cms/`).
 
 
