@@ -7,7 +7,7 @@ import { Zoom } from "swiper/modules";
 import "swiper/css";
 import "./slider-modal.scss";
 
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 
 import SliderModalClose from "./slider-modal-close";
 

@@ -4,7 +4,7 @@ import { FC } from "react";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import SliderBase from "./slider-base";
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 import { TSliderBaseProps } from "~/types/slider";
 import SliderButtonExpand from "./slider-button-expand";
 import { TArtPiece } from "~/types";

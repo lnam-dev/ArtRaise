@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { TSlide } from "~/types/slider";
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 
 type SliderImgPortraitSquare = Pick<TSlide, "imgSrc"> & {
 	index: number;

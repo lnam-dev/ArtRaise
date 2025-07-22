@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useEffect, useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper";
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 import "swiper/css";
 
 import SliderNavPanel from "./slider-nav-panel";

@@ -25,6 +25,7 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-redux": "^9.2.0",
+		"redux-persist": "^6.0.0",
 		"sass": "^1.86.3",
 		"sharp": "^0.34.1",
 		"swiper": "^11.2.6",
