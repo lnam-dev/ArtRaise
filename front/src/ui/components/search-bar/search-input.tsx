@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "../button/button";
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 import Search from "~/assets/search.svg";
 import Input from "../input/input";
 import { FC, FormEvent } from "react";
