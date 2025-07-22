@@ -1,8 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
-from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer
+from rest_framework import status
+from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceBuyFormSerializer
 from .filters import ArtPieceFilter
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -22,7 +24,50 @@ class ArtPieceViewSet(ModelViewSet):
         if self.action == 'list':
             return ArtPieceSerializer
         return ArtPieceDetailSerializer
+    
 
+    @action(detail=True, methods=['POST'])
+    def send_buy_form(self, request, pk):
+        artpiece = self.get_object()  
+        data = request.data.copy()
+        data['artpiece'] = artpiece.id
+        
+        serializer = ArtPieceBuyFormSerializer(data=data)
+        
+        if serializer.is_valid():
+            buy_form = serializer.save()
+            return Response(
+                {
+                    "message": "Запит на покупку успішно створено",
+                    "buy_form": ArtPieceBuyFormSerializer(buy_form).data
+                },
+                status=status.HTTP_201_CREATED
+            )
+        else:
+            return Response(
+                {
+                    "error": "Помилки валідації",
+                    "details": serializer.errors
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+    @action(detail=True, methods=['GET'])
+    def buy_requests(self, request, pk):
+        artpiece = self.get_object()
+        
+        buy_requests = artpiece.buy_requests.all().order_by('-created_at')
+        serializer = ArtPieceBuyFormSerializer(buy_requests, many=True)
+        
+        return Response(
+            {
+                "artpiece_id": artpiece.id,
+                "artpiece_title": artpiece.title,
+                "total_requests": buy_requests.count(),
+                "buy_requests": serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 class ArtPieceStatsView(APIView):

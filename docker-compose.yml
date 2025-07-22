@@ -11,12 +11,8 @@ services:
     command: >
       sh -c "python manage.py migrate --settings=project.settings.base &&
              python manage.py runserver --settings=project.settings.base 0.0.0.0:8000"
-    environment:
-      - DB_HOST=artraise-db-do-user-20452403-0.j.db.ondigitalocean.com
-      - DB_NAME=defaultdb
-      - DB_USER=doadmin
-      - DB_PASS=AVNS_4xGPtpfhtxZYkY71Z_V
-      - DB_PORT=25060
+    env_file:
+      - ./backend/.env
 #    depends_on:
 #      - db
 
