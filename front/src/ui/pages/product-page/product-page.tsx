@@ -13,7 +13,7 @@ import { TAccordion } from "~/types/accordion";
 
 import useDevice from "~/ui/hooks/useDevice/useDevice";
 
-import SliderWrapper from "./card-wrapper";
+import SliderWrapper from "./slider-wrapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
