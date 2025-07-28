@@ -20,8 +20,8 @@ async function getData(category: string): Promise<TArtPiece[]> {
 		if (!response.ok) {
 			throw new Error(`Failed to fetch artpieces: ${response.status}`);
 		}
-		const { artPieces }: { artPieces: TArtPiece[] } = await response.json();
-		return artPieces;
+		const { results }: { results: TArtPiece[] } = await response.json();
+		return results;
 	} catch (error) {
 		console.error(`Помилка при завантаженні арт-об'єктів: ${error}`);
 		return [];
