@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import FAQ, CallToAction
 from rest_framework.views import APIView
 from .serializers import FAQSerializer, CallToActionSerializer
+from django.db.models import Q
 
 
 class FAQViewSet(ModelViewSet):
@@ -25,6 +26,39 @@ class FAQViewSet(ModelViewSet):
         question = FAQ.objects.create(question=question_data)
         serializer = self.get_serializer(question)
         return Response(serializer.data, 200)
+    
+    @action(detail=False, methods=['GET'])
+    def question_and_answer(self, request):
+        common_faq = FAQ.objects.filter(
+            Q(category__isnull=True) | Q(category='')
+        )
+
+        category_faq = FAQ.objects.exclude(
+            Q(category__isnull=True) | Q(category='')
+        ).order_by('category')
+
+        common_data = FAQSerializer(common_faq, many=True).data
+
+        categories = {}
+        for faq in category_faq:
+            if faq.category not in categories:
+                categories[faq.category] = []
+            categories[faq.category].append(faq)
+
+        frequent_data = [
+            {
+                'category': category,
+                'question': FAQSerializer(questions, many=True).data,
+            }
+            for category, questions in categories.items()
+        ]
+
+        return Response(
+            {
+                'common': common_data,
+                'frequent': frequent_data,
+            }
+        )
 
 
 class CallToActionAPIView(APIView):

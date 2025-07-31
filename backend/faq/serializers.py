@@ -21,6 +21,11 @@ class FAQSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_at']
 
 
+class CategoryQuestionSerializer(serializers.Serializer):
+    category = serializers.CharField()
+    questions = FAQSerializer(many=True)
+
+
 class CallToActionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CallToAction

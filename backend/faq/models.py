@@ -4,10 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 class FAQ(models.Model):
     class TypeOfQuestion(models.TextChoices):
-        ABOUT_PLATFORM = "AP"
-        PAYMENT_AND_DELIVERY = "PAD"
-        TECHNICAL_SUPPORT = "TS"
-        COLLECTORS = "C"
+        ABOUT_PLATFORM = "AP", "Про платформу"
+        PAYMENT_AND_DELIVERY = "PAD", "Оплата та доставка"
+        TECHNICAL_SUPPORT = "TS", "Техпідтримка"
+        COLLECTORS = "C", "Колекціонери"
+
+    category = models.CharField(max_length=3, choices=TypeOfQuestion.choices, null=True, blank=True, default=None)
     question = models.CharField(max_length=255)
     answer = models.TextField(null=True,  blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
