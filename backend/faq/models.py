@@ -11,7 +11,10 @@ class FAQ(models.Model):
 
     category = models.CharField(max_length=3, choices=TypeOfQuestion.choices, null=True, blank=True, default=None)
     question = models.CharField(max_length=255)
-    answer = models.TextField(null=True,  blank=True)
+    answer = models.TextField(null=True, blank=True)
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    show_in_call_to_action = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

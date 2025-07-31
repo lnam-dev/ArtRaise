@@ -16,6 +16,10 @@ class FAQSerializer(serializers.ModelSerializer):
             "id",
             "question",
             "answer",
+            "category",
+            "order",
+            "is_active",
+            "show_in_call_to_action",
             "created_at"
         ]
         read_only_fields = ['id', 'created_at']

@@ -9,9 +9,11 @@ services:
     volumes:
       - ./backend:/backend
     command: >
-      sh -c "python manage.py makemigrations --settings=project.settings.base
-             python manage.py migrate --settings=project.settings.base &&
-             python manage.py runserver --settings=project.settings.base 0.0.0.0:8000"
+      sh -c "
+        python manage.py makemigrations --settings=project.settings.base &&
+        python manage.py migrate --settings=project.settings.base &&
+        python manage.py createsuperuser --noinput --settings=project.settings.base || true &&
+        python manage.py runserver --settings=project.settings.base 0.0.0.0:8000"
     env_file:
       - ./backend/.env
 #    depends_on:
