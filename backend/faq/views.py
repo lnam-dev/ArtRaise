@@ -27,7 +27,7 @@ class FAQViewSet(ModelViewSet):
         serializer = self.get_serializer(question)
         return Response(serializer.data, 200)
     
-    @action(detail=False, methods=['GET'])
+    @action(detail=False, methods=['GET'], url_path='question-and-answer')
     def question_and_answer(self, request):
         common_faq = FAQ.objects.filter(
             Q(category__isnull=True) | Q(category='')
