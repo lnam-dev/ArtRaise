@@ -89,7 +89,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 			</div>
 			<div className="container mx-auto w-full text-left">
 				<div className="mobile-spacing">
-					{children(currentSlideIdx)}
+					{children && children(currentSlideIdx)}
 					{!isDesktop && (
 						<SliderPagination
 							mode="dark"

@@ -24,7 +24,6 @@ const nextConfig = withNextIntl({
 	},
 	reactStrictMode: true,
 	images: {
-		domains: ["localhost", "artraise-media.fra1.cdn.digitaloceanspaces.com"],
 		remotePatterns: [
 			{
 				protocol: "http",
@@ -41,7 +40,7 @@ const nextConfig = withNextIntl({
 		],
 	},
 	devIndicators: {
-		allowedDevOrigins: ["http://192.168.31.89"],
+		allowedDevOrigins: ["http://192.168.31.88:3000", "http://localhost:3000"],
 	},
 	async redirects() {
 		return [

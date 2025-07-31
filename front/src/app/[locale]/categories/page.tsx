@@ -1,72 +1,36 @@
+import { TCategory } from "~/types/categories";
+import { CategoriesPage as TCategoriesPage } from "~/use-cases/contracts/categories-page";
 import CategoriesPage from "~/ui/pages/categories-page/categories-page";
 
-const NEW_ARRIVALS = {
-	imageSrc: "/default.png",
-	imageAlternative: "Image description",
-	title: "Нові надходження",
-	description: "+24 роботи",
-};
-
-const CATEGORIES = [
+const NEW_ARRIVALS: TCategory[] = [
 	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Живопис",
-		description: "234 роботи",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Графіка",
-		description: "157 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Скульптура",
-		description: "89 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Фотографія",
-		description: "312 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Цифрове мистецтво",
-		description: "201 робота",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Ілюстрація",
-		description: "145 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Кераміка",
-		description: "67 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Мозаїка",
-		description: "48 робіт",
-	},
-	{
-		imageSrc: "/default.png",
-		imageAlternative: "Image description",
-		title: "Текстиль",
-		description: "93 роботи",
+		image_url: "/default.png",
+		value: "New Arrivals",
+		label_en: "New Arrivals",
+		label_ua: "Нові надходження",
+		count: 24,
+		is_available: true,
 	},
 ];
 
 export const revalidate = 21600;
 export const dynamic = "force-dynamic";
 
+async function getData(): Promise<TCategory[]> {
+	try {
+		const response = await fetch(`${process.env.API_URL}artpieces/categories/`);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch categories: ${response.status}`);
+		}
+		const { categories }: { categories: TCategory[] } = await response.json();
+		return categories;
+	} catch (error) {
+		console.error(`Помилка при завантаженні категорій: ${error}`);
+		return [];
+	}
+}
+
 export default async () => {
-	return <CategoriesPage newArrivals={NEW_ARRIVALS} categories={CATEGORIES} />;
+	const categories = await getData();
+	return <CategoriesPage newArrivals={NEW_ARRIVALS} categories={categories} />;
 };

@@ -14,12 +14,12 @@ export interface TSliderClassicProps extends TSliderBaseProps {
 
 export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
-	variant: "classic" | "fullscreen";
-	swiperProps: SwiperOptions;
+	variant?: "classic" | "fullscreen";
+	swiperProps?: SwiperOptions;
 	headerStyle?: string;
 	wrapperStyle?: string;
 	expandStyle?: string;
 	unpackedSlides?: (slides: TSlide[]) => React.ReactNode;
-	children: (currentSlideIdx: number) => React.ReactNode;
+	children?: (currentSlideIdx: number) => React.ReactNode;
 	headerElements?: () => React.ReactNode;
 };

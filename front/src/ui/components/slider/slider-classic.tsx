@@ -8,7 +8,9 @@ import SliderImgPortrait from "./slider-img-portrait";
 import SliderImgLandscape from "./slider-img-landscape";
 import SliderImgSquare from "./slider-img-square";
 import SliderButtonExpand from "./slider-button-expand";
-import type { TSliderClassicProps } from "~/types/slider";
+
+import { TArtPiece } from "~/types/art";
+import type { TSliderBaseProps } from "~/types/slider";
 
 const orientationMapping = {
 	portrait: SliderImgPortrait,
@@ -16,9 +18,12 @@ const orientationMapping = {
 	square: SliderImgSquare,
 };
 
+type TSliderClassicProps = Omit<TSliderBaseProps, "children" | "variant"> & {
+	orientation: TArtPiece["orientation"];
+};
+
 const SliderClassic: FC<TSliderClassicProps> = ({
 	slides,
-	children,
 	orientation,
 	swiperProps,
 	...props
@@ -27,11 +32,9 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 	return (
 		<SliderBase
 			slides={slides}
+			variant="classic"
 			headerStyle="w-[60%]"
 			wrapperStyle="pl-4 xl:pl-0"
-			swiperProps={{
-				...swiperProps,
-			}}
 			unpackedSlides={(slides) => (
 				<>
 					{slides.map((obj, index) => (
@@ -44,9 +47,7 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 			headerElements={() => (
 				<>{<SliderButtonExpand slides={slides} orientation={orientation} />}</>
 			)}
-			{...props}>
-			{children}
-		</SliderBase>
+			{...props}></SliderBase>
 	);
 };
 
