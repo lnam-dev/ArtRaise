@@ -3,7 +3,7 @@
 import django.core.validators
 import django.db.models.deletion
 import wagtail.fields
-from django.db import зззззззз0щ, models
+from django.db import models, migrations
 
 
 class Migration(migrations.Migration):

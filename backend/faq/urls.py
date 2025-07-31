@@ -1,7 +1,10 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from .views import FAQViewSet, CallToActionAPIView
 
-urlpatterns = [
-    path('', FAQViewSet.as_view({'get': 'list', 'post': 'add_question'})),
+router = DefaultRouter()
+router.register('', FAQViewSet, basename='faq')
+
+urlpatterns = router.urls + [
     path('questions/', CallToActionAPIView.as_view(), name='call-to-action'),
 ]
