@@ -20,7 +20,6 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
 						alt={`Slide`}
 						className="object-cover opacity-30"
 						fill
-						loading="lazy"
 					/>
 				</figure>
 			))}

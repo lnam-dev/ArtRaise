@@ -12,6 +12,7 @@
 		"test": "echo TODO"
 	},
 	"dependencies": {
+		"@gsap/react": "^2.1.2",
 		"@reduxjs/toolkit": "^2.7.0",
 		"@rehooks/local-storage": "^2.4.5",
 		"axios": "^1.8.4",

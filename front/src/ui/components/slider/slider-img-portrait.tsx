@@ -25,7 +25,6 @@ const SliderImgPortrait = ({ imgSrc, index }: SliderImgPortraitProps) => {
 					height={0}
 					sizes="100vw"
 					className="w-full h-auto"
-					loading="lazy"
 				/>
 			</figure>
 			{
