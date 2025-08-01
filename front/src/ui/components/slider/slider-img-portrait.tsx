@@ -1,60 +1,64 @@
 import Image from "next/image";
+import { memo } from "react";
 import { TSlide } from "~/types/slider";
-import useDevice from "~/ui/hooks/useDevice/useDevice";
 
 type SliderImgPortraitProps = Pick<TSlide, "imgSrc"> & {
 	index: number;
 };
 
-const COLUMNS_IMAGES = [
-	["30%", "70%"],
-	["70%", "30%"],
-	["30%", "70%"],
-	["70%", "30%"],
-	["30%", "70%"],
-];
+const GRID_IMAGES_CONFIG = [
+	{
+		containerClass: "relative overflow-hidden",
+		imageClass: "scale-125 origin-top-left",
+	},
+	{
+		containerClass: "relative overflow-hidden md:col-span-2",
+		imageClass: "scale-110 origin-center",
+	},
+	{
+		containerClass: "relative overflow-hidden md:col-span-2",
+		imageClass: "scale-110 origin-bottom-right",
+	},
+	{
+		containerClass: "relative overflow-hidden",
+		imageClass: "scale-130 origin-top-right",
+	},
+] as const;
 
-const SliderImgPortrait = ({ imgSrc, index }: SliderImgPortraitProps) => {
+const SliderImgPortrait = memo<SliderImgPortraitProps>(({ imgSrc, index }) => {
+	const slideAlt = `Slide ${index + 1}`;
+
 	return (
-		<div className="flex flex-row justify-end gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
-			<figure className="flex-grow-[3] flex-shrink-0 w-auto h-auto relative min-w-[40vh] md:min-w-[45vh] lg:min-w-[50vh] lg:max-w-[50%] xl:max-w-[25%]">
+		<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
+			<figure className="flex-shrink-0 w-[40vh] md:w-[45vh] lg:w-[50vh] relative">
 				<Image
 					src={imgSrc}
-					alt={`Slide ${index + 1}`}
+					alt={slideAlt}
 					width={0}
 					height={0}
-					sizes="100vw"
+					sizes="50vh"
 					className="w-full h-auto"
+					priority={index === 0}
 				/>
 			</figure>
-			{
-				<div className="columns-1 sm:columns-2 xl:columns-3 2xl:columns-4 gap-2 md:gap-4 xl:gap-6 w-full display-none sm:display-block">
-					{COLUMNS_IMAGES.map((heights, colIdx) => (
-						<div
-							key={colIdx}
-							className="space-y-2 md:space-y-4 xl:space-y-6 w-full h-full">
-							{heights.map((height, imgIdx) => {
-								return (
-									<figure
-										key={`${colIdx}-${imgIdx}`}
-										className="relative"
-										style={{
-											height,
-										}}>
-										<Image
-											src={imgSrc}
-											alt={`Slide ${index + 1} - ${colIdx}-${imgIdx}`}
-											fill
-											className={`object-cover opacity-30 `}
-										/>
-									</figure>
-								);
-							})}
-						</div>
-					))}
-				</div>
-			}
+
+			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 w-full h-auto">
+				{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
+					<figure
+						key={gridIndex}
+						className={`${config.containerClass} group cursor-pointer`}>
+						<Image
+							src={imgSrc}
+							alt={slideAlt}
+							fill
+							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
+							className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out hover:opacity-100 hover:scale-105`}
+						/>
+					</figure>
+				))}
+			</div>
 		</div>
 	);
-};
+});
+
 export default SliderImgPortrait;

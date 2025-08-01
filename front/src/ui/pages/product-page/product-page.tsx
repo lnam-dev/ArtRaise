@@ -24,7 +24,7 @@ import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
 
 gsap.registerPlugin(ScrollTrigger);
-const MAX_SHIFT_GSAP = 200;
+const MAX_SHIFT_GSAP = 50;
 
 function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	const sliderRef = useRef<HTMLDivElement>(null);
@@ -45,7 +45,7 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 		tl.fromTo(
 			contentRef.current,
 			{ y: 0 },
-			{ y: -MAX_SHIFT_GSAP, ease: "none" }
+			{ y: `-${MAX_SHIFT_GSAP}vh`, ease: "easeInOut" }
 		);
 	});
 
