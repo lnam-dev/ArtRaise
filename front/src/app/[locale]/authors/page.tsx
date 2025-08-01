@@ -1,7 +1,6 @@
 import React from "react";
 import { TAuthor } from "~/types";
 import AuthorsPage from "~/ui/pages/authors-page/authors-page";
-import "~/styles/bg-light.css";
 
 const getAuthorsData = async (): Promise<TAuthor[]> => {
 	try {
