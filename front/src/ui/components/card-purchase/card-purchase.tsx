@@ -25,7 +25,7 @@ const CardPurchase = ({
 		<article className={`card card--${variable}`} {...props}>
 			<figure className={`image image--${variable} group`}>
 				<Image
-					src={card.image_artpiece}
+					src={card.image_artpiece ?? "/default.png"}
 					alt={card.title}
 					layout="responsive"
 					width={16}

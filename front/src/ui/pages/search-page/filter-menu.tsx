@@ -5,14 +5,15 @@ import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
     appendFilter, ISearchPageState,
-    removeFilter, setPreviewArtpiecesCount,
-    setTitle,
-    setupFilterKeysValues,
+    removeFilter, setArtpieces,
+    setTitle, setupCurrentPage,
+    setupFilterKeysValues, setupPagination, setupPriceRange,
     TFilterKeysValues
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
 import {filterKeys} from "~/types/filter-types/filter";
 import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
+import {useSearchPage} from "~/app/[locale]/search/useSearchPage";
 
 type Props = {
     className?: string;
@@ -23,6 +24,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch()
     const filterState = useAppSelector(state => state.searchPageReducer)
     //set filters state when refresh page by parsing url
+    const {getSearchPage} = useSearchPage()
     useEffect(() => {
         const setupCountOfEachFilter = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
@@ -48,13 +50,28 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         //TODO price
     }, []);
     useEffect(() => {
+        dispatch(setupCurrentPage(1));
         const timeoutId = setTimeout(async () => {
-            const responseArtpieces = await getArtpiecesByQueryParams(getFilteredUrlParamsFromFilterState(filterState).toString());
-            const count = responseArtpieces.length
-            dispatch(setPreviewArtpiecesCount(count))
+            const response = await getSearchPage()
+            if (response) {
+                const {artpieces, pagination, price_range} = response
+                dispatch(setArtpieces(artpieces));
+                dispatch(setupPagination(pagination));
+                dispatch(setupPriceRange(price_range));
+            }
         }, msDebounceDelay)
         return () => clearTimeout(timeoutId);
     }, [filterState.filters]);
+    useEffect(() => {
+        const timeoutId = setTimeout(async () => {
+            const response = await getSearchPage()
+            if (response) {
+                const {artpieces} = response
+                dispatch(setArtpieces(artpieces));
+            }
+        }, msDebounceDelay)
+        return () => clearTimeout(timeoutId);
+    }, [filterState.pagination.current_page]);
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>

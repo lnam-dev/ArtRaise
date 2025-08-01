@@ -21,6 +21,8 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
         });
 
     }
+    params.append("page", object.pagination.current_page.toString());
+    params.append("page_size", object.pagination.page_size.toString());
     new URLSearchParams(params)
     return new URLSearchParams(params)
 }

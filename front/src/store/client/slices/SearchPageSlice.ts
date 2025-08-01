@@ -13,13 +13,24 @@ export type TFilterKeysValues = {
     }[]
 }
 
-export interface ISearchPageState  {
-    displayArtpieces: TArtPiece[]
-    allArtpieces: TArtPiece[]
-    artPiecesCount: number
-    previewArtPiecesCount: number
-    currentPage: number
-    countPage: number
+export interface IPagination {
+    current_page: number,
+    total_pages: number,
+    total_items: number,
+    has_next: boolean,
+    has_previous: boolean,
+    page_size: number
+}
+
+export interface IPriceRange {
+    min_price: number
+    max_price: number
+}
+
+export interface ISearchPageState {
+    artpieces: TArtPiece[]
+    pagination: IPagination
+    price_range: IPriceRange,
     filters: {
         query: string,
         price_range: {
@@ -27,16 +38,23 @@ export interface ISearchPageState  {
             max: number
         }
         filterKeysValues: TFilterKeysValues
-    }& TFilterFields,
+    } & TFilterFields,
 }
 
 const initialState: ISearchPageState = {
-    allArtpieces: [],
-    displayArtpieces: [],
-    countPage: 0,
-    currentPage: 0,
-    artPiecesCount: 0, //count of current artpieces displayed
-    previewArtPiecesCount: 0, //count of artpieces, that match filter state , but not currently displayed(used for preview count artpieces)
+    artpieces: [],
+    pagination: {
+        total_items: 0,
+        current_page: 1,
+        total_pages: 1,
+        has_next: false,
+        has_previous: false,
+        page_size: 5
+    },
+    price_range: {
+        min_price: 0,
+        max_price: 100000,
+    },
     filters: {
         query: "",
         price_range: {
@@ -67,6 +85,9 @@ const SearchPageSlice = createSlice({
             state.filters.price_range.min = action.payload.min;
             state.filters.price_range.max = action.payload.max;
         },
+        setArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
+            state.artpieces = action.payload;
+        },
         appendFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys, filterValue: string }>) => {
             const {filterKey, filterValue} = action.payload;
             const modifiedArray = Array.from(state.filters[filterKey]);
@@ -81,15 +102,29 @@ const SearchPageSlice = createSlice({
         setupFilterKeysValues: (state, action: PayloadAction<TFilterKeysValues>) => {
             state.filters.filterKeysValues = action.payload;
         },
-        setupDisplayedArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
-            state.displayArtpieces = action.payload;
+        setupPagination: (state, action: PayloadAction<IPagination>) => {
+            state.pagination = action.payload;
         },
-        setPreviewArtpiecesCount: (state, action: PayloadAction<number>) => {
-            state.previewArtPiecesCount = action.payload;
+        setupPriceRange: (state, action: PayloadAction<IPriceRange>) => {
+            state.price_range = action.payload;
         },
-
+        setupCurrentPage: (state, action: PayloadAction<number>) => {
+            if (action.payload >= 1) {
+                state.pagination.current_page = action.payload;
+            }
+        },
     }
 })
 
-export const {setTitle, setPriceRange, appendFilter, removeFilter, setupFilterKeysValues,setupDisplayedArtpieces,setPreviewArtpiecesCount} = SearchPageSlice.actions;
+export const {
+    setTitle,
+    setPriceRange,
+    setArtpieces,
+    setupCurrentPage,
+    setupPriceRange,
+    appendFilter,
+    removeFilter,
+    setupFilterKeysValues,
+    setupPagination
+} = SearchPageSlice.actions;
 export default SearchPageSlice.reducer;
