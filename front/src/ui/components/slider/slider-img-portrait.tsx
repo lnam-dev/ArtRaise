@@ -30,7 +30,7 @@ const SliderImgPortrait = memo<SliderImgPortraitProps>(({ imgSrc, index }) => {
 
 	return (
 		<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
-			<figure className="flex-shrink-0 w-[40vh] md:w-[45vh] lg:w-[50vh] relative">
+			<figure className="flex-shrink-0 md:flex-shrink-[1] w-[40vh] md:w-[45vh] lg:w-[50vh] relative">
 				<Image
 					src={imgSrc}
 					alt={slideAlt}
@@ -42,17 +42,19 @@ const SliderImgPortrait = memo<SliderImgPortraitProps>(({ imgSrc, index }) => {
 				/>
 			</figure>
 
-			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 w-full h-auto">
+			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 w-full h-[75vh] md:h-auto">
 				{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
 					<figure
 						key={gridIndex}
-						className={`${config.containerClass} group cursor-pointer`}>
+						className={`${config.containerClass} group cursor-pointer ${
+							gridIndex === 1 ? "block" : "hidden md:block"
+						}`}>
 						<Image
 							src={imgSrc}
 							alt={slideAlt}
 							fill
 							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
-							className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out hover:opacity-100 hover:scale-105`}
+							className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out xl:hover:opacity-100 xl:hover:scale-105`}
 						/>
 					</figure>
 				))}
