@@ -3,8 +3,10 @@
 import React, { useMemo, useRef, useEffect } from "react";
 import Script from "next/script";
 import Link from "~/bridge/ui/Link";
-import gsap from "gsap";
+
 import { useGSAP } from "@gsap/react";
+
+import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 import LinkTo from "~/assets/link-to.svg";
@@ -21,17 +23,14 @@ import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
 
-import "~/styles/bg-light.css";
-
 gsap.registerPlugin(ScrollTrigger);
+const MAX_SHIFT_GSAP = 200;
 
 function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	const sliderRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
 	useGSAP(() => {
-		const maxShift = 200; // px або vh — залежить від твого дизайну
-
 		if (!sliderRef.current || !contentRef.current) return;
 
 		const tl = gsap.timeline({
@@ -43,7 +42,11 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 			},
 		});
 
-		tl.fromTo(contentRef.current, { y: 0 }, { y: -maxShift, ease: "none" });
+		tl.fromTo(
+			contentRef.current,
+			{ y: 0 },
+			{ y: -MAX_SHIFT_GSAP, ease: "none" }
+		);
 	});
 
 	const size = useMemo(() => {
