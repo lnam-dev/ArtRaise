@@ -15,7 +15,6 @@ const SliderImgLandscape = ({ imgSrc, index }: SliderImgLandscapeProps) => {
 				width={16}
 				height={9}
 				className="object-contain"
-				loading="lazy"
 			/>
 		</figure>
 	);

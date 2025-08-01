@@ -32,7 +32,6 @@ const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
 					height={0}
 					sizes="100vw"
 					className="w-full h-auto"
-					loading="lazy"
 				/>
 			</figure>
 		</div>

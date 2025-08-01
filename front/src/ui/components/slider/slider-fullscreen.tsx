@@ -3,11 +3,15 @@
 import { FC } from "react";
 import { SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import SliderBase from "./slider-base";
+
 import useDevice from "~/ui/hooks/useDevice/useDevice";
-import { TSliderBaseProps } from "~/types/slider";
-import SliderButtonExpand from "./slider-button-expand";
+
 import { TArtPiece } from "~/types";
+import { TSliderBaseProps } from "~/types/slider";
+
+import SliderBase from "./slider-base";
+import SliderButtonExpand from "./slider-button-expand";
+import Turnabout from "../turnabout/turnabout";
 
 const PADDING_FOR_MOBILE = 16;
 const ORIENTATION: TArtPiece["orientation"] = "landscape";
@@ -33,7 +37,6 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 		<SliderBase
 			slides={slides}
 			wrapperStyle="px-4 xl:px-0 xl:px-0 xl:justify-normal"
-			headerStyle="xl:pr-0 xl:w-full"
 			swiperProps={{
 				slidesOffsetBefore: validationDevice(),
 				...swiperProps,
@@ -48,15 +51,25 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 									alt={`Slide ${index + 1}`}
 									fill
 									className="object-cover"
-									loading="lazy"
 								/>
 							</figure>
 						</SwiperSlide>
 					))}
 				</>
 			)}
-			headerElements={() => (
+			headerElements={(currentSlideIdx) => (
 				<>
+					<div
+						className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 xl:w-full`}>
+						<Turnabout
+							currentIndex={currentSlideIdx}
+							text={slides.map(({ title }) => title)}
+							tag={"h1"}
+							textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
+							animation="ease-in-out"
+							duration={600}
+						/>
+					</div>
 					{!isDesktop && (
 						<SliderButtonExpand
 							className="translate-x-4 sm:translate-x-0"

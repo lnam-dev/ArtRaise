@@ -18,20 +18,14 @@ const orientationMapping = {
 
 const SliderClassic: FC<TSliderClassicProps> = ({
 	slides,
-	children,
 	orientation,
-	swiperProps,
 	...props
 }) => {
 	const OrientationComponent = orientationMapping[orientation];
 	return (
 		<SliderBase
 			slides={slides}
-			headerStyle="w-[60%]"
 			wrapperStyle="pl-4 xl:pl-0"
-			swiperProps={{
-				...swiperProps,
-			}}
 			unpackedSlides={(slides) => (
 				<>
 					{slides.map((obj, index) => (
@@ -44,9 +38,8 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 			headerElements={() => (
 				<>{<SliderButtonExpand slides={slides} orientation={orientation} />}</>
 			)}
-			{...props}>
-			{children}
-		</SliderBase>
+			{...props}
+		/>
 	);
 };
 
