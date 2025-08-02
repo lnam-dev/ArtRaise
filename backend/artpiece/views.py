@@ -8,8 +8,11 @@ from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceB
 from .filters import ArtPieceFilter
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import ArtPiece
+from .models import ArtPiece, ArtPieceType
 from django.db.models import Count
+from django.core.cache import cache
+from django.utils import timezone
+from django.utils import timezone
 
 
 class ArtPieceViewSet(ModelViewSet):
@@ -89,3 +92,57 @@ class ArtPieceStatsView(APIView):
             "dominant_color": to_array(dominant_color_counts, 'dominant_color'),
         }
         return Response(data)
+
+
+class ArtPieceCategoriesView(APIView):
+    """
+    Endpoint для отримання всіх категорій (типів) artpieces
+    з українською та англійською локалізацією, включаючи лічильники використання.
+    """
+    
+    def get(self, request):
+        # Перевіряємо кэш
+        cache_key = 'artpiece_categories'
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            return Response(cached_data)
+
+        # Отримуємо счетчики для кожного типу з БД
+        type_counts = dict(
+            ArtPiece.objects.values('type')
+            .annotate(count=Count('id'))
+            .values_list('type', 'count')
+        )
+
+        # Формуємо повний список категорій з локалізацією
+        categories = []
+        
+        for choice_value, choice_label in ArtPieceType.choices:
+            category_data = {
+                'value': choice_value,           # Англійське значення для API
+                'label_en': choice_value,        # Англійська метка
+                'label_ua': choice_label,        # Українська метка
+                'count': type_counts.get(choice_value, 0),  # Кількість artpieces цього типу
+                'is_available': type_counts.get(choice_value, 0) > 0  # Є artpieces цього типу
+            }
+            categories.append(category_data)
+        
+        # Статистика
+        total_artpieces = ArtPiece.objects.count()
+        available_categories = len([cat for cat in categories if cat['is_available']])
+        
+        response_data = {
+            'categories': categories,
+            'meta': {
+                'total_categories': len(categories),
+                'available_categories': available_categories,
+                'total_artpieces': total_artpieces,
+                'cache_generated_at': timezone.now().isoformat()
+            }
+        }
+
+        # Кешуємо на 1 годину (3600 секунд)
+        cache.set(cache_key, response_data, 3600)
+        
+        return Response(response_data)

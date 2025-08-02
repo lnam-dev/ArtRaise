@@ -8,12 +8,18 @@ import SliderImgPortrait from "./slider-img-portrait";
 import SliderImgLandscape from "./slider-img-landscape";
 import SliderImgSquare from "./slider-img-square";
 import SliderButtonExpand from "./slider-button-expand";
-import type { TSliderClassicProps } from "~/types/slider";
+
+import { TArtPiece } from "~/types/art";
+import type { TSliderBaseProps } from "~/types/slider";
 
 const orientationMapping = {
 	portrait: SliderImgPortrait,
 	landscape: SliderImgLandscape,
 	square: SliderImgSquare,
+};
+
+type TSliderClassicProps = Omit<TSliderBaseProps, "children" | "variant"> & {
+	orientation: TArtPiece["orientation"];
 };
 
 const SliderClassic: FC<TSliderClassicProps> = ({
