@@ -14,7 +14,7 @@ import LinkTo from "~/assets/link-to.svg";
 import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
 import { TAccordion } from "~/types/accordion";
 
-import SliderWrapper from "./card-wrapper";
+import SliderWrapper from "./slider-wrapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
