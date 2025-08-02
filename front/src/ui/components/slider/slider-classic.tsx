@@ -30,13 +30,15 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 				<>
 					{slides.map((obj, index) => (
 						<SwiperSlide key={index}>
-							<OrientationComponent imgSrc={obj.imgSrc} index={index} />
+							<OrientationComponent
+								slides={slides}
+								orientation={orientation}
+								imgSrc={obj.imgSrc}
+								index={index}
+							/>
 						</SwiperSlide>
 					))}
 				</>
-			)}
-			headerElements={() => (
-				<>{<SliderButtonExpand slides={slides} orientation={orientation} />}</>
 			)}
 			{...props}
 		/>

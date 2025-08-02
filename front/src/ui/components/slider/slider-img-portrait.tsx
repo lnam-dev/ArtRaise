@@ -1,9 +1,15 @@
 import Image from "next/image";
 import { memo } from "react";
+
 import { TSlide } from "~/types/slider";
+
+import SliderButtonExpand from "./slider-button-expand";
+import { TArtPiece } from "~/types/art";
 
 type SliderImgPortraitProps = Pick<TSlide, "imgSrc"> & {
 	index: number;
+	slides: TSlide[];
+	orientation: TArtPiece["orientation"];
 };
 
 const GRID_IMAGES_CONFIG = [
@@ -25,42 +31,49 @@ const GRID_IMAGES_CONFIG = [
 	},
 ] as const;
 
-const SliderImgPortrait = memo<SliderImgPortraitProps>(({ imgSrc, index }) => {
-	const slideAlt = `Slide ${index + 1}`;
+const SliderImgPortrait = memo<SliderImgPortraitProps>(
+	({ imgSrc, index, slides, orientation }) => {
+		const slideAlt = `Slide ${index + 1}`;
 
-	return (
-		<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 h-[75vh]">
-			<figure className="flex-shrink-0 h-full relative">
-				<Image
-					src={imgSrc}
-					alt={slideAlt}
-					width={0}
-					height={0}
-					sizes="50vh"
-					className="h-full w-auto object-contain"
-					priority={index === 0}
-				/>
-			</figure>
+		return (
+			<div className="relative flex flex-row gap-2 md:gap-4 xl:gap-6 h-[75vh]">
+				<figure className="flex-shrink-0 h-full relative">
+					<Image
+						src={imgSrc}
+						alt={slideAlt}
+						width={0}
+						height={0}
+						sizes="50vh"
+						className="h-full w-auto object-contain"
+						priority={index === 0}
+					/>
+					<SliderButtonExpand
+						slides={slides}
+						orientation={orientation}
+						className="absolute bottom-0 right-0"
+					/>
+				</figure>
 
-			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 flex-1 h-full">
-				{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
-					<figure
-						key={gridIndex}
-						className={`${config.containerClass} group cursor-pointer ${
-							gridIndex === 1 ? "block" : "hidden md:block"
-						}`}>
-						<Image
-							src={imgSrc}
-							alt={slideAlt}
-							fill
-							sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
-							className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out xl:hover:opacity-100 xl:hover:scale-105`}
-						/>
-					</figure>
-				))}
+				<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 flex-1 h-full">
+					{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
+						<figure
+							key={gridIndex}
+							className={`${config.containerClass} group cursor-pointer ${
+								gridIndex === 1 ? "block" : "hidden md:block"
+							}`}>
+							<Image
+								src={imgSrc}
+								alt={slideAlt}
+								fill
+								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
+								className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out xl:hover:opacity-100 xl:hover:scale-105`}
+							/>
+						</figure>
+					))}
+				</div>
 			</div>
-		</div>
-	);
-});
+		);
+	}
+);
 
 export default SliderImgPortrait;
