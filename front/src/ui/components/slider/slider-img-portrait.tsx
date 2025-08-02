@@ -29,20 +29,20 @@ const SliderImgPortrait = memo<SliderImgPortraitProps>(({ imgSrc, index }) => {
 	const slideAlt = `Slide ${index + 1}`;
 
 	return (
-		<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
-			<figure className="flex-shrink-0 md:flex-shrink-[1] w-[40vh] md:w-[45vh] lg:w-[50vh] relative">
+		<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 h-[75vh]">
+			<figure className="flex-shrink-0 h-full relative">
 				<Image
 					src={imgSrc}
 					alt={slideAlt}
 					width={0}
 					height={0}
 					sizes="50vh"
-					className="w-full h-auto"
+					className="h-full w-auto object-contain"
 					priority={index === 0}
 				/>
 			</figure>
 
-			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 w-full h-[75vh] md:h-auto">
+			<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 flex-1 h-full">
 				{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
 					<figure
 						key={gridIndex}
