@@ -2,18 +2,19 @@
 
 import React, { useMemo, useRef, useEffect } from "react";
 import Script from "next/script";
+import Link from "~/bridge/ui/Link";
+
+import { useGSAP } from "@gsap/react";
+
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import Link from "~/bridge/ui/Link";
 
 import LinkTo from "~/assets/link-to.svg";
 
 import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page";
 import { TAccordion } from "~/types/accordion";
 
-import useDevice from "~/ui/hooks/useDevice/useDevice";
-
-import SliderWrapper from "./slider-wrapper";
+import SliderWrapper from "./card-wrapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
@@ -22,52 +23,31 @@ import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
 
-import "~/styles/bg-light.css";
+gsap.registerPlugin(ScrollTrigger);
+const MAX_SHIFT_GSAP = 50;
 
 function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	const sliderRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const { isDesktop } = useDevice();
 
-	const deviceCoefficient = useMemo(() => {
-		return isDesktop ? 0.593 : 0.625;
-	}, [isDesktop]);
+	useGSAP(() => {
+		if (!sliderRef.current || !contentRef.current) return;
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-
-		const ctx = gsap.context(() => {
-			gsap.to(contentRef.current, {
-				y: "-30vh",
-				ease: "easeInOut",
-				scrollTrigger: {
-					trigger: sliderRef.current,
-					start: "top top",
-					end: "bottom top",
-					scrub: true,
-					pin: sliderRef.current,
-				},
-			});
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: sliderRef.current,
+				start: "top top",
+				end: "bottom top",
+				scrub: true,
+			},
 		});
 
-		const timeout = setTimeout(() => {
-			ScrollTrigger.refresh();
-
-			const sliderHeight = sliderRef.current?.offsetHeight ?? 0;
-
-			const offsetFromTop = sliderHeight * deviceCoefficient;
-
-			window.scrollTo({
-				top: offsetFromTop,
-				behavior: "auto",
-			});
-		}, 50);
-
-		return () => {
-			clearTimeout(timeout);
-			ctx.revert();
-		};
-	}, [deviceCoefficient]);
+		tl.fromTo(
+			contentRef.current,
+			{ y: 0 },
+			{ y: `-${MAX_SHIFT_GSAP}vh`, ease: "easeInOut" }
+		);
+	});
 
 	const size = useMemo(() => {
 		const length = parseInt(artPiece.length_cm);
@@ -110,11 +90,13 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
 			/>
 			<section
-				className="pt-12 lg:pt-18 xl:pt-[5rem] lg:pb-6 max-h-[75vh]"
+				className="relative pt-12 lg:pt-18 xl:pt-[5rem] max-h-[75vh]"
 				ref={sliderRef}>
 				<SliderWrapper artPiece={artPiece} />
 			</section>
-			<section className="mobile-spacing bg-white h-full" ref={contentRef}>
+			<section
+				className="relative z-10 mobile-spacing mt-20 bg-white h-full"
+				ref={contentRef}>
 				<div className="pt-6">
 					<BreadcrumbsWrapper activeIndex={2} className="mb-3">
 						<BreadcrumbsLink>Категорії</BreadcrumbsLink>
@@ -174,10 +156,12 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 	);
 }
 
-export default React.memo(ProductPage, (prevProps, nextProps) => {
-	return (
-		prevProps.artPiece.id === nextProps.artPiece.id &&
-		prevProps.artPiece.price === nextProps.artPiece.price &&
-		prevProps.artPiece.title === nextProps.artPiece.title
-	);
-});
+export default ProductPage;
+
+// export default React.memo(ProductPage, (prevProps, nextProps) => {
+// 	return (
+// 		prevProps.artPiece.id === nextProps.artPiece.id &&
+// 		prevProps.artPiece.price === nextProps.artPiece.price &&
+// 		prevProps.artPiece.title === nextProps.artPiece.title
+// 	);
+// });

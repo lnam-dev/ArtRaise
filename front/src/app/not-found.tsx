@@ -1,7 +1,11 @@
+"use client";
+
 import ButtonArrow from "~/ui/components/button/button-arrow";
-import "~/styles/bg-dark.css";
+import useBackground from "~/ui/hooks/useBackground";
 
 export default function NotFound() {
+	useBackground("dark");
+
 	return (
 		<main className="bg-body-dark container mx-auto mobile-spacing text-white h-[100vh]">
 			<div className="flex items-center h-full">
