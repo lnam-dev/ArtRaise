@@ -14,7 +14,7 @@ class FAQ(models.Model):
     answer = models.TextField(null=True, blank=True)
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
-    show_in_call_to_action = models.BooleanField(default=False)
+    show_in_call_question_answer = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -25,6 +25,7 @@ class CallToAction(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     question = models.CharField(max_length=2000)
+    show_in_call_to_action = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
