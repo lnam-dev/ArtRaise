@@ -1,7 +1,7 @@
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
-from .models import ArtPiece
+from .models import ArtPiece, ArtPieceBuyForm
 from .forms import ArtPieceForm
 
 
@@ -25,8 +25,21 @@ class WagtailArtPieceProfileViewSet(SnippetViewSet):
     search_fields = ['title', 'description']
 
 
+class WagtailArtPieceBuyFormViewSet(SnippetViewSet):
+    model = ArtPieceBuyForm
+    icon = "form"
+    list_display = [
+        "first_name", "last_name", "email", "phone_number", "artpiece", "created_at", "is_processed"
+    ]
+    search_filters = ["first_name", "last_name", "email", "artpiece"]
+    ordering = ["-created_at"]
+    form_fields = [
+        "first_name", "last_name", "email", "phone_number", "description", "artpiece", "is_processed"
+    ]
+
+
 class ArtPieceViewSetGroup(SnippetViewSetGroup):
-    items = [WagtailArtPieceProfileViewSet]
+    items = [WagtailArtPieceProfileViewSet, WagtailArtPieceBuyFormViewSet]
     menu_label = 'Art Piece'
     menu_name = 'art_pieces_folder'
 
