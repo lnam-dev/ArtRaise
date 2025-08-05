@@ -13,8 +13,10 @@ class FAQ(models.Model):
     question = models.CharField(max_length=255)
     answer = models.TextField(null=True, blank=True)
     order = models.IntegerField(default=0)
-    is_active = models.BooleanField(default=True)
-    show_in_call_question_answer = models.BooleanField(default=False)
+    is_active = models.BooleanField("Активний", default=True)
+    show_in_call_to_action = models.BooleanField("Показувати в Call-to-Action", default=False)
+    show_in_question_answer = models.BooleanField("Показувати в Q&A", default=False)
+    show_in_how_to_buy = models.BooleanField("Показувати в How to Buy", default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

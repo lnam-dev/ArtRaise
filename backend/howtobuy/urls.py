@@ -1,7 +1,6 @@
+from .views import HowToBuyAPIView
 from django.urls import path
 
-from .views import HowToBuyAPIView
-
 urlpatterns = [
-    path('how-to-buy/', HowToBuyAPIView.as_view(), name='how-to-buy'),
+    path('', HowToBuyAPIView.as_view(), name='how-to-buy')
 ]

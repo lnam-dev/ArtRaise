@@ -215,5 +215,20 @@ class CallToActionAPIView(APIView):
         return Response(serializer.data)
 
 
+class HowToBuyAPIView(APIView):
+    """
+    API endpoint для отримання секції "Як купити".
+    Повертає впорядкований список активних питань, позначених для показу в розділі "Як купити".
+
+    GET /api/faq/how-to-buy/
+    """
+    def get(self, request):
+        queryset = FAQ.objects.filter(
+            is_active=True,
+            show_in_how_to_buy=True
+        ).order_by('order')
+        
+        serializer = FAQSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
