@@ -180,33 +180,6 @@ class CallToActionAPIView(APIView):
         }
     ]
     """
-
-    @swagger_auto_schema(
-        operation_description="Створює нове питання від користувача",
-        request_body=CallToActionSerializer,
-        responses={
-            201: openapi.Response(
-                description="Питання успішно створено",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'message': openapi.Schema(type=openapi.TYPE_STRING),
-                        'data': CallToActionSerializer
-                    }
-                )
-            ),
-            400: openapi.Response(
-                description="Помилка валідації",
-                schema=openapi.Schema(
-                    type=openapi.TYPE_OBJECT,
-                    properties={
-                        'error': openapi.Schema(type=openapi.TYPE_STRING),
-                        'details': openapi.Schema(type=openapi.TYPE_OBJECT)
-                    }
-                )
-            )
-        }
-    )
     def post(self, request):
         """
         Створює нове питання від користувача.
