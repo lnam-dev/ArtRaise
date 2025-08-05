@@ -16,10 +16,9 @@ export type TSliderBaseProps = React.HTMLAttributes<HTMLElement> & {
 	slides: TSlide[];
 	variant?: "classic" | "fullscreen";
 	swiperProps?: SwiperOptions;
-	headerStyle?: string;
 	wrapperStyle?: string;
 	expandStyle?: string;
 	unpackedSlides?: (slides: TSlide[]) => React.ReactNode;
 	children?: (currentSlideIdx: number) => React.ReactNode;
-	headerElements?: () => React.ReactNode;
+	headerElements?: (currentSlideIdx: number) => React.ReactNode;
 };

@@ -1,15 +1,17 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper } from "swiper/react";
 import { useEffect, useRef, useState } from "react";
-import { Swiper as SwiperType } from "swiper";
+
 import useDevice from "~/ui/hooks/useDevice/useDevice";
-import "swiper/css";
+
+import { Swiper as SwiperType } from "swiper";
+import { TSliderBaseProps } from "~/types/slider";
 
 import SliderNavPanel from "./slider-nav-panel";
 import SliderPagination from "./slider-pagination";
-import Turnabout from "../turnabout/turnabout";
-import { TSliderBaseProps } from "~/types/slider";
+
+import "swiper/css";
 
 const SliderBase: React.FC<TSliderBaseProps> = ({
 	slides,
@@ -18,7 +20,6 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 	swiperProps,
 	unpackedSlides,
 	headerElements,
-	headerStyle,
 	wrapperStyle,
 	...props
 }) => {
@@ -66,18 +67,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 					{unpackedSlides && unpackedSlides(slides)}
 					<div
 						className={`container absolute bottom-0 left-0 w-full z-20 flex items-end justify-between -translate-x-1/2 left-1/2 ${wrapperStyle}`}>
-						<div
-							className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full ${headerStyle}`}>
-							<Turnabout
-								currentIndex={currentSlideIdx}
-								text={slides.map(({ title }) => title)}
-								tag={"h1"}
-								textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
-								animation="ease-in-out"
-								duration={600}
-							/>
-						</div>
-						{headerElements && headerElements()}
+						{headerElements && headerElements(currentSlideIdx)}
 						{isDesktop && (
 							<SliderNavPanel
 								currentSlide={currentSlideIdx}

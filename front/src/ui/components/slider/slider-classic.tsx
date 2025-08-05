@@ -25,29 +25,29 @@ type TSliderClassicProps = Omit<TSliderBaseProps, "children" | "variant"> & {
 const SliderClassic: FC<TSliderClassicProps> = ({
 	slides,
 	orientation,
-	swiperProps,
 	...props
 }) => {
 	const OrientationComponent = orientationMapping[orientation];
 	return (
 		<SliderBase
 			slides={slides}
-			variant="classic"
-			headerStyle="w-[60%]"
 			wrapperStyle="pl-4 xl:pl-0"
 			unpackedSlides={(slides) => (
 				<>
 					{slides.map((obj, index) => (
 						<SwiperSlide key={index}>
-							<OrientationComponent imgSrc={obj.imgSrc} index={index} />
+							<OrientationComponent
+								slides={slides}
+								orientation={orientation}
+								imgSrc={obj.imgSrc}
+								index={index}
+							/>
 						</SwiperSlide>
 					))}
 				</>
 			)}
-			headerElements={() => (
-				<>{<SliderButtonExpand slides={slides} orientation={orientation} />}</>
-			)}
-			{...props}></SliderBase>
+			{...props}
+		/>
 	);
 };
 
