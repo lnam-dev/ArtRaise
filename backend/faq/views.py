@@ -154,13 +154,13 @@ class FAQViewSet(ModelViewSet):
         })
 
 
-class CallToActionAPIView(APIView):
+class CallToActionFormAPIView(APIView):
     """
     API endpoint для роботи з запитаннями від користувачів (Call to Action).
     Дозволяє створювати нові запитання та отримувати список існуючих.
 
-    GET /api/faq/questions/
-    POST /api/faq/questions/
+    GET /api/faq/call-to-action/
+    POST /api/faq/call-to-action/
 
     Формат запиту POST:
     {
