@@ -13,14 +13,16 @@ const CategoriesPage = ({ newArrivals, categories }: TCategoriesPage) => {
 				<CategoriesSearchWrapper />
 			</div>
 			<section className="columns-1 gap-6 sm:columns-2 xl:columns-4">
-				<CardCategories
-					card={newArrivals}
-					variant="disabled"
-					className="w-full xl:break-after-column sticky top-[5rem] "
-				/>
+				{newArrivals.map((arrivals) => (
+					<CardCategories
+						key={arrivals.label_en}
+						card={arrivals}
+						className="w-full mb-12 xl:mb-0 xl:break-after-column xl:sticky xl:top-[5rem]"
+					/>
+				))}
 				{categories.map((category) => (
 					<CardCategories
-						key={category.title}
+						key={category.label_en}
 						card={category}
 						className="mb-12"
 					/>

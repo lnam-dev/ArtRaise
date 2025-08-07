@@ -1,6 +1,6 @@
-import type { TCategories } from "~/types/categories";
+import type { TCategory } from "~/types/categories";
 
 export type CategoriesPage = {
-	newArrivals: TCategories;
-	categories: TCategories[];
+	newArrivals: TCategory[];
+	categories: TCategory[];
 };

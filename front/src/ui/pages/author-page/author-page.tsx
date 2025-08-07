@@ -7,7 +7,6 @@ import AuthorCard from "~/ui/components/author-card/author-card";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import FamiliarAuthors from "~/ui/pages/author-page/FamiliarAuthors";
 import MobileSectionAuthorPage from "~/ui/pages/author-page/MobileSectionAuthorPage";
-import "~/styles/bg-light.css";
 
 const AuthorPage: React.FC<TAuthorPage> = ({
 	author,
