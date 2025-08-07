@@ -299,12 +299,13 @@ GET /api/authors/?fullname=Іван&style=реал&ordering=-fullname
 #### Фільтри (підтримують множинні значення)
 | Параметр | Тип | Опис |
 |----------|-----|------|
-| `category` | `string[]` | Категорії творів |
-| `type` | `string[]` | Типи творів (`painting`, `sculpture`, `graphics`, `architecture`, `aplied_art`, `design`) |
+| `category` | `string[]` | **ОНОВЛЕНО:** Slug категорій (напр. `painting,sculpture`) |
+| `category_id` | `string[]` | **НОВИЙ:** ID категорій (напр. `1,2`) |
+| `type` | `string[]` | **ЗВОРОТНА СУМІСНІСТЬ:** Працює як `category` |
 | `material` | `string[]` | Матеріали |
 | `theme` | `string[]` | Теми творів |
 | `style` | `string[]` | Стилі творів |
-| `expression_method` | `string[]` | Методи вираження |
+| `expression_method` | `string[]` | **ОНОВЛЕНО:** Тепер фільтрує по slug категорій |
 | `size` | `string[]` | Розміри (`small`, `medium`, `big`) |
 | `color` | `string[]` | Домінуючі кольори |
 | `orientation` | `string[]` | Орієнтація (`square`, `portrait`, `landscape`) |
@@ -340,10 +341,10 @@ GET /api/authors/?fullname=Іван&style=реал&ordering=-fullname
 GET /api/search/?q=пейзаж
 
 # Фільтрація за типом та матеріалом
-GET /api/search/?type=painting&material=олія
+GET /api/search/?category=painting&material=олія
 
 # Множинні значення фільтра
-GET /api/search/?type=painting&type=sculpture&style=реалізм
+GET /api/search/?category=painting&category=sculpture&style=реалізм
 
 # Фільтрація за ціною
 GET /api/search/?price_min=1000&price_max=5000
@@ -355,7 +356,7 @@ GET /api/search/?sort_by=price&sort_direction=desc
 GET /api/search/?page=2&page_size=10
 
 # Комбінований запит
-GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&page=1&page_size=20
+GET /api/search/?q=портрет&category=painting&price_min=2000&sort_by=price&page=1&page_size=20
 ```
 
 ### Структура відповіді
@@ -367,7 +368,14 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
       "id": 1,
       "title": "Назва твору",
       "price": "2500.00",
-      "type": "painting",
+      "category": {
+        "id": 1,
+        "slug": "painting",
+        "name_en": "Painting",
+        "name_ua": "Живопис",
+        "description": "Твори живопису - картини, написані різними техніками",
+        "image_url": "https://example.com/categories/painting.jpg"
+      },
       "material": "Олія",
       "theme": "Портрет",
       "style": "Реалізм",
@@ -405,8 +413,7 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
   },
   "filters_applied": {
     "query": "пейзаж",
-    "categories": [],
-    "types": ["painting"],
+    "categories": ["painting"],
     "materials": ["олія"],
     "themes": [],
     "styles": [],
@@ -454,7 +461,7 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 
 ### Примітки
 
-1. **Множинні значення**: Більшість фільтрів підтримують множинні значення. Використовуйте один і той же параметр кілька разів: `?type=painting&type=sculpture`
+1. **Множинні значення**: Більшість фільтрів підтримують множинні значення. Використовуйте один і той же параметр кілька разів: `?category=painting&category=sculpture`
 
 2. **Регістронезалежний пошук**: Текстовий пошук (`q`) та пошук за автором (`author`) працюють без урахування регістра.
 
@@ -468,7 +475,9 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 
 **Endpoint:** `GET /api/artpieces/categories/`
 
-**Опис:** Повертає список усіх категорій (типів) творів мистецтва з українською та англійською локалізацією, включаючи кількість творів у кожній категорії.
+**Опис:** Повертає список усіх активних категорій творів мистецтва з українською та англійською локалізацією, зображеннями та описами, включаючи кількість творів у кожній категорії.
+
+⚠️ **ВАЖЛИВО**: Система категорій була оновлена! Замість фіксованого списку типів, тепер категорії зберігаються в базі даних і можуть керуватися через CMS.
 
 ### Приклад відповіді
 
@@ -476,53 +485,51 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 {
   "categories": [
     {
-      "value": "painting",
-      "label_en": "painting",
-      "label_ua": "живопис",
+      "id": 1,
+      "slug": "painting",
+      "name_en": "Painting",
+      "name_ua": "Живопис",
+      "description": "Твори живопису - картини, написані різними техніками",
+      "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/categories/painting.jpg",
       "count": 8,
       "is_available": true
     },
     {
-      "value": "sculpture",
-      "label_en": "sculpture", 
-      "label_ua": "скульптура",
+      "id": 2,
+      "slug": "sculpture", 
+      "name_en": "Sculpture",
+      "name_ua": "Скульптура",
+      "description": "Скульптурні роботи та об'ємні форми мистецтва",
+      "image_url": "https://artraise-media.fra1.cdn.digitaloceanspaces.com/categories/sculpture.jpg",
       "count": 1,
       "is_available": true
     },
     {
-      "value": "graphics",
-      "label_en": "graphics",
-      "label_ua": "графіка", 
+      "id": 3,
+      "slug": "graphics",
+      "name_en": "Graphics",
+      "name_ua": "Графіка", 
+      "description": "Графічні роботи, малюнки, гравюри",
+      "image_url": null,
       "count": 1,
       "is_available": true
     },
     {
-      "value": "architecture",
-      "label_en": "architecture",
-      "label_ua": "архітектура",
-      "count": 0,
-      "is_available": false
-    },
-    {
-      "value": "aplied_art", 
-      "label_en": "aplied_art",
-      "label_ua": "прикладне_мистецтво",
-      "count": 0,
-      "is_available": false
-    },
-    {
-      "value": "design",
-      "label_en": "design",
-      "label_ua": "дизайн",
+      "id": 4,
+      "slug": "architecture",
+      "name_en": "Architecture",
+      "name_ua": "Архітектура",
+      "description": "Архітектурні проекти та роботи",
+      "image_url": null,
       "count": 0,
       "is_available": false
     }
   ],
   "meta": {
-    "total_categories": 6,
+    "total_categories": 4,
     "available_categories": 3,
     "total_artpieces": 10,
-    "cache_generated_at": "2025-07-22T19:15:30.123456Z"
+    "cache_generated_at": "2025-08-07T23:45:30.123456Z"
   }
 }
 ```
@@ -532,30 +539,55 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 #### Поля категорії
 | Поле | Тип | Опис |
 |------|-----|------|
-| `value` | `string` | Англійське значення категорії для використання в API |
-| `label_en` | `string` | Англійська назва категорії |
-| `label_ua` | `string` | Українська назва категорії |
+| `id` | `integer` | Унікальний ідентифікатор категорії |
+| `slug` | `string` | URL-дружня назва категорії (для API та маршрутизації) |
+| `name_en` | `string` | Англійська назва категорії |
+| `name_ua` | `string` | Українська назва категорії |
+| `description` | `string` | Опис категорії |
+| `image_url` | `string/null` | URL зображення категорії або `null` |
 | `count` | `integer` | Кількість творів мистецтва в цій категорії |
 | `is_available` | `boolean` | Чи є твори мистецтва в цій категорії |
 
 #### Метадані (`meta`)
 | Поле | Тип | Опис |
 |------|-----|------|
-| `total_categories` | `integer` | Загальна кількість категорій |
+| `total_categories` | `integer` | Загальна кількість активних категорій |
 | `available_categories` | `integer` | Кількість категорій, які мають твори |
 | `total_artpieces` | `integer` | Загальна кількість творів мистецтва |
 | `cache_generated_at` | `datetime` | Час генерації кешу |
 
-### Категорії творів мистецтва
+### Управління категоріями
 
-| Англійська назва | Українська назва | Опис |
-|------------------|------------------|------|
-| `painting` | `живопис` | Картини, малюнки олією, акрилом тощо |
-| `sculpture` | `скульптура` | Скульптурні роботи |
-| `graphics` | `графіка` | Графічні роботи, гравюри, літографії |
-| `architecture` | `архітектура` | Архітектурні проекти та моделі |
-| `aplied_art` | `прикладне_мистецтво` | Декоративно-прикладне мистецтво |
-| `design` | `дизайн` | Дизайнерські роботи |
+#### CMS (Wagtail Admin)
+Категорії можуть керуватися через CMS:
+- Додавання нових категорій
+- Редагування назв та описів
+- Завантаження зображень категорій  
+- Налаштування порядку відображення
+- Активація/деактивація категорій
+
+#### Поля категорії в CMS
+- **Назва українською** (`name_ua`) - обов'язкове, унікальне
+- **Назва англійською** (`name_en`) - обов'язкове, унікальне
+- **Slug** - автоматично генерується з англійської назви
+- **Опис** - необов'язковий опис категорії
+- **Зображення** - необов'язкове зображення для категорії
+- **Активна** - чи відображається категорія на сайті
+- **Порядок** - числове значення для сортування (менше = вище)
+
+### Фільтрація по категоріях
+
+#### У Search API
+```javascript
+// Фільтрація по slug категорії
+GET /api/search/?category=painting,sculpture
+
+// Фільтрація по ID категорії  
+GET /api/search/?category_id=1,2
+
+// Зворотна сумісність (працює як category)
+GET /api/search/?type=painting
+```
 
 ### Приклади використання у фронтенді
 
@@ -564,10 +596,13 @@ GET /api/search/?q=портрет&type=painting&price_min=2000&sort_by=price&pag
 const response = await fetch('/api/artpieces/categories/');
 const data = await response.json();
 
-// Створення випадаючого списку
+// Створення випадаючого списку з зображеннями
 data.categories.forEach(category => {
   if (category.is_available) {
-    console.log(`${category.label_ua} (${category.count})`);
+    console.log(`${category.name_ua} (${category.count})`);
+    if (category.image_url) {
+      console.log(`Image: ${category.image_url}`);
+    }
   }
 });
 ```

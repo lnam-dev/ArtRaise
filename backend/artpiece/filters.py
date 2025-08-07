@@ -1,5 +1,5 @@
 import django_filters
-from .models import ArtPiece, ArtPieceType
+from .models import ArtPiece, Category
 from authors.models import Author
 
 # Заготовка під множинне значення через кому
@@ -15,13 +15,16 @@ class ArtPieceFilter(django_filters.FilterSet):
     price_min = django_filters.NumberFilter(field_name="price", lookup_expr="gte")
     price_range = django_filters.RangeFilter(field_name="price")
 
+    # Фільтр по категоріях - підтримуємо і старий формат (type) і новий (category)
+    category = CharInFilter(field_name="category__slug", lookup_expr="in")  # по slug категорії
+    type = CharInFilter(field_name="category__slug", lookup_expr="in")  # для зворотної сумісності
+    category_id = CharInFilter(field_name="category__id", lookup_expr="in")  # по ID категорії
+    
     # Множинні фільтри
-    category = CharInFilter(field_name="type", lookup_expr="in")  # тип твору
-    type = CharInFilter(field_name="type", lookup_expr="in")  # для зворотної сумісності
     material = CharInFilter(field_name="material", lookup_expr="in")
     theme = CharInFilter(field_name="theme", lookup_expr="in")
     style = CharInFilter(field_name="style", lookup_expr="in")
-    expression_method = CharInFilter(field_name="type", lookup_expr="in")  # спосіб вираження
+    expression_method = CharInFilter(field_name="category__slug", lookup_expr="in")  # спосіб вираження
     size = CharInFilter(field_name="format", lookup_expr="in")  # розмір
     color = CharInFilter(field_name="dominant_color", lookup_expr="in")  # колір
 

@@ -7,9 +7,9 @@ from .models import ArtPiece
 class ArtPieceForm(WagtailAdminModelForm):
     class Meta:
         model = ArtPiece
-        # Явно указываем все поля КРОМЕ creating_date_end
+        # Явно вказуємо всі поля ОКРІМ creating_date_end - замінюємо type на category
         fields = [
-            'title', 'price', 'type', 'material', 'theme', 'style',
+            'title', 'price', 'category', 'material', 'theme', 'style',
             'length_cm', 'width_cm', 'height_cm', 'format', 'orientation',
             'gamma', 'dominant_color', 'creating_date_start', 'description',
             'certificate', 'image_artpiece', 'author'

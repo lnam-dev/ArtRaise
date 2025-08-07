@@ -14,6 +14,6 @@ class ArtPieceAdmin(admin.ModelAdmin):
         "style",
         "author"
     ]
-    list_filter = ["title", "price", "type"]
+    list_filter = ["title", "price", "category"]
     search_fields = ["title"]
 
