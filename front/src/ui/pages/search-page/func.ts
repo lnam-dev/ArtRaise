@@ -7,9 +7,9 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
     if (object.filters.query) {
         params.append("q", object.filters.query)
     }
-    // if (object.filters.price_range_filters.min && object.filters.price_range_filters.max) {
-    //     params.append("price_range", `${object.filters.price_range_filters.min},${object.filters.price_range_filters.max}`);
-    // }
+    if (object.filters.price_range_filters.min) params.append("price_min", `${object.filters.price_range_filters.min}`);
+    if (object.filters.price_range_filters.max) params.append("price_max", `${object.filters.price_range_filters.max}`);
+
     const isAnyCategorySelected = object.filters.category.appliedCategoriesSlugs.length > 0
     if (isAnyCategorySelected) {
         object.filters.category.appliedCategoriesSlugs.forEach(slug => {

@@ -5,7 +5,7 @@ import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
     appendFilter, appendSelectedCategoriesSlug,
-    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setPriceRange,
+    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setSelectedPriceRange,
     setTitle, setupCategoriesKeys, setupCurrentPage,
     setupFilterKeysCounts, setupPagination, setupPriceRange, TFilterCategoryKeyCount,
     TFilterKeysCounts
@@ -31,6 +31,8 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         const setupCountOfEachFilter = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
             const categoryResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/categories/`);
+            const setup = await getSearchPage();
+            if(setup) dispatch(setSelectedPriceRange({min: setup.price_range.min_price, max: setup.price_range.max_price}));
             if (response.ok && categoryResponse.ok) {
                 const keyValues : TFilterKeysCounts = await response.json() as TFilterKeysCounts;
                 const categoriesDto = await categoryResponse.json();
@@ -155,15 +157,19 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 </div>
             </Accordion>
             <Accordion title={"Ціна"}>
-                <div className="px-4 py-2 w-full bg-gray-700">
+                <div className="px-4 py-2 w-full">
+                    <div className={'w-full flex flex-row justify-between'}>
+                        <p>{filterState.filters.price_range_filters.min}</p>
+                        <p>{filterState.filters.price_range_filters.max}</p>
+                    </div>
                     <DualRangeSlider
-                        className={"w-56 bg-black-1000 rounded-full"}
+                        className={"w-full"}
                         min={filterState.available_price_range.min_price}
                         max={filterState.available_price_range.max_price}
                         step={100}
                         value={[filterState.filters.price_range_filters.min, filterState.filters.price_range_filters.max]}
                         onValueChange={([min,max]) => {
-                            dispatch(setPriceRange({min: min, max: max}))
+                            dispatch(setSelectedPriceRange({min: min, max: max}))
                         }}
                     />
                 </div>

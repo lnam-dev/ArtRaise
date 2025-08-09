@@ -93,7 +93,7 @@ const SearchPageSlice = createSlice({
         setTitle: (state, action: PayloadAction<string>) => {
             state.filters.query = action.payload;
         },
-        setPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
+        setSelectedPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
             state.filters.price_range_filters.min = action.payload.min;
             state.filters.price_range_filters.max = action.payload.max;
         },
@@ -147,7 +147,7 @@ export const {
     appendSelectedCategoriesSlug,
     setupCategoriesKeys,
     setTitle,
-    setPriceRange,
+    setSelectedPriceRange,
     setArtpieces,
     setupCurrentPage,
     setupPriceRange,
