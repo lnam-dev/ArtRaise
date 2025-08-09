@@ -3,21 +3,18 @@ import React from 'react';
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import SearchPageInput from "~/ui/pages/search-page/search-page-input";
-import CardPurchase from "~/ui/components/card-purchase/card-purchase";
 import FilterMenu from "~/ui/pages/search-page/filter-menu";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import LinkBackTo from "~/ui/components/link/link-back-to";
 import { useAppSelector} from "~/store/client/hooks";
-import {useRouter} from "next/navigation";
 import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
 import {SearchPagination} from "~/app/[locale]/search/SearchPagination";
+import CardPurchase from "~/ui/components/card/card-purchase";
 
 export default function Page() {
     const searchPageState = useAppSelector(state => state.searchPageReducer)
     const {artpieces} = searchPageState;
     const isArtpiecesNotEmpty = searchPageState.artpieces.length !== 0;
-    const router = useRouter();
-
     return (
         <div
             className={
