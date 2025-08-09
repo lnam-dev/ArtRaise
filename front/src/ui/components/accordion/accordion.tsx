@@ -52,7 +52,7 @@ const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
 				</div>
 			</button>
 			<div
-				className={`overflow-y-hidden w-fit transition-all ${
+				className={`overflow-y-hidden w-full transition-all ${
 					isOpen ? "max-h-96" : "max-h-0"
 				} duration-300`}>
 				{isValidElement(children)
