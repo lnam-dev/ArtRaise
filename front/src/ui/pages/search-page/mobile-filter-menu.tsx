@@ -19,8 +19,8 @@ const MobileFilterMenu: React.FC<Props> = ({}) => {
 		hideModal();
 	};
 	return (
-		<div className={"flex flex-col justify-center items-center gap-3"}>
-			<FilterMenu className={"max-w-72 max-h-96 overflow-y-auto"} />
+		<div className={"flex flex-col justify-center items-center gap-3 p-5 bg-white"}>
+			<FilterMenu className={"max-w-72 max-h-96 overflow-y-auto scrollbar-hide"} />
 			<Button onClick={onSearchHandler} className="w-40" variant="dark">
 				Пошук
 			</Button>
