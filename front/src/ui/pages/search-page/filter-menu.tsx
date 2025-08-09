@@ -4,16 +4,17 @@ import Accordion from "~/ui/components/accordion/accordion";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
-    appendFilter, ISearchPageState,
-    removeFilter, setArtpieces,
+    appendFilter,
+    removeFilter, setArtpieces, setPriceRange,
     setTitle, setupCurrentPage,
     setupFilterKeysValues, setupPagination, setupPriceRange,
     TFilterKeysValues
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
 import {filterKeys} from "~/types/filter-types/filter";
-import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 import {useSearchPage} from "~/app/[locale]/search/useSearchPage";
+import {Slider} from "~/components/ui/slider";
+import {DualRangeSlider} from "~/components/ui/dual-range-slider";
 
 type Props = {
     className?: string;
@@ -34,6 +35,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         }
         const getInitialFiltersFromUrl = () => {
             dispatch(setTitle(searchParams.get("title") ?? ""));
+            dispatch(setupPagination({...filterState.pagination,current_page : Number(searchParams.get("page")) ?? 1 ,page_size: Number(searchParams.get("page_size")) ?? 10}))
             //get params from current URL
             for (const key of filterKeys) {
                 const filterKeys = searchParams.getAll(key)//get all params that appear in url
@@ -63,15 +65,16 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         return () => clearTimeout(timeoutId);
     }, [filterState.filters]);
     useEffect(() => {
-        const timeoutId = setTimeout(async () => {
+        const getPage = async () => {
             const response = await getSearchPage()
             if (response) {
                 const {artpieces} = response
                 dispatch(setArtpieces(artpieces));
             }
-        }, msDebounceDelay)
-        return () => clearTimeout(timeoutId);
+        }
+        getPage();
     }, [filterState.pagination.current_page]);
+
     return (
         <div className={` ${className}`}>
             <Accordion title={"Категорія"}>
@@ -144,7 +147,18 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                 </div>
             </Accordion>
             <Accordion title={"Ціна"}>
-                <div className={"w-fit"}>hello</div>
+                <div className="px-4 py-2 w-full bg-gray-700">
+                    <DualRangeSlider
+                        className={"w-56 bg-black-1000 rounded-full"}
+                        min={filterState.available_price_range.min_price}
+                        max={filterState.available_price_range.max_price}
+                        step={100}
+                        value={[filterState.filters.price_range_filters.min, filterState.filters.price_range_filters.max]}
+                        onValueChange={([min,max]) => {
+                            dispatch(setPriceRange({min: min, max: max}))
+                        }}
+                    />
+                </div>
             </Accordion>
             <Accordion title={"Матеріал"}>
                 <div>hello</div>

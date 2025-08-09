@@ -30,10 +30,10 @@ export interface IPriceRange {
 export interface ISearchPageState {
     artpieces: TArtPiece[]
     pagination: IPagination
-    price_range: IPriceRange,
+    available_price_range: IPriceRange,
     filters: {
         query: string,
-        price_range: {
+        price_range_filters: {
             min: number,
             max: number
         }
@@ -51,13 +51,13 @@ const initialState: ISearchPageState = {
         has_previous: false,
         page_size: 5
     },
-    price_range: {
+    available_price_range: {
         min_price: 0,
         max_price: 100000,
     },
     filters: {
         query: "",
-        price_range: {
+        price_range_filters: {
             min: 0,
             max: 20000000
         },
@@ -82,8 +82,8 @@ const SearchPageSlice = createSlice({
             state.filters.query = action.payload;
         },
         setPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
-            state.filters.price_range.min = action.payload.min;
-            state.filters.price_range.max = action.payload.max;
+            state.filters.price_range_filters.min = action.payload.min;
+            state.filters.price_range_filters.max = action.payload.max;
         },
         setArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
             state.artpieces = action.payload;
@@ -106,7 +106,7 @@ const SearchPageSlice = createSlice({
             state.pagination = action.payload;
         },
         setupPriceRange: (state, action: PayloadAction<IPriceRange>) => {
-            state.price_range = action.payload;
+            state.available_price_range = action.payload;
         },
         setupCurrentPage: (state, action: PayloadAction<number>) => {
             if (action.payload >= 1) {
