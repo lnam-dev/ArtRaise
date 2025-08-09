@@ -1,11 +1,13 @@
 import React from "react";
 import Image from "next/image";
+
 import { TArtPiece } from "~/types";
+
 import ButtonArrow from "~/ui/components/button/button-arrow";
-import "./card-purchase.scss";
-import Arrow from "~/assets/arrow-right.svg";
-import CardHeart from "./card-heart";
 import Link from "~/bridge/ui/Link";
+import Arrow from "~/assets/arrow-right.svg";
+
+import "./card.scss";
 
 interface CardPurchaseProps {
 	card: TArtPiece;
@@ -25,14 +27,13 @@ const CardPurchase = ({
 		<article className={`card card--${variable}`} {...props}>
 			<figure className={`image image--${variable} group`}>
 				<Image
-					src={card.image_artpiece ?? "/default.png"}
+					src={card.image_artpiece || "/default.png"}
 					alt={card.title}
 					layout="responsive"
 					width={16}
 					height={9}
 					className="object-cover"
 				/>
-				{/* {!isLight && <CardHeart />} */}
 			</figure>
 			<Tag className={`wrapper wrapper--${variable}`} {...prop}>
 				<div className={`description description--${variable}`}>

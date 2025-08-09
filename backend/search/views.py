@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, Min, Max
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
@@ -17,13 +17,12 @@ class ArtPiecePagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100
 
-# Альтернативна версія з використанням django-filter
 class SearchView(APIView):
     renderer_classes = [JSONRenderer]
 
     def get(self, request):
         # Створюємо розширений фільтр для підтримки множинних значень
-        queryset = ArtPiece.objects.select_related('author').all()
+        queryset = ArtPiece.objects.select_related('author', 'category').all()
 
         # Текстовий пошук
         query = request.GET.get("q", "").strip()
@@ -37,7 +36,8 @@ class SearchView(APIView):
         # Обробляємо множинні параметри вручну для більшого контролю
         # Отримуємо всі значення для кожного параметра
         categories = request.GET.getlist("category")
-        types = request.GET.getlist("type") 
+        category_ids = request.GET.getlist("category_id")
+        types = request.GET.getlist("type")  # зворотна сумісність
         materials = request.GET.getlist("material")
         themes = request.GET.getlist("theme")
         styles = request.GET.getlist("style")
@@ -49,10 +49,17 @@ class SearchView(APIView):
 
         # Застосовуємо фільтри якщо є значення
         if categories:
-            queryset = queryset.filter(type__in=categories)
+            queryset = queryset.filter(category__slug__in=categories)
         
-        if types:
-            queryset = queryset.filter(type__in=types)
+        if category_ids:
+            try:
+                category_ids_int = [int(id) for id in category_ids]
+                queryset = queryset.filter(category__id__in=category_ids_int)
+            except ValueError:
+                pass
+        
+        if types:  # зворотна сумісність - працює як category
+            queryset = queryset.filter(category__slug__in=types)
             
         if materials:
             queryset = queryset.filter(material__in=materials)
@@ -64,7 +71,7 @@ class SearchView(APIView):
             queryset = queryset.filter(style__in=styles)
             
         if expression_methods:
-            queryset = queryset.filter(type__in=expression_methods)
+            queryset = queryset.filter(category__slug__in=expression_methods)
             
         if sizes:
             queryset = queryset.filter(format__in=sizes)
@@ -116,6 +123,12 @@ class SearchView(APIView):
 
         queryset = queryset.order_by(sort_field)
 
+        # Вычисляем минимальную и максимальную цену для текущего набора результатов
+        price_stats = queryset.aggregate(
+            min_price=Min('price'),
+            max_price=Max('price')
+        )
+
         # Пагінація
         try:
             page = int(request.GET.get("page", 1))
@@ -145,10 +158,15 @@ class SearchView(APIView):
                 "has_previous": page_obj.has_previous(),
                 "page_size": page_size
             },
+            "price_range": {
+                "min_price": price_stats['min_price'],
+                "max_price": price_stats['max_price']
+            },
             "filters_applied": {
                 "query": query,
                 "categories": categories,
-                "types": types,
+                "category_ids": category_ids,
+                "types": types,  # зворотна сумісність
                 "materials": materials,
                 "themes": themes,
                 "styles": styles,

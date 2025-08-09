@@ -1,13 +1,24 @@
 from rest_framework import serializers
 from django.conf import settings
 from phonenumber_field.serializerfields import PhoneNumberField
-from .models import ArtPiece, ArtPieceBuyForm
+from .models import ArtPiece, ArtPieceBuyForm, Category
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    """Серіалізатор для категорій"""
+    class Meta:
+        model = Category
+        fields = [
+            'id', 'name_en', 'name_ua', 'slug', 'description', 
+            'image_url', 'is_active', 'order'
+        ]
 
 
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
     image_artpiece = serializers.SerializerMethodField()
     creating_date = serializers.SerializerMethodField()
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = ArtPiece
@@ -23,6 +34,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "author",
             "image_artpiece",
             "creating_date",
+            "category",
         ]
 
     def get_author(self, obj):
@@ -61,17 +73,14 @@ class ArtPieceDetailSerializer(ArtPieceSerializer):
     class Meta:
         model = ArtPiece
         fields = ArtPieceSerializer.Meta.fields + [
-            "type",
             "material",
             "theme",
             "format",
             "orientation",
             "gamma",
             "dominant_color",
-            "creating_date",
             "description",
             "certificate",
-            "author",
         ]
 
     def get_author(self, obj):

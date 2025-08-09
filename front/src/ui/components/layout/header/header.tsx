@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "~/bridge/ui/Link";
-import useDevice from "~/ui/hooks/useDevice";
+import useDevice from "~/ui/hooks/useDevice/useDevice";
 import SearchMobile from "~/assets/search-mobile.svg";
 import SearchPC from "~/assets/search-pc.svg";
 import Arrow from "~/assets/arrow-right-mobile-menu.svg";

@@ -5,13 +5,76 @@ from phonenumber_field.modelfields import PhoneNumberField
 from authors.models import Author
 
 
-class ArtPieceType(models.TextChoices):
-    PAINTING = "painting", "живопис"
-    SCULPTURE = "sculpture", "скульптура"
-    GRAPHICS = "graphics", "графіка"
-    ARCHITECTURE = "architecture", "архітектура"
-    APLIED_ART = "aplied_art", "прикладне_мистецтво"
-    DESIGN = "design", "дизайн"
+class Category(models.Model):
+    """
+    Модель для категорій творів мистецтва.
+    Містить локалізацію та додаткову інформацію.
+    """
+    name_en = models.CharField(
+        max_length=100, 
+        unique=True, 
+        verbose_name="Назва англійською",
+        help_text="Англійська назва категорії (для API)"
+    )
+    name_ua = models.CharField(
+        max_length=100, 
+        unique=True, 
+        verbose_name="Назва українською",
+        help_text="Українська назва категорії (для інтерфейсу)"
+    )
+    description = models.TextField(
+        blank=True, 
+        verbose_name="Опис",
+        help_text="Опис категорії"
+    )
+    image_url = models.ImageField(
+        upload_to='categories/', 
+        blank=True, 
+        null=True,
+        verbose_name="Зображення категорії",
+        help_text="Зображення для представлення категорії"
+    )
+    is_active = models.BooleanField(
+        default=True, 
+        verbose_name="Активна",
+        help_text="Чи відображається категорія на сайті"
+    )
+    order = models.PositiveIntegerField(
+        default=0, 
+        verbose_name="Порядок",
+        help_text="Порядок відображення (менше число = вище в списку)"
+    )
+    slug = models.SlugField(
+        max_length=100, 
+        unique=True, 
+        blank=True,
+        verbose_name="Slug",
+        help_text="URL-дружня назва (автоматично генерується)"
+    )
+    
+    # Метадані
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата створення")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата оновлення")
+
+    class Meta:
+        verbose_name = "Категорія"
+        verbose_name_plural = "Категорії"
+        ordering = ['order', 'name_ua']
+        indexes = [
+            models.Index(fields=['is_active']),
+            models.Index(fields=['order']),
+            models.Index(fields=['slug']),
+        ]
+
+    def __str__(self):
+        return f"{self.name_ua} ({self.name_en})"
+    
+    def save(self, *args, **kwargs):
+        # Автоматично генеруємо slug з англійської назви
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.name_en)
+        super().save(*args, **kwargs)
 
 
 class ArtPieceFormat(models.TextChoices):
@@ -34,9 +97,14 @@ class ArtPiece(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)]
     )
-    type = models.CharField(
-        max_length=20,
-        choices=ArtPieceType.choices)
+    # Нове поле категорії (заміна для type)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+        related_name='artpieces',
+        verbose_name="Категорія",
+        help_text="Категорія твору мистецтва"
+    )
     material = models.CharField(max_length=255)
     theme = models.CharField(max_length=255)
     style = models.CharField(max_length=255)
@@ -86,6 +154,9 @@ class ArtPiece(models.Model):
         on_delete=models.CASCADE,
         related_name='artpieces'
     )
+
+    def __str__(self):
+        return self.title
 
 
 

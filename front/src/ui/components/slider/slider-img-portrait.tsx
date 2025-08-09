@@ -1,63 +1,79 @@
 import Image from "next/image";
+import { memo } from "react";
+
 import { TSlide } from "~/types/slider";
-import useDevice from "~/ui/hooks/useDevice";
+
+import SliderButtonExpand from "./slider-button-expand";
+import { TArtPiece } from "~/types/art";
 
 type SliderImgPortraitProps = Pick<TSlide, "imgSrc"> & {
 	index: number;
+	slides: TSlide[];
+	orientation: TArtPiece["orientation"];
 };
 
-const COLUMNS_IMAGES = [
-	["30%", "70%"],
-	["70%", "30%"],
-	["30%", "70%"],
-	["70%", "30%"],
-	["30%", "70%"],
-];
+const GRID_IMAGES_CONFIG = [
+	{
+		containerClass: "relative overflow-hidden",
+		imageClass: "scale-125 origin-top-left",
+	},
+	{
+		containerClass: "relative overflow-hidden md:col-span-2",
+		imageClass: "scale-110 origin-center",
+	},
+	{
+		containerClass: "relative overflow-hidden md:col-span-2",
+		imageClass: "scale-110 origin-bottom-right",
+	},
+	{
+		containerClass: "relative overflow-hidden",
+		imageClass: "scale-130 origin-top-right",
+	},
+] as const;
 
-const SliderImgPortrait = ({ imgSrc, index }: SliderImgPortraitProps) => {
-	const { isDesktop } = useDevice();
-	return (
-		<div className="flex flex-row justify-end gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
-			{
-				<div className="columns-1 sm:columns-2 xl:columns-3 2xl:columns-4 gap-2 md:gap-4 xl:gap-6 w-full display-none sm:display-block">
-					{COLUMNS_IMAGES.map((heights, colIdx) => (
-						<div
-							key={colIdx}
-							className="space-y-2 md:space-y-4 xl:space-y-6 w-full h-full">
-							{heights.map((height, imgIdx) => {
-								return (
-									<figure
-										key={`${colIdx}-${imgIdx}`}
-										className="relative"
-										style={{
-											height,
-										}}>
-										<Image
-											src={imgSrc}
-											alt={`Slide ${index + 1} - ${colIdx}-${imgIdx}`}
-											fill
-											className={`object-cover opacity-30 `}
-											loading="lazy"
-										/>
-									</figure>
-								);
-							})}
-						</div>
+const SliderImgPortrait = memo<SliderImgPortraitProps>(
+	({ imgSrc, index, slides, orientation }) => {
+		const slideAlt = `Slide ${index + 1}`;
+
+		return (
+			<div className="relative flex flex-row gap-2 md:gap-4 xl:gap-6 h-[75vh]">
+				<figure className="flex-shrink-0 h-full relative">
+					<Image
+						src={imgSrc}
+						alt={slideAlt}
+						width={0}
+						height={0}
+						sizes="50vh"
+						className="h-full w-auto object-contain"
+						priority={index === 0}
+					/>
+					<SliderButtonExpand
+						slides={slides}
+						orientation={orientation}
+						className="absolute bottom-0 right-0"
+					/>
+				</figure>
+
+				<div className="grid grid-cols-1 grid-rows-1 md:grid-rows-2 md:grid-cols-3 gap-2 md:gap-4 xl:gap-6 flex-1 h-full">
+					{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
+						<figure
+							key={gridIndex}
+							className={`${config.containerClass} group cursor-pointer ${
+								gridIndex === 1 ? "block" : "hidden md:block"
+							}`}>
+							<Image
+								src={imgSrc}
+								alt={slideAlt}
+								fill
+								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
+								className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out xl:hover:opacity-100 xl:hover:scale-105`}
+							/>
+						</figure>
 					))}
 				</div>
-			}
-			<figure className="flex-grow-[3] flex-shrink-0 w-auto h-auto relative min-w-[40vh] md:min-w-[45vh] lg:min-w-[50vh] lg:max-w-[50%] xl:max-w-[25%]">
-				<Image
-					src={imgSrc}
-					alt={`Slide ${index + 1}`}
-					width={0}
-					height={0}
-					sizes="100vw"
-					className="w-full h-auto"
-					loading="lazy"
-				/>
-			</figure>
-		</div>
-	);
-};
+			</div>
+		);
+	}
+);
+
 export default SliderImgPortrait;

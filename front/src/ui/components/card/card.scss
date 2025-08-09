@@ -84,7 +84,8 @@
 	}
 }
 
-.size {
+.size,
+.text-description {
 	@apply font-fixel font-normal text-4 self-stretch;
 
 	&--light {
