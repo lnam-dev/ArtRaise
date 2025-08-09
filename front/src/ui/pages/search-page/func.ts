@@ -7,8 +7,14 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
     if (object.filters.query) {
         params.append("q", object.filters.query)
     }
-    if (object.filters.price_range.min && object.filters.price_range.max) {
-        params.append("price_range", `${object.filters.price_range.min},${object.filters.price_range.max}`);
+    // if (object.filters.price_range_filters.min && object.filters.price_range_filters.max) {
+    //     params.append("price_range", `${object.filters.price_range_filters.min},${object.filters.price_range_filters.max}`);
+    // }
+    const isAnyCategorySelected = object.filters.category.appliedCategoriesSlugs.length > 0
+    if (isAnyCategorySelected) {
+        object.filters.category.appliedCategoriesSlugs.forEach(slug => {
+            params.append("category", slug);
+        })
     }
 
 
@@ -39,3 +45,22 @@ export const getArtpiecesByQueryParams = async (queryParams: string): Promise<TA
         return []
     }
 }
+//this typeguard if dto from /api/aripieces/categories is correct
+export const dtoObjHasCategoriesWithSlugNameUaCount = (
+    obj: unknown
+): obj is { categories: { slug: string; name_ua: string, count: number }[] } => {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "categories" in obj &&
+        Array.isArray((obj as any).categories) &&
+        (obj as any).categories.every(
+            (cat: any) =>
+                typeof cat === "object" &&
+                cat !== null &&
+                typeof cat.slug === "string" &&
+                typeof cat.count === "number" &&
+                typeof cat.name_ua === "string"
+        )
+    );
+};

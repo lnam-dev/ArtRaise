@@ -4,17 +4,18 @@ import Accordion from "~/ui/components/accordion/accordion";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
-    appendFilter,
-    removeFilter, setArtpieces, setPriceRange,
-    setTitle, setupCurrentPage,
-    setupFilterKeysValues, setupPagination, setupPriceRange,
-    TFilterKeysValues
+    appendFilter, appendSelectedCategoriesSlug,
+    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setPriceRange,
+    setTitle, setupCategoriesKeys, setupCurrentPage,
+    setupFilterKeysCounts, setupPagination, setupPriceRange, TFilterCategoryKeyCount,
+    TFilterKeysCounts
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchParams} from "next/navigation";
 import {filterKeys} from "~/types/filter-types/filter";
 import {useSearchPage} from "~/app/[locale]/search/useSearchPage";
 import {Slider} from "~/components/ui/slider";
 import {DualRangeSlider} from "~/components/ui/dual-range-slider";
+import {dtoObjHasCategoriesWithSlugNameUaCount} from "~/ui/pages/search-page/func";
 
 type Props = {
     className?: string;
@@ -29,8 +30,15 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     useEffect(() => {
         const setupCountOfEachFilter = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
-            if (response.ok) {
-                dispatch(setupFilterKeysValues(await response.json() as TFilterKeysValues));
+            const categoryResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/categories/`);
+            if (response.ok && categoryResponse.ok) {
+                const keyValues : TFilterKeysCounts = await response.json() as TFilterKeysCounts;
+                const categoriesDto = await categoryResponse.json();
+                if(dtoObjHasCategoriesWithSlugNameUaCount(categoriesDto)) {
+                    const categories : TFilterCategoryKeyCount[] =  categoriesDto.categories.map((category) => ({slug: category.slug, name: category.name_ua, count: category.count})).filter(category => category.count > 0);
+                    dispatch(setupCategoriesKeys(categories))
+                    dispatch(setupFilterKeysCounts(keyValues));
+                }
             }
         }
         const getInitialFiltersFromUrl = () => {
@@ -80,13 +88,13 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Категорія"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        filterState.filters.filterKeysValues.type.map((filter) => {
-                            const isSelected = filterState.filters.type.includes(filter.name);
+                        filterState.filters.category.categoryKeysCounts.map((filter) => {
+                            const isSelected = filterState.filters.category.appliedCategoriesSlugs.includes(filter.slug);
                             const handleOnClick = () => {
                                 if (!isSelected) {
-                                    dispatch(appendFilter({filterKey: 'type', filterValue: filter.name}))
+                                    dispatch(appendSelectedCategoriesSlug({slug: filter.slug}));
                                 } else {
-                                    dispatch(removeFilter({filterKey: 'type', filterValue: filter.name}))
+                                    dispatch(removeSelectedCategoriesSlug({slug: filter.slug}));
                                 }
                             }
                             return (
@@ -103,7 +111,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Стиль"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        filterState.filters.filterKeysValues.style.map((filter) => {
+                        filterState.filters.filterKeysCounts.style.map((filter) => {
                             const isSelected = filterState.filters.style.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
@@ -126,7 +134,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Тема"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        filterState.filters.filterKeysValues.theme.map((filter) => {
+                        filterState.filters.filterKeysCounts.theme.map((filter) => {
                             const isSelected = filterState.filters.theme.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {

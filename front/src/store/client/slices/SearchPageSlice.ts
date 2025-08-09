@@ -6,11 +6,14 @@ import {TArtPiece} from "~/types";
 export type TFilterFields = {
     [key in TFilterKeys]: string[]
 }
-export type TFilterKeysValues = {
-    [key in TFilterKeys]: {
-        count: number,
-        name: string,
-    }[]
+
+type TFilterKeyCount = {
+    count: number;
+    name: string;
+}
+
+export type TFilterKeysCounts = {
+    [key in TFilterKeys]: TFilterKeyCount[]
 }
 
 export interface IPagination {
@@ -22,10 +25,13 @@ export interface IPagination {
     page_size: number
 }
 
+export type TFilterCategoryKeyCount = TFilterKeyCount & { slug: string }
+
 export interface IPriceRange {
     min_price: number
     max_price: number
 }
+
 
 export interface ISearchPageState {
     artpieces: TArtPiece[]
@@ -33,11 +39,15 @@ export interface ISearchPageState {
     available_price_range: IPriceRange,
     filters: {
         query: string,
+        category: {
+            appliedCategoriesSlugs: string[],
+            categoryKeysCounts: TFilterCategoryKeyCount[],
+        }
         price_range_filters: {
             min: number,
             max: number
         }
-        filterKeysValues: TFilterKeysValues
+        filterKeysCounts: TFilterKeysCounts
     } & TFilterFields,
 }
 
@@ -61,12 +71,14 @@ const initialState: ISearchPageState = {
             min: 0,
             max: 20000000
         },
-        type: [],
         material: [],
         style: [],
         theme: [],
-        filterKeysValues: {
-            type: [],
+        category: {
+            appliedCategoriesSlugs: [],
+            categoryKeysCounts: [],
+        },
+        filterKeysCounts: {
             material: [],
             style: [],
             theme: [],
@@ -99,8 +111,8 @@ const SearchPageSlice = createSlice({
             const modifiedArray = Array.from(state.filters[filterKey]);
             state.filters[filterKey] = modifiedArray.filter(filterVal => filterVal !== filterValue);
         },
-        setupFilterKeysValues: (state, action: PayloadAction<TFilterKeysValues>) => {
-            state.filters.filterKeysValues = action.payload;
+        setupFilterKeysCounts: (state, action: PayloadAction<TFilterKeysCounts>) => {
+            state.filters.filterKeysCounts = action.payload;
         },
         setupPagination: (state, action: PayloadAction<IPagination>) => {
             state.pagination = action.payload;
@@ -113,10 +125,27 @@ const SearchPageSlice = createSlice({
                 state.pagination.current_page = action.payload;
             }
         },
+        setupCategoriesKeys: (state, action: PayloadAction<TFilterCategoryKeyCount[]>) => {
+            state.filters.category.categoryKeysCounts = action.payload;
+        },
+        appendSelectedCategoriesSlug: (state, action: PayloadAction<{ slug: string }>) => {
+            const {slug} = action.payload;
+            const modifiedArray = Array.from(state.filters.category.appliedCategoriesSlugs);
+            modifiedArray.push(slug);
+            state.filters.category.appliedCategoriesSlugs = modifiedArray;
+        },
+        removeSelectedCategoriesSlug: (state, action: PayloadAction<{ slug: string }>) => {
+            const {slug} = action.payload;
+            const modifiedArray = Array.from(state.filters.category.appliedCategoriesSlugs).filter(s => s !== slug);;
+            state.filters.category.appliedCategoriesSlugs = modifiedArray;
+        },
     }
 })
 
 export const {
+    removeSelectedCategoriesSlug,
+    appendSelectedCategoriesSlug,
+    setupCategoriesKeys,
     setTitle,
     setPriceRange,
     setArtpieces,
@@ -124,7 +153,7 @@ export const {
     setupPriceRange,
     appendFilter,
     removeFilter,
-    setupFilterKeysValues,
+    setupFilterKeysCounts,
     setupPagination
 } = SearchPageSlice.actions;
 export default SearchPageSlice.reducer;
