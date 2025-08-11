@@ -91,6 +91,8 @@ INSTALLED_APPS = [
     'events',
     'users',
     'faq',
+    'slider',
+    'howtobuy',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',

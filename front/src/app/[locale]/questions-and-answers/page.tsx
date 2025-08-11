@@ -3,7 +3,6 @@ import { TAuthor } from "~/types";
 import AuthorsPage from "~/ui/pages/authors-page/authors-page";
 import { MOCKED_QADATA, TQAPage } from "~/use-cases/contracts/qa-page";
 import QAPage from "~/ui/pages/qa-page/qa-page";
-import "~/styles/bg-light.css";
 
 const getQAdata = async (): Promise<TQAPage> => {
 	try {

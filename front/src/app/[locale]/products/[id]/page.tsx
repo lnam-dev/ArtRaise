@@ -1,7 +1,11 @@
 import { TArtPiece } from "~/types";
-import { TAccordion } from "~/types/accordion";
-import { TParams } from "~/types/params";
 import ProductPage from "~/ui/pages/product-page/product-page";
+
+export type TParams = {
+	params: Promise<{
+		id: string;
+	}>;
+};
 
 const ACCORDION_ITEMS = [
 	{ title: "Умови придбання", content: "Інформація про умови придбання" },

@@ -8,13 +8,16 @@ from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceB
 from .filters import ArtPieceFilter
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import ArtPiece
+from .models import ArtPiece, Category
 from django.db.models import Count
+from django.core.cache import cache
+from django.utils import timezone
+from django.utils import timezone
 
 
 class ArtPieceViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
-    queryset = ArtPiece.objects.all().select_related('author')  # Оптимізація запитів через select_related
+    queryset = ArtPiece.objects.all().select_related('author', 'category')  # Оптимізація запитів через select_related
     filter_backends = (DjangoFilterBackend, OrderingFilter)
     filterset_class = ArtPieceFilter
     ordering_fields = ['price', 'creating_date_start', 'title']
@@ -75,17 +78,73 @@ class ArtPieceStatsView(APIView):
         def to_array(queryset, field_name):
             return [{"name": item[field_name], "count": item["count"]} for item in queryset]
 
-        type_counts = ArtPiece.objects.values('type').annotate(count=Count('id')).order_by()
+        # Заміняємо type на category
+        category_counts = ArtPiece.objects.values('category__name_ua').annotate(count=Count('id')).order_by()
         style_counts = ArtPiece.objects.values('style').annotate(count=Count('id')).order_by()
         theme_counts = ArtPiece.objects.values('theme').annotate(count=Count('id')).order_by()
         material_counts = ArtPiece.objects.values('material').annotate(count=Count('id')).order_by()
         dominant_color_counts = ArtPiece.objects.values('dominant_color').annotate(count=Count('id')).order_by()
 
         data = {
-            "type": to_array(type_counts, 'type'),
+            "category": to_array(category_counts, 'category__name_ua'),
             "style": to_array(style_counts, 'style'),
             "theme": to_array(theme_counts, 'theme'),
             "material": to_array(material_counts, 'material'),
             "dominant_color": to_array(dominant_color_counts, 'dominant_color'),
         }
         return Response(data)
+
+
+class ArtPieceCategoriesView(APIView):
+    """
+    Endpoint для отримання всіх категорій artpieces
+    з українською та англійською локалізацією, включаючи лічильники використання.
+    """
+    
+    def get(self, request):
+        # Перевіряємо кэш
+        cache_key = 'artpiece_categories'
+        cached_data = cache.get(cache_key)
+        
+        if cached_data:
+            return Response(cached_data)
+
+        # Отримуємо активні категорії з лічильниками artpieces
+        categories = Category.objects.filter(is_active=True).annotate(
+            count=Count('artpieces')
+        ).order_by('order')
+
+        # Формуємо відповідь
+        categories_data = []
+        
+        for category in categories:
+            category_data = {
+                'id': category.id,
+                'slug': category.slug,
+                'name_en': category.name_en,        # Англійська назва
+                'name_ua': category.name_ua,        # Українська назва
+                'description': category.description,
+                'image_url': category.image_url.url if category.image_url else None,
+                'count': category.count,            # Кількість artpieces в категорії
+                'is_available': category.count > 0  # Є artpieces в категорії
+            }
+            categories_data.append(category_data)
+        
+        # Статистика
+        total_artpieces = ArtPiece.objects.count()
+        available_categories = len([cat for cat in categories_data if cat['is_available']])
+        
+        response_data = {
+            'categories': categories_data,
+            'meta': {
+                'total_categories': len(categories_data),
+                'available_categories': available_categories,
+                'total_artpieces': total_artpieces,
+                'cache_generated_at': timezone.now().isoformat()
+            }
+        }
+
+        # Кешуємо на 1 годину (3600 секунд)
+        cache.set(cache_key, response_data, 3600)
+        
+        return Response(response_data)

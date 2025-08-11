@@ -3,7 +3,6 @@ import AuthorsFilterMenu from "~/ui/components/authors/authors-filtermenu/Author
 import { TAuthorsPage } from "~/use-cases/contracts/authors-page";
 import AuthorsMapper from "~/ui/pages/authors-page/authors-mapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
-import "~/styles/bg-light.css";
 
 const AuthorsPage: FC<TAuthorsPage> = ({ authors }) => {
 	return (

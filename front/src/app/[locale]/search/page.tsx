@@ -1,38 +1,20 @@
 "use client"
-import React, {useEffect} from 'react';
+import React from 'react';
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import SearchPageInput from "~/ui/pages/search-page/search-page-input";
-import {TArtPiece} from "~/types";
-import CardPurchase from "~/ui/components/card-purchase/card-purchase";
 import FilterMenu from "~/ui/pages/search-page/filter-menu";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import LinkBackTo from "~/ui/components/link/link-back-to";
-import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
-import {useRouter, useSearchParams} from "next/navigation";
-import {getArtpiecesByQueryParams, getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
-import {setupDisplayedArtpieces} from "~/store/client/slices/SearchPageSlice";
-import Button from "~/ui/components/button/button";
+import { useAppSelector} from "~/store/client/hooks";
 import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
+import {SearchPagination} from "~/app/[locale]/search/SearchPagination";
+import CardPurchase from "~/ui/components/card/card-purchase";
 
 export default function Page() {
-    const filterState = useAppSelector(state => state.searchPageReducer)
-    const artpieces = filterState.displayArtpieces;
-    const isArtpiecesNotEmpty = filterState.displayArtpieces.length !== 0;
-    const searchParams = useSearchParams();
-    const dispatch = useAppDispatch();
-    const router = useRouter();
-    useEffect(() => {
-        const setupArtpieces = async () => {
-            const arpieces: TArtPiece[] = await getArtpiecesByQueryParams(searchParams.toString());
-            dispatch(setupDisplayedArtpieces(arpieces));
-        }
-        setupArtpieces();
-        console.log(searchParams)
-    }, [searchParams]);
-    useEffect(() => {
-
-    })
+    const searchPageState = useAppSelector(state => state.searchPageReducer)
+    const {artpieces} = searchPageState;
+    const isArtpiecesNotEmpty = searchPageState.artpieces.length !== 0;
     return (
         <div
             className={
@@ -49,8 +31,8 @@ export default function Page() {
             {/*<FilterMapper className={"col-span-full"}/>*/}
             <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
-                <Button className={"w-full my-3"}
-                        onClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(filterState)}`)}>{`Застосувати фільтр ( ${filterState.previewArtPiecesCount} )`}</Button>
+                {/*<Button className={"w-full my-3 text-nowrap"}*/}
+                {/*        onClick={() => }>{`Застосувати фільтр ( ${searchPageState.pagination.total_items} )`}</Button>*/}
                 <FilterMenu/>
             </aside>
             <main className={"md:col-start-2 md:col-end-[-1] col-span-full"}>
@@ -69,8 +51,8 @@ export default function Page() {
                         </div>
                     </div>
                 }
+            <SearchPagination/>
             </main>
-
 
         </div>
     );

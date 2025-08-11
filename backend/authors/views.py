@@ -21,7 +21,7 @@ class AuthorViewSet(ModelViewSet):
     @action(detail=True, methods=['get'])
     def artpieces(self, request, pk=None):
         author = self.get_object()
-        artpieces = author.artpieces.all()
+        artpieces = author.artpieces.select_related('category').all()
         serializer = ArtPieceDetailSerializer(artpieces, many=True)
         return Response(serializer.data)
 
