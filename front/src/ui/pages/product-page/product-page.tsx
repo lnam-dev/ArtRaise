@@ -99,8 +99,10 @@ function ProductPage({ artPiece, ACCORDION_ITEMS }: TProductPage) {
 				ref={contentRef}>
 				<div className="pt-6">
 					<BreadcrumbsWrapper activeIndex={2} className="mb-3">
-						<BreadcrumbsLink>Категорії</BreadcrumbsLink>
-						<BreadcrumbsLink>Живопис</BreadcrumbsLink>
+						<BreadcrumbsLink to="/categories">Категорії</BreadcrumbsLink>
+						<BreadcrumbsLink to={`/categories/${artPiece.category.slug}`}>
+							{artPiece.category.name_ua}
+						</BreadcrumbsLink>
 						<BreadcrumbsLink>{artPiece.title}</BreadcrumbsLink>
 					</BreadcrumbsWrapper>
 					<LinkBackTo path="/" className="mb-8">

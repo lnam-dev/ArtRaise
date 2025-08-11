@@ -2,6 +2,7 @@ import { CategoriesPage as TCategoriesPage } from "~/use-cases/contracts/categor
 
 import CategoriesSearchWrapper from "./search/categories-search-wrapper";
 import CardCategories from "~/ui/components/card/card-categories";
+import SearchInput from "../../components/search-bar/search-input";
 
 const CategoriesPage = ({ newArrivals, categories }: TCategoriesPage) => {
 	return (
@@ -10,22 +11,18 @@ const CategoriesPage = ({ newArrivals, categories }: TCategoriesPage) => {
 				<h1 className="font-namu font-medium text-6 xl:text-8 text-black leading-none ">
 					Категорії
 				</h1>
-				<CategoriesSearchWrapper />
+				<SearchInput />
 			</div>
 			<section className="columns-1 gap-6 sm:columns-2 xl:columns-4">
 				{newArrivals.map((arrivals) => (
 					<CardCategories
-						key={arrivals.label_en}
+						key={arrivals.id}
 						card={arrivals}
 						className="w-full mb-12 xl:mb-0 xl:break-after-column xl:sticky xl:top-[5rem]"
 					/>
 				))}
 				{categories.map((category) => (
-					<CardCategories
-						key={category.label_en}
-						card={category}
-						className="mb-12"
-					/>
+					<CardCategories key={category.id} card={category} className="mb-12" />
 				))}
 			</section>
 		</main>

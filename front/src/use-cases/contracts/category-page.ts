@@ -3,5 +3,4 @@ import { TArtPiece } from "~/types/art";
 
 export type CategoryPage = {
 	artPieces: TArtPiece[];
-	category: string;
 };
