@@ -11,6 +11,8 @@ type TFilterKeyCount = {
     count: number;
     name: string;
 }
+type TSortDirection = 'asc' | 'desc';
+type TSortBy = 'title' | 'price' | 'date' | 'author'
 
 export type TFilterKeysCounts = {
     [key in TFilterKeys]: TFilterKeyCount[]
@@ -31,12 +33,17 @@ export interface IPriceRange {
     min_price: number
     max_price: number
 }
+export interface ISort {
+    sort_by: TSortBy,
+    sort_direction: TSortDirection,
+}
 
 
 export interface ISearchPageState {
     artpieces: TArtPiece[]
     pagination: IPagination
     available_price_range: IPriceRange,
+    sort: ISort,
     filters: {
         query: string,
         category: {
@@ -64,6 +71,10 @@ const initialState: ISearchPageState = {
     available_price_range: {
         min_price: 0,
         max_price: 100000,
+    },
+    sort: {
+        sort_by: "date",
+        sort_direction: "desc",
     },
     filters: {
         query: "",
@@ -120,6 +131,9 @@ const SearchPageSlice = createSlice({
         setupPriceRange: (state, action: PayloadAction<IPriceRange>) => {
             state.available_price_range = action.payload;
         },
+        setSort: (state, action: PayloadAction<ISort>) => {
+            state.sort = action.payload;
+        },
         setupCurrentPage: (state, action: PayloadAction<number>) => {
             if (action.payload >= 1) {
                 state.pagination.current_page = action.payload;
@@ -143,6 +157,7 @@ const SearchPageSlice = createSlice({
 })
 
 export const {
+    setSort,
     removeSelectedCategoriesSlug,
     appendSelectedCategoriesSlug,
     setupCategoriesKeys,
