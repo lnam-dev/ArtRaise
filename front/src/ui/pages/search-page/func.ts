@@ -16,6 +16,10 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
             params.append("category", slug);
         })
     }
+    if(object.sort) {
+        params.append("sort_by", object.sort.sort_by)
+        params.append("sort_direction", object.sort.sort_direction)
+    }
 
 
     for (const key of filterKeys) {

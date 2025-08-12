@@ -5,7 +5,8 @@ import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
     appendFilter, appendSelectedCategoriesSlug,
-    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setSelectedPriceRange,
+    ISort,
+    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setSelectedPriceRange, setSort,
     setTitle, setupCategoriesKeys, setupCurrentPage,
     setupFilterKeysCounts, setupPagination, setupPriceRange, TFilterCategoryKeyCount,
     TFilterKeysCounts
@@ -16,6 +17,7 @@ import {useSearchPage} from "~/app/[locale]/search/useSearchPage";
 import {Slider} from "~/components/ui/slider";
 import {DualRangeSlider} from "~/components/ui/dual-range-slider";
 import {dtoObjHasCategoriesWithSlugNameUaCount} from "~/ui/pages/search-page/func";
+import SearchpageSortSelector from "~/ui/pages/search-page/searchpage-sort-selector";
 
 type Props = {
     className?: string;
@@ -46,6 +48,8 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         const getInitialFiltersFromUrl = () => {
             dispatch(setTitle(searchParams.get("title") ?? ""));
             dispatch(setupPagination({...filterState.pagination,current_page : Number(searchParams.get("page")) ?? 1 ,page_size: Number(searchParams.get("page_size")) ?? 10}))
+            //setup init sort values
+            if(searchParams.get("sort_direction") && searchParams.get("sort_by")) dispatch(setSort({sort_direction: searchParams.get("sort_direction"), sort_by: searchParams.get("sort_by")} as ISort))
             //get params from current URL
             for (const key of filterKeys) {
                 const filterKeys = searchParams.getAll(key)//get all params that appear in url
@@ -59,7 +63,6 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         }
         setupCountOfEachFilter()
         getInitialFiltersFromUrl();
-        //TODO price
     }, []);
     useEffect(() => {
         dispatch(setupCurrentPage(1));
@@ -73,7 +76,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             }
         }, msDebounceDelay)
         return () => clearTimeout(timeoutId);
-    }, [filterState.filters]);
+    }, [filterState.filters, filterState.sort]);
     useEffect(() => {
         const getPage = async () => {
             const response = await getSearchPage()
@@ -87,6 +90,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
 
     return (
         <div className={` ${className}`}>
+            <span className={"hidden md:block"}><SearchpageSortSelector/></span>
             <Accordion title={"Категорія"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
