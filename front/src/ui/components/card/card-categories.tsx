@@ -52,7 +52,6 @@ const CardCategories = ({
 						{validationDescription}
 					</p>
 					<ButtonArrow
-						ca
 						href={isAvailable ? `categories/${card.slug}` : ""}
 						className="w-full"
 						variant={isAvailable ? variant : "disabled"}>
