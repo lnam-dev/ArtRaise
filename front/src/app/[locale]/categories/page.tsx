@@ -1,13 +1,14 @@
 import { TCategory } from "~/types/categories";
-import { CategoriesPage as TCategoriesPage } from "~/use-cases/contracts/categories-page";
 import CategoriesPage from "~/ui/pages/categories-page/categories-page";
 
 const NEW_ARRIVALS: TCategory[] = [
 	{
+		id: 1,
+		slug: "new-arrivals",
 		image_url: "/default.png",
-		value: "New Arrivals",
-		label_en: "New Arrivals",
-		label_ua: "Нові надходження",
+		description: "New Arrivals",
+		name_en: "New Arrivals",
+		name_ua: "Нові надходження",
 		count: 24,
 		is_available: true,
 	},

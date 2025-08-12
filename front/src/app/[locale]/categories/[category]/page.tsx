@@ -32,5 +32,5 @@ export default async ({ params }: TParams) => {
 	const { category } = await params;
 	const artPieces = await getData(category);
 
-	return <CategoryPage category={category} artPieces={artPieces} />;
+	return <CategoryPage artPieces={artPieces} />;
 };

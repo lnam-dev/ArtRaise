@@ -6,10 +6,12 @@ export interface TNewArrival {
 }
 
 export interface TCategory {
+	id: number;
 	image_url?: string;
-	value: string;
-	label_en: string;
-	label_ua: string;
+	description: string;
+	name_en: string;
+	name_ua: string;
+	slug: string;
 	count: number;
 	is_available: boolean;
 }

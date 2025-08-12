@@ -26,6 +26,14 @@ const nextConfig = withNextIntl({
 	images: {
 		remotePatterns: [
 			{
+				protocol: "https",
+				hostname: "artraise-media.fra1.digitaloceanspaces.com",
+			},
+			{
+				protocol: "https",
+				hostname: "artraise-media.fra1.cdn.digitaloceanspaces.com",
+			},
+			{
 				protocol: "http",
 				hostname: "localhost",
 			},
@@ -33,11 +41,8 @@ const nextConfig = withNextIntl({
 				protocol: "https",
 				hostname: "artraise-dev-pidyo.ondigitalocean.app",
 			},
-			{
-				protocol: "https",
-				hostname: "artraise-media.fra1.cdn.digitaloceanspaces.com",
-			},
 		],
+		formats: ["image/avif", "image/webp"],
 	},
 	devIndicators: {
 		allowedDevOrigins: ["http://192.168.31.88:3000", "http://localhost:3000"],

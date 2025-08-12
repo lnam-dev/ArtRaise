@@ -34,6 +34,11 @@ export type TArtPiece = {
 		bio_text: string;
 		image_author: string;
 	};
+	category: {
+		name_en: string;
+		name_ua: string;
+		slug: string;
+	};
 };
 
 type TEventAuthor = Pick<TAuthor, "id" | "fullname"> & {
