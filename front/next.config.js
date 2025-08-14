@@ -3,8 +3,30 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
+	experimental: {
+		optimizePackageImports: [
+			"lodash",
+			"lucide-react",
+			"@radix-ui/react-slider",
+			"@gsap/react",
+			"gsap",
+			"swiper",
+			"formik",
+			"yup",
+			"@reduxjs/toolkit",
+			"redux-persist",
+		],
+	},
 	webpack(config) {
 		config.resolve.symlinks = false;
+
+		// Файловий кеш для прискорення повторних білдів
+		config.cache = {
+			type: "filesystem",
+			buildDependencies: {
+				config: [__filename],
+			},
+		};
 
 		// Видаляємо старі svg rule (якщо є)
 		config.module.rules = config.module.rules.filter((rule) => {

@@ -15,14 +15,22 @@ const NEW_ARRIVALS: TCategory[] = [
 ];
 
 export const revalidate = 21600;
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 async function getData(): Promise<TCategory[]> {
 	try {
-		const response = await fetch(`${process.env.API_URL}artpieces/categories/`);
+		const response = await fetch(
+			`${process.env.API_URL}artpieces/categories/`,
+			{
+				next: { revalidate: revalidate },
+				cache: "force-cache",
+			} as any
+		);
+
 		if (!response.ok) {
 			throw new Error(`Failed to fetch categories: ${response.status}`);
 		}
+
 		const { categories }: { categories: TCategory[] } = await response.json();
 		return categories;
 	} catch (error) {
