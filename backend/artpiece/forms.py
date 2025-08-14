@@ -1,18 +1,25 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminModelForm
-from .models import ArtPiece
+from .models import ArtPiece, Tag
 
 
 class ArtPieceForm(WagtailAdminModelForm):
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.filter(is_active=True),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        help_text="Оберіть теги для твору мистецтва (максимум 5 тегів)"
+    )
+    
     class Meta:
         model = ArtPiece
-        # Явно вказуємо всі поля ОКРІМ creating_date_end - замінюємо type на category
+        # Включаємо поле tags
         fields = [
             'title', 'price', 'category', 'material', 'theme', 'style',
             'length_cm', 'width_cm', 'height_cm', 'format', 'orientation',
             'gamma', 'dominant_color', 'creating_date_start', 'description',
-            'certificate', 'image_artpiece', 'author'
+            'certificate', 'image_artpiece', 'author', 'tags'
         ]
 
     def clean_creating_date_start(self):
@@ -35,6 +42,15 @@ class ArtPieceForm(WagtailAdminModelForm):
         
         return creating_date_start
 
+    def clean_tags(self):
+        """
+        Валідація для тегів - максимум 5 тегів
+        """
+        tags = self.cleaned_data.get('tags')
+        if tags and len(tags) > 5:
+            raise ValidationError('Артпіс може мати максимум 5 тегів')
+        return tags
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         
@@ -44,5 +60,7 @@ class ArtPieceForm(WagtailAdminModelForm):
             
         if commit:
             instance.save()
+            # Зберігаємо теги після збереження об'єкта
+            self.save_m2m()
             
         return instance

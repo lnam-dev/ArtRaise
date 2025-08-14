@@ -1,5 +1,5 @@
 import django_filters
-from .models import ArtPiece, Category
+from .models import ArtPiece, Category, Tag
 from authors.models import Author
 
 # Заготовка під множинне значення через кому
@@ -31,6 +31,9 @@ class ArtPieceFilter(django_filters.FilterSet):
     # Автор
     author = django_filters.CharFilter(field_name="author__fullname", lookup_expr="icontains")
 
+    # Теги
+    tag = django_filters.CharFilter(field_name="tags__slug", lookup_expr="exact")
+
     # Додаткові фільтри
     orientation = CharInFilter(field_name="orientation", lookup_expr="in")
     gamma = CharInFilter(field_name="gamma", lookup_expr="in")
@@ -51,8 +54,8 @@ class ArtPieceFilter(django_filters.FilterSet):
         model = ArtPiece
         fields = [
             'title', 'price_min', 'price_max', 'price_range',
-            'category', 'type', 'material', 'theme', 'style',
-            'expression_method', 'size', 'color', 'author',
+            'category', 'type', 'category_id', 'material', 'theme', 'style',
+            'expression_method', 'size', 'color', 'author', 'tag',
             'orientation', 'gamma',
             'length_min', 'length_max', 'width_min', 'width_max', 'height_min', 'height_max',
             'creating_date_start_min', 'creating_date_start_max'
