@@ -15,7 +15,11 @@ export const dynamic = "force-dynamic";
 async function getData(category: string): Promise<TArtPiece[]> {
 	try {
 		const response = await fetch(
-			`${process.env.API_URL}search?type=${category}`
+			`${process.env.API_URL}search?type=${category}`,
+			{
+				next: { revalidate: revalidate },
+				cache: "force-cache",
+			} as any
 		);
 		if (!response.ok) {
 			throw new Error(`Failed to fetch artpieces: ${response.status}`);
@@ -24,6 +28,31 @@ async function getData(category: string): Promise<TArtPiece[]> {
 		return results;
 	} catch (error) {
 		console.error(`Помилка при завантаженні арт-об'єктів: ${error}`);
+		return [];
+	}
+}
+
+export async function generateStaticParams() {
+	try {
+		const response = await fetch(
+			`${process.env.API_URL}artpieces/categories/`,
+			{
+				next: { revalidate: revalidate },
+				cache: "force-cache",
+			} as any
+		);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch categories: ${response.status}`);
+		}
+
+		const { categories }: { categories: { slug: string }[] } =
+			await response.json();
+
+		return categories.map((category) => ({
+			category: category.slug,
+		}));
+	} catch (error) {
+		console.error(`Помилка при генерації статичних маршрутів: ${error}`);
 		return [];
 	}
 }
