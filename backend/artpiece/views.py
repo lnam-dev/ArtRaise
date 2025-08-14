@@ -4,11 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework import status
-from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceBuyFormSerializer
+from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceBuyFormSerializer, TagSerializer
 from .filters import ArtPieceFilter
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import ArtPiece, Category
+from .models import ArtPiece, Category, Tag
 from django.db.models import Count
 from django.core.cache import cache
 from django.utils import timezone
@@ -140,6 +140,43 @@ class ArtPieceCategoriesView(APIView):
                 'total_categories': len(categories_data),
                 'available_categories': available_categories,
                 'total_artpieces': total_artpieces,
+                'cache_generated_at': timezone.now().isoformat()
+            }
+        }
+
+        # Кешуємо на 1 годину (3600 секунд)
+        cache.set(cache_key, response_data, 3600)
+        
+        return Response(response_data)
+
+
+class TagsAPIView(APIView):
+    """
+    API для отримання списку всіх активних тегів з підрахунком кількості творів
+    """
+    
+    def get(self, request):
+        # Кеш ключ
+        cache_key = 'artpieces_tags_api'
+        
+        # Спробуємо отримати з кешу
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return Response(cached_data)
+
+        # Отримуємо тільки активні теги з підрахунком artpieces
+        tags = Tag.objects.filter(is_active=True).annotate(
+            artpieces_count=Count('artpieces')
+        ).order_by('priority', 'name')
+
+        # Серіалізуємо дані
+        serializer = TagSerializer(tags, many=True)
+        
+        # Формуємо відповідь
+        response_data = {
+            'tags': serializer.data,
+            'meta': {
+                'total_tags': tags.count(),
                 'cache_generated_at': timezone.now().isoformat()
             }
         }
