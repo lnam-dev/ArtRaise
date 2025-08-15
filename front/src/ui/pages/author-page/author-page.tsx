@@ -22,7 +22,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 					"font-namu mt-20 grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
 				}>
 				<aside
-					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit"}>
+					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit mt-auto"}>
 					<ImageWithFallback
 						className="h-auto w-full object-cover max-h-[40vh] object-center"
 						src={author.image_author}
@@ -31,7 +31,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 					/>
 					<div
 						className={
-							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white "
+							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white pr-2.5 "
 						}>
 						<h1
 							className={
@@ -47,7 +47,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 							className={"font-thin text-black text-8 hidden md:block w-full"}>
 							<h2 className={""}>Біографія</h2>
 							<p className={"text-4 text-black/50"}>
-								{truncateText(author?.bio_text, 100)}
+								{author.bio_text}
 							</p>
 						</div>
 					</div>
