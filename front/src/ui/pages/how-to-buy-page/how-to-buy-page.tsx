@@ -22,14 +22,14 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({steps}) => {
             <h1 className={"response-text-8 md:font-medium font-namu my-10 font-bold"}>Як купити?</h1>
             <aside className={" response-text-6 font md:col-span-1 hidden md:inline"}>
                 {
-                    steps.map((step, index) => (<p key={index} onClick={handleScrollToStep(index)} className={`py-2`}>{step.title}</p>))
+                    steps.map((step, index) => (<p key={index} onClick={handleScrollToStep(index)} className={`py-2 cursor-pointer`}>{step.title}</p>))
                 }
             </aside>
             </div>
             <ul className={"flex flex-col response-text-6 md:col-span-2 gap-6 md:pt-32"}>
                 {
                     steps.map((step, index) => (
-                        <li key={index} ref={ (elem) => {stepRefs.current[index] = elem}} className={`scroll-mt-52 flex flex-col relative`}>
+                        <li key={index} ref={ (elem) => {stepRefs.current[index] = elem}} className={`scroll-mt-52 flex flex-col relative `}>
                             <p className={"response-text-8 pb-3 md:pb-6"}>{step.title}</p>
                             <p className={"response-text-6 opacity-80 font-fixel pb-4"}>{step.description}</p>
                             <UnderLine className={"bg"}/>
