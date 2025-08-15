@@ -15,7 +15,7 @@ interface SliderWrapperProps {
 const SliderWrapper: FC<SliderWrapperProps> = ({ artPiece, ...props }) => {
 	const slides: TSlide[] = [
 		{
-			imgSrc: artPiece.image_artpiece,
+			image_url: artPiece.image_artpiece,
 			title: artPiece.title,
 		},
 	];

@@ -6,7 +6,7 @@ import { TSlide } from "~/types/slider";
 import SliderButtonExpand from "./slider-button-expand";
 import { TArtPiece } from "~/types/art";
 
-type SliderImgLandscapeProps = Pick<TSlide, "imgSrc"> & {
+type SliderImgLandscapeProps = Pick<TSlide, "image_url"> & {
 	index: number;
 	slides: TSlide[];
 	orientation: TArtPiece["orientation"];
@@ -24,14 +24,14 @@ const GRID_IMAGES_CONFIG = [
 ] as const;
 
 const SliderImgLandscape = memo<SliderImgLandscapeProps>(
-	({ imgSrc, index, slides, orientation }) => {
+	({ image_url, index, slides, orientation }) => {
 		const slideAlt = `Slide ${index + 1}`;
 
 		return (
 			<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh]">
 				<figure className="flex-shrink-0 h-auto w-full lg:w-[70%] xl:w-[60%] 2xl:w-[55%] relative">
 					<Image
-						src={imgSrc}
+						src={image_url}
 						alt={slideAlt}
 						width={0}
 						height={0}
@@ -54,7 +54,7 @@ const SliderImgLandscape = memo<SliderImgLandscapeProps>(
 								gridIndex === 1 ? "block" : "hidden md:block"
 							}`}>
 							<Image
-								src={imgSrc}
+								src={image_url}
 								alt={slideAlt}
 								fill
 								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"

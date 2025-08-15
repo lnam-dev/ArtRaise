@@ -47,7 +47,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 						<SwiperSlide key={index}>
 							<figure className="relative w-full aspect-[16/9] h-[70vh] lg:min-h-[80vh] xl:min-h-[90vh] 2xl:min-h-[75vh]">
 								<Image
-									src={obj.imgSrc}
+									src={obj.image_url}
 									alt={`Slide ${index + 1}`}
 									className="object-cover"
 									fill

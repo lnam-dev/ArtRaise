@@ -1,43 +1,3 @@
-// import Image from "next/image";
-// import { TSlide } from "~/types/slider";
-// import useDevice from "~/ui/hooks/useDevice/useDevice";
-
-// type SliderImgPortraitSquare = Pick<TSlide, "imgSrc"> & {
-// 	index: number;
-// };
-
-// const SliderImgSquare = ({ imgSrc, index }: SliderImgPortraitSquare) => {
-// 	const { isTablet, isDesktop } = useDevice();
-
-// 	const columnsCount = isTablet ? 1 : isDesktop ? 2 : 0;
-
-// 	return (
-// 		<div className="flex flex-row justify-end gap-2 md:gap-4 xl:gap-6 max-h-[90vh] lg:max-h-[75vh] xl:max-h-[70vh]">
-// 			{Array.from({ length: columnsCount }, (_, i) => (
-// 				<figure key={i} className="flex-grow-[2] relative aspect-square">
-// 					<Image
-// 						src={imgSrc}
-// 						alt={`Slide`}
-// 						className="object-cover opacity-30"
-// 						fill
-// 					/>
-// 				</figure>
-// 			))}
-// 			<figure className="flex-grow-[2] flex-shrink-0 w-auto h-auto relative">
-// 				<Image
-// 					src={imgSrc}
-// 					alt={`Slide ${index + 1}`}
-// 					width={0}
-// 					height={0}
-// 					sizes="100vw"
-// 					className="w-full h-auto"
-// 				/>
-// 			</figure>
-// 		</div>
-// 	);
-// };
-// export default SliderImgSquare;
-
 import Image from "next/image";
 import { memo } from "react";
 
@@ -46,7 +6,7 @@ import { TSlide } from "~/types/slider";
 import SliderButtonExpand from "./slider-button-expand";
 import { TArtPiece } from "~/types/art";
 
-type SliderImgSquareProps = Pick<TSlide, "imgSrc"> & {
+type SliderImgSquareProps = Pick<TSlide, "image_url"> & {
 	index: number;
 	slides: TSlide[];
 	orientation: TArtPiece["orientation"];
@@ -64,14 +24,14 @@ const GRID_IMAGES_CONFIG = [
 ] as const;
 
 const SliderImgSquare = memo<SliderImgSquareProps>(
-	({ imgSrc, index, slides, orientation }) => {
+	({ image_url, index, slides, orientation }) => {
 		const slideAlt = `Slide ${index + 1}`;
 
 		return (
 			<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh] md:max-h-[50vh] xl:max-h-[65vh]">
 				<figure className="flex-shrink-0 h-auto w-full md:w-[65%] lg:w-[70%] xl:w-[60%] 2xl:w-[40%] relative">
 					<Image
-						src={imgSrc}
+						src={image_url}
 						alt={slideAlt}
 						width={0}
 						height={0}
@@ -94,7 +54,7 @@ const SliderImgSquare = memo<SliderImgSquareProps>(
 								gridIndex === 1 ? "block" : "hidden md:block"
 							}`}>
 							<Image
-								src={imgSrc}
+								src={image_url}
 								alt={slideAlt}
 								fill
 								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"

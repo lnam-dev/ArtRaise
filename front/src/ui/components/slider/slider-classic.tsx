@@ -39,7 +39,7 @@ const SliderClassic: FC<TSliderClassicProps> = ({
 							<OrientationComponent
 								slides={slides}
 								orientation={orientation}
-								imgSrc={obj.imgSrc}
+								image_url={obj.image_url}
 								index={index}
 							/>
 						</SwiperSlide>
