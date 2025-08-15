@@ -10,6 +10,7 @@ import { useAppSelector} from "~/store/client/hooks";
 import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigation";
 import {SearchPagination} from "~/app/[locale]/search/SearchPagination";
 import CardPurchase from "~/ui/components/card/card-purchase";
+import FilterMapper from "~/ui/pages/search-page/filter-mapper";
 
 export default function Page() {
     const searchPageState = useAppSelector(state => state.searchPageReducer)
@@ -24,11 +25,11 @@ export default function Page() {
                 <BreadcrumbsLink>Головна</BreadcrumbsLink>
                 <BreadcrumbsLink>Пошук</BreadcrumbsLink>
             </BreadcrumbsWrapper>
-            <LinkBackTo path="/" className="mt-4 pl-10 opacity-70">
+            <LinkBackTo path="/" className="mt-4 opacity-70">
                 до головної
             </LinkBackTo>
             <SearchPageInput className={"col-span-full pl-0 my-4"}/>
-            {/*<FilterMapper className={"col-span-full"}/>*/}
+            <FilterMapper className={"col-span-full"}/>
             <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
                 {/*<Button className={"w-full my-3 text-nowrap"}*/}
