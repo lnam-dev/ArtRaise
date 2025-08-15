@@ -7,6 +7,7 @@ import AuthorCard from "~/ui/components/author-card/author-card";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import FamiliarAuthors from "~/ui/pages/author-page/FamiliarAuthors";
 import MobileSectionAuthorPage from "~/ui/pages/author-page/MobileSectionAuthorPage";
+import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
 
 const AuthorPage: React.FC<TAuthorPage> = ({
 	author,
@@ -22,10 +23,11 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 				}>
 				<aside
 					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit"}>
-					<img
+					<ImageWithFallback
 						className="h-auto w-full object-cover max-h-[40vh] object-center"
-						src={author?.image_author}
-						alt="imageAuthor"
+						src={author.image_author}
+						alt="Author"
+						fallbackSrc={'/default.png'}
 					/>
 					<div
 						className={
@@ -51,12 +53,13 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 					</div>
 				</aside>
 				<div className={"flex md:col-span-3 h-full max-h-full"}>
-					<img
+					<ImageWithFallback
 						src={author.image_author}
 						alt={"art photo"}
+						fallbackSrc={'/default.png'}
 						className={
 							"object-cover w-full h-full md:col-span-3 max-h-[60vh]"
-						}></img>
+						}></ImageWithFallback>
 				</div>
 			</div>
 
