@@ -5,6 +5,16 @@ from django.http import HttpResponse
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.api.v2.router import WagtailAPIRouter
+from wagtail.api.v2.views import PagesAPIViewSet
+from wagtail.images.api.v2.views import ImagesAPIViewSet
+from wagtail.documents.api.v2.views import DocumentsAPIViewSet
+
+# Налаштування Wagtail API
+api_router = WagtailAPIRouter('wagtailapi')
+api_router.register_endpoint('pages', PagesAPIViewSet)
+api_router.register_endpoint('images', ImagesAPIViewSet)
+api_router.register_endpoint('documents', DocumentsAPIViewSet)
 
 # Основні маршрути вашого додатку та Wagtail
 # Змінені маршути з приставкою API для правильної маршутизації
@@ -12,16 +22,18 @@ urlpatterns = [
     path('health/', lambda request: HttpResponse("OK", status=200)),
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
-    # Можливо, 'pages/' краще залишити для catch-all нижче, якщо він обробляє сторінки
-    # path('pages/', include(wagtail_urls)),
+    
+    # Wagtail API - надає доступ до сторінок, зображень та документів
+    path('api/v2/', api_router.urls),
+    
+    # Кастомні API маршрути
     path('api/users/', include('users.urls')),
     path('api/search/', include('search.urls')),
     path('api/authors/', include('authors.urls')),
     path('api/events/', include('events.urls')),
     path('api/artpieces/', include('artpiece.urls')),
     path('api/faq/', include('faq.urls')),
-    path('api/slider/', include('slider.urls')),
-    path('api/how-to-buy/', include('howtobuy.urls')),
+    path('api/main-page/', include('pages.urls')),
 
     # Wagtail catch-all для сторінок - зазвичай має бути останнім серед основних маршрутів
     re_path(r'^', include(wagtail_urls)),
