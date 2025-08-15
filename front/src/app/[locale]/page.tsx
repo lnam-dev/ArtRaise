@@ -31,10 +31,14 @@ const SLIDES = [
 ];
 
 export const revalidate = 21600;
+export const dynamic = "force-static";
 
 async function getData(): Promise<TMainPage> {
 	try {
-		const response = await fetch(`${process.env.API_URL}artpieces/`);
+		const response = await fetch(`${process.env.API_URL}artpieces/`, {
+			next: { revalidate: revalidate },
+			cache: "force-cache",
+		} as any);
 		if (!response.ok) {
 			throw new Error(`Failed to fetch art pieces: ${response.status}`);
 		}

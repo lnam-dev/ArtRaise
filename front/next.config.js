@@ -3,8 +3,30 @@ const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
+	experimental: {
+		optimizePackageImports: [
+			"lodash",
+			"lucide-react",
+			"@radix-ui/react-slider",
+			"@gsap/react",
+			"gsap",
+			"swiper",
+			"formik",
+			"yup",
+			"@reduxjs/toolkit",
+			"redux-persist",
+		],
+	},
 	webpack(config) {
 		config.resolve.symlinks = false;
+
+		// Файловий кеш для прискорення повторних білдів
+		config.cache = {
+			type: "filesystem",
+			buildDependencies: {
+				config: [__filename],
+			},
+		};
 
 		// Видаляємо старі svg rule (якщо є)
 		config.module.rules = config.module.rules.filter((rule) => {
@@ -26,6 +48,14 @@ const nextConfig = withNextIntl({
 	images: {
 		remotePatterns: [
 			{
+				protocol: "https",
+				hostname: "artraise-media.fra1.digitaloceanspaces.com",
+			},
+			{
+				protocol: "https",
+				hostname: "artraise-media.fra1.cdn.digitaloceanspaces.com",
+			},
+			{
 				protocol: "http",
 				hostname: "localhost",
 			},
@@ -33,11 +63,8 @@ const nextConfig = withNextIntl({
 				protocol: "https",
 				hostname: "artraise-dev-pidyo.ondigitalocean.app",
 			},
-			{
-				protocol: "https",
-				hostname: "artraise-media.fra1.cdn.digitaloceanspaces.com",
-			},
 		],
+		formats: ["image/avif", "image/webp"],
 	},
 	devIndicators: {
 		allowedDevOrigins: ["http://192.168.31.88:3000", "http://localhost:3000"],

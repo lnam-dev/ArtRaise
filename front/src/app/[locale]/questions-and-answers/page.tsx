@@ -4,6 +4,9 @@ import AuthorsPage from "~/ui/pages/authors-page/authors-page";
 import { MOCKED_QADATA, TQAPage } from "~/use-cases/contracts/qa-page";
 import QAPage from "~/ui/pages/qa-page/qa-page";
 
+export const revalidate = 21600;
+export const dynamic = "force-static";
+
 const getQAdata = async (): Promise<TQAPage> => {
 	try {
 		// const responseAuthors = await fetch(`${process.env.API_URL}qa`);

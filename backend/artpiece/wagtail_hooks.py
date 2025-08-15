@@ -1,7 +1,7 @@
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
-from .models import ArtPiece, ArtPieceBuyForm, Category
+from .models import ArtPiece, ArtPieceBuyForm, Category, Tag
 from .forms import ArtPieceForm
 
 
@@ -22,7 +22,24 @@ class WagtailCategoryViewSet(SnippetViewSet):
     ordering = ['order', 'name_ua']
 
 
-@register_snippet  
+@register_snippet
+class WagtailTagViewSet(SnippetViewSet):
+    """Управління тегами в CMS"""
+    model = Tag
+    icon = "snippet"
+    list_display = [
+        "name_ua",
+        "name", 
+        "slug",
+        "priority",
+        "is_active",
+        "color"
+    ]
+    list_filter = ['is_active']
+    search_fields = ['name', 'name_ua', 'description']
+    ordering = ['priority', 'name']
+
+
 class WagtailArtPieceProfileViewSet(SnippetViewSet):
     model = ArtPiece
     form_class = ArtPieceForm

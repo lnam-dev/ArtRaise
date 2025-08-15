@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from phonenumber_field.serializerfields import PhoneNumberField
-from .models import ArtPiece, ArtPieceBuyForm, Category
+from .models import ArtPiece, ArtPieceBuyForm, Category, Tag
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -14,11 +14,28 @@ class CategorySerializer(serializers.ModelSerializer):
         ]
 
 
+class TagSerializer(serializers.ModelSerializer):
+    """Серіалізатор для тегів"""
+    artpieces_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Tag
+        fields = [
+            'id', 'name', 'name_ua', 'slug', 'description', 
+            'color', 'priority', 'is_active', 'artpieces_count'
+        ]
+    
+    def get_artpieces_count(self, obj):
+        """Кількість творів з цим тегом"""
+        return obj.artpieces.count()
+
+
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
     image_artpiece = serializers.SerializerMethodField()
     creating_date = serializers.SerializerMethodField()
     category = CategorySerializer(read_only=True)
+    tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
         model = ArtPiece
@@ -35,6 +52,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "image_artpiece",
             "creating_date",
             "category",
+            "tags",
         ]
 
     def get_author(self, obj):
