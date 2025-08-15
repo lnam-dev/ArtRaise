@@ -26,7 +26,7 @@ const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 			case "artpiece":
 				return (
 					info?.type === "artpiece" && (
-						<LinkInside to={`products/${info.id}`}>
+						<LinkInside target="_blank" to={`products/${info.id}`}>
 							<span>{info.author_name}</span>
 						</LinkInside>
 					)
@@ -34,7 +34,7 @@ const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 			case "author":
 				return (
 					info?.type === "author" && (
-						<LinkInside to={item.link_url}>
+						<LinkInside target="_blank" to={item.link_url}>
 							<span>{info.name}</span>
 						</LinkInside>
 					)
@@ -42,7 +42,7 @@ const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 			case "event":
 				return (
 					info?.type === "event" && (
-						<LinkInside to={item.link_url}>
+						<LinkInside target="_blank" to={item.link_url}>
 							<span>{parseFormatData(info.start_date, info.end_date)}</span>
 						</LinkInside>
 					)
@@ -50,7 +50,7 @@ const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 			case "custom":
 				return (
 					info?.type === "custom" && (
-						<LinkOutside href={item.link_url ?? ""}>
+						<LinkOutside target="_blank" href={item.link_url ?? ""}>
 							<span>{item.subtitle}</span>
 						</LinkOutside>
 					)
