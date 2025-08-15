@@ -178,18 +178,6 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                     />
                 </div>
             </Accordion>
-            <Accordion title={"Матеріал"}>
-                <div>hello</div>
-            </Accordion>
-            <Accordion title={"Засіб вираження"}>
-                <div>hello</div>
-            </Accordion>
-            <Accordion title={"Розмір"}>
-                <div>hello</div>
-            </Accordion>
-            <Accordion title={"Колір"}>
-                <div>hello</div>
-            </Accordion>
         </div>
     );
 };
