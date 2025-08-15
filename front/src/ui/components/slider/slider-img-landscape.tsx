@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { memo } from "react";
 
-import { TSlide } from "~/types/slider";
+import { TSliderItem } from "~/types/slider";
 
 import SliderButtonExpand from "./slider-button-expand";
 import { TArtPiece } from "~/types/art";
 
-type SliderImgLandscapeProps = Pick<TSlide, "image_url"> & {
+type SliderImgLandscapeProps = Pick<TSliderItem, "image_url"> & {
 	index: number;
-	slides: TSlide[];
+	slides: TSliderItem[];
 	orientation: TArtPiece["orientation"];
 };
 

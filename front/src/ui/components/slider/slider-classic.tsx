@@ -7,7 +7,6 @@ import SliderBase from "./slider-base";
 import SliderImgPortrait from "./slider-img-portrait";
 import SliderImgLandscape from "./slider-img-landscape";
 import SliderImgSquare from "./slider-img-square";
-import SliderButtonExpand from "./slider-button-expand";
 
 import { TArtPiece } from "~/types/art";
 import type { TSliderBaseProps } from "~/types/slider";

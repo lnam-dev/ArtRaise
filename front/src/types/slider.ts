@@ -60,7 +60,7 @@ export type TLinkedObjectInfo =
 	| TLinkedObjectInfoCustom;
 
 export interface TSliderItem {
-	id: number;
+	id?: number;
 	title: string; // треба
 	subtitle: string; // треба
 	description: string; // треба
