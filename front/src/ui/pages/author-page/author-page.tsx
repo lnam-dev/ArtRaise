@@ -14,9 +14,9 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 	authorArtpieces,
 	familiarAuthors,
 }) => {
-	familiarAuthors = familiarAuthors.slice(0, 5); //TODO тимчасово хардкодом обмежуємо
+	familiarAuthors = familiarAuthors.slice(0, 4); //TODO тимчасово хардкодом обмежуємо
 	return (
-		<div className={"h-fit font-fixel px-4"}>
+		<div className={"container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing"}>
 			<div
 				className={
 					"font-namu mt-20 grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
@@ -76,13 +76,13 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 			{/*all*/}
 			<SegmentTitle
 				className={"mt-20"}
-				link={{ to: "/authors", name: "Всі автори" }}>
-				Схожі автори
+				link={{ to: "ua/authors", name: "Всі автори" }}>
+				Інші автори
 			</SegmentTitle>
 			<FamiliarAuthors
 				familiarAuthors={familiarAuthors}
 				className={
-					"columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-10"
+					"flex w-full gap-5 overflow-x-auto  md:grid md:grid-cols-2 lg:grid-cols-4 pt-5"
 				}
 			/>
 			<CallToActionSection />

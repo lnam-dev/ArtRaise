@@ -9,14 +9,15 @@ import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fall
 
 type Props = {
 	author: TAuthor;
+	className?: string;
 };
-const AuthorCard: FC<Props> = ({ author }) => {
+const AuthorCard: FC<Props> = ({ author,className }) => {
 	const pathMaker = usePath()
 	const { fullname, image_author, artpieces } = author;
 	return (
 		<figure
 			className={
-				"flex flex-shrink flex-col w-full h-full bg-gray-950 break-inside-avoid"
+				"flex flex-shrink flex-col w-full h-full bg-gray-950 break-inside-avoid " + className
 			}
 			onClick={() => {
 				redirect(pathMaker(`/authors/${author.id}`));
