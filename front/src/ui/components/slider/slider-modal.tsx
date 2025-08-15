@@ -51,7 +51,7 @@ const SliderModal: React.FC<{
 										<figure
 											className={`slider-modal__image-wrapper slider-modal__image-wrapper--${orientation}`}>
 											<Image
-												src={slide.imgSrc}
+												src={slide.image_url}
 												alt={slide.description || slide.title}
 												width={0}
 												height={0}

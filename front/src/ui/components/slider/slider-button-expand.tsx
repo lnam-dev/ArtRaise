@@ -3,13 +3,13 @@ import SliderModal from "./slider-modal";
 
 import { useModal } from "~/ui/hooks/useModal";
 
-import type { TSlide } from "~/types/slider";
+import type { TSliderItem } from "~/types/slider";
 import type { TArtPiece } from "~/types";
 
 interface SliderButtonExpandProps {
 	className?: string;
 	orientation?: TArtPiece["orientation"];
-	slides: TSlide[];
+	slides: TSliderItem[];
 }
 
 export default function SliderButtonExpand({
