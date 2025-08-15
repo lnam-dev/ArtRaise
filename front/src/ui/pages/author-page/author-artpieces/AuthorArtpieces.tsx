@@ -16,7 +16,7 @@ const AuthorArtpieces: FC<Props> = ({ artpieces }) => {
 			? artpieces
 			: artpieces.filter((artpiece) => artpiece.style === selectedTag);
 	return (
-		<div>
+		<div className="w-full">
 			<TagsMenu tags={filterArtTags} onSelectTag={setSelectedTag} />
 			<div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-20">
 				{filteredArtPieces.map((artpiece) => (

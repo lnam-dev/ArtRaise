@@ -7,29 +7,31 @@ import AuthorCard from "~/ui/components/author-card/author-card";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import FamiliarAuthors from "~/ui/pages/author-page/FamiliarAuthors";
 import MobileSectionAuthorPage from "~/ui/pages/author-page/MobileSectionAuthorPage";
+import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
 
 const AuthorPage: React.FC<TAuthorPage> = ({
 	author,
 	authorArtpieces,
 	familiarAuthors,
 }) => {
-	familiarAuthors = familiarAuthors.slice(0, 5); //TODO тимчасово хардкодом обмежуємо
+	familiarAuthors = familiarAuthors.slice(0, 4); //TODO тимчасово хардкодом обмежуємо
 	return (
-		<div className={"h-fit font-fixel px-4"}>
+		<div className={"container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing"}>
 			<div
 				className={
 					"font-namu mt-20 grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
 				}>
 				<aside
-					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit"}>
-					<img
+					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit mt-auto"}>
+					<ImageWithFallback
 						className="h-auto w-full object-cover max-h-[40vh] object-center"
-						src={author?.image_author}
-						alt="imageAuthor"
+						src={author.image_author}
+						alt="Author"
+						fallbackSrc={'/default.png'}
 					/>
 					<div
 						className={
-							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white "
+							"flex flex-col bottom-0 left-0 col-span-3 z-10 w-fit bg-white pr-2.5 "
 						}>
 						<h1
 							className={
@@ -45,18 +47,19 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 							className={"font-thin text-black text-8 hidden md:block w-full"}>
 							<h2 className={""}>Біографія</h2>
 							<p className={"text-4 text-black/50"}>
-								{truncateText(author?.bio_text, 100)}
+								{author.bio_text}
 							</p>
 						</div>
 					</div>
 				</aside>
 				<div className={"flex md:col-span-3 h-full max-h-full"}>
-					<img
+					<ImageWithFallback
 						src={author.image_author}
 						alt={"art photo"}
+						fallbackSrc={'/default.png'}
 						className={
 							"object-cover w-full h-full md:col-span-3 max-h-[60vh]"
-						}></img>
+						}></ImageWithFallback>
 				</div>
 			</div>
 
@@ -73,13 +76,13 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 			{/*all*/}
 			<SegmentTitle
 				className={"mt-20"}
-				link={{ to: "/authors", name: "Всі автори" }}>
-				Схожі автори
+				link={{ to: "/ua/authors", name: "Всі автори" }}>
+				Інші автори
 			</SegmentTitle>
 			<FamiliarAuthors
 				familiarAuthors={familiarAuthors}
 				className={
-					"columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-10"
+					"flex w-full gap-5 overflow-x-auto  md:grid md:grid-cols-2 lg:grid-cols-4 pt-5"
 				}
 			/>
 			<CallToActionSection />

@@ -5,17 +5,19 @@ import Arrow from "~/assets/arrow-right.svg";
 import { redirect } from "next/navigation";
 import useLocation from "~/bridge/ui/useLocation";
 import usePath from "~/ui/hooks/usePath";
+import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
 
 type Props = {
 	author: TAuthor;
+	className?: string;
 };
-const AuthorCard: FC<Props> = ({ author }) => {
+const AuthorCard: FC<Props> = ({ author,className }) => {
 	const pathMaker = usePath()
 	const { fullname, image_author, artpieces } = author;
 	return (
 		<figure
 			className={
-				"flex flex-shrink flex-col w-full h-full bg-gray-950 break-inside-avoid"
+				"flex flex-shrink flex-col w-full h-full bg-gray-950 break-inside-avoid " + className
 			}
 			onClick={() => {
 				redirect(pathMaker(`/authors/${author.id}`));
@@ -23,9 +25,10 @@ const AuthorCard: FC<Props> = ({ author }) => {
 			<div className="relative block w-full text-white/90 font-namu">
 				{" "}
 				{/* Aspect ratio for consistent image size */}
-				<img
+				<ImageWithFallback
 					src={`${image_author}`}
 					alt="Author"
+					fallbackSrc={`/default.png`}
 					className={"inline-block w-full h-auto aspect-[16/9] object-cover"}
 				/>
 				<div
