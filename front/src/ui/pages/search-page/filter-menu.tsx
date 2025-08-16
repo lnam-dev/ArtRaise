@@ -106,7 +106,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                             return (
                                 <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {`${filter.name}(${filter.count})`}
+                                    {`${filter.name}`}
                                 </FilterTag>
                             )
                         })
@@ -129,7 +129,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                             return (
                                 <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {`${filter.name}(${filter.count})`}
+                                    {`${filter.name}`}
                                 </FilterTag>
                             )
                         })
@@ -152,7 +152,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
                             return (
                                 <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
                                            isSelected={isSelected}>
-                                    {`${filter.name}(${filter.count})`}
+                                    {`${filter.name}`}
                                 </FilterTag>
                             )
                         })
