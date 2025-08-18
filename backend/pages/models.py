@@ -3,12 +3,39 @@ from wagtail import blocks
 from wagtail.fields import StreamField
 from wagtail.embeds.blocks import EmbedBlock
 from django.db import models
+from rest_framework import serializers
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
 from wagtail import blocks
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
+from slider.serializers import SlideSerializer
+from slider.models import Slide
+from rest_framework.serializers import SerializerMethodField
+
+
+
+class SliderAPIMixin:
+    """
+    Міксин для додавання API-поля 'slides' до будь-якої сторінки.
+    """
+
+    @property
+    def slides(self):
+        """Повертає список активних слайдів, серіалізованих у JSON."""
+        active_slides = Slide.objects.filter(is_active=True).order_by('order', '-created_at')
+        request = getattr(self, 'context', {}).get('request', None)  # на випадок, якщо хочеш абсолютні URL
+        return SlideSerializer(active_slides, many=True, context={'request': request}).data
+
+    api_fields = [
+        APIField('slides')
+    ]
+
+
+
+
+# ... решта вашого коду
 
 class HtmlLikeRichTextBlock(blocks.StreamBlock):
     """
@@ -205,9 +232,6 @@ class TextWithCaptionBlock(blocks.StructBlock):
         icon = "pilcrow"
         label = "Текстовий блок з підписом"
 
-
-
-
 # Окремий блок для медіа (без підпису)
 class SingleMediaBlock(blocks.StreamBlock):
     image_url = URLImageBlock(label="Зображення за URL")
@@ -243,9 +267,7 @@ class SingleTextFieldBlock(blocks.StructBlock):
         icon = "pilcrow"
         label = "Текстовий блок (окремий)"
 
-
-
-class UniversalPageTemplate(Page):
+class UniversalPageTemplate(SliderAPIMixin, Page):
     """
     Універсальний шаблон сторінки, що використовує єдиний блоковий редактор.
     """
@@ -264,7 +286,7 @@ class UniversalPageTemplate(Page):
         FieldPanel('content'),
     ]
 
-    api_fields = [
+    api_fields = SliderAPIMixin.api_fields + [
         APIField('page_title'),
         APIField('content'),
     ]
@@ -278,8 +300,7 @@ class UniversalPageTemplate(Page):
     def __str__(self):
         return self.page_title
 
-
-class AboutFondPage(Page):
+class AboutFondPage(SliderAPIMixin, Page):
     fond_name = models.CharField(
         max_length=200,
         default="ArtRaise",
@@ -294,7 +315,7 @@ class AboutFondPage(Page):
         FieldPanel('content'),
     ]
     
-    api_fields = [
+    api_fields = SliderAPIMixin.api_fields + [
         APIField('fond_name'),
         APIField('content'),
     ]
@@ -308,8 +329,7 @@ class AboutFondPage(Page):
     def __str__(self):
         return self.fond_name
 
-
-class AuthenticityCertsPage(Page):
+class AuthenticityCertsPage(SliderAPIMixin, Page):
     title_text = models.CharField(
         max_length=200,
         default="Сертифікати автентичності",
@@ -324,7 +344,7 @@ class AuthenticityCertsPage(Page):
         FieldPanel('content'),
     ]
     
-    api_fields = [
+    api_fields = SliderAPIMixin.api_fields + [
         APIField('title_text'),
         APIField('content'),
     ]
@@ -339,18 +359,23 @@ class AuthenticityCertsPage(Page):
     def __str__(self):
         return self.title_text
 
-
 # Оновлення HomePage, щоб дозволити створювати UniversalPageTemplate
-class HomePage(Page):
+class HomePage(SliderAPIMixin, Page):
     max_count = 1
     subpage_types = [
         'pages.AboutFondPage',
         'pages.AuthenticityCertsPage',
-        'pages.UniversalPageTemplate', # Додано новий шаблон сторінки
+        'pages.UniversalPageTemplate', 
         'wagtailcore.Page',
     ]
+
+    api_fields = SliderAPIMixin.api_fields + [
+        # Ви можете додати сюди інші API-поля, якщо вони потрібні
+    ]
+
     class Meta:
         verbose_name = "Головна сторінка"
         verbose_name_plural = "Головні сторінки"
+        
     def __str__(self):
         return self.title
