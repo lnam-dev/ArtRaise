@@ -3,8 +3,66 @@ from wagtail import blocks
 from wagtail.fields import StreamField
 from wagtail.embeds.blocks import EmbedBlock
 from django.db import models
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
+from wagtail import blocks
+from wagtail.embeds.blocks import EmbedBlock
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.documents.blocks import DocumentChooserBlock
+
+class HtmlLikeRichTextBlock(blocks.StreamBlock):
+    """
+    Універсальний блоковий редактор для контенту, який імітує HTML-редактор.
+    """
+    heading_2 = blocks.RichTextBlock(
+        label="Заголовок 2",
+        features=['h2', 'bold', 'italic'],
+        icon="title"
+    )
+    heading_3 = blocks.RichTextBlock(
+        label="Заголовок 3",
+        features=['h3', 'bold', 'italic'],
+        icon="title"
+    )
+    heading_4 = blocks.RichTextBlock(
+        label="Заголовок 4",
+        features=['h4', 'bold', 'italic'],
+        icon="title"
+    )
+    paragraph = blocks.RichTextBlock(
+        label="Параграф",
+        features=['bold', 'italic', 'link'],
+        icon="pilcrow"
+    )
+    bulleted_list = blocks.ListBlock(
+        blocks.RichTextBlock(label="Пункт списку"),
+        label="Список з маркерами",
+        icon="list-ul"
+    )
+    numbered_list = blocks.ListBlock(
+        blocks.RichTextBlock(label="Пункт списку"),
+        label="Нумерований список",
+        icon="list-ol"
+    )
+    image = ImageChooserBlock(
+        label="Зображення",
+        help_text="Оберіть зображення з бібліотеки"
+    )
+    embed = EmbedBlock(
+        label="Вбудований контент (відео, твіти тощо)"
+    )
+    document = DocumentChooserBlock(
+        label="Документ"
+    )
+    horizontal_line = blocks.StaticBlock(
+        label="Горизонтальна лінія",
+        admin_text="Горизонтальна лінія для розділення контенту",
+        icon="horizontal-line"
+    )
+
+    class Meta:
+        label = "Редактор контенту (універсальний)"
+        icon = "doc-full"
 
 # Блок для окремого пункту в списку (тире/пробіл)
 class SectionItemBlock(blocks.StructBlock):
@@ -189,8 +247,7 @@ class SingleTextFieldBlock(blocks.StructBlock):
 
 class UniversalPageTemplate(Page):
     """
-    Універсальний шаблон сторінки, що дозволяє комбінувати різні блоки.
-    Ідеально підходить для статей, блогів або новин.
+    Універсальний шаблон сторінки, що використовує єдиний блоковий редактор.
     """
     
     page_title = models.CharField(
@@ -199,14 +256,7 @@ class UniversalPageTemplate(Page):
     )
 
     content = StreamField([
-        ('text', SingleTextFieldBlock()),                 # Окремий текстовий блок
-        ('media', SingleMediaBlock()),                   # Окремий медіа-блок
-        ('caption', SingleCaptionBlock()),               # Окремий підпис
-        ('section', SectionBlock()),                     # Секція з пунктами
-        ('single_item', SingleItemBlock()),              # Окремий пункт
-        ('media_with_caption', MediaBlock()),            # Медіа з підписом
-        ('media_with_subtitle', MediaWithSubtitleBlock()), # Медіа з підзаголовком
-        ('image_gallery', ImageGalleryBlock()),          # Галерея зображень
+        ('editor', HtmlLikeRichTextBlock(label="Основний контент"))
     ], use_json_field=True, verbose_name="Контент сторінки", default=[])
 
     content_panels = Page.content_panels + [
@@ -219,7 +269,6 @@ class UniversalPageTemplate(Page):
         APIField('content'),
     ]
     
-    # Дозволяємо створювати цю сторінку як дочірню для HomePage
     parent_page_types = ['pages.HomePage']
 
     class Meta:
@@ -237,32 +286,28 @@ class AboutFondPage(Page):
         verbose_name="Назва фонду (заголовок сторінки)"
     )
     content = StreamField([
-        ('description_block', blocks.RichTextBlock(
-            label="Вступний опис",
-            help_text="Короткий вступний абзац на початку сторінки",
-            icon="pilcrow"
-        )),
-        ('section', SectionBlock()),
-        ('single_item', SingleItemBlock()),
-        ('media_with_caption', MediaBlock()),
-        ('media_with_subtitle', MediaWithSubtitleBlock()),
-        ('image_gallery', ImageGalleryBlock()),
-        ('text_with_caption', TextWithCaptionBlock()),
+        ('editor', HtmlLikeRichTextBlock(label="Основний контент"))
     ], use_json_field=True, verbose_name="Контент сторінки", default=[])
+    
     content_panels = Page.content_panels + [
         FieldPanel('fond_name'),
         FieldPanel('content'),
     ]
+    
     api_fields = [
         APIField('fond_name'),
         APIField('content'),
     ]
+    
     parent_page_types = ['pages.HomePage']
+    
     class Meta:
         verbose_name = "Сторінка 'Про фонд' (розширена)"
         verbose_name_plural = "Сторінки 'Про фонд' (розширені)"
+    
     def __str__(self):
         return self.fond_name
+
 
 class AuthenticityCertsPage(Page):
     title_text = models.CharField(
@@ -271,33 +316,29 @@ class AuthenticityCertsPage(Page):
         verbose_name="Заголовок сторінки сертифікатів"
     )
     content = StreamField([
-        ('description_block', blocks.RichTextBlock(
-            label="Вступний опис",
-            help_text="Короткий вступний абзац на початку сторінки",
-            icon="pilcrow"
-        )),
-        ('section', SectionBlock()),
-        ('single_item', SingleItemBlock()),
-        ('media_with_caption', MediaBlock()),
-        ('media_with_subtitle', MediaWithSubtitleBlock()),
-        ('image_gallery', ImageGalleryBlock()),
-        ('text_with_caption', TextWithCaptionBlock()),
+        ('editor', HtmlLikeRichTextBlock(label="Основний контент"))
     ], use_json_field=True, verbose_name="Контент сторінки", default=[])
+    
     content_panels = Page.content_panels + [
         FieldPanel('title_text'),
         FieldPanel('content'),
     ]
+    
     api_fields = [
         APIField('title_text'),
         APIField('content'),
     ]
+    
     max_count = 1
     parent_page_types = ['pages.HomePage']
+    
     class Meta:
         verbose_name = "Сторінка 'Сертифікати автентичності'"
         verbose_name_plural = "Сторінки 'Сертифікати автентичності'"
+    
     def __str__(self):
         return self.title_text
+
 
 # Оновлення HomePage, щоб дозволити створювати UniversalPageTemplate
 class HomePage(Page):
