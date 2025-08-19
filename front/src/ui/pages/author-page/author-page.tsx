@@ -8,6 +8,7 @@ import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import FamiliarAuthors from "~/ui/pages/author-page/FamiliarAuthors";
 import MobileSectionAuthorPage from "~/ui/pages/author-page/MobileSectionAuthorPage";
 import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
+import LinkBackTo from "~/ui/components/link/link-back-to";
 
 const AuthorPage: React.FC<TAuthorPage> = ({
 	author,
@@ -17,10 +18,14 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 	familiarAuthors = familiarAuthors.slice(0, 4); //TODO тимчасово хардкодом обмежуємо
 	return (
 		<div className={"container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing"}>
+
 			<div
 				className={
-					"font-namu mt-20 grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
+					"font-namu grid grid-cols-4  mt-20 gap-x-[1rem] w-full h-fit auto-rows-auto"
 				}>
+				<LinkBackTo path="/authors" className="mb-8 col-span-full">
+					назад до Авторів
+				</LinkBackTo>
 				<aside
 					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit mt-auto"}>
 					<ImageWithFallback
@@ -69,7 +74,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 				authorArtpieces={authorArtpieces}
 			/>
 			{/*desktop*/}
-			<div className={`hidden w-full flex-col h-fit px-4 mt-20 md:flex`}>
+			<div className={`hidden w-full flex-col h-fit mt-20 md:flex`}>
 				<SegmentTitle className={"w-full"}>Роботи автора</SegmentTitle>
 				<AuthorArtpieces artpieces={authorArtpieces ?? []} />
 			</div>
