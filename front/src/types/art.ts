@@ -10,6 +10,7 @@ export type TAuthor = {
 	image_author: string;
 	style: string;
 	theme: string;
+	artpieces_count: number;
 	expression_type: string;
 };
 export type TArtPiece = {

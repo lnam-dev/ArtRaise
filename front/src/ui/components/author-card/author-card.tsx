@@ -1,11 +1,10 @@
 import React, { FC } from "react";
 import { TAuthor } from "~/types";
-import Image from "next/image";
 import Arrow from "~/assets/arrow-right.svg";
 import { redirect } from "next/navigation";
-import useLocation from "~/bridge/ui/useLocation";
 import usePath from "~/ui/hooks/usePath";
 import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
+import {getRobotaWord} from "~/ui/components/author-card/helper";
 
 type Props = {
 	author: TAuthor;
@@ -13,7 +12,7 @@ type Props = {
 };
 const AuthorCard: FC<Props> = ({ author,className }) => {
 	const pathMaker = usePath()
-	const { fullname, image_author, artpieces } = author;
+	const { fullname, image_author, artpieces_count } = author;
 	return (
 		<figure
 			className={
@@ -37,9 +36,9 @@ const AuthorCard: FC<Props> = ({ author,className }) => {
 					}>
 					<div className={"px-6 py-4 text-5"}>
 						<h3 className={""}>{fullname}</h3>
-						<p className={"text-4 font-light"}>{`${
-							artpieces?.length ?? 0
-						} роботи`}</p>
+						<p className="text-4 font-light">
+							{artpieces_count ?? 0} {getRobotaWord(artpieces_count ?? 0)}
+						</p>
 					</div>
 					<Arrow className={"inline-block fill-white"} height={30} width={30} />
 				</div>
