@@ -61,7 +61,7 @@ const FilterMapper: React.FC<Props> = ({className}) => {
             <DefaultTag className={"border-none flex flex-row w-fit items-center flex-nowrap stroke-gray-950 gap-3 cursor-default"}>
                 <p className={"text-nowrap"}>{"Очистити"}</p>
                 <Cross height={20} width={20} className={"stroke-2 cursor-pointer"} onClick={() => {filterItems.forEach((value) => value.onDelete())}}/>
-            </DefaultTag>)
+            </DefaultTag>
             {filterItems.map((value, index) =>
                 <DefaultTag key={index} className={"border-none flex flex-row w-fit items-center flex-nowrap stroke-gray-950 gap-3 cursor-default"}>
                     <Hash height={16} width={16} className={""}/>
