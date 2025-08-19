@@ -12,7 +12,7 @@ const getQAdata = async (): Promise<TQAPage> => {
 		// const responseAuthors = await fetch(`${process.env.API_URL}qa`);
 		// if (!responseAuthors.ok) {
 		//     console.error(`Failed to fetch art pieces: ${responseAuthors.status}`);
-		// }
+		// }cc
 		// return await responseAuthors.json() as TAuthor[];
 		return MOCKED_QADATA;
 	} catch (error) {

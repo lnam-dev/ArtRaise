@@ -49,6 +49,7 @@ export default ({ artPieces, slides }: TMainPage) => {
 					</section>
 					<PartnersSection className="mb-10" />
 					<CertificatesSection />
+					<SegmentTitle className="mb-10" />
 					<CallToActionSection />
 				</article>
 			</div>
