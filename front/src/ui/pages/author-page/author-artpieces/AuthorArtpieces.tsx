@@ -1,30 +1,38 @@
 "use client";
-import React, { FC, useState } from "react";
-import { TArtPiece } from "~/types";
-import { getStylesFromArtPieces } from "~/app/[locale]/authors/functionsAuthor";
+import React, {FC, useState} from "react";
+import {TArtPiece} from "~/types";
+import {getStylesFromArtPieces} from "~/app/[locale]/authors/functionsAuthor";
 import CardPurchase from "~/ui/components/card/card-purchase";
 import TagsMenu from "~/ui/components/tags-menu/TagsMenu";
 
 type Props = {
-	artpieces: TArtPiece[];
+    artpieces: TArtPiece[];
 };
-const AuthorArtpieces: FC<Props> = ({ artpieces }) => {
-	const filterArtTags = getStylesFromArtPieces(artpieces ?? []);
-	const [selectedTag, setSelectedTag] = useState<string>(filterArtTags[0]);
-	const filteredArtPieces =
-		selectedTag === filterArtTags[0]
-			? artpieces
-			: artpieces.filter((artpiece) => artpiece.style === selectedTag);
-	return (
-		<div className="w-full">
-			<TagsMenu tags={filterArtTags} onSelectTag={setSelectedTag} />
-			<div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-20">
-				{filteredArtPieces.map((artpiece) => (
-					<CardPurchase key={artpiece.id} card={artpiece} />
-				))}
-			</div>
-		</div>
-	);
+const AuthorArtpieces: FC<Props> = ({artpieces}) => {
+    const filterArtTags = getStylesFromArtPieces(artpieces ?? []);
+    const [selectedTag, setSelectedTag] = useState<string>(filterArtTags[0]);
+    const filteredArtPieces =
+        selectedTag === filterArtTags[0]
+            ? artpieces
+            : artpieces.filter((artpiece) => artpiece.style === selectedTag);
+    return (
+        <div className="w-full">{
+            artpieces.length > 0 ?
+                <>
+                    <TagsMenu tags={filterArtTags} onSelectTag={setSelectedTag}/>
+                    <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-20">
+                        {filteredArtPieces.map((artpiece) => (
+                            <CardPurchase key={artpiece.id} card={artpiece}/>
+                        ))}
+                    </div>
+                </>
+				:
+				<p className={'text-center md:text-start py-5 text-5'}>
+                    Жодних робіт у цього автора
+                </p>
+        }
+        </div>
+    );
 };
 
 export default AuthorArtpieces;
