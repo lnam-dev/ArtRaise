@@ -21,13 +21,13 @@ class FAQViewSet(ModelViewSet):
     """
     renderer_classes = [JSONRenderer]
     serializer_class = FAQSerializer
-    queryset = FAQ.objects.all()
 
     def get_queryset(self):
         """Повертає тільки активні питання, відсортовані за порядком"""
         queryset = FAQ.objects.filter(is_active=True).order_by('order')
         return queryset
 
+    @action(detail=False, methods=['POST'], url_path='add-question')
     def add_question(self, request):
         """Додає нове питання до FAQ"""
         question_data = request.data.get("question")
@@ -215,20 +215,6 @@ class CallToActionFormAPIView(APIView):
         return Response(serializer.data)
 
 
-class HowToBuyAPIView(APIView):
-    """
-    API endpoint для отримання секції "Як купити".
-    Повертає впорядкований список активних питань, позначених для показу в розділі "Як купити".
 
-    GET /api/faq/how-to-buy/
-    """
-    def get(self, request):
-        queryset = FAQ.objects.filter(
-            is_active=True,
-            show_in_how_to_buy=True
-        ).order_by('order')
-        
-        serializer = FAQSerializer(queryset, many=True)
-        return Response(serializer.data)
 
 
