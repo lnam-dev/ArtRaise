@@ -10,6 +10,6 @@ export function SearchPagination() {
   const {pagination} = useAppSelector(state => state.searchPageReducer);
   const {total_pages,current_page,has_next,has_previous} = pagination;
   return (
-      <ReusablePagination has_next={has_next} has_previous={has_previous} goToPage={goToPage} total_pages={total_pages} current_page={current_page}/>
+      <ReusablePagination goToPage={goToPage} total_pages={total_pages} current_page={current_page}/>
   );
 }
