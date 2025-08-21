@@ -4,7 +4,7 @@ import React from "react";
 
 import { TQuestionAnswer } from "~/types";
 
-import UnderLine from "~/ui/components/underline/underline";
+import Underline from "~/ui/components/underline/underline";
 
 type Props = {
 	questionAnswer: TQuestionAnswer;
@@ -29,7 +29,7 @@ const QuestionAnswer: React.FC<Props> = ({ questionAnswer }) => {
 				}>
 				{questionAnswer.answer}
 			</p>
-			<UnderLine />
+			<Underline />
 		</li>
 	);
 };

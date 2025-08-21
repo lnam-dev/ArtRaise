@@ -2,10 +2,9 @@ import React from "react";
 
 import { TQuestionCategory } from "~/types";
 
-import QuestionAnswer from "~/ui/pages/qa-page/sections/question-answer";
 import Accordion from "~/ui/components/accordion/accordion";
 
-import UnderLine from "~/ui/components/underline/underline";
+import Underline from "~/ui/components/underline/underline";
 
 type Props = {
 	category: TQuestionCategory;
@@ -24,7 +23,7 @@ const QuestionCategory: React.FC<Props> = ({ category }) => {
 				}>
 				{name}
 			</h3>
-			<ul className={"col-span-full md:col-start-2 md:col-span-3"}>
+			<div className={"col-span-full md:col-start-2 md:col-span-3"}>
 				{questions.map((question) => (
 					<Accordion
 						key={question.question}
@@ -38,8 +37,8 @@ const QuestionCategory: React.FC<Props> = ({ category }) => {
 						</div>
 					</Accordion>
 				))}
-			</ul>
-			<UnderLine className="hidden md:block" />
+			</div>
+			<Underline className="hidden md:block" />
 		</li>
 	);
 };
