@@ -25,7 +25,7 @@ export default function Page() {
                 <BreadcrumbsLink>Головна</BreadcrumbsLink>
                 <BreadcrumbsLink>Пошук</BreadcrumbsLink>
             </BreadcrumbsWrapper>
-            <LinkBackTo path="/" className="mt-4 opacity-70">
+            <LinkBackTo path="/" className="mt-4">
                 до головної
             </LinkBackTo>
             <SearchPageInput className={"col-span-full pl-0 my-4"}/>
