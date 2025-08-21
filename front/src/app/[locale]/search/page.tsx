@@ -21,7 +21,7 @@ export default function Page() {
             className={
                 "font-namu mt-16 grid grid-cols-4 gap-x-[3rem] w-full h-fit auto-rows-auto px-[3vw]"
             }>
-            <BreadcrumbsWrapper activeIndex={2} className="col-span-full mt-9 pl-0">
+            <BreadcrumbsWrapper activeIndex={1} className="col-span-full mt-9 pl-0">
                 <BreadcrumbsLink to={"/"}>Головна</BreadcrumbsLink>
                 <BreadcrumbsLink to={"/search"}>Пошук</BreadcrumbsLink>
             </BreadcrumbsWrapper>
