@@ -56,7 +56,7 @@ export default function CallToActionAccordion() {
 			<div>
 				<Link
 					className="font-fixel font-normal text-4 text-gray-950 box-border"
-					href="#">
+					to="questions-and-answers">
 					Більше
 				</Link>
 			</div>
