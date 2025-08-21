@@ -52,7 +52,9 @@ export default function Page() {
                         </div>
                     </div>
                 }
-            <SearchPagination/>
+            <SearchPagination
+
+            />
             </main>
 
         </div>
