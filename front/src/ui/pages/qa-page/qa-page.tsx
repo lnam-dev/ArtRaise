@@ -15,7 +15,7 @@ const QAPage: React.FC<Props> = ({frequentlyAskedQuestions, questionsCategories}
     return (
         <div
             className={
-                "font-namu mt-16 grid grid-cols-4 gap-x-[3rem] w-full h-fit auto-rows-auto px-[3vw] max-w-screen-2xl ml-auto container mx-auto"
+                "font-namu mt-16 grid grid-cols-4 gap-x-[3rem] w-full h-fit auto-rows-auto px-[3vw] container mobile-spacing mx-auto"
             }>
             <BreadcrumbsWrapper activeIndex={2} className="col-span-full mt-9 pl-0">
                 <BreadcrumbsLink>Головна</BreadcrumbsLink>

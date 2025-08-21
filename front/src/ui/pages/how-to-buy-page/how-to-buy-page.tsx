@@ -1,25 +1,35 @@
-import React from 'react';
+"use client"
+import React, {useRef} from 'react';
 import {THowToBuyPage} from "~/use-cases/contracts/how-to-buy-page";
 import UnderLine from "~/ui/components/underline/UnderLine";
-import Button from "~/ui/components/button/button";
-import {redirect} from "next/navigation";
 import StartBuySection from "~/ui/pages/how-to-buy-page/StartBuySection";
 
 
 const HowToBuyPage: React.FC<THowToBuyPage> = ({steps}) => {
+    const stepRefs = useRef<(HTMLLIElement | null)[]>([])
+    const handleScrollToStep =  (stepIndex: number) => {
+        return (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+        const ref = stepRefs.current[stepIndex];
+        if(ref){
+            ref.scrollIntoView({behavior: "smooth"});
+        }
+        }
+    }
     return (
         <main
             className={"container mx-auto grid grid-cols-1 gap-x-8 md:grid-cols-3 pt-20 font-namu mobile-spacing"}>
-            <h1 className={"col-span-full response-text-8 md:font-medium font-namu my-10 font-bold"}>Як купити?</h1>
+            <div className={'md:sticky md:top-5'}>
+            <h1 className={"response-text-8 md:font-medium font-namu my-10 font-bold"}>Як купити?</h1>
             <aside className={" response-text-6 font md:col-span-1 hidden md:inline"}>
                 {
-                    steps.map((step, index) => (<p key={index} className={`py-2`}>{step.title}</p>))
+                    steps.map((step, index) => (<p key={index} onClick={handleScrollToStep(index)} className={`py-2 cursor-pointer`}>{step.title}</p>))
                 }
             </aside>
-            <ul className={"flex flex-col response-text-6 md:col-span-2 gap-6"}>
+            </div>
+            <ul className={"flex flex-col response-text-6 md:col-span-2 gap-6 md:pt-32"}>
                 {
                     steps.map((step, index) => (
-                        <li key={index} className={`:bg-red flex flex-col relative`}>
+                        <li key={index} ref={ (elem) => {stepRefs.current[index] = elem}} className={`scroll-mt-52 flex flex-col relative `}>
                             <p className={"response-text-8 pb-3 md:pb-6"}>{step.title}</p>
                             <p className={"response-text-6 opacity-80 font-fixel pb-4"}>{step.description}</p>
                             <UnderLine className={"bg"}/>

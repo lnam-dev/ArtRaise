@@ -1,15 +1,24 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.db import models
+from wagtail.snippets.models import register_snippet
 
+@register_snippet
+class FAQCategory(models.Model):
+    name = models.CharField(max_length=100)  
+    code = models.CharField(max_length=10, null=True, blank=True) 
+
+    def __str__(self):
+        return self.name
 
 class FAQ(models.Model):
-    class TypeOfQuestion(models.TextChoices):
-        ABOUT_PLATFORM = "AP", "Про платформу"
-        PAYMENT_AND_DELIVERY = "PAD", "Оплата та доставка"
-        TECHNICAL_SUPPORT = "TS", "Техпідтримка"
-        COLLECTORS = "C", "Колекціонери"
-
-    category = models.CharField(max_length=3, choices=TypeOfQuestion.choices, null=True, blank=True, default=None)
+    category = models.ForeignKey(
+        FAQCategory, 
+        null=True, 
+        blank=True, 
+        on_delete=models.SET_NULL,
+        related_name="faqs"
+    )
     question = models.CharField(max_length=255)
     answer = models.TextField(null=True, blank=True)
     order = models.IntegerField(default=0)

@@ -7,8 +7,7 @@ import PartnersSection from "../../components/partners-section/partners-section"
 import CallToActionSection from "../../components/cta-section/cta-section";
 import MainSliderWrapper from "./main-slider-wrapper";
 
-export default ({ data }: { data: TMainPage }) => {
-	const { artPieces, slides } = data;
+export default ({ artPieces, slides }: TMainPage) => {
 	return (
 		<main>
 			<MainSliderWrapper className="mb-12 lg:mb-8" slides={slides} />
