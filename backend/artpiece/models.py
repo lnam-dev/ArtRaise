@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.utils.text import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 
 from authors.models import Author
@@ -154,9 +155,24 @@ class ArtPiece(models.Model):
         on_delete=models.CASCADE,
         related_name='artpieces'
     )
+    tags = models.ManyToManyField(
+        'Tag',
+        blank=True,
+        related_name='artpieces',
+        verbose_name="Теги",
+        help_text="Теги твору мистецтва (максимум 5 тегів)"
+    )
 
     def __str__(self):
         return self.title
+
+    def clean(self):
+        """Валідація моделі"""
+        super().clean()
+        # Перевірка кількості тегів можлива тільки після збереження об'єкта
+        if self.pk and self.tags.count() > 5:
+            from django.core.exceptions import ValidationError
+            raise ValidationError("Артп'єс може мати максимум 5 тегів.")
 
 
 
@@ -189,3 +205,65 @@ class ArtPieceBuyForm(models.Model):
     is_processed = models.BooleanField(
         default=False,  
     )
+
+
+class Tag(models.Model):
+    """
+    Модель для тегів творів мистецтва.
+    """
+    name = models.CharField(
+        max_length=30,
+        unique=True,
+        verbose_name="Назва тега",
+        help_text="Англійська назва тега (максимум 30 символів)"
+    )
+    name_ua = models.CharField(
+        max_length=30,
+        unique=True,
+        verbose_name="Назва українською",
+        help_text="Українська назва тега (максимум 30 символів)"
+    )
+    slug = models.SlugField(
+        max_length=50,
+        unique=True,
+        blank=True,
+        verbose_name="Slug",
+        help_text="URL-дружня назва (автоматично генерується)"
+    )
+    description = models.TextField(
+        blank=True,
+        verbose_name="Опис",
+        help_text="Опціональний опис тега"
+    )
+    color = models.CharField(
+        max_length=7,
+        blank=True,
+        default="#007bff",
+        verbose_name="Колір",
+        help_text="Колір тега у форматі HEX (наприклад, #007bff)"
+    )
+    priority = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Пріоритет",
+        help_text="Порядок відображення (менше число = вище в списку)"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Активний",
+        help_text="Чи відображається тег на сайті"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Оновлено")
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+        ordering = ['priority', 'name']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name_ua or self.name

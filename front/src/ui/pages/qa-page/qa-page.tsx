@@ -13,6 +13,7 @@ import CallToActionSection from "~/ui/components/cta-section/cta-section";
 
 type Props = TQAPage;
 
+
 const QAPage: React.FC<Props> = ({
 	frequentlyAskedQuestions,
 	questionsCategories,
