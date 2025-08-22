@@ -20,7 +20,7 @@ const AuthorArtpieces: FC<Props> = ({artpieces}) => {
             artpieces.length > 0 ?
                 <>
                     <TagsMenu tags={filterArtTags} onSelectTag={setSelectedTag}/>
-                    <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12 mt-20">
+                    <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12">
                         {filteredArtPieces.map((artpiece) => (
                             <CardPurchase key={artpiece.id} card={artpiece}/>
                         ))}
