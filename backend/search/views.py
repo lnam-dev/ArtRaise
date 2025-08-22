@@ -85,10 +85,29 @@ class SearchView(APIView):
         if gammas:
             queryset = queryset.filter(gamma__in=gammas)
 
-        # Обробляємо числові фільтри
+        # Обробляємо фільтр за автором
+        author = request.GET.get("author")
+        if author:
+            queryset = queryset.filter(author__fullname__icontains=author)
+
+        # Отримуємо ценові фільтри, але поки не застосовуємо
         price_min = request.GET.get("price_min")
         price_max = request.GET.get("price_max")
+
+        # Вычисляем минимальную и максимальную цену ПЕРЕД применением ценовых фильтров
+        # Это даст нам доступный диапазон цен для текущих не-ценовых фильтров
+        price_stats = queryset.aggregate(
+            min_price=Min('price'),
+            max_price=Max('price')
+        )
         
+        # Обробляємо null значення при відсутності результатів
+        if price_stats['min_price'] is None:
+            price_stats['min_price'] = 0
+        if price_stats['max_price'] is None:
+            price_stats['max_price'] = 0
+
+        # Тепер застосовуємо ценові фільтри
         if price_min:
             try:
                 queryset = queryset.filter(price__gte=float(price_min))
@@ -101,12 +120,7 @@ class SearchView(APIView):
             except ValueError:
                 pass
 
-        # Обробляємо фільтр за автором
-        author = request.GET.get("author")
-        if author:
-            queryset = queryset.filter(author__fullname__icontains=author)
-
-        # Сортування
+        # Сортування після всіх фільтрів
         sort_by = request.GET.get("sort_by", "title")
         sort_direction = request.GET.get("sort_direction", "asc")
 
@@ -122,12 +136,6 @@ class SearchView(APIView):
             sort_field = f'-{sort_field}'
 
         queryset = queryset.order_by(sort_field)
-
-        # Вычисляем минимальную и максимальную цену для текущего набора результатов
-        price_stats = queryset.aggregate(
-            min_price=Min('price'),
-            max_price=Max('price')
-        )
 
         # Пагінація
         try:

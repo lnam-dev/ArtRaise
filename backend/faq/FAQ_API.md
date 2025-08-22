@@ -51,7 +51,7 @@ API для роботи з питаннями та відповідями (FAQ),
 ---
 
 ### 7. Питання для Call-to-Action (з пагінацією)
-- **GET** `/api/faq/call-to-action-questions/?page=1&per_page=4`
+- **GET** `/api/faq/call-to-action/`
 - Відповідь:
   ```json
   {

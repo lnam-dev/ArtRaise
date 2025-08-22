@@ -5,6 +5,7 @@ import Arrow from "~/assets/arrow-up-right.svg";
 interface AccordionProps {
 	title: string;
 	children: ReactNode | string;
+	className?: string;
 	size?: "sm" | "bg";
 }
 
@@ -16,7 +17,12 @@ const textComponent = (children: string) => {
 	);
 };
 
-const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
+const Accordion = ({
+	title,
+	children,
+	className = "",
+	size = "sm",
+}: AccordionProps) => {
 	let style;
 	switch (size) {
 		case "sm":
@@ -31,7 +37,7 @@ const Accordion = ({ title, children, size = "sm" }: AccordionProps) => {
 	const handleToggle = () => setIsOpen(!isOpen);
 
 	return (
-		<div className={`border-bottom ${style}`}>
+		<div className={`border-bottom ${style} ${className}`}>
 			<button
 				className="flex justify-between items-center gap-2 w-full"
 				onClick={handleToggle}>
