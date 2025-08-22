@@ -75,6 +75,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 						<SliderButtonExpand
 							className="translate-x-4 sm:translate-x-0"
 							slides={slides}
+							initialSlide={currentSlideIdx}
 							orientation={ORIENTATION}
 						/>
 					)}

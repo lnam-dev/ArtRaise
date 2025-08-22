@@ -2,27 +2,27 @@
 	@apply font-fixel text-black-1000 leading-relaxed max-w-full leading-tight;
 
 	h1 {
-		@apply font-namu text-10 font-bold;
+		@apply font-namu text-6 md:text-8 xl:text-10 font-semibold md:font-bold;
 	}
 
 	h2 {
-		@apply font-namu text-8 font-semibold;
+		@apply font-namu text-6 md:text-8 font-medium md:font-semibold;
 	}
 
 	h3 {
-		@apply font-namu text-6 font-medium;
+		@apply font-namu text-4 md:text-6 font-normal md:font-medium;
 	}
 
 	h4 {
-		@apply font-namu text-4 font-medium;
+		@apply font-namu text-3 xl:text-4 font-normal md:font-medium;
 	}
 
 	h5 {
-		@apply font-namu text-3 font-medium;
+		@apply font-namu text-3 font-normal md:font-medium;
 	}
 
 	h6 {
-		@apply font-namu text-2 font-medium;
+		@apply font-namu text-2 font-normal md:font-medium;
 	}
 
 	span {
