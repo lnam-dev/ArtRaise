@@ -1,0 +1,24 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 546 / 363; /* завжди зберігає пропорції */
+  overflow: hidden;
+  border-radius: 0; /* прямі кути */
+}
+
+.image {
+  object-fit: cover;
+  border-radius: 0; /* прямі кути */
+}
+
+.buttonOverlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}

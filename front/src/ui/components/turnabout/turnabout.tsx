@@ -1,9 +1,14 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 
+type SlideTextDataType = {
+	title: string;
+	subtitle: string;
+}
+
 interface TurnaboutProps
 	extends React.ComponentPropsWithoutRef<React.ElementType> {
-	text: (string | undefined)[];
+	slideTextData: SlideTextDataType[];
 	tag: React.ElementType;
 	type?: "vertical";
 	currentIndex: number;
@@ -14,7 +19,7 @@ interface TurnaboutProps
 }
 
 const Turnabout: React.FC<TurnaboutProps> = ({
-	text,
+	slideTextData,
 	tag: Tag,
 	type = "vertical",
 	currentIndex,
@@ -28,7 +33,7 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 	const [heights, setHeights] = useState<number[]>([]);
 	const [currentHeight, setCurrentHeight] = useState<number>(0);
 
-	const validatedIndex = currentIndex >= text.length ? 0 : currentIndex;
+	const validatedIndex = currentIndex >= slideTextData.length ? 0 : currentIndex;
 
 	const setRef = useCallback((el: HTMLDivElement | null, index: number) => {
 		if (el) refs.current[index] = el;
@@ -43,7 +48,7 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 				setCurrentHeight(newHeights[validatedIndex]);
 			}
 		}, 10);
-	}, [text, validatedIndex]);
+	}, [slideTextData, validatedIndex]);
 
 	const translateY = heights
 		.slice(0, validatedIndex)
@@ -57,13 +62,22 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 			<div
 				className={`flex flex-col transition-transform duration-[${duration}ms] ${animation}`}
 				style={{ transform: `translateY(-${translateY}px)` }}>
-				{text.map((textItem, index) => (
+				{slideTextData && slideTextData.map(({title, subtitle}, index) => (
 					<Tag
-						key={index}
-						ref={(el: any) => setRef(el, index)}
-						className={textClass}>
-						{textItem}
-					</Tag>
+  key={index}
+  ref={(el: any) => setRef(el, index)}
+  className="pl-[10px] pt-[48px] pb-[10px] inline-block"
+>
+  <div className="font-namu text-[48px] font-normal">
+    {title}
+  </div>
+  {subtitle && (
+    <div className="font-fixel text-[24px] font-normal mt-2">
+      {subtitle}
+    </div>
+  )}
+</Tag>
+
 				))}
 			</div>
 		</div>

@@ -33,6 +33,11 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 		return 0;
 	};
 
+	if(!slides.length) {
+		return null;
+	}
+
+
 	return (
 		<SliderBase
 			slides={slides}
@@ -60,10 +65,10 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 			headerElements={(currentSlideIdx) => (
 				<>
 					<div
-						className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 xl:w-full`}>
+						className={`bg-gradient-light backdrop-blur-md pr-1 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-2 xl:w-full -ml-12`}>
 						<Turnabout
 							currentIndex={currentSlideIdx}
-							text={slides.map(({ title }) => title)}
+							slideTextData={slides.map((contentData) => ({title: contentData.title || '', subtitle: contentData.subtitle || ''}))}
 							tag={"h1"}
 							textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
 							animation="ease-in-out"

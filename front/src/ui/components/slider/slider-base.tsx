@@ -18,6 +18,7 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 	variant = "classic",
 	children,
 	swiperProps,
+	isShowLines,
 	unpackedSlides,
 	headerElements,
 	wrapperStyle,
@@ -77,18 +78,19 @@ const SliderBase: React.FC<TSliderBaseProps> = ({
 					</div>
 				</Swiper>
 			</div>
-			<div className="container mx-auto w-full text-left">
-				<div className="mobile-spacing">
-					{children && children(currentSlideIdx)}
-					{!isDesktop && (
-						<SliderPagination
-							mode="dark"
-							currentSlide={currentSlideIdx}
-							slidesLength={slides.length}
-						/>
-					)}
-				</div>
-			</div>
+			{ isShowLines && (<div className="container mx-auto w-full text-left">
+					<div className="mobile-spacing">
+						{children && children(currentSlideIdx)}
+						{!isDesktop && (
+							<SliderPagination
+								mode="dark"
+								currentSlide={currentSlideIdx}
+								slidesLength={slides.length}
+							/>
+						)}
+					</div>
+				</div>)
+			}
 		</section>
 	);
 };

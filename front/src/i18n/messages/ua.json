@@ -1,4 +1,11 @@
 {
-	"greeting": "Hello",
-	"product": "Product"
+	"greeting": "Привіт",
+	"product": "Продукт",
+	"aboutFund": {
+		"title": "Про Фонд",
+		"subtitle": "Благодійний Фонд 'Друзі ЛНАМ'",
+		"photos": "Фотографії",
+		"learnMore": "Дізнатися більше",
+		"view": "Переглянути"
+	}
 }

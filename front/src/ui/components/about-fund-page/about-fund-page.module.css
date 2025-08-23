@@ -1,0 +1,34 @@
+/* About Fund Page Styles */
+.aboutFundPage {
+  min-height: 100vh;
+}
+
+.photosSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.photosTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.photoGrid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .photosTitle {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .photoGrid {
+    gap: 1rem;
+  }
+}

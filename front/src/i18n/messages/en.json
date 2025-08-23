@@ -1,4 +1,11 @@
 {
 	"greeting": "Hello",
-	"product": "Product"
+	"product": "Product",
+	"aboutFund": {
+		"title": "About Fund",
+		"subtitle": "Charitable Fund 'Friends of LNAM'",
+		"photos": "Photos",
+		"learnMore": "Learn More",
+		"view": "View"
+	}
 }

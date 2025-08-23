@@ -1,0 +1,47 @@
+.about-fund-page__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.about-fund-page__title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 1.5rem;
+  font-family: 'NAMU-1850', serif;
+}
+
+.about-fund-page__images-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.about-fund-page__image-wrapper {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .about-fund-page__images-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-fund-page__title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .about-fund-page__images-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.about-fund-page__image-wrapper img {
+  border-radius: 0; /* робить кути прямими */
+}

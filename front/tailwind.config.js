@@ -137,5 +137,12 @@ module.exports = {
 			namu: ["namu", "sans-serif"],
 			museo: ['"Museo Sans Cyr"', "sans-serif"],
 		},
+		theme: {
+			extend: {
+			  fontFamily: {
+				fixel: ['"Fixel Display"', 'sans-serif'],
+			  },
+			},
+		  },
 	},
 };
