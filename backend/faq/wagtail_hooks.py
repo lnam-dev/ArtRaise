@@ -5,10 +5,10 @@ from .models import FAQ, FAQCategory, CallToAction
 class WagtailFAQCategoryViewSet(SnippetViewSet):
     model = FAQCategory
     icon = "folder-open-inverse"
-    list_display = ["name", "code"]
-    search_filters = ["name", "code"]
+    list_display = ["name"]
+    search_filters = ["name"]
     ordering = ["name"]
-    form_fields = ["name", "code"]
+    form_fields = ["name"]
 
 class WagtailFAQProfileViewSet(SnippetViewSet):
     model = FAQ
@@ -30,7 +30,6 @@ class FAQViewSetGroup(SnippetViewSetGroup):
     items = [WagtailFAQCategoryViewSet, WagtailFAQProfileViewSet, WagtailCallToActionViewSet]
     menu_label = "FAQ"
     menu_name = "FAQ_folder"
-
 
 register_snippet(FAQViewSetGroup)
 
