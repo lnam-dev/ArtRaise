@@ -32,6 +32,6 @@ class FAQViewSetGroup(SnippetViewSetGroup):
     menu_name = "FAQ_folder"
 
 
-register_snippet(FAQViewSetGroup)
+# register_snippet(FAQViewSetGroup)
 
 
