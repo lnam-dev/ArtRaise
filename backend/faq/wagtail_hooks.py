@@ -2,6 +2,15 @@ from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 from .models import FAQ, FAQCategory, CallToAction
 
+class WagtailFAQProfileViewSet(SnippetViewSet):
+    model = FAQ
+    icon = "help"
+    list_display = ["question", "category", "show_in_how_to_buy", "show_in_question_answer", "show_in_call_to_action", "created_at"]
+    search_filters = ["question"]
+    ordering = ["-id"]
+    form_fields = ["question", "answer", "category", "show_in_how_to_buy", "show_in_question_answer", "show_in_call_to_action", "order", "is_active"]
+
+
 class WagtailFAQCategoryViewSet(SnippetViewSet):
     model = FAQCategory
     icon = "folder-open-inverse"
@@ -10,13 +19,6 @@ class WagtailFAQCategoryViewSet(SnippetViewSet):
     ordering = ["name"]
     form_fields = ["name"]
 
-class WagtailFAQProfileViewSet(SnippetViewSet):
-    model = FAQ
-    icon = "help"
-    list_display = ["question", "answer", "category", "created_at"]
-    search_filters = ["question"]
-    ordering = ["-id"]
-    form_fields = ["question", "answer", "category"]
 
 class WagtailCallToActionViewSet(SnippetViewSet):
     model = CallToAction
