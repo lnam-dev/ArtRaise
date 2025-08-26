@@ -17,7 +17,8 @@ import { TArtPiece } from "~/types/art";
 const SliderModal: React.FC<{
 	slides: TSliderBaseProps["slides"];
 	orientation?: TArtPiece["orientation"];
-}> = ({ slides, orientation = "landscape", ...props }) => {
+	initialSlide?: number;
+}> = ({ slides, orientation = "landscape", initialSlide = 0, ...props }) => {
 	const { currentDevice } = useDevice();
 
 	return (
@@ -27,43 +28,34 @@ const SliderModal: React.FC<{
 					loop
 					modules={[Zoom]}
 					zoom={true}
-					centeredSlides={true}
-					slidesPerView={1}
-					slidesPerGroup={1}
-					spaceBetween={0}
-					loopAdditionalSlides={1}
-					observer={true}
-					observeParents={true}
-					simulateTouch={true}
-					allowTouchMove={true}
-					speed={600}
-					longSwipes={false}
 					threshold={20}
 					touchRatio={1}
+					initialSlide={initialSlide}
 					className="slider-modal__swiper">
 					<div className="slider-modal__swiper-wrapper">
-						{slides.map((slide, index) => (
-							<SwiperSlide key={index}>
+						<SwiperSlide>
+							<div
+								className={`slider-modal__container slider-modal__container--${currentDevice} swiper-zoom-container`}>
 								<div
-									className={`slider-modal__container slider-modal__container--${currentDevice} swiper-zoom-container`}>
-									<div
-										className={`slider-modal__content slider-modal__content--${currentDevice}`}>
-										<figure
-											className={`slider-modal__image-wrapper slider-modal__image-wrapper--${orientation}`}>
-											<Image
-												src={slide.image_url}
-												alt={slide.description || slide.title}
-												width={0}
-												height={0}
-												sizes="100vw"
-												className={`slider-modal__image slider-modal__image--${orientation}`}
-											/>
-										</figure>
-										<SliderModalClose />
-									</div>
+									className={`slider-modal__content slider-modal__content--${currentDevice}`}>
+									<figure
+										className={`slider-modal__image-wrapper slider-modal__image-wrapper--${orientation}`}>
+										<Image
+											src={slides[initialSlide].image_url}
+											alt={
+												slides[initialSlide].description ||
+												slides[initialSlide].title
+											}
+											width={0}
+											height={0}
+											sizes="60vw"
+											className={`slider-modal__image slider-modal__image--${orientation}`}
+										/>
+									</figure>
+									<SliderModalClose />
 								</div>
-							</SwiperSlide>
-						))}
+							</div>
+						</SwiperSlide>
 					</div>
 				</Swiper>
 			</div>

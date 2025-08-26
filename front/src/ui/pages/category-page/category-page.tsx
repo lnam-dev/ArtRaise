@@ -2,14 +2,13 @@ import { CategoryPage as TCategoryPage } from "~/use-cases/contracts/category-pa
 
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
-import LinkBackTo from "~/ui/components/link/link-back-to";
 import CardPurchase from "~/ui/components/card/card-purchase";
 
 const CategoryPage = ({ artPieces }: TCategoryPage) => {
 	return (
 		<main className="container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing">
 			<div>
-				<BreadcrumbsWrapper activeIndex={2} className="mb-3">
+				<BreadcrumbsWrapper activeIndex={1} className="mb-3">
 					<BreadcrumbsLink to="/categories">Категорії</BreadcrumbsLink>
 					<BreadcrumbsLink>{artPieces[0].category.name_ua}</BreadcrumbsLink>
 				</BreadcrumbsWrapper>
