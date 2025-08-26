@@ -25,13 +25,13 @@ const ButtonTransparent: React.FC<TransparentButtonProps> = ({
 	return (
 		<Link
 			to={href}
-			className={`flex flex-row justify-between items-start md:items-center gap-6 bg-black-950/60 backdrop-blur-xl py-4 px-6 text-white tracking-wider z-10 ${className}`}>
+			className={`flex flex-row justify-between items-start md:items-center gap-6 bg-black-950/60 backdrop-blur-xl py-6 px-4 md:py-4 md:px-6 text-white tracking-wider z-10 ${className}`}>
 			<div>
 				<p className="font-fixel leading-none font-normal text-3 md:text-4">
 					{primaryText}
 				</p>
 				<h3 className="font-namu text-5 md:text-8 mb-2">{secondaryText}</h3>
-				<p className="font-fixel leading-none text-4 md:text-5 font-normal">
+				<p className="font-fixel leading-none text-3 md:text-4 xl:text-5 font-normal">
 					{description}
 				</p>
 			</div>

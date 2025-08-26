@@ -14,11 +14,11 @@ const QuestionCategory: React.FC<QuestionCategoryProps> = ({ category }) => {
 	return (
 		<li
 			className={
-				"relative grid grid-cols-4 col-span-full gap-x-6 gap-y-4 py-12"
+				"relative grid grid-cols-4 col-span-full gap-x-6 gap-y-4 pb-8 xl:py-12"
 			}>
 			<h3
 				className={
-					"font-namu font-semibold text-5 md:text-6 text-black-950/65 col-span-full md:col-span-1 mb-2 md:mb-0"
+					"font-namu font-semibold text-5 md:text-6 text-gray-700 col-span-full md:col-span-1 mb-0 xl:mb-2 md:mb-0"
 				}>
 				{name}
 			</h3>
@@ -27,7 +27,7 @@ const QuestionCategory: React.FC<QuestionCategoryProps> = ({ category }) => {
 					<Accordion
 						key={question.question}
 						title={question.question}
-						className="mt-4"
+						className="mb-4"
 						size="bg">
 						<div className="mt-2">
 							<span className="font-fixel text-4 text-black-950">
