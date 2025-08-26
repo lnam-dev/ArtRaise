@@ -17,13 +17,13 @@ const QaCategoriesMapper: React.FC<QaCategoriesMapperProps> = ({
 				className={`mt-12 mb-0 md:mb-12 md:mt-12 text-8 md:text-12 md:text-nowrap `}>
 				Часті питання:
 			</h2>
-			<li>
+			<React.Fragment>
 				{categories.map((category) => {
 					return (
 						<QuestionCategory key={category.category} category={category} />
 					);
 				})}
-			</li>
+			</React.Fragment>
 		</ul>
 	);
 };
