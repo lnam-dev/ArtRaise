@@ -14,7 +14,7 @@ const QaCategoriesMapper: React.FC<QaCategoriesMapperProps> = ({
 	return (
 		<ul className={"col-span-full"}>
 			<h2
-				className={`mt-12 mb-0 md:mb-12 md:mt-12 text-8 md:text-12 md:text-nowrap `}>
+				className={`mt-12 mb-10 md:mb-12 md:mt-12 text-8 md:text-12 md:text-nowrap `}>
 				Часті питання:
 			</h2>
 			<React.Fragment>
