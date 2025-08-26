@@ -1,31 +1,35 @@
 import React from "react";
-import { TAuthor } from "~/types";
-import AuthorsPage from "~/ui/pages/authors-page/authors-page";
-import { MOCKED_QADATA, TQAPage } from "~/use-cases/contracts/qa-page";
+
+import { TFAQResponse } from "~/types";
+import { TQAPage } from "~/use-cases/contracts/qa-page";
+
 import QAPage from "~/ui/pages/qa-page/qa-page";
 
 export const revalidate = 21600;
 export const dynamic = "force-static";
 
-const getQAdata = async (): Promise<TQAPage> => {
+async function getData(): Promise<TFAQResponse> {
 	try {
-		// const responseAuthors = await fetch(`${process.env.API_URL}qa`);
-		// if (!responseAuthors.ok) {
-		//     console.error(`Failed to fetch art pieces: ${responseAuthors.status}`);
-		// }cc
-		// return await responseAuthors.json() as TAuthor[];
-		return MOCKED_QADATA;
+		const response = await fetch(
+			`${process.env.API_URL}faq/questions/question-and-answer/`
+		);
+		if (!response.ok) {
+			throw new Error(`Failed to fetch FAQ data: ${response.status}`);
+		}
+
+		const faqData = await response.json();
+		return faqData;
 	} catch (error) {
-		console.error(`Помилка при завантаженні FAQ: ${error}`);
+		console.error(`Error fetching FAQ data: ${error}`);
 		return {
-			questionsCategories: [],
-			frequentlyAskedQuestions: [],
+			common: [],
+			frequent: [],
 		};
 	}
-};
+}
 
 const Home = async () => {
-	const QAdata: TQAPage = await getQAdata();
+	const QAdata: TQAPage = await getData();
 	return <QAPage {...QAdata} />;
 };
 

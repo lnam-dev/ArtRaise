@@ -1,17 +1,16 @@
 import React from "react";
 
-import { TQuestionCategory } from "~/types";
+import { TFrequentCategory } from "~/types";
 
 import Accordion from "~/ui/components/accordion/accordion";
-
 import Underline from "~/ui/components/underline/underline";
 
-type Props = {
-	category: TQuestionCategory;
+type QuestionCategoryProps = {
+	category: TFrequentCategory;
 };
 
-const QuestionCategory: React.FC<Props> = ({ category }) => {
-	const { questions, name } = category;
+const QuestionCategory: React.FC<QuestionCategoryProps> = ({ category }) => {
+	const { category: name, questions } = category;
 	return (
 		<li
 			className={
