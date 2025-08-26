@@ -1,12 +1,16 @@
 import React from "react";
-import { TQuestionAnswer } from "~/types";
-import QuestionAnswer from "~/ui/pages/qa-page/sections/question-answer";
 
-type Props = {
-	frequentQuestions: TQuestionAnswer[];
+import { TFAQResponse } from "~/types";
+
+import QuestionAnswer from "./question-answer";
+
+type CommonQuestionProps = {
+	commonQuestions: TFAQResponse["common"];
 };
 
-const FrequentQuestionsMapper: React.FC<Props> = ({ frequentQuestions }) => {
+const CommonQuestionsMapper: React.FC<CommonQuestionProps> = ({
+	commonQuestions,
+}) => {
 	return (
 		<section className={"col-span-full"}>
 			<h2
@@ -14,12 +18,12 @@ const FrequentQuestionsMapper: React.FC<Props> = ({ frequentQuestions }) => {
 				Зазвичай запитують:
 			</h2>
 			<ul>
-				{frequentQuestions.map((question, index) => (
-					<QuestionAnswer questionAnswer={question} key={index} />
+				{commonQuestions.map((question) => (
+					<QuestionAnswer questionAnswer={question} key={question.id} />
 				))}
 			</ul>
 		</section>
 	);
 };
 
-export default FrequentQuestionsMapper;
+export default CommonQuestionsMapper;

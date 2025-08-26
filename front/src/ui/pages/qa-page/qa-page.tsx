@@ -13,10 +13,7 @@ import CallToActionSection from "~/ui/components/cta-section/cta-section";
 
 type Props = TQAPage;
 
-const QAPage: React.FC<Props> = ({
-	frequentlyAskedQuestions,
-	questionsCategories,
-}) => {
+const QAPage: React.FC<Props> = ({ common, frequent }) => {
 	return (
 		<main
 			className={
@@ -32,8 +29,8 @@ const QAPage: React.FC<Props> = ({
 				до головної
 			</LinkBackTo>
 			<MostCommonQuestion />
-			<FrequentQuestionsMapper frequentQuestions={frequentlyAskedQuestions} />
-			<QACategoriesMapper categories={questionsCategories} />
+			<FrequentQuestionsMapper commonQuestions={common} />
+			<QACategoriesMapper categories={frequent} />
 			<CallToActionSection
 				QuestionAndAnswer={false}
 				className={"col-span-full mt-10"}
