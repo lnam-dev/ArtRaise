@@ -13,7 +13,7 @@ const ArtpiecesTagMapper: React.FC<Props> = ({artpieces}) => {
     const canLoadMore = artpieces.length > numbOfDisplayed
     return (
         <>
-            <SegmentTitle className={'mb-10'}>{'Знайдені результати'}</SegmentTitle>
+            <SegmentTitle className={'mb-10'} link={{to:'search', name: 'шукати ще'}}>{'Знайдені результати'}</SegmentTitle>
             <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12">
                 {artpieces.slice(0,numbOfDisplayed).map((obj) => (
                     <CardPurchase key={obj.id} card={obj}/>
