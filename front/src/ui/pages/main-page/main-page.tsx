@@ -6,14 +6,16 @@ import CertificatesSection from "../../components/certificatesSection/certificat
 import AboutFund from "../../components/partners-section/about-fund";
 import CallToActionSection from "../../components/cta-section/cta-section";
 import MainSliderWrapper from "./main-slider-wrapper";
+import FindByTags from "~/ui/components/search-bar/find-by-tags";
 
-export default ({ artPieces, slides }: TMainPage) => {
+export default ({ artPieces, slides, tagsFindBy }: TMainPage) => {
 	return (
 		<main>
 			<MainSliderWrapper className="mb-12 lg:mb-8" slides={slides} />
 			<div className="container mx-auto min-h-[100vh]">
-				<SearchBar className="mb-12" />
-				<article className="mobile-spacing">
+				<SearchBar />
+				<FindByTags tags={tagsFindBy}/>
+				<article className="mobile-spacing mt-10">
 					<section className="mb-10">
 						<SegmentTitle
 							className="mb-10"
