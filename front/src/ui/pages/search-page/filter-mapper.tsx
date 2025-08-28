@@ -6,7 +6,6 @@ import {removeFilter, removeSelectedCategoriesSlug, setSelectedPriceRange} from 
 import DefaultTag from "~/ui/components/tag/default-tag";
 import Hash from "~/assets/hash.svg";
 import Cross from "~/assets/cross.svg";
-import {forEach} from "lodash";
 
 
 type Props = {
@@ -21,9 +20,8 @@ const FilterMapper: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch();
     let filterItems: TFilterItem[] = [];
     const price_range = filterState.filters.price_range_filters
-
-    if (price_range) {
-
+    const isPriceDiffer = filterState.available_price_range.min_price !== price_range.min || filterState.available_price_range.max_price !== price_range.max
+    if (price_range && isPriceDiffer) {
         filterItems.push({
             value: `${price_range.min}-${price_range.max}`,
             onDelete: () => {
