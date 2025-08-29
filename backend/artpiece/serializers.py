@@ -50,9 +50,9 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "style",
             "author",
             "image_artpiece",
-            "creating_date",
             "category",
             "tags",
+            "created_at",
         ]
 
     def get_author(self, obj):
@@ -75,14 +75,6 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             return None
         # Повертаємо URL зображення
         return f"{settings.MEDIA_URL}{obj.image_artpiece.name}"
-
-    def get_creating_date(self, obj):
-        if obj.creating_date_start and obj.creating_date_end:
-            return f"{obj.creating_date_start}-{obj.creating_date_end}"
-        elif obj.creating_date_start:
-            return f"{obj.creating_date_start}"
-        else:
-            return f"Unknown"
 
 
 class ArtPieceDetailSerializer(ArtPieceSerializer):
