@@ -81,7 +81,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 			{/*all*/}
 			<SegmentTitle
 				className={"mt-20"}
-				link={{ to: "/ua/authors", name: "Всі автори" }}>
+				link={{ to: "/authors", name: "Всі автори" }}>
 				Інші автори
 			</SegmentTitle>
 			<FamiliarAuthors

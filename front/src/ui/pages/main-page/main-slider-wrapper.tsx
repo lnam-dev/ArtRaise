@@ -97,7 +97,7 @@ const MainSliderWrapper: FC<SliderWrapperProps> = ({ slides, ...props }) => {
 						items={slides.map(({ link_type, ...rest }) =>
 							renderDescription(link_type, rest)
 						)}
-						wrapperClass="mb-2 xl:mb-0 admin-content"
+						wrapperClass="mb-4 xl:mb-0 admin-content"
 						animation="ease-in-out"
 						duration={600}
 					/>

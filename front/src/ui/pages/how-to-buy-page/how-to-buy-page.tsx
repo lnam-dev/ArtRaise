@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import { THowToBuyPage } from "~/use-cases/contracts/how-to-buy-page";
-import UnderLine from "~/ui/components/underline/underline";
+import Underline from "~/ui/components/underline/underline";
 import StartBuySection from "~/ui/pages/how-to-buy-page/StartBuySection";
 
 const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
@@ -53,7 +53,7 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 						<p className={"response-text-6 opacity-80 font-fixel pb-4"}>
 							{step.description}
 						</p>
-						<UnderLine className={"bg"} />
+						<Underline className={"bg"} />
 					</li>
 				))}
 			</ul>

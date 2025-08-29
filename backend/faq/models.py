@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from wagtail.snippets.models import register_snippet
 
-# @register_snippet
+
+
 class FAQCategory(models.Model):
     name = models.CharField(max_length=100)  
-    code = models.CharField(max_length=10, null=True, blank=True) 
+    # code = models.CharField(max_length=10, null=True, blank=True) 
 
     def __str__(self):
         return self.name

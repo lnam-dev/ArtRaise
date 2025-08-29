@@ -16,9 +16,19 @@ async function getData(): Promise<TMainPage> {
 			cache: "force-cache",
 		} as any);
 
+		const findByTagResponse = await fetch(`${process.env.API_URL}artpieces/tags`, {
+			next: { revalidate: revalidate },
+			cache: "force-cache",
+		} as any);
+
 		if (!artPiecesResponse.ok) {
 			throw new Error(
 				`Failed to fetch art pieces: ${artPiecesResponse.status}`
+			);
+		}
+		if (!findByTagResponse.ok) {
+			throw new Error(
+				`Failed to fetch tags: ${artPiecesResponse.status}`
 			);
 		}
 		if (!SliderResponse.ok) {
@@ -26,17 +36,19 @@ async function getData(): Promise<TMainPage> {
 		}
 		const artPieces = await artPiecesResponse.json();
 		const slides = await SliderResponse.json();
-		return { artPieces, slides };
+		const tagsFindBy = (await findByTagResponse.json()).tags;
+		return { artPieces, slides , tagsFindBy};
 	} catch (error) {
 		console.error(`Помилка при завантаженні мистецьких творів: ${error}`);
 		return {
 			artPieces: [],
 			slides: [],
+			tagsFindBy: []
 		};
 	}
 }
 
 export default async () => {
 	const data = await getData();
-	return <MainPage slides={data.slides} artPieces={data.artPieces} />;
+	return <MainPage slides={data.slides} artPieces={data.artPieces} tagsFindBy={data.tagsFindBy} />;
 };

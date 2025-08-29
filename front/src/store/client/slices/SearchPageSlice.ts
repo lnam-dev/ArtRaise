@@ -122,9 +122,6 @@ const SearchPageSlice = createSlice({
             const modifiedArray = Array.from(state.filters[filterKey]);
             state.filters[filterKey] = modifiedArray.filter(filterVal => filterVal !== filterValue);
         },
-        setupFilterKeysCounts: (state, action: PayloadAction<TFilterKeysCounts>) => {
-            state.filters.filterKeysCounts = action.payload;
-        },
         setupPagination: (state, action: PayloadAction<IPagination>) => {
             state.pagination = action.payload;
         },
@@ -168,7 +165,6 @@ export const {
     setupPriceRange,
     appendFilter,
     removeFilter,
-    setupFilterKeysCounts,
     setupPagination
 } = SearchPageSlice.actions;
 export default SearchPageSlice.reducer;

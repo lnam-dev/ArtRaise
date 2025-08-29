@@ -5,13 +5,9 @@ import {
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue,
 } from "~/components/ui/select";
 import { useAppDispatch, useAppSelector } from "~/store/client/hooks";
 import { ISort, setSort } from "~/store/client/slices/SearchPageSlice";
-import { Separator } from "@radix-ui/react-select";
-import { Underline } from "lucide-react";
-import UnderLine from "~/ui/components/underline/underline";
 
 type Props = {};
 

@@ -13,18 +13,14 @@ import CallToActionSection from "~/ui/components/cta-section/cta-section";
 
 type Props = TQAPage;
 
-
-const QAPage: React.FC<Props> = ({
-	frequentlyAskedQuestions,
-	questionsCategories,
-}) => {
+const QAPage: React.FC<Props> = ({ common, frequent }) => {
 	return (
 		<main
 			className={
 				"font-namu mt-12 xl:mt-16 grid grid-cols-4 gap-x-[3rem] w-full h-fit auto-rows-auto px-[3vw] max-w-screen-2xl ml-auto container mx-auto"
 			}>
 			<BreadcrumbsWrapper
-				activeIndex={2}
+				activeIndex={1}
 				className="col-span-full mt-9 mb-4 pl-0">
 				<BreadcrumbsLink to="/">Головна</BreadcrumbsLink>
 				<BreadcrumbsLink>Зазвичай запитують</BreadcrumbsLink>
@@ -33,8 +29,8 @@ const QAPage: React.FC<Props> = ({
 				до головної
 			</LinkBackTo>
 			<MostCommonQuestion />
-			<FrequentQuestionsMapper frequentQuestions={frequentlyAskedQuestions} />
-			<QACategoriesMapper categories={questionsCategories} />
+			<FrequentQuestionsMapper commonQuestions={common} />
+			<QACategoriesMapper categories={frequent} />
 			<CallToActionSection
 				QuestionAndAnswer={false}
 				className={"col-span-full mt-10"}

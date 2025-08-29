@@ -57,3 +57,14 @@ export type TEvent = {
 	start_date: string; //there need mb date
 	end_date: string;
 };
+export type TFindByTag = {
+	id: number;
+	name: string;
+	name_ua: string;
+	slug: string;
+	description: string;
+	color: string;
+	priority: number;
+	is_active: boolean;
+	artpieces_count: number;
+};
