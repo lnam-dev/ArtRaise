@@ -52,7 +52,7 @@ const CertificatePage: React.FC<Props> = ({artpiece}) => {
             </div>
             <SegmentTitle className={'my-5 md:mt-10'}>Сертифікат</SegmentTitle>
             <ImageWithFallback
-                className="h-auto w-full max-h-[50rem] object-cover mx-auto object-center"
+                className="h-auto w-full max-h-[50rem] object-cover mx-auto mb-10 object-center"
                 src={artpiece.certificate}
                 alt="Author"
                 fallbackSrc={'/default.png'}
