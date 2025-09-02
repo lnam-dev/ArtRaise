@@ -80,7 +80,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Стиль"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        filterState.filters.filterKeysCounts.style.map((filter) => {
+                        filterState.filters.filterKeys.style.map((filter) => {
                             const isSelected = filterState.filters.style.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
@@ -103,13 +103,36 @@ const FilterMenu: React.FC<Props> = ({className}) => {
             <Accordion title={"Тема"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
                     {
-                        filterState.filters.filterKeysCounts.theme.map((filter) => {
+                        filterState.filters.filterKeys.theme.map((filter) => {
                             const isSelected = filterState.filters.theme.includes(filter.name);
                             const handleOnClick = () => {
                                 if (!isSelected) {
                                     dispatch(appendFilter({filterKey: 'theme', filterValue: filter.name}))
                                 } else {
                                     dispatch(removeFilter({filterKey: 'theme', filterValue: filter.name}))
+                                }
+                            }
+                            return (
+                                <FilterTag key={filter.name} className={`py-1`} onClick={handleOnClick}
+                                           isSelected={isSelected}>
+                                    {`${filter.name}`}
+                                </FilterTag>
+                            )
+                        })
+                    }
+
+                </div>
+            </Accordion>
+            <Accordion title={"Матеріал"}>
+                <div className={"flex w-full flex-wrap gap-3 mt-4"}>
+                    {
+                        filterState.filters.filterKeys.material.map((filter) => {
+                            const isSelected = filterState.filters.material.includes(filter.name);
+                            const handleOnClick = () => {
+                                if (!isSelected) {
+                                    dispatch(appendFilter({filterKey: 'material', filterValue: filter.name}))
+                                } else {
+                                    dispatch(removeFilter({filterKey: 'material', filterValue: filter.name}))
                                 }
                             }
                             return (

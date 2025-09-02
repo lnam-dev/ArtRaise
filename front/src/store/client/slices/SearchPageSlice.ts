@@ -1,21 +1,21 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {TFilterKeys} from "~/types/filter-types/filter";
+import {TFilterKeysValues} from "~/types/filter-types/filter";
 import {TArtPiece} from "~/types";
 
 //fields like type, material , and so on. Need to select multiply values of this filter
 export type TFilterFields = {
-    [key in TFilterKeys]: string[]
+    [key in TFilterKeysValues]: string[]
 }
 
-type TFilterKeyCount = {
-    count: number;
+type TFilterKey = {
     name: string;
 }
 type TSortDirection = 'asc' | 'desc';
 type TSortBy = 'title' | 'price' | 'date' | 'author'
 
-export type TFilterKeysCounts = {
-    [key in TFilterKeys]: TFilterKeyCount[]
+
+export type TFilterKeys = {
+    [key in TFilterKeysValues]: TFilterKey[]
 }
 
 export interface IPagination {
@@ -27,7 +27,7 @@ export interface IPagination {
     page_size: number
 }
 
-export type TFilterCategoryKeyCount = TFilterKeyCount & { slug: string }
+export type TFilterCategoryKey = TFilterKey & { slug: string }
 
 export interface IPriceRange {
     min_price: number
@@ -48,13 +48,13 @@ export interface ISearchPageState {
         query: string,
         category: {
             appliedCategoriesSlugs: string[],
-            categoryKeysCounts: TFilterCategoryKeyCount[],
+            categoryKeysCounts: TFilterCategoryKey[],
         }
         price_range_filters: {
             min: number,
             max: number
         }
-        filterKeysCounts: TFilterKeysCounts
+        filterKeys: TFilterKeys
     } & TFilterFields,
 }
 
@@ -89,7 +89,7 @@ const initialState: ISearchPageState = {
             appliedCategoriesSlugs: [],
             categoryKeysCounts: [],
         },
-        filterKeysCounts: {
+        filterKeys: {
             material: [],
             style: [],
             theme: [],
@@ -111,13 +111,13 @@ const SearchPageSlice = createSlice({
         setArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
             state.artpieces = action.payload;
         },
-        appendFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys, filterValue: string }>) => {
+        appendFilter: (state, action: PayloadAction<{ filterKey: TFilterKeysValues, filterValue: string }>) => {
             const {filterKey, filterValue} = action.payload;
             const modifiedArray = Array.from(state.filters[filterKey]);
             modifiedArray.push(filterValue);
             state.filters[filterKey] = modifiedArray;
         },
-        removeFilter: (state, action: PayloadAction<{ filterKey: TFilterKeys, filterValue: string }>) => {
+        removeFilter: (state, action: PayloadAction<{ filterKey: TFilterKeysValues, filterValue: string }>) => {
             const {filterKey, filterValue} = action.payload;
             const modifiedArray = Array.from(state.filters[filterKey]);
             state.filters[filterKey] = modifiedArray.filter(filterVal => filterVal !== filterValue);
@@ -136,7 +136,7 @@ const SearchPageSlice = createSlice({
                 state.pagination.current_page = action.payload;
             }
         },
-        setupCategoriesKeys: (state, action: PayloadAction<TFilterCategoryKeyCount[]>) => {
+        setupCategoriesKeys: (state, action: PayloadAction<TFilterCategoryKey[]>) => {
             state.filters.category.categoryKeysCounts = action.payload;
         },
         appendSelectedCategoriesSlug: (state, action: PayloadAction<{ slug: string }>) => {
@@ -144,6 +144,9 @@ const SearchPageSlice = createSlice({
             const modifiedArray = Array.from(state.filters.category.appliedCategoriesSlugs);
             modifiedArray.push(slug);
             state.filters.category.appliedCategoriesSlugs = modifiedArray;
+        },
+        setupFilterKeys: (state, action: PayloadAction<TFilterKeys>) => {
+            state.filters.filterKeys = action.payload;
         },
         removeSelectedCategoriesSlug: (state, action: PayloadAction<{ slug: string }>) => {
             const {slug} = action.payload;
@@ -163,6 +166,7 @@ export const {
     setArtpieces,
     setupCurrentPage,
     setupPriceRange,
+    setupFilterKeys,
     appendFilter,
     removeFilter,
     setupPagination
