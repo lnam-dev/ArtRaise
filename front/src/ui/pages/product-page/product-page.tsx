@@ -23,6 +23,7 @@ import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
 import {Button} from "~/components/ui/button";
+import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
 
 gsap.registerPlugin(ScrollTrigger);
 const MAX_SHIFT_GSAP = 50;
@@ -104,9 +105,7 @@ function ProductPage({artPiece, ACCORDION_ITEMS}: TProductPage) {
                         <BreadcrumbsLink>Живопис</BreadcrumbsLink>
                         <BreadcrumbsLink>{artPiece.title}</BreadcrumbsLink>
                     </BreadcrumbsWrapper>
-                    <LinkBackTo path="/" className="mb-8">
-                        назад до Категорій
-                    </LinkBackTo>
+                    <LinkBackToPrevious/>
                 </div>
                 <div className="grid grid-cols-1 gap-12 gap-y-0 lg:grid-cols-[6fr_3fr] lg:grid-rows-[auto_auto]">
                     <article className="order-1 lg:order-none lg:col-start-1 mb-9 xl:mb-6">
