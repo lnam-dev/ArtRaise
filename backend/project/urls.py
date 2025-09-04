@@ -27,12 +27,14 @@ urlpatterns = [
     path('api/v2/', api_router.urls),
     
     # Кастомні API маршрути
+    # path('api/', include('howtobuy.urls')),
     path('api/users/', include('users.urls')),
     path('api/search/', include('search.urls')),
     path('api/authors/', include('authors.urls')),
     path('api/events/', include('events.urls')),
     path('api/artpieces/', include('artpiece.urls')),
     path('api/faq/', include('faq.urls')),
+    path('api/slider/', include('slider.urls')),
     path('api/main-page/', include('pages.urls')),
 
     # Wagtail catch-all для сторінок - зазвичай має бути останнім серед основних маршрутів

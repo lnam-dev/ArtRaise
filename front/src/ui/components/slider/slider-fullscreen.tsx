@@ -44,13 +44,14 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 			unpackedSlides={(slides) => (
 				<>
 					{slides.map((obj, index) => (
-						<SwiperSlide key={index}>
+						<SwiperSlide key={obj.id}>
 							<figure className="relative w-full aspect-[16/9] h-[70vh] lg:min-h-[80vh] xl:min-h-[90vh] 2xl:min-h-[75vh]">
 								<Image
-									src={obj.imgSrc}
+									src={obj.image_url}
 									alt={`Slide ${index + 1}`}
-									fill
 									className="object-cover"
+									fill
+									priority
 								/>
 							</figure>
 						</SwiperSlide>
@@ -74,6 +75,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 						<SliderButtonExpand
 							className="translate-x-4 sm:translate-x-0"
 							slides={slides}
+							initialSlide={currentSlideIdx}
 							orientation={ORIENTATION}
 						/>
 					)}

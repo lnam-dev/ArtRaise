@@ -12,11 +12,13 @@ import "./card.scss";
 interface CardPurchaseProps {
 	card: TArtPiece;
 	variable?: "light" | "dark" | "modal";
+	className?: string;
 }
 
 const CardPurchase = ({
 	card,
 	variable = "light",
+	className,
 	...props
 }: CardPurchaseProps) => {
 	const Tag = variable === "dark" ? Link : "div";
@@ -24,7 +26,7 @@ const CardPurchase = ({
 		variable === "dark" ? { href: `products/${Number(card.id)}` } : null;
 
 	return (
-		<article className={`card card--${variable}`} {...props}>
+		<article className={`card card--${variable} ${className}`} {...props}>
 			<figure className={`image image--${variable} group`}>
 				<Image
 					src={card.image_artpiece || "/default.png"}
@@ -62,7 +64,7 @@ const CardPurchase = ({
 					)}
 				</div>
 				{variable === "dark" && (
-					<Arrow height={48} width={48} className="fill-white" />
+					<Arrow height={48} width={48} className="fill-white flex-shrink-0" />
 				)}
 			</Tag>
 		</article>

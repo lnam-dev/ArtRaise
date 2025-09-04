@@ -21,13 +21,13 @@ class FAQViewSet(ModelViewSet):
     """
     renderer_classes = [JSONRenderer]
     serializer_class = FAQSerializer
-    queryset = FAQ.objects.all()
 
     def get_queryset(self):
         """Повертає тільки активні питання, відсортовані за порядком"""
         queryset = FAQ.objects.filter(is_active=True).order_by('order')
         return queryset
 
+    @action(detail=False, methods=['POST'], url_path='add-question')
     def add_question(self, request):
         """Додає нове питання до FAQ"""
         question_data = request.data.get("question")
@@ -42,57 +42,40 @@ class FAQViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'], url_path='question-and-answer')
     def question_and_answer(self, request):
         """
-        API endpoint для отримання структурованого списку FAQ.
-        Повертає питання, розділені на загальні та по категоріях.
-
-        GET /api/faq/question-and-answer/
-
-        Формат відповіді:
-        {
-            "common": [
-                {
-                    "id": 1,
-                    "question": "Загальне питання",
-                    "answer": "Відповідь на загальне питання"
-                }
-            ],
-            "frequent": [
-                {
-                    "category": "Категорія",
-                    "questions": [
-                        {
-                            "id": 2,
-                            "question": "Питання категорії",
-                            "answer": "Відповідь на питання категорії"
-                        }
-                    ]
-                }
-            ]
-        }
+        API endpoint для отримання списку Q&A, які треба показувати на сайті.
+        Використовує прапорець show_in_question_answer=True.
         """
+
+        # Загальні питання (без категорії)
         common_faq = FAQ.objects.filter(
-            Q(category__isnull=True) | Q(category=''),
-            is_active=True
+            is_active=True,
+            show_in_question_answer=True,
+            category__isnull=True
         ).order_by('order')
 
+        # Питання по категоріях
         category_faq = FAQ.objects.filter(
-            is_active=True
-        ).exclude(
-            Q(category__isnull=True) | Q(category='')
-        ).order_by('order', 'category')
+            is_active=True,
+            show_in_question_answer=True,
+            category__isnull=False
+        ).select_related("category").order_by('category__name', 'order')
 
+        # Серіалізація загальних
         common_data = FAQSerializer(common_faq, many=True).data
 
+        # Групування категорій
         categories = {}
         for faq in category_faq:
-            if faq.category not in categories:
-                categories[faq.category] = []
-            categories[faq.category].append(faq)
+            cat_name = faq.category.name if faq.category else "Інше"
+            if cat_name not in categories:
+                categories[cat_name] = []
+            categories[cat_name].append(faq)
 
+        # Формування відповіді
         frequent_data = [
             {
                 'category': category,
-                'question': FAQSerializer(questions, many=True).data,
+                'questions': FAQSerializer(questions, many=True).data,
             }
             for category, questions in categories.items()
         ]
@@ -215,6 +198,9 @@ class CallToActionFormAPIView(APIView):
         return Response(serializer.data)
 
 
+
+
+# Create your views here.
 class HowToBuyAPIView(APIView):
     """
     API endpoint для отримання секції "Як купити".
@@ -230,5 +216,3 @@ class HowToBuyAPIView(APIView):
         
         serializer = FAQSerializer(queryset, many=True)
         return Response(serializer.data)
-
-

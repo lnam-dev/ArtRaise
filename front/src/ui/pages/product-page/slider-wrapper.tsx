@@ -1,7 +1,7 @@
 "use client";
 
 import { FC } from "react";
-import { TSlide } from "~/types/slider";
+import { TSliderItem } from "~/types/slider";
 
 import SliderClassic from "~/ui/components/slider/slider-classic";
 
@@ -12,16 +12,18 @@ interface SliderWrapperProps {
 	className?: string;
 }
 
+type MinimalSlide = Pick<TSliderItem, "image_url" | "title">;
+
 const SliderWrapper: FC<SliderWrapperProps> = ({ artPiece, ...props }) => {
-	const slides: TSlide[] = [
+	const slides: MinimalSlide[] = [
 		{
-			imgSrc: artPiece.image_artpiece,
+			image_url: artPiece.image_artpiece,
 			title: artPiece.title,
 		},
 	];
 	return (
 		<SliderClassic
-			slides={slides}
+			slides={slides as unknown as TSliderItem[]}
 			orientation={artPiece.orientation}
 			{...props}
 		/>

@@ -46,8 +46,8 @@ export default function ModalOrderFillForm({ className = "" }) {
 			validateOnChange={true}
 			onSubmit={handleSubmitForm}>
 			{({ isValid, dirty }) => (
-				<Form className="flex flex-col gap-8 h-full justify-between">
-					<div>
+				<Form className="flex flex-col h-full justify-between">
+					<div className="overflow-y-scroll h-[65vh] sm:h-full sm:overflow-y-auto pb-7 scrollbar-hide">
 						<h1 className="font-namu text-6 xl:text-8 leading-9 mb-4 xl:mb-7">
 							Заповніть форму для <br />
 							оформлення вашого замовлення:
@@ -71,7 +71,7 @@ export default function ModalOrderFillForm({ className = "" }) {
 						/>
 					</div>
 					<ButtonArrow
-						className="w-full"
+						className="w-full mt-1"
 						variant={isValid && dirty ? "dark" : "disabled"}
 						type="submit">
 						Надіслати

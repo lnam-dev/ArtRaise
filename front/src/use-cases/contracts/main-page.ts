@@ -1,7 +1,8 @@
-import { TArtPiece } from "~/types/art";
-import { TSlide } from "~/types/slider";
+import {TArtPiece, TFindByTag} from "~/types/art";
+import { TSliderItem } from "~/types/slider";
 
 export type MainPage = {
-	slides: Array<TSlide>;
-	artPieces: Array<TArtPiece>;
+	slides: TSliderItem[];
+	artPieces: TArtPiece[];
+	tagsFindBy: TFindByTag[];
 };

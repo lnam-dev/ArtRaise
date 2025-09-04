@@ -10,6 +10,7 @@ export type TAuthor = {
 	image_author: string;
 	style: string;
 	theme: string;
+	artpieces_count: number;
 	expression_type: string;
 };
 export type TArtPiece = {
@@ -34,6 +35,11 @@ export type TArtPiece = {
 		bio_text: string;
 		image_author: string;
 	};
+	category: {
+		name_en: string;
+		name_ua: string;
+		slug: string;
+	};
 };
 
 type TEventAuthor = Pick<TAuthor, "id" | "fullname"> & {
@@ -50,4 +56,15 @@ export type TEvent = {
 	description: string;
 	start_date: string; //there need mb date
 	end_date: string;
+};
+export type TFindByTag = {
+	id: number;
+	name: string;
+	name_ua: string;
+	slug: string;
+	description: string;
+	color: string;
+	priority: number;
+	is_active: boolean;
+	artpieces_count: number;
 };

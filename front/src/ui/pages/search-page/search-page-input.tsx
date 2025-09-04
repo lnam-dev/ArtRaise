@@ -4,7 +4,7 @@ import SearchInput from "~/ui/components/search-bar/search-input";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {useRouter} from "next/navigation";
 import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
-import {TFilterKeys} from "~/types/filter-types/filter";
+import {TFilterKeysValues} from "~/types/filter-types/filter";
 import {setTitle} from "~/store/client/slices/SearchPageSlice";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 const SearchPageInput: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch();
     const searchPageState = useAppSelector(state => state.searchPageReducer)
-    const setFilterTags = (key: TFilterKeys, value: string) => {
+    const setFilterTags = (key: TFilterKeysValues, value: string) => {
     }
     const searchFilterState = useAppSelector(state => state.searchPageReducer)
     const router = useRouter();

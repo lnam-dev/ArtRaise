@@ -27,10 +27,10 @@ const QuickMenu: FC<Props> = ({ variants, onSelect }) => {
                 ))}
                 {/* Animated Underline */}
                 <div
-                    className="absolute -bottom-0 h-[2px] bg-black transition-all duration-300"
+                    className="absolute -bottom-0 h-[2px] bg-black-950 transition-all duration-300"
                     style={underlineStyle}
                 />
-                <div className="absolute content-[''] h-[1px] -bottom-0 left-0 bg-black/40 w-full" />
+                <div className="absolute content-[''] h-[1px] -bottom-0 left-0 bg-black-950/30 w-full" />
             </div>
         </div>
     );

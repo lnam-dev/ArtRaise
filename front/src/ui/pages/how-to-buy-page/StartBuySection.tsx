@@ -9,7 +9,7 @@ type Props = {}
 const StartBuySection: React.FC<Props> = ({}) => {
     return (
         <section className={"col-span-full gap-4"}>
-            <Button className={"w-full md:w-[40%] mb-12"} onClick={() => redirect("/search")}>Переглянути витвори</Button>
+            <Button className={"w-full md:w-[40%] mb-12"} onClick={() => redirect("/ua/search")}>Переглянути витвори</Button>
             <ImageLinkToQA/>
         </section>
     );

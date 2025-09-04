@@ -7,8 +7,18 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
     if (object.filters.query) {
         params.append("q", object.filters.query)
     }
-    if (object.filters.price_range.min && object.filters.price_range.max) {
-        params.append("price_range", `${object.filters.price_range.min},${object.filters.price_range.max}`);
+    if (object.filters.price_range_filters.min && object.filters.price_range_filters.min !== object.available_price_range.min_price) params.append("price_min", `${object.filters.price_range_filters.min}`);
+    if (object.filters.price_range_filters.max && object.filters.price_range_filters.max !== object.available_price_range.max_price) params.append("price_max", `${object.filters.price_range_filters.max}`);
+
+    const isAnyCategorySelected = object.filters.category.appliedCategoriesSlugs.length > 0
+    if (isAnyCategorySelected) {
+        object.filters.category.appliedCategoriesSlugs.forEach(slug => {
+            params.append("category", slug);
+        })
+    }
+    if(object.sort) {
+        params.append("sort_by", object.sort.sort_by)
+        params.append("sort_direction", object.sort.sort_direction)
     }
 
 
@@ -21,6 +31,8 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
         });
 
     }
+    params.append("page", object.pagination.current_page.toString());
+    params.append("page_size", object.pagination.page_size.toString());
     new URLSearchParams(params)
     return new URLSearchParams(params)
 }
@@ -37,3 +49,22 @@ export const getArtpiecesByQueryParams = async (queryParams: string): Promise<TA
         return []
     }
 }
+//this typeguard if dto from /api/aripieces/categories is correct
+export const dtoObjHasCategoriesWithSlugNameUaCount = (
+    obj: unknown
+): obj is { categories: { slug: string; name_ua: string, count: number }[] } => {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "categories" in obj &&
+        Array.isArray((obj as any).categories) &&
+        (obj as any).categories.every(
+            (cat: any) =>
+                typeof cat === "object" &&
+                cat !== null &&
+                typeof cat.slug === "string" &&
+                typeof cat.count === "number" &&
+                typeof cat.name_ua === "string"
+        )
+    );
+};

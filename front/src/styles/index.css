@@ -85,6 +85,9 @@
 	.response-text-6 {
 		@apply text-4 md:text-5 lg:text-6;
 	}
+    .response-text-4 {
+		@apply text-3 md:text-3 lg:text-4;
+	}
 
 	.hover_button__light {
 		transition: all 0.2s;
@@ -724,6 +727,20 @@
 		.nav-anchor {
 			height: auto;
 		}
+	}
+
+	h1 a,
+	h2 a,
+	h3 a,
+	h4 a,
+	h5 a,
+	h6 a {
+		color: inherit !important;
+		text-decoration: none !important;
+		font-family: inherit !important;
+		font-size: inherit !important;
+		font-weight: inherit !important;
+		line-height: inherit !important;
 	}
 
 	@-webkit-keyframes load3 {

@@ -9,7 +9,6 @@ export type TParams = {
 
 const ACCORDION_ITEMS = [
 	{ title: "Умови придбання", content: "Інформація про умови придбання" },
-	{ title: "Сертифікати автентичності", content: "Інформація про сертифікати" },
 	{ title: "FAQ", content: "Часті запитання" },
 ];
 

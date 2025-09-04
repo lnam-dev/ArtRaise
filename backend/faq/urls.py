@@ -8,7 +8,7 @@ router.register('questions', FAQViewSet, basename='faq')
 
 urlpatterns = [
     path('call-to-action/', CallToActionFormAPIView.as_view(), name='call-to-action'),
-    path('how-to-buy/', HowToBuyAPIView.as_view(), name='how-to-buy'),
+    path('how-to-buy/', HowToBuyAPIView.as_view(), name='how-to-buy')
 ]
 
 urlpatterns += router.urls
