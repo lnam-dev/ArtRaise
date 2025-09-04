@@ -2,6 +2,7 @@
 import ButtonArrow from "~/ui/components/button/button-arrow";
 import React from "react";
 import { useRouter } from "next/navigation";
+import useBackground from "~/ui/hooks/useBackground";
 
 type Props = {
 	message?: string;
@@ -9,10 +10,11 @@ type Props = {
 
 const InternalServerErrorPage: React.FC<Props> = ({ message }) => {
 	const router = useRouter();
+	useBackground('dark')
 	return (
 		<main className="container mx-auto mobile-spacing h-[100vh]">
 			<div className="flex items-center h-full">
-				<div className="w-full lg:w-[45%] ml-auto">
+				<div className="w-full text-white/90 lg:w-[45%] ml-auto">
 					<h1 className="font-namu text-10 lg:text-12 leading-normal">
 						Виникла невідома помилка
 					</h1>
