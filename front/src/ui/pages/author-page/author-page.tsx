@@ -9,6 +9,7 @@ import FamiliarAuthors from "~/ui/pages/author-page/FamiliarAuthors";
 import MobileSectionAuthorPage from "~/ui/pages/author-page/MobileSectionAuthorPage";
 import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
 import LinkBackTo from "~/ui/components/link/link-back-to";
+import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
 
 const AuthorPage: React.FC<TAuthorPage> = ({
 	author,
@@ -23,9 +24,7 @@ const AuthorPage: React.FC<TAuthorPage> = ({
 				className={
 					"font-namu grid grid-cols-4  mt-20 gap-x-[1rem] w-full h-fit auto-rows-auto"
 				}>
-				<LinkBackTo path="/authors" className="mb-8 col-span-full">
-					назад до Авторів
-				</LinkBackTo>
+				<LinkBackToPrevious className="mb-8 col-span-full"/>
 				<aside
 					className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit mt-auto"}>
 					<ImageWithFallback

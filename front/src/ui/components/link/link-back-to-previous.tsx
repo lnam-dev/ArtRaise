@@ -1,7 +1,6 @@
+'use client'
 import React from 'react';
-import LinkBackTo from "~/ui/components/link/link-back-to";
 import ArrowBackTo from "~/assets/arrow-back.svg";
-import Link from "~/bridge/ui/Link";
 import {useRouter} from "next/navigation";
 
 interface Props {
