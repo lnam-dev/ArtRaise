@@ -85,6 +85,9 @@
 	.response-text-6 {
 		@apply text-4 md:text-5 lg:text-6;
 	}
+    .response-text-4 {
+		@apply text-3 md:text-3 lg:text-4;
+	}
 
 	.hover_button__light {
 		transition: all 0.2s;
