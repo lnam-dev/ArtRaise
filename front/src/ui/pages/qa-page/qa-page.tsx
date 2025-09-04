@@ -10,6 +10,7 @@ import MostCommonQuestion from "~/ui/pages/qa-page/sections/most-common-question
 import FrequentQuestionsMapper from "~/ui/pages/qa-page/sections/frequent-questions-mapper";
 import QACategoriesMapper from "~/ui/pages/qa-page/sections/categories-mapper";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
+import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
 
 type Props = TQAPage;
 
@@ -25,9 +26,7 @@ const QAPage: React.FC<Props> = ({ common, frequent }) => {
 				<BreadcrumbsLink to="/">Головна</BreadcrumbsLink>
 				<BreadcrumbsLink>Зазвичай запитують</BreadcrumbsLink>
 			</BreadcrumbsWrapper>
-			<LinkBackTo path="/" className="mb-6">
-				до головної
-			</LinkBackTo>
+			<LinkBackToPrevious className="mb-6"/>
 			<MostCommonQuestion />
 			<FrequentQuestionsMapper commonQuestions={common} />
 			<QACategoriesMapper categories={frequent} />
