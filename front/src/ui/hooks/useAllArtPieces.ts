@@ -33,7 +33,6 @@ export function useAllArtPieces() {
         }));
 
         setAllArtPieces(formattedData);
-        console.log('all data', formattedData);
       } catch (error) {
         console.error('Error fetching art pieces:', error);
       }
