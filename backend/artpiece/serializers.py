@@ -33,6 +33,7 @@ class TagSerializer(serializers.ModelSerializer):
 class ArtPieceSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
     image_artpiece = serializers.SerializerMethodField()
+    certificate_url = serializers.SerializerMethodField()
     creating_date = serializers.SerializerMethodField()
     category = CategorySerializer(read_only=True)
     tags = TagSerializer(many=True, read_only=True)
@@ -50,6 +51,7 @@ class ArtPieceSerializer(serializers.ModelSerializer):
             "style",
             "author",
             "image_artpiece",
+            "certificate_url",
             "category",
             "tags",
             "created_at",
@@ -76,6 +78,13 @@ class ArtPieceSerializer(serializers.ModelSerializer):
         # Повертаємо URL зображення
         return f"{settings.MEDIA_URL}{obj.image_artpiece.name}"
 
+    def get_certificate_url(self, obj):
+        # Перевіряємо наявність сертифіката
+        if not obj.certificate or not obj.certificate.name:
+            return None
+        # Повертаємо URL сертифіката
+        return f"{settings.MEDIA_URL}{obj.certificate.name}"
+
 
 class ArtPieceDetailSerializer(ArtPieceSerializer):
     author = serializers.SerializerMethodField()
@@ -90,7 +99,6 @@ class ArtPieceDetailSerializer(ArtPieceSerializer):
             "gamma",
             "dominant_color",
             "description",
-            "certificate",
         ]
 
     def get_author(self, obj):
