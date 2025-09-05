@@ -4,8 +4,6 @@ import { useRef, useState, useMemo, useCallback } from "react";
 
 import { debounce } from "~/utils/debounce";
 
-import useDevice from "~/ui/hooks/useDevice/useDevice";
-
 import { CategoriesPage as TCategoriesPage } from "~/use-cases/contracts/categories-page";
 import CardCategories from "~/ui/components/card/card-categories";
 
@@ -55,21 +53,25 @@ const CategoriesPage = ({ newArrivals, categories }: TCategoriesPage) => {
 					/>
 				</div>
 			</div>
-			<section className="columns-1 gap-6 sm:columns-2 xl:columns-4">
-				{newArrivals.map((arrivals) => (
-					<CardCategories
-						key={arrivals.id}
-						card={arrivals}
-						className="w-full mb-12 xl:mb-0 xl:sticky xl:top-[5rem] break-inside-avoid"
-					/>
-				))}
-				{filteredCategories.map((category) => (
-					<CardCategories
-						key={category.id}
-						card={category}
-						className="mb-12 break-inside-avoid"
-					/>
-				))}
+			<section className="xl:flex xl:items-start xl:gap-8">
+				<div className="mb-12 xl:mb-0 xl:basis-[23%] xl:max-w-[23%] shrink-0 flex flex-col gap-12 xl:gap-8 xl:sticky xl:top-[5rem]">
+					{newArrivals.map((arrivals) => (
+						<CardCategories
+							key={arrivals.id}
+							card={arrivals}
+							className="w-full"
+						/>
+					))}
+				</div>
+				<div className="columns-1 sm:columns-2 xl:columns-3 gap-6 w-full">
+					{filteredCategories.map((category) => (
+						<CardCategories
+							key={category.id}
+							card={category}
+							className="mb-12 break-inside-avoid"
+						/>
+					))}
+				</div>
 			</section>
 		</main>
 	);
