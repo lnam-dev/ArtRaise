@@ -5,6 +5,7 @@ import {
 	NEW_ARRIVALS_PAGE_SIZE,
 } from "~/const/static-categories";
 import { DEFAULT_PAGE_SIZE } from "~/const/search-page";
+import { TPagination } from "~/types/pagination";
 
 export type TParams = {
 	params: Promise<{ category: string }>;
@@ -19,10 +20,10 @@ interface FetchOptions {
 	page: number;
 }
 
-async function getData({
-	category,
-	page,
-}: FetchOptions): Promise<{ artpieces: TArtPiece[]; pagination: any }> {
+async function getData({ category, page }: FetchOptions): Promise<{
+	artpieces: TArtPiece[];
+	pagination: TPagination;
+}> {
 	try {
 		const isNewArrivalsCategory = category === "new-arrivals";
 
@@ -41,13 +42,25 @@ async function getData({
 			throw new Error(`Failed to fetch artpieces: ${response.status}`);
 		}
 
-		const { results, pagination }: { results: TArtPiece[]; pagination: any } =
+		const {
+			results,
+			pagination,
+		}: { results: TArtPiece[]; pagination: TPagination } =
 			await response.json();
-
 		return { artpieces: results, pagination };
 	} catch (error) {
 		console.error(`Error: ${error}`);
-		return { artpieces: [], pagination: {} };
+		return {
+			artpieces: [],
+			pagination: {
+				current_page: 1,
+				total_pages: 1,
+				total_items: 0,
+				has_next: false,
+				has_previous: false,
+				page_size: DEFAULT_PAGE_SIZE,
+			},
+		};
 	}
 }
 
@@ -60,26 +73,21 @@ export async function generateStaticParams() {
 				cache: "force-cache",
 			} as any
 		);
-
 		if (!response.ok) {
 			throw new Error(`Failed to fetch categories: ${response.status}`);
 		}
-
 		const { categories }: { categories: { slug: string }[] } =
 			await response.json();
-
-		const apiCategories = categories.map((category) => ({
+		const dynamicCategories = categories.map((category) => ({
 			category: category.slug,
 		}));
-
-		const staticCategories = STATIC_CATEGORIES_SLUG.map((slug) => ({
-			category: slug.slug,
+		const staticOnes = STATIC_CATEGORIES_SLUG.map((category) => ({
+			category: category.slug,
 		}));
-
-		return [...staticCategories, ...apiCategories];
+		return [...staticOnes, ...dynamicCategories];
 	} catch (error) {
 		console.error(`Error generating static routes: ${error}`);
-		return [STATIC_CATEGORIES_SLUG];
+		return STATIC_CATEGORIES_SLUG.map((c) => ({ category: c.slug }));
 	}
 }
 export default async ({ params, searchParams }: TParams) => {
@@ -99,6 +107,8 @@ export default async ({ params, searchParams }: TParams) => {
 		page: resolvedPage,
 	});
 
+	const validatedPagination = isNewArrivalsCategory ? null : pagination;
+
 	const currentCategoryName =
 		STATIC_CATEGORIES_SLUG.find((item) => item.slug === category)?.name_ua ||
 		artpieces[0]?.category?.name_ua ||
@@ -108,7 +118,7 @@ export default async ({ params, searchParams }: TParams) => {
 		<CategoryPage
 			artPieces={artpieces}
 			categories={currentCategoryName}
-			pagination={pagination}
+			pagination={validatedPagination}
 		/>
 	);
 };
