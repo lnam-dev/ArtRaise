@@ -4,17 +4,17 @@ import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import CardPurchase from "~/ui/components/card/card-purchase";
 
-const CategoryPage = ({ artPieces }: TCategoryPage) => {
+const CategoryPage = ({ artPieces, categories }: TCategoryPage) => {
 	return (
 		<main className="container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing">
 			<div>
 				<BreadcrumbsWrapper activeIndex={1} className="mb-3">
 					<BreadcrumbsLink to="/categories">Категорії</BreadcrumbsLink>
-					<BreadcrumbsLink>{artPieces[0].category.name_ua}</BreadcrumbsLink>
+					<BreadcrumbsLink>{categories}</BreadcrumbsLink>
 				</BreadcrumbsWrapper>
 			</div>
 			<h1 className="font-namu font-medium text-6 xl:text-8 text-black leading-none mb-8">
-				{artPieces[0].category.name_ua}
+				{categories}
 			</h1>
 			<section className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-12">
 				{artPieces.map((obj) => (
