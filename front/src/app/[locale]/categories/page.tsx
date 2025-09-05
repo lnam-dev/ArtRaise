@@ -55,10 +55,10 @@ async function getData(): Promise<{
 	}
 }
 
-export default async function CategoriesPageWrapper() {
+export default async () => {
 	const { staticCategory, dynamicCategory } = await getData();
 
 	return (
 		<CategoriesPage categories={dynamicCategory} newArrivals={staticCategory} />
 	);
-}
+};
