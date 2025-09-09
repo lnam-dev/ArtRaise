@@ -45,7 +45,7 @@ export const getArtpiecesByQueryParams = async (queryParams: string): Promise<TA
         const artPieces:TArtPiece[] = (await response.json()).results;
         return Array.isArray(artPieces) ? artPieces : [];
     } catch (error) {
-        console.log(error)
+        console.error(error)
         return []
     }
 }

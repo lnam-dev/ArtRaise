@@ -55,7 +55,6 @@ const FilterMenu: React.FC<Props> = ({className}) => {
         <div className={` ${className}`} onClick={(e)=> {
             e.preventDefault()
             e.stopPropagation()
-            console.log(123)
         }}>
             <span className={"hidden md:block"}><SearchpageSortSelector/></span>
             <Accordion title={"Категорія"}>
