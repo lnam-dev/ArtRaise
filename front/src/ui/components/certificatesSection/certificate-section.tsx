@@ -18,7 +18,7 @@ const CertificateSection: FC<CertificateSectionProps> = ({
 						Немає кращого подарунка, ніж мистецтво, на весілля, ювілей,
 						випускний чи іншу особливу подію.
 					</h2>
-					<ButtonArrow className="font-fixel font-medium text-4 w-full sm:w-3/4">
+					<ButtonArrow href={'certificate'} className="font-fixel font-medium text-4 w-full sm:w-3/4">
 						Дізнатися більше
 					</ButtonArrow>
 				</div>

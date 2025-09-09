@@ -3,6 +3,7 @@ import {TArtPiece} from "~/types";
 import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fallback";
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
+import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
 
 interface Props {
     artpiece: TArtPiece
@@ -12,9 +13,10 @@ interface Props {
 const CertificatePage: React.FC<Props> = ({artpiece}) => {
     return (
         <div className={"container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing"}>
+            <LinkBackToPrevious className={'mt-20 mb-10'}/>
             <div
                 className={
-                    "font-namu grid grid-cols-4  mt-20 gap-x-[1rem] w-full h-fit auto-rows-auto"
+                    "font-namu grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
                 }>
                 <aside
                     className={"flex flex-col w-full col-span-3 md:col-span-1 h-fit mt-auto"}>

@@ -4,6 +4,7 @@ import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fall
 import Image from "next/image";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import CardPurchase from "~/ui/components/card/card-purchase";
+import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
 
 interface Props {
     artpiecesWithCertificate: TArtPiece[]
@@ -20,9 +21,10 @@ const ContainerWithTitle: React.FC<{ title: string, children: ReactNode }> = ({t
 const LandingCertificatePage: React.FC<Props> = ({artpiecesWithCertificate}) => {
     return (
         <div className={"container mx-auto mt-14 lg:mt-18 xl:mt-[5rem] mobile-spacing"}>
+            <LinkBackToPrevious className={'mt-20 mb-10'}/>
             <div
                 className={
-                    "font-namu grid grid-cols-4  mt-20 gap-x-[1rem] w-full h-fit auto-rows-auto"
+                    "font-namu grid grid-cols-4 gap-x-[1rem] w-full h-fit auto-rows-auto"
                 }>
                 <div className={'relative col-span-full mb-10'}>
                     <ImageWithFallback

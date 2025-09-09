@@ -52,7 +52,10 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     }, [filterState.pagination.current_page]);
 
     return (
-        <div className={` ${className}`}>
+        <div className={` ${className}`} onClick={(e)=> {
+            e.preventDefault()
+            e.stopPropagation()
+        }}>
             <span className={"hidden md:block"}><SearchpageSortSelector/></span>
             <Accordion title={"Категорія"}>
                 <div className={"flex w-full flex-wrap gap-3 mt-4"}>
