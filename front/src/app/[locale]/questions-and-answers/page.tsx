@@ -28,9 +28,7 @@ async function getData(): Promise<TFAQResponse> {
 	}
 }
 
-const Home = async () => {
+export default async () => {
 	const QAdata: TQAPage = await getData();
 	return <QAPage {...QAdata} />;
 };
-
-export default Home;

@@ -1,11 +1,14 @@
 "use client";
+
 import React, { useRef } from "react";
+
 import { THowToBuyPage } from "~/use-cases/contracts/how-to-buy-page";
 import Underline from "~/ui/components/underline/underline";
 import StartBuySection from "~/ui/pages/how-to-buy-page/StartBuySection";
 
 const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 	const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+
 	const handleScrollToStep = (stepIndex: number) => {
 		return (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
 			const ref = stepRefs.current[stepIndex];
@@ -14,6 +17,7 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 			}
 		};
 	};
+
 	return (
 		<main
 			className={
@@ -42,11 +46,11 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 				className={
 					"flex flex-col response-text-6 md:col-span-2 gap-6 md:pt-32"
 				}>
-				{steps.map((step, index) => (
+				{steps.map((step) => (
 					<li
-						key={index}
+						key={step.id}
 						ref={(elem) => {
-							stepRefs.current[index] = elem;
+							stepRefs.current[step.id] = elem;
 						}}
 						className={`scroll-mt-52 flex flex-col relative `}>
 						<p className={"response-text-8 pb-3 md:pb-6"}>{step.title}</p>
