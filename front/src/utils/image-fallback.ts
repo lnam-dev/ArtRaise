@@ -1,5 +1,5 @@
 const imageFallback = (src: string | undefined | null) => {
-	return src ?? process.env.DEFAULT_IMAGE_URL ?? "/default.png";
+	return src ?? process.env.VITE_DEFAULT_IMAGE;
 };
 
 export default imageFallback;

@@ -15,18 +15,44 @@ const ACCORDION_ITEMS = [
 export const revalidate = 21600;
 export const dynamic = "force-dynamic";
 
-async function getData(id: string): Promise<TArtPiece> {
+async function getData(id: string): Promise<{
+	artPiece: TArtPiece;
+	similarArtPieces: TArtPiece[];
+}> {
 	try {
-		const response = await fetch(`${process.env.API_URL}artpieces/${id}/`);
-		if (!response.ok) {
-			throw new Error(`Failed to fetch art pieces: ${response.status}`);
+		const artPieceRes = await fetch(`${process.env.API_URL}artpieces/${id}/`, {
+			cache: "force-cache",
+		});
+
+		if (!artPieceRes.ok) {
+			throw new Error("Failed to fetch art piece");
 		}
 
-		const artPiece = await response.json();
-		return artPiece;
+		const artPiece: TArtPiece = await artPieceRes.json();
+
+		const styleParam = encodeURIComponent(artPiece.style);
+
+		const similarArtPiecesRes = await fetch(
+			`${process.env.API_URL}search?style=${styleParam}`,
+			{
+				cache: "force-cache",
+			}
+		);
+
+		if (!similarArtPiecesRes.ok) {
+			throw new Error("Failed to fetch similar art pieces");
+		}
+
+		const similarArtPiecesData = await similarArtPiecesRes.json();
+
+		const validatedSimilarArtPieces = similarArtPiecesData.results.filter(
+			(item: TArtPiece) => item.id !== artPiece.id
+		);
+
+		return { artPiece, similarArtPieces: validatedSimilarArtPieces };
 	} catch (error) {
-		console.error(error);
-		throw error;
+		console.error("Error fetching art piece or similar art pieces:", error);
+		return { artPiece: {} as TArtPiece, similarArtPieces: [] };
 	}
 }
 
@@ -49,7 +75,13 @@ export async function generateStaticParams() {
 
 export default async ({ params }: TParams) => {
 	const { id } = await params;
-	const artPiece = await getData(id);
+	const { artPiece, similarArtPieces } = await getData(id);
 
-	return <ProductPage artPiece={artPiece} ACCORDION_ITEMS={ACCORDION_ITEMS} />;
+	return (
+		<ProductPage
+			artPiece={artPiece}
+			similarArtPieces={similarArtPieces}
+			ACCORDION_ITEMS={ACCORDION_ITEMS}
+		/>
+	);
 };

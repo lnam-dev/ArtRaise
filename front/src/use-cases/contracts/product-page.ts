@@ -4,4 +4,5 @@ import { TArtPiece } from "~/types/art";
 export type ProductPage = {
 	artPiece: TArtPiece;
 	ACCORDION_ITEMS: TAccordion[];
+	similarArtPieces: TArtPiece[];
 };
