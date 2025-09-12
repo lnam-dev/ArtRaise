@@ -26,10 +26,13 @@ import Character from "~/ui/components/character/character";
 import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
+
 import useSectionSpacing from "~/ui/hooks/use-section-spacing";
+
 
 gsap.registerPlugin(ScrollTrigger);
 const MAX_SHIFT_GSAP = 50;
+
 
 function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 	const sliderRef = useRef<HTMLDivElement>(null);

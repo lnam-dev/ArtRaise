@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'slider',
     'howtobuy',
     'pages',
+    'utils',
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -326,6 +327,36 @@ print("=== STATIC AND MEDIA FILES CONFIGURED ===")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
+
+# Настройки логирования
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'utils.image_optimizer': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'utils.image_signals': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+}
 
 print("=== OTHER SETTINGS ===")
 print(f"DEFAULT_AUTO_FIELD: {DEFAULT_AUTO_FIELD}")

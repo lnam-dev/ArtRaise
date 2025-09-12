@@ -56,10 +56,13 @@ const FilterMapper: React.FC<Props> = ({className}) => {
     }
     return (
         <div className={`w-full flex flex-row min-h-10 overflow-x-auto gap-5 flex-nowrap pb-2 mb-2 ${className}`}>
-            <DefaultTag className={"border-none flex flex-row w-fit items-center flex-nowrap stroke-gray-950 gap-3 cursor-default"}>
+            {filterItems.length > 0 && <DefaultTag
+                className={"border-none flex flex-row w-fit items-center flex-nowrap stroke-gray-950 gap-3 cursor-default"}>
                 <p className={"text-nowrap"}>{"Очистити"}</p>
-                <Cross height={20} width={20} className={"stroke-2 cursor-pointer"} onClick={() => {filterItems.forEach((value) => value.onDelete())}}/>
-            </DefaultTag>
+                <Cross height={20} width={20} className={"stroke-2 cursor-pointer"} onClick={() => {
+                    filterItems.forEach((value) => value.onDelete())
+                }}/>
+            </DefaultTag>}
             {filterItems.map((value, index) =>
                 <DefaultTag key={index} className={"border-none flex flex-row w-fit items-center flex-nowrap stroke-gray-950 gap-3 cursor-default"}>
                     <Hash height={16} width={16} className={""}/>

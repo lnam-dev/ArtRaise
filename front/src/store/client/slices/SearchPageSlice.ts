@@ -80,7 +80,7 @@ const initialState: ISearchPageState = {
         query: "",
         price_range_filters: {
             min: 0,
-            max: 20000000
+            max: 100000,
         },
         material: [],
         style: [],

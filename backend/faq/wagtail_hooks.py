@@ -1,6 +1,25 @@
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
-from .models import FAQ, FAQCategory, CallToAction
+from .models import FAQ, FAQCategory, CallToAction, HowToBuyBlock
+
+
+class WagtailHowToBuyBlockViewSet(SnippetViewSet):
+    """
+    Wagtail snippet для управління блоками "Як купити"
+    """
+    model = HowToBuyBlock
+    icon = "list-ol"
+    menu_label = "Як купити"
+    list_display = ["order", "title_ua", "title_en", "is_active", "created_at"]
+    list_filter = ["is_active", "created_at"]
+    search_fields = ["title_ua", "title_en", "description_ua", "description_en"]
+    ordering = ["order"]
+    form_fields = [
+        "title_ua", "title_en", 
+        "description_ua", "description_en",
+        "order", "is_active"
+    ]
+
 
 class WagtailFAQProfileViewSet(SnippetViewSet):
     model = FAQ
@@ -29,7 +48,7 @@ class WagtailCallToActionViewSet(SnippetViewSet):
     form_fields = ["name", "email", "question", "show_in_call_to_action"]
 
 class FAQViewSetGroup(SnippetViewSetGroup):
-    items = [WagtailFAQCategoryViewSet, WagtailFAQProfileViewSet, WagtailCallToActionViewSet]
+    items = [WagtailHowToBuyBlockViewSet, WagtailFAQCategoryViewSet, WagtailFAQProfileViewSet, WagtailCallToActionViewSet]
     menu_label = "FAQ"
     menu_name = "FAQ_folder"
 

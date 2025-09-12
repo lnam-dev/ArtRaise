@@ -3,6 +3,54 @@ from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 
+class HowToBuyBlock(models.Model):
+    """
+    Модель для блоків розділу "Як купити".
+    Підтримує локалізацію та динамічне управління через адмінку.
+    """
+    title_en = models.CharField(
+        max_length=200,
+        verbose_name="Заголовок англійською",
+        help_text="Заголовок блоку англійською мовою (може містити HTML)"
+    )
+    title_ua = models.CharField(
+        max_length=200,
+        verbose_name="Заголовок українською",
+        help_text="Заголовок блоку українською мовою (може містити HTML)"
+    )
+    description_en = models.TextField(
+        verbose_name="Опис англійською",
+        help_text="Детальний опис блоку англійською мовою"
+    )
+    description_ua = models.TextField(
+        verbose_name="Опис українською",
+        help_text="Детальний опис блоку українською мовою"
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Порядок",
+        help_text="Порядок відображення (менше число = вище в списку)"
+    )
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Активний",
+        help_text="Чи відображається блок на сайті"
+    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Створено")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Оновлено")
+
+    class Meta:
+        verbose_name = "Блок 'Як купити'"
+        verbose_name_plural = "Блоки 'Як купити'"
+        ordering = ['order', 'id']
+        indexes = [
+            models.Index(fields=['is_active']),
+            models.Index(fields=['order']),
+        ]
+
+    def __str__(self):
+        return f"{self.order}. {self.title_ua}"
+
 
 class FAQCategory(models.Model):
     name = models.CharField(max_length=100)  

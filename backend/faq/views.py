@@ -2,9 +2,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import FAQ, CallToAction
+from .models import FAQ, CallToAction, HowToBuyBlock
 from rest_framework.views import APIView
-from .serializers import FAQSerializer, CallToActionSerializer
+from .serializers import FAQSerializer, CallToActionSerializer, HowToBuyBlockSerializer
 from django.db.models import Q
 
 
@@ -204,15 +204,36 @@ class CallToActionFormAPIView(APIView):
 class HowToBuyAPIView(APIView):
     """
     API endpoint для отримання секції "Як купити".
-    Повертає впорядкований список активних питань, позначених для показу в розділі "Як купити".
+    Повертає впорядкований список активних блоків розділу "Як купити".
 
     GET /api/faq/how-to-buy/
+    
+    Формат відповіді:
+    [
+        {
+            "id": 1,
+            "title": "Заголовок блоку",
+            "description": "Опис блоку",
+            "order": 1,
+            "created_at": "2025-09-04T12:00:00Z",
+            "updated_at": "2025-09-04T12:00:00Z"
+        }
+    ]
     """
+    renderer_classes = [JSONRenderer]
+
     def get(self, request):
-        queryset = FAQ.objects.filter(
-            is_active=True,
-            show_in_how_to_buy=True
+        """
+        Повертає всі активні блоки розділу "Як купити", 
+        відсортовані за полем order.
+        """
+        queryset = HowToBuyBlock.objects.filter(
+            is_active=True
         ).order_by('order')
         
-        serializer = FAQSerializer(queryset, many=True)
+        serializer = HowToBuyBlockSerializer(
+            queryset, 
+            many=True,
+            context={'request': request}
+        )
         return Response(serializer.data)
