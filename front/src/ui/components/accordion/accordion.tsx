@@ -59,7 +59,7 @@ const Accordion = ({
 			</button>
 			<div
 				className={`overflow-y-hidden w-full transition-all ${
-					isOpen ? "max-h-96" : "max-h-0"
+					isOpen ? "min-h-1" : "max-h-0"
 				} duration-300`}>
 				{isValidElement(children)
 					? children

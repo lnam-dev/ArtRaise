@@ -36,7 +36,7 @@ const SliderImgPortrait = memo<SliderImgPortraitProps>(
 		const slideAlt = `Slide ${index + 1}`;
 
 		return (
-			<div className="relative flex flex-row gap-2 md:gap-4 xl:gap-6 h-[75vh]">
+			<div className="relative flex flex-row gap-2 md:gap-4 xl:gap-6 h-[65vh] sm:h-[75vh] ">
 				<figure className="flex-shrink-0 h-full relative">
 					<Image
 						src={image_url}

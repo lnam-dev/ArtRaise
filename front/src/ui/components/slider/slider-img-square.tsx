@@ -27,16 +27,19 @@ const SliderImgSquare = memo<SliderImgSquareProps>(
 	({ image_url, index, slides, orientation }) => {
 		const slideAlt = `Slide ${index + 1}`;
 
+		// Висота блоку: показуємо більше на desktop (75vh замість 65vh). Головне зображення завжди повністю влазить.
+		const heightClasses = "h-[75vh] md:h-[50vh] xl:h-[75vh]";
+
 		return (
-			<div className="flex flex-row gap-2 md:gap-4 xl:gap-6 max-h-[75vh] md:max-h-[50vh] xl:max-h-[65vh]">
-				<figure className="flex-shrink-0 h-auto w-full md:w-[65%] lg:w-[70%] xl:w-[60%] 2xl:w-[40%] relative">
+			<div className={`flex flex-row gap-2 md:gap-4 xl:gap-6 ${heightClasses}`}>
+				<figure
+					className={`relative flex-shrink-0 aspect-square ${heightClasses} bg-white`}>
 					<Image
-						src={image_url}
+						src={image_url || "/default.png"}
 						alt={slideAlt}
-						width={0}
-						height={0}
+						fill
 						sizes="(max-width: 768px) 100vw, (max-width: 1024px) 65vw, (max-width: 1280px) 70vw, 60vw"
-						className="h-auto w-full object-contain max-h-[75vh] md:max-h-[50vh] xl:max-h-[65vh]"
+						className="select-none object-cover w-full h-full"
 						priority={index === 0}
 					/>
 					<SliderButtonExpand
@@ -46,11 +49,14 @@ const SliderImgSquare = memo<SliderImgSquareProps>(
 					/>
 				</figure>
 
-				<div className="grid grid-cols-1 grid-rows-1 md:grid-cols-2 gap-2 md:gap-4 xl:gap-6 flex-1 self-stretch min-h-0">
+				<div
+					className={`grid grid-cols-1 grid-rows-1 md:grid-cols-2 gap-2 md:gap-4 xl:gap-6 flex-1 self-stretch ${heightClasses}`}>
 					{GRID_IMAGES_CONFIG.map((config, gridIndex) => (
 						<figure
 							key={gridIndex}
-							className={`${config.containerClass} group cursor-pointer ${
+							className={`${
+								config.containerClass
+							} group cursor-pointer relative h-full ${
 								gridIndex === 1 ? "block" : "hidden md:block"
 							}`}>
 							<Image
@@ -58,7 +64,7 @@ const SliderImgSquare = memo<SliderImgSquareProps>(
 								alt={slideAlt}
 								fill
 								sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 20vw"
-								className={`object-cover opacity-40 ${config.imageClass} transition-all duration-300 ease-in-out xl:hover:opacity-100 xl:hover:scale-105`}
+								className={`object-cover ${config.imageClass} opacity-40 transition-all duration-300 ease-in-out xl:group-hover:opacity-100 xl:group-hover:scale-105`}
 							/>
 						</figure>
 					))}

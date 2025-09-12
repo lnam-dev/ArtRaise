@@ -1,18 +1,20 @@
 import React from "react";
 import Image from "next/image";
+
 import ButtonTransparent from "~/ui/components/button/button-transparent";
 
 const MostCommonQuestion = () => {
 	return (
-		<div className="col-span-full flex relative items-center justify-center md:justify-start overflow-x-hidden  mb-12 md:mb-14">
-			<figure>
+		<div className="col-span-full flex relative items-center justify-center md:justify-start overflow-hidden mb-12 md:mb-14">
+			<figure className="relative w-full aspect-[5/1] max-h-[80vh]">
 				<Image
 					src="/QA/QAPageBackGround.png"
-					height={200}
-					width={1500}
 					alt="Фонове зображення для сторінки Q&A"
-					className="object-cover"
+					fill
+					className="object-cover object-center"
 					loading="lazy"
+					sizes="100vw"
+					priority={false}
 				/>
 			</figure>
 			<ButtonTransparent

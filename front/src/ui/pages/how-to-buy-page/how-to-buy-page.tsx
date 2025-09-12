@@ -13,30 +13,35 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 	const { isDesktop } = useDevice();
 	const { activeStepIndex, navigateToStep, setHoverIndex, clearHover } =
 		useActiveStep(stepRefs, steps.length);
+	const colorForStep = (isActive: boolean) =>
+		!isDesktop ? "text-black" : isActive ? "text-black" : "text-gray-700";
 
 	return (
 		<main className="container mx-auto grid grid-cols-1 gap-x-8 md:grid-cols-3 mt-20 font-namu mobile-spacing">
-			<div className="md:sticky md:top-5">
-				<h1 className="response-text-8 md:font-medium font-namu mb-4 xl:mb-10 font-bold">
+			<div className="md:sticky md:top-12">
+				<h1 className="text-7 md:text-8 xl:text-10 md:font-medium font-namu mb-4 xl:mb-6 font-bold">
 					Як купити?
 				</h1>
 				<aside className=" response-text-6 font md:col-span-1 hidden md:inline">
-					{steps.map((step, index) => (
-						<p
-							key={index}
-							onClick={() => navigateToStep(index)}
-							onMouseEnter={() => isDesktop && setHoverIndex(index)}
-							onMouseLeave={() => isDesktop && clearHover()}
-							className={`py-2 cursor-pointer transition-colors duration-300 ease-in-out hover:text-black ${
-								index !== activeStepIndex ? "text-gray-700" : "text-black"
-							}`}>
-							{step.title}
-						</p>
-					))}
+					{steps.map((step, index) => {
+						const isActive = index === activeStepIndex;
+						return (
+							<p
+								key={index}
+								onClick={() => navigateToStep(index)}
+								onMouseEnter={() => isDesktop && setHoverIndex(index)}
+								onMouseLeave={() => isDesktop && clearHover()}
+								className={`py-2 cursor-pointer transition-colors duration-300 ease-in-out ${
+									isDesktop ? "hover:text-black" : ""
+								} ${colorForStep(isActive)}`}>
+								{step.title}
+							</p>
+						);
+					})}
 				</aside>
 			</div>
 			<ul
-				className="flex flex-col response-text-6 md:col-span-2 gap-6 md:pt-32"
+				className="flex flex-col response-text-6 md:col-span-2 gap-6 md:pt-20"
 				onMouseLeave={() => isDesktop && clearHover()}>
 				{steps.map((step, index) => {
 					const isActive = index === activeStepIndex;
@@ -50,15 +55,15 @@ const HowToBuyPage: React.FC<THowToBuyPage> = ({ steps }) => {
 							onMouseLeave={() => isDesktop && clearHover()}
 							className="scroll-mt-52 flex flex-col relative">
 							<p
-								className={`response-text-8 pb-3 md:pb-6 transition-colors duration-300 ease-in-out ${
-									isActive ? "text-black" : "text-gray-700"
-								}`}>
+								className={`response-text-8 pb-3 md:pb-6 transition-colors duration-300 ease-in-out ${colorForStep(
+									isActive
+								)}`}>
 								{step.title}
 							</p>
 							<p
-								className={`response-text-6 opacity-80 font-fixel pb-4 transition-colors duration-300 ease-in-out ${
-									isActive ? "text-black" : "text-gray-700"
-								}`}>
+								className={`response-text-6 opacity-80 font-fixel pb-4 transition-colors duration-300 ease-in-out ${colorForStep(
+									isActive
+								)}`}>
 								{step.description}
 							</p>
 							<Underline className="bg" />
