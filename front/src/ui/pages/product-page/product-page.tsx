@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useMemo, useRef } from "react";
-import Image from "next/image";
 import Script from "next/script";
 import Link from "~/bridge/ui/Link";
 
@@ -16,7 +15,6 @@ import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page"
 import { TAccordion } from "~/types/accordion";
 
 import getRandomUniqueData from "~/utils/get-random-unique-data";
-import imageFallback from "~/utils/image-fallback";
 import AboutAuthor from "./about-author";
 import CertificatePreview from "./certificate-preview";
 
@@ -28,7 +26,7 @@ import Character from "~/ui/components/character/character";
 import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
-import ButtonArrow from "~/ui/components/button/button-arrow";
+import useSectionSpacing from "~/ui/hooks/use-section-spacing";
 
 gsap.registerPlugin(ScrollTrigger);
 const MAX_SHIFT_GSAP = 50;
@@ -97,6 +95,10 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 		]
 	);
 
+	const spacingStyle = useSectionSpacing(
+		sliderRef as React.RefObject<HTMLElement>
+	);
+
 	return (
 		<main className="container mx-auto">
 			<Script
@@ -133,8 +135,9 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 				<SliderWrapper artPiece={artPiece} />
 			</section>
 			<section
-				className="relative z-10 mobile-spacing mt-[3.25rem] md:mt-[5.25rem] xl:mt-20 bg-white h-full"
-				ref={contentRef}>
+				className="relative z-10 mobile-spacing bg-white h-full"
+				ref={contentRef}
+				style={spacingStyle}>
 				<div className="pt-6">
 					<BreadcrumbsWrapper activeIndex={2} className="mb-3">
 						<BreadcrumbsLink>Категорії</BreadcrumbsLink>
