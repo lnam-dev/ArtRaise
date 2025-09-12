@@ -17,6 +17,8 @@ import { TAccordion } from "~/types/accordion";
 
 import getRandomUniqueData from "~/utils/get-random-unique-data";
 import imageFallback from "~/utils/image-fallback";
+import AboutAuthor from "./about-author";
+import CertificatePreview from "./certificate-preview";
 
 import SliderWrapper from "./slider-wrapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
@@ -57,60 +59,15 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 	const size = useMemo(() => {
 		const length = parseInt(artPiece.length_cm);
 		const width = parseInt(artPiece.width_cm);
-
-		if (length && width) {
+		if (Number.isFinite(length) && Number.isFinite(width) && length && width)
 			return `${length} см × ${width} см`;
-		}
-
-		if (length) {
-			return `${length} см`;
-		}
-
+		if (Number.isFinite(length) && length) return `${length} см`;
 		return "";
 	}, [artPiece.length_cm, artPiece.width_cm]);
 
-	const AboutAuthor = ({
-		id,
-		name,
-		bio,
-		imgSrc,
-	}: {
-		id: string | number;
-		name: string;
-		bio?: string;
-		imgSrc?: string;
-	}) => {
-		return (
-			<section className="flex gap-4 h-[40vh] mt-4 items-stretch">
-				<figure className="h-full flex-shrink-0">
-					<img
-						src={imageFallback(imgSrc)}
-						alt={name}
-						loading="lazy"
-						className="h-full w-auto object-contain select-none"
-					/>
-				</figure>
-				<div className="flex flex-col gap-3 justify-between h-full min-w-0">
-					<div>
-						<h2 className="font-namu text-12 md:text-8 line-clamp-2 break-words mb-4">
-							{name}
-						</h2>
-						<p className="font-fixel text-4 leading-relaxed overflow-auto">
-							{bio || "Інформація про автора відсутня."}
-						</p>
-					</div>
-					<ButtonArrow href={`authors/${id}`}>Переглянути автора</ButtonArrow>
-				</div>
-			</section>
-		);
-	};
-
-	const accordionItems: TAccordion[] = useMemo(() => {
-		return [
-			{
-				title: "Опис твору",
-				content: artPiece.description,
-			},
+	const accordionItems: TAccordion[] = useMemo(
+		() => [
+			{ title: "Опис твору", content: artPiece.description },
 			{
 				title: "Про автора",
 				content: (
@@ -124,26 +81,21 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 			},
 			{
 				title: "Сертифікат автентичності",
-				content: artPiece.certificate_url ? (
-					<figure className="h-[40vh] mt-4 flex-shrink-0">
-						<img
-							src={imageFallback(artPiece.certificate_url)}
-							alt={`Сертифікат автентичності для ${artPiece.title}`}
-							loading="lazy"
-							className="h-full w-auto object-contain select-none"
-						/>
-					</figure>
-				) : (
-					<p>Для цього твору сертифікату не знайдено</p>
+				content: (
+					<CertificatePreview
+						src={artPiece.certificate_url}
+						title={artPiece.title}
+					/>
 				),
 			},
-		];
-	}, [
-		artPiece.description,
-		artPiece.author?.bio_text,
-		artPiece.certificate,
-		artPiece.title,
-	]);
+		],
+		[
+			artPiece.description,
+			artPiece.author?.bio_text,
+			artPiece.certificate_url,
+			artPiece.title,
+		]
+	);
 
 	return (
 		<main className="container mx-auto">
@@ -233,7 +185,7 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 									<CardPurchase key={piece.id} variable="dark" card={piece} />
 								))
 							) : (
-								<p className="font-namu font-bold text-6 text-gray-700">
+								<p className="font-namu font-bold text-4 xl:text-6 text-gray-700">
 									Немає схожих робіт
 								</p>
 							)}
