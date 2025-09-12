@@ -10,7 +10,7 @@ export default function CertificatePreview({
 }) {
 	if (!src)
 		return (
-			<p className="font-fixel text-4 ">
+			<p className="font-fixel text-4 text-gray-700">
 				Для цього твору сертифікату не знайдено
 			</p>
 		);

@@ -133,7 +133,7 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 				<SliderWrapper artPiece={artPiece} />
 			</section>
 			<section
-				className="relative z-10 mobile-spacing mt-20 bg-white h-full"
+				className="relative z-10 mobile-spacing mt-[3.25rem] md:mt-[5.25rem] xl:mt-20 bg-white h-full"
 				ref={contentRef}>
 				<div className="pt-6">
 					<BreadcrumbsWrapper activeIndex={2} className="mb-3">
@@ -179,6 +179,10 @@ function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 						/>
 					</aside>
 					<aside className="order-3 lg:order-none lg:col-start-2">
+						<h3 className="font-fixel font-medium text-5 xl:text-6 mb-4 xl:mb-6">
+							Роботи інших авторів
+							<br />у схожій стилістиці
+						</h3>
 						<div className="columns-1 sm:columns-2 lg:columns-auto space-y-8">
 							{similarArtPieces.length > 0 ? (
 								getRandomUniqueData(similarArtPieces, 2).map((piece) => (
