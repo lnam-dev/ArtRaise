@@ -4,6 +4,7 @@ import ImageWithFallback from "~/ui/components/imageWithFallback/image-with-fall
 import SegmentTitle from "~/ui/components/segment-title/segment-title";
 import CallToActionSection from "~/ui/components/cta-section/cta-section";
 import LinkBackToPrevious from "~/ui/components/link/link-back-to-previous";
+import imageFallback from "~/utils/image-fallback";
 
 interface Props {
     artpiece: TArtPiece
@@ -55,7 +56,7 @@ const CertificatePage: React.FC<Props> = ({artpiece}) => {
             <SegmentTitle className={'my-5 md:mt-10'}>Сертифікат</SegmentTitle>
             <ImageWithFallback
                 className="h-auto w-full max-h-[50rem] object-cover mx-auto mb-10 object-center"
-                src={artpiece.certificate}
+                src={imageFallback(artpiece.certificate_url)}
                 alt="Author"
                 fallbackSrc={'/default.png'}
             />
