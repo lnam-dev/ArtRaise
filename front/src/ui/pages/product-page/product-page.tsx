@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useRef } from "react";
+import Image from "next/image";
 import Script from "next/script";
 import Link from "~/bridge/ui/Link";
 
@@ -15,6 +16,7 @@ import { ProductPage as TProductPage } from "~/use-cases/contracts/product-page"
 import { TAccordion } from "~/types/accordion";
 
 import getRandomUniqueData from "~/utils/get-random-unique-data";
+import imageFallback from "~/utils/image-fallback";
 
 import SliderWrapper from "./slider-wrapper";
 import LinkBackTo from "~/ui/components/link/link-back-to";
@@ -24,15 +26,12 @@ import Character from "~/ui/components/character/character";
 import Accordion from "~/ui/components/accordion/accordion";
 import PriceBar from "~/ui/components/price-bar/price-bar";
 import CardPurchase from "~/ui/components/card/card-purchase";
+import ButtonArrow from "~/ui/components/button/button-arrow";
 
 gsap.registerPlugin(ScrollTrigger);
 const MAX_SHIFT_GSAP = 50;
 
-function ProductPage({
-	artPiece,
-	ACCORDION_ITEMS,
-	similarArtPieces,
-}: TProductPage) {
+function ProductPage({ artPiece, similarArtPieces }: TProductPage) {
 	const sliderRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
@@ -70,30 +69,111 @@ function ProductPage({
 		return "";
 	}, [artPiece.length_cm, artPiece.width_cm]);
 
+	const AboutAuthor = ({
+		id,
+		name,
+		bio,
+		imgSrc,
+	}: {
+		id: string | number;
+		name: string;
+		bio?: string;
+		imgSrc?: string;
+	}) => {
+		return (
+			<section className="flex gap-4 h-[40vh] mt-4 items-stretch">
+				<figure className="h-full flex-shrink-0">
+					<img
+						src={imageFallback(imgSrc)}
+						alt={name}
+						loading="lazy"
+						className="h-full w-auto object-contain select-none"
+					/>
+				</figure>
+				<div className="flex flex-col gap-3 justify-between h-full min-w-0">
+					<div>
+						<h2 className="font-namu text-12 md:text-8 line-clamp-2 break-words mb-4">
+							{name}
+						</h2>
+						<p className="font-fixel text-4 leading-relaxed overflow-auto">
+							{bio || "Інформація про автора відсутня."}
+						</p>
+					</div>
+					<ButtonArrow href={`authors/${id}`}>Переглянути автора</ButtonArrow>
+				</div>
+			</section>
+		);
+	};
+
 	const accordionItems: TAccordion[] = useMemo(() => {
 		return [
-			{ title: "Опис твору", content: artPiece.description },
-			{ title: "Про автора", content: artPiece.author?.bio_text || "" },
-			...ACCORDION_ITEMS,
+			{
+				title: "Опис твору",
+				content: artPiece.description,
+			},
+			{
+				title: "Про автора",
+				content: (
+					<AboutAuthor
+						id={artPiece.author?.id}
+						name={artPiece.author?.fullname}
+						bio={artPiece.author?.bio_text}
+						imgSrc={artPiece.author?.image_author}
+					/>
+				),
+			},
+			{
+				title: "Сертифікат автентичності",
+				content: artPiece.certificate_url ? (
+					<figure className="h-[40vh] mt-4 flex-shrink-0">
+						<img
+							src={imageFallback(artPiece.certificate_url)}
+							alt={`Сертифікат автентичності для ${artPiece.title}`}
+							loading="lazy"
+							className="h-full w-auto object-contain select-none"
+						/>
+					</figure>
+				) : (
+					<p>Для цього твору сертифікату не знайдено</p>
+				),
+			},
 		];
-	}, [artPiece.description, artPiece.author?.bio_text]);
-
-	const schema = {
-		"@context": "https://schema.org",
-		"@type": "FAQPage",
-		mainEntity: accordionItems.map(({ title, content }) => ({
-			"@type": "Question",
-			name: title,
-			acceptedAnswer: { "@type": "Answer", text: content },
-		})),
-	};
+	}, [
+		artPiece.description,
+		artPiece.author?.bio_text,
+		artPiece.certificate,
+		artPiece.title,
+	]);
 
 	return (
 		<main className="container mx-auto">
 			<Script
 				id="faq-schema"
 				type="application/ld+json"
-				dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+				dangerouslySetInnerHTML={{
+					__html: JSON.stringify({
+						"@context": "https://schema.org",
+						"@type": "FAQPage",
+						mainEntity: accordionItems
+							.map(({ title, content }) => {
+								if (!title) return null;
+								let text = "";
+								if (typeof content === "string") text = content;
+								else if (content && typeof content === "object") {
+									if (typeof (content as any).props?.children === "string") {
+										text = (content as any).props.children;
+									}
+								}
+								if (!text) return null;
+								return {
+									"@type": "Question",
+									name: title,
+									acceptedAnswer: { "@type": "Answer", text },
+								};
+							})
+							.filter(Boolean),
+					}),
+				}}
 			/>
 			<section
 				className="relative pt-12 lg:pt-18 xl:pt-[5rem] max-h-[75vh]"
@@ -138,13 +218,6 @@ function ProductPage({
 								{content}
 							</Accordion>
 						))}
-						<Accordion size={"bg"} title={"Сертифікати автентичності"}>
-							{artPiece.certificate ? (
-								<Link to={`certificate/${artPiece.id}`}>До сертифікату</Link>
-							) : (
-								<p>Для цього твору сертифікату не знайдено</p>
-							)}
-						</Accordion>
 					</article>
 					<aside className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 flex flex-col justify-start w-full">
 						<PriceBar

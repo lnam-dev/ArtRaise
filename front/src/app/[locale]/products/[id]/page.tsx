@@ -7,11 +7,6 @@ export type TParams = {
 	}>;
 };
 
-const ACCORDION_ITEMS = [
-	{ title: "Умови придбання", content: "Інформація про умови придбання" },
-	{ title: "FAQ", content: "Часті запитання" },
-];
-
 export const revalidate = 21600;
 export const dynamic = "force-dynamic";
 
@@ -78,10 +73,6 @@ export default async ({ params }: TParams) => {
 	const { artPiece, similarArtPieces } = await getData(id);
 
 	return (
-		<ProductPage
-			artPiece={artPiece}
-			similarArtPieces={similarArtPieces}
-			ACCORDION_ITEMS={ACCORDION_ITEMS}
-		/>
+		<ProductPage artPiece={artPiece} similarArtPieces={similarArtPieces} />
 	);
 };
