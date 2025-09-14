@@ -33,7 +33,11 @@ const SliderModal: React.FC<{
 					initialSlide={initialSlide}
 					className="slider-modal__swiper">
 					<div className="slider-modal__swiper-wrapper">
-						<SwiperSlide>
+						<SwiperSlide
+							onClick={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+							}}>
 							<div
 								className={`slider-modal__container slider-modal__container--${currentDevice} swiper-zoom-container`}>
 								<div
