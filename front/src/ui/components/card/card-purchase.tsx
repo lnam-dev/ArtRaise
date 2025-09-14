@@ -22,8 +22,9 @@ const CardPurchase = ({
 	...props
 }: CardPurchaseProps) => {
 	const Tag = variable === "dark" ? Link : "div";
+	// Use `to` for Link (bridge/ui/Link) so it doesn't fallback to '#'
 	const prop =
-		variable === "dark" ? { href: `products/${Number(card.id)}` } : null;
+		variable === "dark" ? { to: `products/${Number(card.id)}` } : null;
 
 	return (
 		<article className={`card card--${variable} ${className}`} {...props}>

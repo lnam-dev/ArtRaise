@@ -1,4 +1,8 @@
-interface CharacterProps {
+"use client";
+
+import React from "react";
+
+interface CharacterProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	value: string | number;
 	className?: string;
@@ -7,7 +11,7 @@ interface CharacterProps {
 const Character = ({ title, value, className, ...props }: CharacterProps) => {
 	return (
 		<div
-			className={`font-fixel pb-3 lg:pb-4 border-bottom ${className}`}
+			className={`font-fixel pb-3 lg:pb-4 border-bottom ${className ?? ""}`}
 			{...props}>
 			<span className="font-normal text-gray-700 text-[0.875rem] xl:text-4">
 				{title}
