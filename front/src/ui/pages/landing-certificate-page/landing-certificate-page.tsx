@@ -92,10 +92,10 @@ const LandingCertificatePage: React.FC<Props> = ({artpiecesWithCertificate}) => 
                             <CardPurchase key={artpiece.id} card={artpiece} className={'mt-10'}/>))
                     }
                 </aside>
-                <div className={'col-span-full mt-10'}>
+                <div className={'col-span-full mt-10 md:hidden'}>
                     <p className={'response-text-8'}>{"Роботи з сертифікатом"}</p>
                     <div className={
-                        "flex gap-5 overflow-x-auto pt-5 md:hidden col-span-full"
+                        "flex gap-5 overflow-x-auto pt-5 col-span-full"
                     }>
                         {artpiecesWithCertificate.slice(0, 9).map((artpiece, index) => (
                             <CardPurchase key={artpiece.id} card={artpiece} className={'min-w-[80vw]'}/>

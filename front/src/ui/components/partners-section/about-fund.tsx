@@ -13,7 +13,7 @@ const AboutFund: FC<PartnersSectionProps> = ({
 		<section className={className} {...props}>
 			<SegmentTitle
 				className="mb-10"
-				link={{ to: "/", name: `всі наші партнери` }}>
+				link={{ to: "/about-fund", name: `` }}>
 				Про фонд
 			</SegmentTitle>
 			<div className="grid grid-cols-1 gap-8 items-center sm:grid-cols-2">
