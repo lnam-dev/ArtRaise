@@ -18,13 +18,13 @@ export const Footer = () => {
 					</div>
 					{/* Contact */}
 					<div className="lg:flex flex-col xl:text-[1.25rem] ml-[1rem] space-y-1 font-namu text-gray-300 hidden">
-						<Link to="mailto:friendsofinaa@gmail.com">
+						<a href="mailto:friendsofinaa@gmail.com">
 							friendsofinaa@gmail.com
-						</Link>
+						</a>
 						<p>+380 98 859 39 00</p>
-						<Link to="/">Instagram</Link>
-						<Link to="/">Facebook</Link>
-						<Link to="/">Telegram</Link>
+						<a target={"_blank"} href="https://www.instagram.com/lvivartacademy?igsh=YXBzbGMyeGsycXdu">Instagram</a>
+						<a target={"_blank"} href="https://www.facebook.com/share/1AqaXnu3uA/?mibextid=wwXIfr">Facebook</a>
+						<a target={"_blank"} href="https://whatsapp.com/channel/0029VatExYe11ulSOhtcty0P">WhatsApp</a>
 					</div>
 				</div>
 
