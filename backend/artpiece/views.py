@@ -4,7 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework import status
-from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceBuyFormSerializer, TagSerializer
+from .serializers import ArtPieceDetailSerializer, ArtPieceSerializer, ArtPieceBuyFormSerializer, TagSerializer, CategorySerializer
 from .filters import ArtPieceFilter
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -114,20 +114,16 @@ class ArtPieceCategoriesView(APIView):
             count=Count('artpieces')
         ).order_by('order')
 
-        # Формуємо відповідь
+        # Використовуємо сериализатор для правильної обробки даних
+        serializer = CategorySerializer(categories, many=True, context={'request': request})
         categories_data = []
         
-        for category in categories:
-            category_data = {
-                'id': category.id,
-                'slug': category.slug,
-                'name_en': category.name_en,        # Англійська назва
-                'name_ua': category.name_ua,        # Українська назва
-                'description': category.description,
-                'image_url': category.image_url.url if category.image_url else None,
-                'count': category.count,            # Кількість artpieces в категорії
-                'is_available': category.count > 0  # Є artpieces в категорії
-            }
+        for i, category in enumerate(categories):
+            category_data = serializer.data[i].copy()  # Копіюємо дані з сериализатора
+            category_data.update({
+                'count': category.count,                # Додаємо лічильник artpieces
+                'is_available': category.count > 0      # Додаємо доступність категорії
+            })
             categories_data.append(category_data)
         
         # Статистика

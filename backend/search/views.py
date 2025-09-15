@@ -10,6 +10,7 @@ from artpiece.filters import ArtPieceFilter
 from artpiece.models import ArtPiece
 from artpiece.serializers import ArtPieceSerializer
 from authors.models import Author
+from search.authors_ea import create_authors_ea
 
 
 class ArtPiecePagination(PageNumberPagination):
@@ -21,11 +22,20 @@ class SearchView(APIView):
     renderer_classes = [JSONRenderer]
 
     def get(self, request):
+        #якщо запит дорівнює "authors_of_this"
+        query = request.GET.get("q", "").strip()
+        if query.lower() == "authors_of_this":
+            mock_artpieces = create_authors_ea()
+            
+            # Серіалізація мок-об'єктів
+            serializer = ArtPieceSerializer(mock_artpieces, many=True)
+            
+            return Response({"results": serializer.data,"pagination": {"current_page": 1,"total_pages": 1,"total_items": 4,"has_next": False,"has_previous": False,"page_size": 20},"price_range": {"min_price": 666666.66,"max_price": 999999.99},"filters_applied": {"query": query,"categories": [],"category_ids": [],"types": [],"materials": [],"themes": [],"styles": [],"expression_methods": [],"sizes": [],"colors": [],"orientations": [],"gammas": [],"price_min": None,"price_max": None,"author": None,"sort_by": "title","sort_direction": "asc"},}, status=status.HTTP_200_OK)
+
         # Створюємо розширений фільтр для підтримки множинних значень
         queryset = ArtPiece.objects.select_related('author', 'category').all()
 
         # Текстовий пошук
-        query = request.GET.get("q", "").strip()
         if query:
             queryset = queryset.filter(
                 Q(title__icontains=query) |

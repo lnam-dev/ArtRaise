@@ -6,12 +6,20 @@ from .models import ArtPiece, ArtPieceBuyForm, Category, Tag
 
 class CategorySerializer(serializers.ModelSerializer):
     """Серіалізатор для категорій"""
+    image_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = Category
         fields = [
             'id', 'name_en', 'name_ua', 'slug', 'description', 
             'image_url', 'is_active', 'order'
         ]
+    
+    def get_image_url(self, obj):
+        """Повертає повний URL зображення категорії"""
+        if obj.image_url and obj.image_url.name:
+            return f"{settings.MEDIA_URL}{obj.image_url.name}"
+        return None
 
 
 class TagSerializer(serializers.ModelSerializer):

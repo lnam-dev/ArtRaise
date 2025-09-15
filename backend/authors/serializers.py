@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.conf import settings
 from .models import Author
 
 
@@ -18,7 +19,7 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
              'price': artpiece.price,
              'length_cm': artpiece.length_cm,
              'width_cm': artpiece.width_cm,
-             'image_artpiece': artpiece.image_artpiece.url,
+             'image_artpiece': f"{settings.MEDIA_URL}{artpiece.image_artpiece.name}" if artpiece.image_artpiece and artpiece.image_artpiece.name else None,
              }
             for artpiece in obj.artpieces.all()
         ]
@@ -37,8 +38,9 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
         ]
 
     def get_image_author(self, obj):
-        if obj.image_author:
-            return obj.image_author.url
+        """Повертає повний URL зображення автора"""
+        if obj.image_author and obj.image_author.name:
+            return f"{settings.MEDIA_URL}{obj.image_author.name}"
         return None
 
 
@@ -55,6 +57,7 @@ class AuthorSerializer(serializers.ModelSerializer):
         return len(obj.artpieces.all())
 
     def get_image_author(self, obj):
-        if obj.image_author:
-            return obj.image_author.url
+        """Повертає повний URL зображення автора"""
+        if obj.image_author and obj.image_author.name:
+            return f"{settings.MEDIA_URL}{obj.image_author.name}"
         return None
