@@ -1,9 +1,9 @@
 import React from "react";
-import AboutFundPage from "~/ui/components/about-fund-page/about-fund-page";
-import { TLinkedObjectInfo, TLinkType, TSliderBaseProps } from "~/types/slider";
-import ImageLinkToQA from "~/ui/pages/how-to-buy-page/image-link-to-qa"; // 👈 додали імпорт
 
-// HTML контент з адмінки (адаптивні класи замість fixed width/height)
+import AboutFundPage from "~/ui/components/about-fund-page/about-fund-page";
+import { TSliderBaseProps } from "~/types/slider";
+import AboutFundImgWrapper from "~/ui/components/about-fund-img-wrapper/about-fund-img-wrapper";
+
 const mockHtml = `
   <p>
     Львівська національна академія мистецтв планувала 2022 рік для прориву в розвитку.
@@ -65,42 +65,67 @@ const mockHtml = `
 `;
 
 const sliderData: TSliderBaseProps = {
-  slides: [
-    {
-      title: "Про Фонд",
-      subtitle: "Благодійний Фонд 'Друзі ЛНАМ'",
-      description:
-        "Підтримка розвитку Львівської національної академії мистецтв", // треба
-      imgSrc: "/slider/img-1.png",
-    },
-    {
-      title: "Місія та цінності",
-      subtitle: "Створення прориву на культурному фронті",
-      description: "Фінансування освітніх, мистецьких та наукових програм", // треба
-      imgSrc: "/slider/img-2.png",
-    },
-    {
-      title: "Наші програми",
-      subtitle: "Підтримка студентів та викладачів",
-      description:
-        "Розвиток креативного підприємництва та модернізація кампусу",
-      imgSrc: "/slider/img-3.png",
-    },
-  ],
-  variant: "fullscreen",
+	slides: [
+		{
+			title: "Про Фонд",
+			subtitle: "Благодійний Фонд 'Друзі ЛНАМ'",
+			description:
+				"Підтримка розвитку Львівської національної академії мистецтв", // треба
+			imgSrc: "/slider/img-1.png",
+		},
+		{
+			title: "Місія та цінності",
+			subtitle: "Створення прориву на культурному фронті",
+			description: "Фінансування освітніх, мистецьких та наукових програм", // треба
+			imgSrc: "/slider/img-2.png",
+		},
+		{
+			title: "Наші програми",
+			subtitle: "Підтримка студентів та викладачів",
+			description:
+				"Розвиток креативного підприємництва та модернізація кампусу",
+			imgSrc: "/slider/img-3.png",
+		},
+	],
+	variant: "fullscreen",
 };
 
-const Page = () => {
-  return (
-    <>
-      <AboutFundPage slider={sliderData} htmlContent={mockHtml} />
+const JSX_CONTENT = (
+	<div className="space-y-6">
+		<AboutFundImgWrapper
+			src="/AboutFundPage-1.jpg"
+			alt="Зустріч випускників та студентів - три молоді люди за столом з виробами на ярмарку"
+			buttonText=""
+			onButtonClick={() => {}}
+		/>
 
-      {/* 👇 після основної сторінки показуємо блок із лінком на Q&A */}
-      <div className="mx-auto px-4 sm:px-6 lg:px-[48px] my-12 max-w-[1200px]">
-        <ImageLinkToQA />
-      </div>
-    </>
-  );
+		<AboutFundImgWrapper
+			src="/AboutFundPage-2.jpg"
+			alt="Кадри: Аліна Кіндяк - світла кімната з меблями та природним освітленням"
+			buttonText=""
+			onButtonClick={() => {}}
+		/>
+
+		<AboutFundImgWrapper
+			src="/AboutFundPage-3.jpg"
+			alt="Кадри: Аліна Кіндяк - світла кімната з меблями та природним освітленням"
+			buttonText=""
+			onButtonClick={() => {}}
+		/>
+	</div>
+);
+
+const SECTIONS = ["Інформація", "Фотографії"];
+
+const Page = () => {
+	return (
+		<AboutFundPage
+			slider={sliderData}
+			htmlContent={mockHtml}
+			jsxContent={JSX_CONTENT}
+			sections={SECTIONS}
+		/>
+	);
 };
 
 export default Page;
