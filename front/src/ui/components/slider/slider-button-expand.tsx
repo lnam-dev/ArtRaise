@@ -3,13 +3,13 @@ import SliderModal from "./slider-modal";
 
 import { useModal } from "~/ui/hooks/useModal";
 
-import type { TSlide } from "~/types/slider";
+import type { TSliderItem } from "~/types/slider";
 import type { TArtPiece } from "~/types";
 
 interface SliderButtonExpandProps {
 	className?: string;
 	orientation?: TArtPiece["orientation"];
-	slides: TSlide[];
+	slides: TSliderItem[];
 }
 
 export default function SliderButtonExpand({
@@ -25,7 +25,7 @@ export default function SliderButtonExpand({
 
 	return (
 		<div
-			className={`flex bg-[#000212] shadow-sm bg-opacity-[64%] ${className}`}>
+			className={`flex bg-[#000212] shadow-sm bg-opacity-[64%] ${className} `}>
 			<button className="all-unset p-3" onClick={handleExpandButton}>
 				<ArrowExpand height="24" width="24" />
 			</button>

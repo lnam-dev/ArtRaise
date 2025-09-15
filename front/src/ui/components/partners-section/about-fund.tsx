@@ -4,9 +4,8 @@ import { FC } from "react";
 
 type PartnersSectionProps = React.HTMLAttributes<HTMLElement>;
 
-const PARTNERS_COUNT = 32;
 
-const PartnersSection: FC<PartnersSectionProps> = ({
+const AboutFund: FC<PartnersSectionProps> = ({
 	className = "",
 	...props
 }) => {
@@ -14,8 +13,8 @@ const PartnersSection: FC<PartnersSectionProps> = ({
 		<section className={className} {...props}>
 			<SegmentTitle
 				className="mb-10"
-				link={{ to: "/", name: `всі наші партнери (${PARTNERS_COUNT})` }}>
-				Партнери ARTRISE
+				link={{ to: "/", name: `всі наші партнери` }}>
+				Про фонд
 			</SegmentTitle>
 			<div className="grid grid-cols-1 gap-8 items-center sm:grid-cols-2">
 				<div className="relative w-full aspect-[16/9]">
@@ -46,4 +45,4 @@ const PartnersSection: FC<PartnersSectionProps> = ({
 	);
 };
 
-export default PartnersSection;
+export default AboutFund;

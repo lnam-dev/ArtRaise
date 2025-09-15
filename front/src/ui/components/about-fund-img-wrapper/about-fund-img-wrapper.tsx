@@ -18,11 +18,10 @@ const AboutFundImgWrapper: FC<AboutFundImgWrapperProps> = ({
   alt,
   buttonText,
   onButtonClick,
-  className = ""
+  className = "",
 }) => {
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      {/* Фонова картинка */}
       <div className={styles.imageContainer}>
         <Image
           src={src}
@@ -34,7 +33,6 @@ const AboutFundImgWrapper: FC<AboutFundImgWrapperProps> = ({
         />
       </div>
 
-      {/* Прозора кнопка поверх картинки (показується тільки якщо є buttonText) */}
       {buttonText && (
         <div className={styles.buttonOverlay}>
           <ButtonTransparent onClick={onButtonClick}>

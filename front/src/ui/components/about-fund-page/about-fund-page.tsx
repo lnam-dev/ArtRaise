@@ -7,48 +7,46 @@ import { TSliderBaseProps } from "~/types/slider";
 
 interface AboutFundPageProps {
   slider: TSliderBaseProps;
-  htmlContent: string; // HTML з адмінки для Section 1
+  htmlContent: string;
 }
 
 const AboutFundPage: FC<AboutFundPageProps> = ({ slider, htmlContent }) => {
-  // JSX контент для Section 2 (тільки фотографії без заголовка)
   const jsxContent = (
     <div className="space-y-6">
-      {/* Перша фотографія - Зустріч випускників */}
       <AboutFundImgWrapper
-        src="/4photo.jpg"
+        src="/AboutFundPage-1.jpg"
         alt="Зустріч випускників та студентів - три молоді люди за столом з виробами на ярмарку"
         buttonText=""
         onButtonClick={() => {}}
       />
-      
-      {/* Друга фотографія - Кадри: Аліна Кіндяк */}
+
       <AboutFundImgWrapper
-        src="/certificate-1.png"
+        src="/AboutFundPage-2.jpg"
         alt="Кадри: Аліна Кіндяк - світла кімната з меблями та природним освітленням"
         buttonText=""
         onButtonClick={() => {}}
       />
+
+    <AboutFundImgWrapper
+        src="/AboutFundPage-3.jpg"
+        alt="Кадри: Аліна Кіндяк - світла кімната з меблями та природним освітленням"
+        buttonText=""
+        onButtonClick={() => {}}
+    />
     </div>
   );
 
-  // Секції для quick-menu
-  const sections = [
-    "Інформація",
-    "Фотографії"
-  ];
+  const sections = ["Інформація", "Фотографії"];
 
   return (
-   <TextTemplatePage
-  slider={slider}
-  htmlContent={htmlContent}
-  jsxContent={jsxContent}
-  sections={sections}
-  rightColumnTitle="Фотографії"
-  rightColumnTitleClass="font-namu text-[36px] font-normal mb-[30px] text-left pl-0 ml-0"
-/>
-
-
+    <TextTemplatePage
+      slider={slider}
+      htmlContent={htmlContent}
+      jsxContent={jsxContent}
+      sections={sections}
+      rightColumnTitle="Фотографії"
+      rightColumnTitleClass="font-namu text-[36px] font-normal mb-[38px] text-left pl-0 ml-0"
+    />
   );
 };
 

@@ -12,7 +12,7 @@ const FamiliarAuthors: React.FC<Props> = ({familiarAuthors, className}) => {
     return (
         <div className={className}>
             {familiarAuthors.map((artist, index) => (
-                <AuthorCard author={artist} key={index}/>
+                <AuthorCard author={artist} key={index} className={'shrink-0 lg:col-span-1'} />
             ))}
         </div>
     );

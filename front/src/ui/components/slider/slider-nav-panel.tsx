@@ -23,7 +23,7 @@ export default function SliderNavPanel({
 	if (slidesLength < 2) return;
 
 	return (
-		<div className="flex bg-[#000212] shadow-sm bg-opacity-[64%]">
+		<div className="flex bg-[#000212] shadow-sm bg-opacity-[64%] hidden">
 			<SliderNavButton variable={"left"} onClick={handlePrevSlide} />
 			<SliderPagination
 				currentSlide={currentSlide}

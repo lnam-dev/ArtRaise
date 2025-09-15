@@ -11,17 +11,25 @@ interface SliderWrapperProps extends TSliderBaseProps {
   orientation?: TArtPiece["orientation"];
 }
 
-const SliderWrapper: FC<SliderWrapperProps> = ({ 
-  variant = "fullscreen", 
+const SliderWrapper: FC<SliderWrapperProps> = ({
+  variant = "fullscreen",
   orientation = "landscape",
-  ...props 
+  className,
+  wrapperStyle,
+  ...props
 }) => {
   switch (variant) {
     case "classic":
       return <SliderClassic {...props} orientation={orientation} />;
     case "fullscreen":
     default:
-      return <SliderFullscreen {...props} />;
+      return (
+        <SliderFullscreen
+          {...props}
+          className={className}
+          wrapperStyle={wrapperStyle}
+        />
+      );
   }
 };
 

@@ -8,15 +8,22 @@ type Props = {
 };
 
 const QuickMenu: FC<Props> = ({ variants, onSelect }) => {
-    const { selectedIndex, setSelectedIndex, selectedVariant, underlineStyle, containerRef } = useQuickMenu(variants);
+    const { selectedIndex, setSelectedIndex } = useQuickMenu(variants);
 
     return (
-        <div className="relative w-fit h-fit">
-            <div ref={containerRef} className="flex flex-row gap-5 px-5 relative">
+        <div className="relative h-fit flex justify-center w-full">
+            <div className="flex gap-[24px] relative">
                 {variants.map((variant, index) => (
                     <div
                         key={index}
-                        className={`relative cursor-pointer px-2 pb-3 transition-colors ${selectedIndex === index ? "text-black" : "text-gray-500"}`}
+                        className="relative cursor-pointer pb-2 transition-all"
+                        style={{
+                            fontFamily: "Fixel, sans-serif",
+                            fontWeight: 400, // regular
+                            fontSize: "16px", // точний розмір
+                            color: "#000",
+                            borderBottom: selectedIndex === index ? "2px solid #000" : "2px solid transparent",
+                        }}
                         onClick={() => {
                             setSelectedIndex(index);
                             onSelect?.(variant);
@@ -25,12 +32,6 @@ const QuickMenu: FC<Props> = ({ variants, onSelect }) => {
                         {variant}
                     </div>
                 ))}
-                {/* Animated Underline */}
-                <div
-                    className="absolute -bottom-0 h-[2px] bg-black transition-all duration-300"
-                    style={underlineStyle}
-                />
-                <div className="absolute content-[''] h-[1px] -bottom-0 left-0 bg-black/40 w-full" />
             </div>
         </div>
     );

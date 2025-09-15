@@ -1,11 +1,11 @@
 import React from "react";
 import AboutFundPage from "~/ui/components/about-fund-page/about-fund-page";
-import { TSliderBaseProps } from "~/types/slider";
+import { TLinkedObjectInfo, TLinkType, TSliderBaseProps } from "~/types/slider";
 import ImageLinkToQA from "~/ui/pages/how-to-buy-page/image-link-to-qa"; // 👈 додали імпорт
 
 // HTML контент з адмінки (адаптивні класи замість fixed width/height)
 const mockHtml = `
-  <p class="text-base leading-relaxed text-gray-900 mb-8 font-fixel max-w-full sm:max-w-[600px] lg:max-w-[774px] mx-auto">
+  <p>
     Львівська національна академія мистецтв планувала 2022 рік для прориву в розвитку.
     Війна відтермінувала плани, але війна не має і не буде ставати на заваді місії Академії.
     Тому в липні 2022 року ми створили Благодійний Фонд «Друзі Львівської національної академії мистецтв»,
@@ -16,10 +16,10 @@ const mockHtml = `
     Фонд виходить на культурний фронт і творитиме історію прориву.
   </p>
 
-  <h2 class="text-2xl font-bold text-gray-900 mb-4 font-fixel">Програми Благодійного фонду «Друзі ЛНАМ»</h2>
+  <h2>Програми Благодійного фонду «Друзі ЛНАМ»</h2>
 
-  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3 font-fixel">Програма підтримки студентів та аспірантів</h3>
-  <ul class="list-disc list-inside space-y-1 text-gray-900 mb-6 font-fixel">
+  <h3>Програма підтримки студентів та аспірантів</h3>
+  <ul>
     <li>Стипендії на навчання та проживання в ЛНАМ</li>
     <li>Підтримка студентської та аспірантської мобільності</li>
     <li>Підтримка здоров'я студентів (здорове харчування, спортивна активність, ментальне здоров'я, допомога в кризових ситуаціях)</li>
@@ -27,8 +27,8 @@ const mockHtml = `
     <li>Підтримка проєктів студентського самоврядування, розвиток клубних форматів</li>
   </ul>
 
-  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3 font-fixel">Програма покращення умов навчання та проживання студентів</h3>
-  <ul class="list-disc list-inside space-y-1 text-gray-900 mb-6 font-fixel">
+  <h3>Програма покращення умов навчання та проживання студентів</h3>
+  <ul>
     <li>Оновлення будівель та освітнього простору (безпека, функціональність, інклюзивність, розвиток академістечка)</li>
     <li>Покращення умов проживання в гуртожитках</li>
     <li>Збереження та ревіталізація культурної спадщини</li>
@@ -37,29 +37,29 @@ const mockHtml = `
     <li>Підтримка цифровізації процесів</li>
   </ul>
 
-  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3 font-fixel">Програма підтримки викладачів та персоналу</h3>
-  <ul class="list-disc list-inside space-y-1 text-gray-900 mb-6 font-fixel">
+  <h3>Програма підтримки викладачів та персоналу</h3>
+  <ul>
     <li>Стипендії та погодинна оплата для гостьових викладачів</li>
     <li>Підтримка академічної, творчої та наукової мобільності викладачів</li>
     <li>Навчання та розвиток викладачів та персоналу (англійська мова, викладацька майстерність, універсальні навички)</li>
   </ul>
 
-  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3 font-fixel">Програма підтримки мистецьких, наукових і комунікаційних проєктів</h3>
-  <ul class="list-disc list-inside space-y-1 text-gray-900 mb-6 font-fixel">
+  <h3>Програма підтримки мистецьких, наукових і комунікаційних проєктів</h3>
+  <ul>
     <li>Стипендії та погодинна оплата для гостьових викладачів</li>
     <li>Підтримка академічної, творчої та наукової мобільності викладачів</li>
     <li>Навчання та розвиток викладачів та персоналу (англійська мова, викладацька майстерність, універсальні навички)</li>
   </ul>
 
-  <h3 class="text-lg font-semibold text-gray-900 mt-6 mb-3 font-fixel">Програма енергозбереження</h3>
-  <ul class="list-disc list-inside space-y-1 text-gray-900 font-fixel">
+  <h3>Програма енергозбереження</h3>
+  <ul>
     <li>Підтримка енергоаудиту та енергоменеджменту</li>
     <li>Модернізація будівель та обладнання</li>
     <li>Використання відновлювальних джерел енергії</li>
     <li>Сортування, ресайклінг та апсайклінг сміття</li>
   </ul>
 
-  <p class="text-base leading-relaxed text-gray-900 mb-8 font-fixel mt-[48px] max-w-full sm:max-w-[600px] lg:max-w-[774px] mx-auto">
+  <p>
     Долучайтесь, запрошуйте своїх друзів, випускників і партнерів Академії на сторінку, діліться нашими новинами!
   </p>
 `;
@@ -67,24 +67,24 @@ const mockHtml = `
 const sliderData: TSliderBaseProps = {
   slides: [
     {
-      imgSrc: "/slider/img-1.png",
       title: "Про Фонд",
       subtitle: "Благодійний Фонд 'Друзі ЛНАМ'",
       description:
-        "Підтримка розвитку Львівської національної академії мистецтв",
+        "Підтримка розвитку Львівської національної академії мистецтв", // треба
+      imgSrc: "/slider/img-1.png",
     },
     {
-      imgSrc: "/slider/img-2.png",
       title: "Місія та цінності",
       subtitle: "Створення прориву на культурному фронті",
-      description: "Фінансування освітніх, мистецьких та наукових програм",
+      description: "Фінансування освітніх, мистецьких та наукових програм", // треба
+      imgSrc: "/slider/img-2.png",
     },
     {
-      imgSrc: "/slider/img-3.png",
       title: "Наші програми",
       subtitle: "Підтримка студентів та викладачів",
       description:
         "Розвиток креативного підприємництва та модернізація кампусу",
+      imgSrc: "/slider/img-3.png",
     },
   ],
   variant: "fullscreen",

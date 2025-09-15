@@ -1,1 +1,3 @@
-export { default } from "./text-template-page";
+import TextTemplatePage from "./text-template-page";
+
+export default TextTemplatePage;

@@ -17,78 +17,83 @@ const PADDING_FOR_MOBILE = 16;
 const ORIENTATION: TArtPiece["orientation"] = "landscape";
 
 const SliderFullscreen: FC<TSliderBaseProps> = ({
-	slides,
-	children,
-	swiperProps,
-	...props
+  slides,
+  children,
+  swiperProps,
+  className,
+  wrapperStyle,
+  ...props
 }) => {
-	const { marginsAuto, isDesktop, isTablet } = useDevice();
+  const { marginsAuto, isDesktop, isTablet } = useDevice();
 
-	const validationDevice = () => {
-		if (isDesktop) {
-			return -marginsAuto;
-		} else if (isTablet) {
-			return -marginsAuto - PADDING_FOR_MOBILE;
-		}
-		return 0;
-	};
+  const validationDevice = () => {
+    if (isDesktop) {
+      return -marginsAuto;
+    } else if (isTablet) {
+      return -marginsAuto - PADDING_FOR_MOBILE;
+    }
+    return 0;
+  };
 
-	if(!slides.length) {
-		return null;
-	}
+  if (!slides.length) {
+    return null;
+  }
 
-
-	return (
-		<SliderBase
-			slides={slides}
-			wrapperStyle="px-4 xl:px-0 xl:px-0 xl:justify-normal"
-			swiperProps={{
-				slidesOffsetBefore: validationDevice(),
-				...swiperProps,
-			}}
-			unpackedSlides={(slides) => (
-				<>
-					{slides.map((obj, index) => (
-						<SwiperSlide key={index}>
-							<figure className="relative w-full aspect-[16/9] h-[70vh] lg:min-h-[80vh] xl:min-h-[90vh] 2xl:min-h-[75vh]">
-								<Image
-									src={obj.imgSrc}
-									alt={`Slide ${index + 1}`}
-									fill
-									className="object-cover"
-								/>
-							</figure>
-						</SwiperSlide>
-					))}
-				</>
-			)}
-			headerElements={(currentSlideIdx) => (
-				<>
-					<div
-						className={`bg-gradient-light backdrop-blur-md pr-1 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-2 xl:w-full -ml-12`}>
-						<Turnabout
-							currentIndex={currentSlideIdx}
-							slideTextData={slides.map((contentData) => ({title: contentData.title || '', subtitle: contentData.subtitle || ''}))}
-							tag={"h1"}
-							textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
-							animation="ease-in-out"
-							duration={600}
-						/>
-					</div>
-					{!isDesktop && (
-						<SliderButtonExpand
-							className="translate-x-4 sm:translate-x-0"
-							slides={slides}
-							orientation={ORIENTATION}
-						/>
-					)}
-				</>
-			)}
-			{...props}
-			variant="fullscreen">
-			{children}
-		</SliderBase>
-	);
+  return (
+    <SliderBase
+      className={`h-[476px] ${className}`}
+      slides={slides}
+      wrapperStyle={`px-4 xl:px-0 xl:px-0 xl:justify-normal ${wrapperStyle}`}
+      swiperProps={{
+        slidesOffsetBefore: validationDevice(),
+        ...swiperProps,
+      }}
+      unpackedSlides={(slides) => (
+        <>
+          {slides.map((obj, index) => (
+            <SwiperSlide key={index}>
+              <figure className="relative w-full aspect-[16/9] h-[70vh] lg:min-h-[80vh] xl:min-h-[90vh] 2xl:min-h-[75vh]">
+                <Image
+                  src={obj.imgSrc}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </figure>
+            </SwiperSlide>
+          ))}
+        </>
+      )}
+      headerElements={(currentSlideIdx) => (
+        <>
+          <div
+            className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 lg:-ml-12 -ml-[32px]`}>
+            <Turnabout
+              currentIndex={currentSlideIdx}
+              slideTextData={slides.map((contentData) => ({
+                title: contentData.title || "",
+                subtitle: contentData.subtitle || "",
+              }))}
+              tag={"h1"}
+              textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
+              animation="ease-in-out"
+              duration={600}
+            />
+          </div>
+          {!isDesktop && (
+            <SliderButtonExpand
+              className="translate-x-4 sm:translate-x-0 hidden"
+              slides={slides}
+              orientation={ORIENTATION}
+            />
+          )}
+        </>
+      )}
+      {...props}
+      variant="fullscreen">
+      {children}
+    </SliderBase>
+  );
 };
 
 export default SliderFullscreen;

@@ -1,1 +1,3 @@
-export { default } from "./about-fund-page";
+import AboutFundPage from "./about-fund-page";
+
+export default AboutFundPage;

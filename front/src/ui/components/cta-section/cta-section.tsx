@@ -2,13 +2,17 @@ import SegmentTitle from "../segment-title/segment-title";
 import CallToActionForm from "./cta-form";
 import CallToActionAccordion from "./cta-accordion";
 
+interface CallToActionSectionProps extends React.HTMLAttributes<HTMLElement> {
+	QuestionAndAnswer?: boolean;
+}
+
 export default function CallToActionSection({
 	className = "",
+	QuestionAndAnswer = true,
 	...props
-}: React.HTMLAttributes<HTMLElement>) {
+}: CallToActionSectionProps) {
 	return (
 		<section className={className} {...props}>
-			<SegmentTitle className="mb-10" />
 			<div className="grid grid-cols-1 gap-12 items-center sm:grid-cols-[3fr_2fr]">
 				<div>
 					<h3 className="font-namu text-8 leading-[1.125] mb-4">
@@ -21,9 +25,8 @@ export default function CallToActionSection({
 					</p>
 					<CallToActionForm />
 				</div>
-				<div>
-					<CallToActionAccordion />
-				</div>
+
+				{QuestionAndAnswer && <CallToActionAccordion />}
 			</div>
 		</section>
 	);

@@ -1,5 +1,5 @@
 export enum FilterKeyEnum {
-    type = "type",//TODO category
+    // category = "category",//removed due to specific getting from stats
     material = "material",
     theme = "theme",
     style = "style",

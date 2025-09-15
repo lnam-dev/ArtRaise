@@ -1,0 +1,55 @@
+.text-template-page {
+}
+
+.text-template-page p {
+  font-size: 16px;
+  margin-bottom: 36px;
+  font-family: "fixel";
+}
+
+.text-template-page h2 {
+  font-family: "namu", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  font-family: "namu";
+}
+
+.text-template-page h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.text-template-page ul {
+  margin-bottom: 36px;
+}
+
+.text-template-page ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.text-template-page ul li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.text-template-page ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: black;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.text-template-page-slider .swiper {
+  height: 476px;
+}
+
+@media (max-width: 1024px) {
+  .text-template-page-slider .swiper {
+    height: 373px;
+    padding-top: 16px;
+  }
+}
