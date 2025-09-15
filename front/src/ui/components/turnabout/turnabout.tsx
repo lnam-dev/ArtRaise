@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useLayoutEffect } from "react";
 
 interface TurnaboutProps
 	extends React.ComponentPropsWithoutRef<React.ElementType> {
@@ -24,9 +24,7 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 	textClass,
 }) => {
 	const refs = useRef<(HTMLDivElement | null)[]>([]);
-	const containerRef = useRef<HTMLDivElement | null>(null);
 	const [heights, setHeights] = useState<number[]>([]);
-	const [currentHeight, setCurrentHeight] = useState<number>(0);
 
 	const validatedIndex = currentIndex >= text.length ? 0 : currentIndex;
 
@@ -34,37 +32,48 @@ const Turnabout: React.FC<TurnaboutProps> = ({
 		if (el) refs.current[index] = el;
 	}, []);
 
-	useEffect(() => {
+	// Measure item heights before paint to avoid visible jump
+	useLayoutEffect(() => {
 		const newHeights = refs.current.map((el) => el?.offsetHeight || 0);
 		setHeights(newHeights);
-
-		setTimeout(() => {
-			if (newHeights[validatedIndex] !== undefined) {
-				setCurrentHeight(newHeights[validatedIndex]);
-			}
-		}, 10);
-	}, [text, validatedIndex]);
+	}, [text]);
 
 	const translateY = heights
 		.slice(0, validatedIndex)
 		.reduce((acc, h) => acc + h, 0);
 
+	const placeholderText = text.reduce((longest, t) => {
+		const a = longest || "";
+		const b = t || "";
+		return b.length > a.length ? b : a;
+	}, "");
+
 	return (
-		<div
-			ref={containerRef}
-			className={`relative overflow-hidden transition-[height] duration-300 ease-in-out ${wrapperClass}`}
-			style={{ height: `${currentHeight}px`, minHeight: "1em" }}>
-			<div
-				className={`flex flex-col transition-transform duration-[${duration}ms] ${animation}`}
-				style={{ transform: `translateY(-${translateY}px)` }}>
-				{text.map((textItem, index) => (
-					<Tag
-						key={index}
-						ref={(el: any) => setRef(el, index)}
-						className={textClass}>
-						{textItem}
-					</Tag>
-				))}
+		<div className={`relative overflow-hidden ${wrapperClass}`}>
+			{/* Invisible placeholder reserves space on first paint to prevent layout shift */}
+			<Tag
+				aria-hidden
+				className={`${textClass} opacity-0 select-none pointer-events-none`}>
+				{placeholderText}
+			</Tag>
+			<div className="absolute inset-0">
+				<div
+					className={`flex flex-col`}
+					style={{
+						transform: `translateY(-${translateY}px)`,
+						transitionProperty: "transform",
+						transitionDuration: `${duration}ms`,
+						transitionTimingFunction: animation,
+					}}>
+					{text.map((textItem, index) => (
+						<Tag
+							key={index}
+							ref={(el: any) => setRef(el, index)}
+							className={textClass}>
+							{textItem}
+						</Tag>
+					))}
+				</div>
 			</div>
 		</div>
 	);
