@@ -62,30 +62,14 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 				<>
 					<div
 						className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 xl:w-full`}>
-						<div className="relative">
-							{/* Placeholder reserves height to prevent jump on init */}
-							<div
-								aria-hidden
-								className="opacity-0 font-namu text-8 md:text-12 lg:text-20 leading-none py-2">
-								{slides.reduce(
-									(longest, s) =>
-										(s.title?.length || 0) > (longest.length || 0)
-											? s.title || ""
-											: longest,
-									""
-								)}
-							</div>
-							<div className="absolute inset-0">
-								<Turnabout
-									currentIndex={currentSlideIdx}
-									text={slides.map(({ title }) => title)}
-									tag={"h1"}
-									textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
-									animation="ease-in-out"
-									duration={600}
-								/>
-							</div>
-						</div>
+						<Turnabout
+							currentIndex={currentSlideIdx}
+							text={slides.map(({ title }) => title)}
+							tag={"h1"}
+							textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
+							animation="ease-in-out"
+							duration={500}
+						/>
 					</div>
 					{!isDesktop && (
 						<SliderButtonExpand
