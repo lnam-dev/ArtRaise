@@ -94,7 +94,7 @@ const AboutFundPage: React.FC<Props> = () => {
                     <p className={'response-text-8'}>{"Фотографії"}</p>
                     {
                         imgUrls.slice(0, 3).map((url, index) => (
-                            <ImageWithFallback className={'w-full md:mb-4'} src={url} fallbackSrc={'/default.jpg'}/>))
+                            <ImageWithFallback key={url} className={'w-full md:mb-4'} src={url} fallbackSrc={'/default.jpg'}/>))
                     }
                 </aside>
                 <div className={'col-span-full mt-10'}>
@@ -104,7 +104,7 @@ const AboutFundPage: React.FC<Props> = () => {
                     }>
                         {
                             imgUrls.slice(0, 3).map((url, index) => (
-                                <ImageWithFallback className={'w-full md:mb-4'} src={url} fallbackSrc={'/default.jpg'}/>))
+                                <ImageWithFallback key={url} className={'w-full md:mb-4'} src={url} fallbackSrc={'/default.jpg'}/>))
                         }
                     </div>
                 </div>
