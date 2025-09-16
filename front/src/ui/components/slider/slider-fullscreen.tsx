@@ -68,7 +68,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 							tag={"h1"}
 							textClass="font-namu text-8 md:text-12 lg:text-20 text-black leading-none py-2"
 							animation="ease-in-out"
-							duration={600}
+							duration={500}
 						/>
 					</div>
 					{!isDesktop && (

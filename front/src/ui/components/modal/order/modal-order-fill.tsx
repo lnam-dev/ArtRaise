@@ -16,7 +16,26 @@ const ModalOrderFill: React.FC<ModalFillOrderProps> = ({ artPiece }) => {
 			aria-modal="true"
 			aria-labelledby="modal-title"
 			aria-describedby="modal-description"
-			className="flex flex-row bg-white w-fit h-fit relative xl:max-w-[90vw] xl:max-h-[90vh] pt-4 sm:pt-0">
+			className="flex flex-row bg-white w-fit h-fit relative xl:max-w-[90vw] xl:max-h-[90vh] pt-4 sm:pt-0"
+			onClick={(e) => {
+				const target = e.target as HTMLElement;
+				const isInteractive = !!target.closest(
+					"button, a, input, textarea, select, label, [role='button']"
+				);
+				if (!isInteractive) {
+					e.preventDefault();
+				}
+				e.stopPropagation();
+			}}
+			onPointerDown={(e) => {
+				e.stopPropagation();
+			}}
+			onMouseDown={(e) => {
+				e.stopPropagation();
+			}}
+			onTouchStart={(e) => {
+				e.stopPropagation();
+			}}>
 			<ModalButtonClose variable="light" />
 			{!isMobile && (
 				<div className="flex-grow-1 overflow-auto scrollbar-hide bg-black-1000">
