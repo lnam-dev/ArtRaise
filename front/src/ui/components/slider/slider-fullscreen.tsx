@@ -61,7 +61,7 @@ const SliderFullscreen: FC<TSliderBaseProps> = ({
 			headerElements={(currentSlideIdx) => (
 				<>
 					<div
-						className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 xl:w-full`}>
+						className={`bg-gradient-light backdrop-blur-md pr-4 before:bg-gradient-light before:backdrop-blur-md before:absolute before:-left-[100%] before:w-[100%] before:h-full xl:pr-0 w-[80%] xl:w-full`}>
 						<Turnabout
 							currentIndex={currentSlideIdx}
 							text={slides.map(({ title }) => title)}
