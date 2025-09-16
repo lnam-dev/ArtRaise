@@ -57,6 +57,14 @@ def create_authors_ea():
             'price': 999999.99,
             'style': 'Next.js & QA',
             'description': 'Експерт з інфраструктури'
+        },
+        {
+            'id': 1000000000005,
+            'title': 'Project Manager',
+            'author_name': 'Mariana',
+            'price': 999999.99,
+            'style': 'Майстриня координації',
+            'description': 'тримала весь хаос в гармонії. Якщо щось працює, значить вона це організувала.'
         }
     ]
 

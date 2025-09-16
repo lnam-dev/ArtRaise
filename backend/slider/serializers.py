@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.conf import settings
 from .models import Slide
 
 
@@ -79,12 +80,9 @@ class SlideSerializer(serializers.ModelSerializer):
         return None
     
     def get_image_url(self, obj):
-        """Отримати повний URL зображення"""
-        if obj.image:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.image.url)
-            return obj.image.url
+        """Повертає повний URL зображення слайда"""
+        if obj.image and obj.image.name:
+            return f"{settings.MEDIA_URL}{obj.image.name}"
         return None
 
 
@@ -122,10 +120,7 @@ class SlideListSerializer(serializers.ModelSerializer):
         return "Немає посилання"
 
     def get_image_url(self, obj):
-        """Отримати повний URL зображення"""
-        if obj.image:
-            request = self.context.get('request')
-            if request:
-                return request.build_absolute_uri(obj.image.url)
-            return obj.image.url
+        """Повертає повний URL зображення слайда"""
+        if obj.image and obj.image.name:
+            return f"{settings.MEDIA_URL}{obj.image.name}"
         return None
