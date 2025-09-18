@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, {useEffect} from 'react';
 import BreadcrumbsLink from "~/ui/components/breadcrumbs/breadcrumbs-link";
 import BreadcrumbsWrapper from "~/ui/components/breadcrumbs/breadcrumbs-wrapper";
 import SearchPageInput from "~/ui/pages/search-page/search-page-input";
@@ -11,11 +11,18 @@ import MobileFilterNavigation from "~/ui/pages/search-page/mobile-filter-navigat
 import {SearchPagination} from "~/app/[locale]/search/SearchPagination";
 import CardPurchase from "~/ui/components/card/card-purchase";
 import FilterMapper from "~/ui/pages/search-page/filter-mapper";
+import {useFilter} from "~/ui/pages/search-page/useFilter/useFilter";
 
 export default function Page() {
     const searchPageState = useAppSelector(state => state.searchPageReducer)
     const {artpieces} = searchPageState;
     const isArtpiecesNotEmpty = searchPageState.artpieces.length !== 0;
+    const {getInitialFiltersFromUrl, setupFiltersKeys} = useFilter()
+
+    useEffect(() => {
+        getInitialFiltersFromUrl()
+        setupFiltersKeys()
+    }, []);
     return (
         <div
             className={

@@ -1,6 +1,6 @@
 import {TArtPiece} from "~/types";
-import {useAppSelector} from "~/store/client/hooks";
-import {IPagination, IPriceRange} from "~/store/client/slices/SearchPageSlice";
+import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
+import {IPagination, IPriceRange, setIsWaitingForResponse} from "~/store/client/slices/SearchPageSlice";
 import {getFilteredUrlParamsFromFilterState} from "~/ui/pages/search-page/func";
 import {useRouter} from "next/navigation";
 interface SearchPageSetup {
@@ -12,11 +12,14 @@ export const useSearchPage = () => {
     const router = useRouter();
     //todo response ok checker
     const searchState = useAppSelector(state => state.searchPageReducer);
+    const dispatch = useAppDispatch()
     const getSearchPage = async (): Promise<SearchPageSetup | null> => {
         const urlParams = getFilteredUrlParamsFromFilterState(searchState);
+        dispatch(setIsWaitingForResponse(true));
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}search?${urlParams.toString()}`, {});
         const data = await response.json();
         router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(searchState)}`);
+        dispatch(setIsWaitingForResponse(false));
         return {
             artpieces: data.results,
             pagination: data.pagination,
@@ -26,6 +29,5 @@ export const useSearchPage = () => {
 
     return {
         getSearchPage,
-
     }
 }
