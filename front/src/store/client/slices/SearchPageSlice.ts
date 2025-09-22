@@ -41,6 +41,7 @@ export interface ISort {
 
 export interface ISearchPageState {
     artpieces: TArtPiece[]
+    isWaitingForResponse: boolean
     pagination: IPagination
     available_price_range: IPriceRange,
     sort: ISort,
@@ -50,16 +51,14 @@ export interface ISearchPageState {
             appliedCategoriesSlugs: string[],
             categoryKeysCounts: TFilterCategoryKey[],
         }
-        price_range_filters: {
-            min: number,
-            max: number
-        }
+        price_range_filters: IPriceRange
         filterKeys: TFilterKeys
     } & TFilterFields,
 }
 
 const initialState: ISearchPageState = {
     artpieces: [],
+    isWaitingForResponse: false,
     pagination: {
         total_items: 0,
         current_page: 1,
@@ -79,8 +78,8 @@ const initialState: ISearchPageState = {
     filters: {
         query: "",
         price_range_filters: {
-            min: 0,
-            max: 100000,
+            min_price: 0,
+            max_price: 100000,
         },
         material: [],
         style: [],
@@ -104,9 +103,11 @@ const SearchPageSlice = createSlice({
         setTitle: (state, action: PayloadAction<string>) => {
             state.filters.query = action.payload;
         },
-        setSelectedPriceRange: (state, action: PayloadAction<{ min: number, max: number }>) => {
-            state.filters.price_range_filters.min = action.payload.min;
-            state.filters.price_range_filters.max = action.payload.max;
+        setIsWaitingForResponse: (state, action: PayloadAction<boolean>) => {
+            state.isWaitingForResponse = action.payload;
+        },
+        setSelectedPriceRange: (state, action: PayloadAction<IPriceRange>) => {
+            state.filters.price_range_filters = action.payload
         },
         setArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
             state.artpieces = action.payload;
@@ -157,6 +158,7 @@ const SearchPageSlice = createSlice({
 })
 
 export const {
+    setIsWaitingForResponse,
     setSort,
     removeSelectedCategoriesSlug,
     appendSelectedCategoriesSlug,
