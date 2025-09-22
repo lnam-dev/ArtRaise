@@ -146,24 +146,24 @@ const FilterMenu: React.FC<Props> = ({className}) => {
 
                 </div>
             </Accordion>
-            <Accordion title={"Ціна"}>
-                <div className="px-4 py-2 w-full">
-                    <div className={'w-full flex flex-row justify-between'}>
-                        <p>{filterState.filters.price_range_filters.min_price}</p>
-                        <p>{filterState.filters.price_range_filters.max_price}</p>
-                    </div>
-                    <DualRangeSlider
-                        className={"w-full"}
-                        min={filterState.available_price_range.min_price}
-                        max={filterState.available_price_range.max_price}
-                        step={100}
-                        value={[filterState.filters.price_range_filters.min_price, filterState.filters.price_range_filters.max_price]}
-                        onValueChange={([min,max]) => {
-                            dispatch(setSelectedPriceRange({min_price: min, max_price: max}))
-                        }}
-                    />
-                </div>
-            </Accordion>
+            {/*<Accordion title={"Ціна"}>*/}
+            {/*    <div className="px-4 py-2 w-full">*/}
+            {/*        <div className={'w-full flex flex-row justify-between'}>*/}
+            {/*            <p>{filterState.filters.price_range_filters.min_price}</p>*/}
+            {/*            <p>{filterState.filters.price_range_filters.max_price}</p>*/}
+            {/*        </div>*/}
+            {/*        <DualRangeSlider*/}
+            {/*            className={"w-full"}*/}
+            {/*            min={filterState.available_price_range.min_price}*/}
+            {/*            max={filterState.available_price_range.max_price}*/}
+            {/*            step={100}*/}
+            {/*            value={[filterState.filters.price_range_filters.min_price, filterState.filters.price_range_filters.max_price]}*/}
+            {/*            onValueChange={([min,max]) => {*/}
+            {/*                dispatch(setSelectedPriceRange({min_price: min, max_price: max}))*/}
+            {/*            }}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</Accordion>*/}
         </div>
     );
 };

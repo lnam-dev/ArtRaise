@@ -22,10 +22,10 @@ export const useFilter = () => {
         const categoryResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/categories/`);
         const filterKeysResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}artpieces/stats/`);
         const setup = await getSearchPage();
-        if (setup?.price_range) dispatch(setSelectedPriceRange({
-            min: setup.price_range.min_price,
-            max: setup.price_range.max_price
-        }));
+        // if (setup?.price_range) dispatch(setSelectedPriceRange({
+        //     min: setup.price_range.min_price,
+        //     max: setup.price_range.max_price
+        // }));
         if(filterKeysResponse.ok){
             //TODO typeguards for dto
             const data : TFilterKeys = await filterKeysResponse.json()

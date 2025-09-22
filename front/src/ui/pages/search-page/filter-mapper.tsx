@@ -20,18 +20,18 @@ const FilterMapper: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch();
     let filterItems: TFilterItem[] = [];
     const price_range = filterState.filters.price_range_filters
-    const isPriceDiffer = filterState.available_price_range.min_price !== price_range.min || filterState.available_price_range.max_price !== price_range.max
-    if (price_range && isPriceDiffer) {
-        filterItems.push({
-            value: `${price_range.min}-${price_range.max}`,
-            onDelete: () => {
-                dispatch(setSelectedPriceRange({
-                    min: filterState.available_price_range.min_price,
-                    max: filterState.available_price_range.max_price
-                }))
-            }
-        })
-    }
+    const isPriceDiffer = filterState.available_price_range.min_price !== price_range.min_price || filterState.available_price_range.max_price !== price_range.max_price
+    // if (price_range && isPriceDiffer) {
+    //     filterItems.push({
+    //         value: `${price_range.min}-${price_range.max}`,
+    //         onDelete: () => {
+    //             dispatch(setSelectedPriceRange({
+    //                 min: filterState.available_price_range.min_price,
+    //                 max: filterState.available_price_range.max_price
+    //             }))
+    //         }
+    //     })
+    // }
     const category = filterState.filters.category
     if(category.appliedCategoriesSlugs) {
         category.appliedCategoriesSlugs.forEach(appliedCategoriesSlug => {
