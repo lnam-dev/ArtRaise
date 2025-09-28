@@ -1,15 +1,23 @@
 "use client"
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Accordion from "~/ui/components/accordion/accordion";
 import FilterTag from "~/ui/components/tag/filter-tag/filter-tag";
 import {useAppDispatch, useAppSelector} from "~/store/client/hooks";
 import {
-    appendFilter, appendSelectedCategoriesSlug,
-    removeFilter, removeSelectedCategoriesSlug, setArtpieces, setSelectedPriceRange, setupCurrentPage, setupPagination, setupPriceRange,
+    appendFilter,
+    appendSelectedCategoriesSlug,
+    removeFilter,
+    removeSelectedCategoriesSlug,
+    setArtpieces,
+    setSelectedPriceRange,
+    setupCurrentPage,
+    setupPagination,
+    setAvailablePriceRange,
 } from "~/store/client/slices/SearchPageSlice";
 import {useSearchPage} from "~/app/[locale]/search/useSearchPage";
 import {DualRangeSlider} from "~/components/ui/dual-range-slider";
 import SearchpageSortSelector from "~/ui/pages/search-page/searchpage-sort-selector";
+import {filters} from "css-select";
 
 type Props = {
     className?: string;
@@ -19,22 +27,42 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch()
     const filterState = useAppSelector(state => state.searchPageReducer)
     const {getSearchPage} = useSearchPage()
+    const [abortController, setAbortController] = useState<AbortController>(new AbortController())
 
 
     useEffect(() => {
+        abortController.abort() //abort previous fetch
+        const newAbortController = new AbortController() //create new abort controller and pass it to current fetch
+        setAbortController(newAbortController) //save this abort controller for next useEffect call, so it will abort this fetch if there is new one
         const timeoutId = setTimeout(async () => {
             dispatch(setupCurrentPage(1));
-            const response = await getSearchPage()
-            console.log('get search page')
+            const response = await getSearchPage(newAbortController.signal)
             if (response) {
                 const {artpieces, pagination, price_range} = response
                 dispatch(setArtpieces(artpieces));
                 dispatch(setupPagination(pagination));
-                dispatch(setupPriceRange(price_range));
+                dispatch(setAvailablePriceRange(price_range));
+                dispatch(setSelectedPriceRange(null))
             }
         }, msDebounceDelay)
-        return () => clearTimeout(timeoutId);
+        return () => {
+            clearTimeout(timeoutId)
+        };
     }, [filterState.filters, filterState.sort]);
+    useEffect(() => {
+        const timeoutId = setTimeout(async () => {
+            dispatch(setupCurrentPage(1));
+            const response = await getSearchPage()
+            if (response) {
+                const {artpieces, pagination, price_range} = response
+                dispatch(setArtpieces(artpieces));
+                dispatch(setupPagination(pagination));
+            }
+        }, msDebounceDelay)
+        return () => {
+            clearTimeout(timeoutId)
+        };
+    }, [filterState.selected_price_range]);
 
 
     useEffect(() => {
@@ -49,7 +77,7 @@ const FilterMenu: React.FC<Props> = ({className}) => {
     }, [filterState.pagination.current_page]);
 
     return (
-        <div className={` ${className}`} onClick={(e)=> {
+        <div className={` ${className}`} onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
         }}>
@@ -146,24 +174,28 @@ const FilterMenu: React.FC<Props> = ({className}) => {
 
                 </div>
             </Accordion>
-            {/*<Accordion title={"Ціна"}>*/}
-            {/*    <div className="px-4 py-2 w-full">*/}
-            {/*        <div className={'w-full flex flex-row justify-between'}>*/}
-            {/*            <p>{filterState.filters.price_range_filters.min_price}</p>*/}
-            {/*            <p>{filterState.filters.price_range_filters.max_price}</p>*/}
-            {/*        </div>*/}
-            {/*        <DualRangeSlider*/}
-            {/*            className={"w-full"}*/}
-            {/*            min={filterState.available_price_range.min_price}*/}
-            {/*            max={filterState.available_price_range.max_price}*/}
-            {/*            step={100}*/}
-            {/*            value={[filterState.filters.price_range_filters.min_price, filterState.filters.price_range_filters.max_price]}*/}
-            {/*            onValueChange={([min,max]) => {*/}
-            {/*                dispatch(setSelectedPriceRange({min_price: min, max_price: max}))*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</Accordion>*/}
+            <Accordion title={"Ціна"}>
+                <div className="px-4 py-2 w-full">
+                    <div className={'w-full flex flex-row justify-between'}>
+                        <p>{filterState.selected_price_range?.min_price ?? filterState.available_price_range.min_price}</p>
+                        <p>{filterState.selected_price_range?.max_price ?? filterState.available_price_range.max_price}</p>
+                    </div>
+                    <DualRangeSlider
+                        className={"w-full"}
+                        min={filterState.available_price_range.min_price}
+                        max={filterState.available_price_range.max_price}
+                        step={100}
+                        value={[filterState.selected_price_range?.min_price ?? filterState.available_price_range.min_price, filterState.selected_price_range?.max_price ?? filterState.available_price_range.max_price]}
+                        onValueChange={([min, max]) => {
+                            if (min === filterState.available_price_range.min_price && max === filterState.available_price_range.max_price) {
+                                dispatch(setSelectedPriceRange(null))
+                            }else{
+                                dispatch(setSelectedPriceRange({min_price: min, max_price: max}))
+                            }
+                        }}
+                    />
+                </div>
+            </Accordion>
         </div>
     );
 };

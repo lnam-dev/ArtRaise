@@ -44,6 +44,7 @@ export interface ISearchPageState {
     isWaitingForResponse: boolean
     pagination: IPagination
     available_price_range: IPriceRange,
+    selected_price_range: IPriceRange | null
     sort: ISort,
     filters: {
         query: string,
@@ -51,7 +52,6 @@ export interface ISearchPageState {
             appliedCategoriesSlugs: string[],
             categoryKeysCounts: TFilterCategoryKey[],
         }
-        price_range_filters: IPriceRange
         filterKeys: TFilterKeys
     } & TFilterFields,
 }
@@ -65,22 +65,19 @@ const initialState: ISearchPageState = {
         total_pages: 1,
         has_next: false,
         has_previous: false,
-        page_size: 5
+        page_size: 10
     },
     available_price_range: {
         min_price: 0,
         max_price: 100000,
     },
+    selected_price_range: null,
     sort: {
         sort_by: "date",
         sort_direction: "desc",
     },
     filters: {
         query: "",
-        price_range_filters: {
-            min_price: 0,
-            max_price: 100000,
-        },
         material: [],
         style: [],
         theme: [],
@@ -106,8 +103,8 @@ const SearchPageSlice = createSlice({
         setIsWaitingForResponse: (state, action: PayloadAction<boolean>) => {
             state.isWaitingForResponse = action.payload;
         },
-        setSelectedPriceRange: (state, action: PayloadAction<IPriceRange>) => {
-            state.filters.price_range_filters = action.payload
+        setSelectedPriceRange: (state, action: PayloadAction<IPriceRange | null>) => {
+            state.selected_price_range = action.payload
         },
         setArtpieces: (state, action: PayloadAction<TArtPiece[]>) => {
             state.artpieces = action.payload;
@@ -126,7 +123,7 @@ const SearchPageSlice = createSlice({
         setupPagination: (state, action: PayloadAction<IPagination>) => {
             state.pagination = action.payload;
         },
-        setupPriceRange: (state, action: PayloadAction<IPriceRange>) => {
+        setAvailablePriceRange: (state, action: PayloadAction<IPriceRange>) => {
             state.available_price_range = action.payload;
         },
         setSort: (state, action: PayloadAction<ISort>) => {
@@ -167,7 +164,7 @@ export const {
     setSelectedPriceRange,
     setArtpieces,
     setupCurrentPage,
-    setupPriceRange,
+    setAvailablePriceRange,
     setupFilterKeys,
     appendFilter,
     removeFilter,

@@ -7,8 +7,12 @@ export const getFilteredUrlParamsFromFilterState = (object: ISearchPageState): U
     if (object.filters.query) {
         params.append("q", object.filters.query)
     }
-    if (object.filters.price_range_filters.min_price && object.filters.price_range_filters.min_price !== object.available_price_range.min_price) params.append("price_min", `${object.filters.price_range_filters.min_price}`);
-    if (object.filters.price_range_filters.max_price && object.filters.price_range_filters.max_price !== object.available_price_range.max_price) params.append("price_max", `${object.filters.price_range_filters.max_price}`);
+    if(object.selected_price_range){
+        params.append("price_min", `${object.selected_price_range.min_price}`)
+        params.append("price_max", `${object.selected_price_range.max_price}`)
+    }
+    // if (object.filters.selected_price_range.min_price && object.selected_price_range.min_price !== object.available_price_range.min_price) params.append("price_min", `${object.selected_price_range.min_price}`);
+    // if (object.selected_price_range.max_price && object.selected_price_range.max_price !== object.available_price_range.max_price) params.append("price_max", `${object.selected_price_range.max_price}`);
 
     const isAnyCategorySelected = object.filters.category.appliedCategoriesSlugs.length > 0
     if (isAnyCategorySelected) {

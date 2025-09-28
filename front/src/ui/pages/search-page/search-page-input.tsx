@@ -14,11 +14,8 @@ type Props = {
 const SearchPageInput: React.FC<Props> = ({className}) => {
     const dispatch = useAppDispatch();
     const searchPageState = useAppSelector(state => state.searchPageReducer)
-    const setFilterTags = (key: TFilterKeysValues, value: string) => {
-    }
     const searchFilterState = useAppSelector(state => state.searchPageReducer)
     const router = useRouter();
-    // const queryParams = getFilteredUrlParamsFromObject(searchPageState.searchFilters).toString();
     return (
         <SearchInput className={`${className}`} setInputString={(titleValue) => dispatch(setTitle(titleValue))}
                      handleOnSearchClick={() => router.push(`/ua/search/?${getFilteredUrlParamsFromFilterState(searchFilterState)}`)}

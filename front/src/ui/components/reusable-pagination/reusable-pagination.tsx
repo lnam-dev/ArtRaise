@@ -53,7 +53,7 @@ const ReusablePagination: React.FC<Props> = ({ goToPage, total_pages, current_pa
     };
 
     return (
-        <Pagination className="gap-1 pl-2.5">
+        <Pagination className="gap-1 pl-2.5 cursor-pointer">
             <PaginationContent>
                 <PaginationItem>
                     <PaginationPrevious

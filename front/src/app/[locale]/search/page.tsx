@@ -39,8 +39,6 @@ export default function Page() {
             <FilterMapper className={"col-span-full"}/>
             <MobileFilterNavigation className={`md:hidden col-span-full`}/>
             <aside className={"py-2 hidden md:block"}>
-                {/*<Button className={"w-full my-3 text-nowrap"}*/}
-                {/*        onClick={() => }>{`Застосувати фільтр ( ${searchPageState.pagination.total_items} )`}</Button>*/}
                 <FilterMenu/>
             </aside>
             <main className={"md:col-start-2 md:col-end-[-1] col-span-full"}>
@@ -59,9 +57,7 @@ export default function Page() {
                         </div>
                     </div>
                 }
-            <SearchPagination
-
-            />
+                {isArtpiecesNotEmpty && searchPageState.pagination.total_pages > 1 && <SearchPagination/>}
             </main>
 
         </div>
