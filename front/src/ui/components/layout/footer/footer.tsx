@@ -9,7 +9,7 @@ export const Footer = () => {
 	return (
 		<footer className="w-full mt-[5rem] bg-black-1000 text-white">
 			<div className="container mx-auto mobile-spacing">
-				<div className="flex justify-between">
+				<div className="flex justify-between flex-col lg:flex-row">
 					{/* Logo Section */}
 					<div className="flex-1 items-center">
 						<h2 className="2xl:text-[8vw] xl:text-[10vw] lg:text-[8vw] lg:text-left md:text-[10vw] text-[16vw] font-fixel font-bold leading-none text-white text-center">
@@ -17,11 +17,11 @@ export const Footer = () => {
 						</h2>
 					</div>
 					{/* Contact */}
-					<div className="lg:flex flex-col xl:text-[1.25rem] ml-[1rem] space-y-1 font-namu text-gray-300 hidden">
+					<div className="flex flex-col xl:text-[1.25rem] lg:ml-[1rem] space-y-1 font-namu text-gray-300">
 						<a href="mailto:friendsofinaa@gmail.com">
 							friendsofinaa@gmail.com
 						</a>
-						<p>+380 98 859 39 00</p>
+						<a href={'tel:+380988593900'}>+380 98 859 39 00</a>
 						<a target={"_blank"} href="https://www.instagram.com/lvivartacademy?igsh=YXBzbGMyeGsycXdu">Instagram</a>
 						<a target={"_blank"} href="https://www.facebook.com/share/1AqaXnu3uA/?mibextid=wwXIfr">Facebook</a>
 						<a target={"_blank"} href="https://whatsapp.com/channel/0029VatExYe11ulSOhtcty0P">WhatsApp</a>
@@ -82,13 +82,6 @@ export const Footer = () => {
 					<Link className="text-gray-300 pt-3" to="/">
 						Збір на мистецтво
 					</Link>
-				</div>
-
-				<div className="lg:hidden py-[1.25rem] text-white">
-					<Link to="mailto:friendsofinaa@gmail.com">
-						friendsofinaa@gmail.com
-					</Link>
-					<p>+380 98 859 39 00</p>
 				</div>
 
 				<div className="flex justify-between items-center mt-3 py-3 border-t-1 lg:border-t-2 lg:mt-8 lg:pt-3 lg:pb-3 border-gray-300/50">
